@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package nuevo;
+import javax.swing.*;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Nuevo {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        JOptionPane.showMessageDialog(null, "Hola", "Título", JOptionPane.INFORMATION_MESSAGE);
     }
     
 }
