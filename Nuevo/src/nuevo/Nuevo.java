@@ -18,6 +18,18 @@ public class Nuevo {
     public static void main(String[] args) {
         // TODO code application logic here
         JOptionPane.showMessageDialog(null, "Hola", "Título", JOptionPane.INFORMATION_MESSAGE);
-    }
+        Marco nuevoMarco = new Marco();
+        nuevoMarco.setBounds(100, 100, 500, 250);
+        nuevoMarco.setVisible(true);
+        nuevoMarco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
+    }
 }
+
+
+class Marco extends JFrame{
+     public Marco(){
+        
+    }
+}
+   
