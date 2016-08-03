@@ -22,6 +22,7 @@ public class Nuevo {
         nuevoMarco.setBounds(100, 100, 500, 250);
         nuevoMarco.setVisible(true);
         nuevoMarco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Comentarioo
     
     }
 }
@@ -32,4 +33,5 @@ class Marco extends JFrame{
         
     }
 }
+
    
