@@ -10,95 +10,96 @@ import java.util.*;
  * @author Mauro
  */
 public class Servicio {
-    private String NombreServicio;
-    private String DescripcionServicio;
-    private int PrecioServicio;
-    private Proveedor ProveedorServicio;
-    private ArrayList<Imagen> ImagenesServicio;
-    private ArrayList<Reserva> ReservaServicio;
-    private ArrayList<Promocion> PromocionesServicio;
-    private ArrayList<Categoria> CategoriasServicio;
-
+    private String nombreServicio;
+    private String descripcionServicio;
+    private int precioServicio;
+    private Proveedor proveedorServicio;
+    private ArrayList<Imagen> imagenesServicio;
+    private ArrayList<Reserva> reservasServicio;
+    private ArrayList<Promocion> promocionesServicio;
+    private ArrayList<Categoria> categoriasServicio;
+    private Ciudad origen;
+    private Ciudad destino;
+    
     public ArrayList<Categoria> getCategoriasServicio() {
-        return CategoriasServicio;
+        return categoriasServicio;
     }
 
     public void setCategoriasServicio(ArrayList<Categoria> CategoriasServicio) {
-        this.CategoriasServicio = CategoriasServicio;
+        this.categoriasServicio = CategoriasServicio;
     }
 
     public ArrayList<Promocion> getPromocionesServicio() {
-        return PromocionesServicio;
+        return promocionesServicio;
     }
 
     public void setPromocionesServicio(ArrayList<Promocion> PromocionesServicio) {
-        this.PromocionesServicio = PromocionesServicio;
+        this.promocionesServicio = PromocionesServicio;
     }
-    private Ciudad Origen;
-    private Ciudad Destino;
+
 
     public Ciudad getOrigen() {
-        return Origen;
+        return origen;
     }
 
     public void setOrigen(Ciudad Origen) {
-        this.Origen = Origen;
+        this.origen = Origen;
     }
 
     public Ciudad getDestino() {
-        return Destino;
+        return destino;
     }
 
     public void setDestino(Ciudad Destino) {
-        this.Destino = Destino;
+        this.destino = Destino;
     }
     
     public String getNombreServicio() {
-        return NombreServicio;
+        return nombreServicio;
     }
 
     public void setNombreServicio(String NombreServicio) {
-        this.NombreServicio = NombreServicio;
+        this.nombreServicio = NombreServicio;
     }
 
     public String getDescripcionServicio() {
-        return DescripcionServicio;
+        return descripcionServicio;
     }
 
     public void setDescripcionServicio(String DescripcionServicio) {
-        this.DescripcionServicio = DescripcionServicio;
+        this.descripcionServicio = DescripcionServicio;
     }
 
     public int getPrecioServicio() {
-        return PrecioServicio;
+        return precioServicio;
     }
 
     public void setPrecioServicio(int PrecioServicio) {
-        this.PrecioServicio = PrecioServicio;
+        this.precioServicio = PrecioServicio;
     }
 
     public Proveedor getProveedorServicio() {
-        return ProveedorServicio;
+        return proveedorServicio;
     }
 
     public void setProveedorServicio(Proveedor ProveedorServicio) {
-        this.ProveedorServicio = ProveedorServicio;
+        this.proveedorServicio = ProveedorServicio;
     }
 
     public ArrayList<Imagen> getImagenesServicio() {
-        return ImagenesServicio;
+        return imagenesServicio;
     }
 
     public void setImagenesServicio(ArrayList<Imagen> ImagenesServicio) {
-        this.ImagenesServicio = ImagenesServicio;
+        this.imagenesServicio = ImagenesServicio;
     }
 
     public ArrayList<Reserva> getReservaServicio() {
-        return ReservaServicio;
+        return reservasServicio;
     }
 
     public void setReservaServicio(ArrayList<Reserva> ReservaServicio) {
-        this.ReservaServicio = ReservaServicio;
+        this.reservasServicio = ReservaServicio;
     }
     
 }

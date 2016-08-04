@@ -10,34 +10,34 @@ import java.util.*;
  * @author Mauro
  */
 public class Promocion {
-    private String Nombre;
-    private int Descuento;
-    private int Precio;
+    private String nombre;
+    private int descuento;
+    private int precio;
     private ArrayList<Servicio> Servicios;
     private ArrayList<Reserva> Reservas;
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
     public int getDescuento() {
-        return Descuento;
+        return descuento;
     }
 
     public void setDescuento(int Descuento) {
-        this.Descuento = Descuento;
+        this.descuento = Descuento;
     }
 
     public int getPrecio() {
-        return Precio;
+        return precio;
     }
 
     public void setPrecio(int Precio) {
-        this.Precio = Precio;
+        this.precio = Precio;
     }
 
     public ArrayList<Servicio> getServicios() {

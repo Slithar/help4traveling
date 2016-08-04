@@ -10,23 +10,23 @@ import java.util.*;
  * @author Mauro
  */
 public class Pais {
-    private String Nombre;
-    private ArrayList<Ciudad> Ciudades;
+    private String nombre;
+    private ArrayList<Ciudad> ciudades;
     
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
     public ArrayList<Ciudad> getCiudades() {
-        return Ciudades;
+        return ciudades;
     }
 
     public void setCiudades(ArrayList<Ciudad> Ciudades) {
-        this.Ciudades = Ciudades;
+        this.ciudades = Ciudades;
     }
     
 }

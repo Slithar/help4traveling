@@ -10,32 +10,32 @@ import java.util.*;
  * @author Mauro
  */
 public class Ciudad {
-    private String Nombre;
-    private ArrayList<Servicio> Servicio;
-    private Pais Pais;
+    private String nombre;
+    private ArrayList<Servicio> servicios;
+    private Pais pais;
 
     public Pais getPais() {
-        return Pais;
+        return pais;
     }
 
     public void setPais(Pais Pais) {
-        this.Pais = Pais;
+        this.pais = Pais;
     }
     
     // No tengo muy claro como hacer la relación de este lado de las clases....
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
-    public ArrayList<Servicio> getServicio() {
-        return Servicio;
+    public ArrayList<Servicio> getServicios() {
+        return servicios;
     }
 
-    public void setServicio(ArrayList<Servicio> Servicio) {
-        this.Servicio = Servicio;
+    public void setServicios(ArrayList<Servicio> Servicio) {
+        this.servicios = Servicio;
     }
 }

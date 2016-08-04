@@ -10,15 +10,15 @@ import java.util.*;
  * @author Mauro
  */
 public class Categoria {
-    private String Nombre;
+    private String nombre;
     private ArrayList<Servicio> Servicios;
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
     public ArrayList<Servicio> getServicios() {

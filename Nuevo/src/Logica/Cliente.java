@@ -10,14 +10,14 @@ import java.util.*;
  * @author Mauro
  */
 public class Cliente extends Usuario {
-   private ArrayList<Reserva> ReservasCliente;
+   private ArrayList<Reserva> reservasCliente;
 
     public ArrayList<Reserva> getReservasCliente() {
-        return ReservasCliente;
+        return reservasCliente;
     }
 
     public void setReservasCliente(ArrayList<Reserva> ReservasCliente) {
-        this.ReservasCliente = ReservasCliente;
+        this.reservasCliente = ReservasCliente;
     }
     
 }

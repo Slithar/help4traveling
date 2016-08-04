@@ -11,59 +11,59 @@ import java.util.*;
  * @author Mauro
  */
 public class Usuario {
-    private String Nickname;
-    private String Nombre;
-    private String Apellido;
-    private String Email;
-    private Date FechaNac;
-    private Imagen ImagenCliente;
+    private String nickname;
+    private String nombre;
+    private String apellido;
+    private String email;
+    private Date fechaNac;
+    private Imagen imagenCliente;
 
     public Imagen getImagenCliente() {
-        return ImagenCliente;
+        return imagenCliente;
     }
 
     public void setImagenCliente(Imagen ImagenCliente) {
-        this.ImagenCliente = ImagenCliente;
+        this.imagenCliente = ImagenCliente;
     }
 
     public String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
     public void setNickname(String Nickname) {
-        this.Nickname = Nickname;
+        this.nickname = Nickname;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
     public void setApellido(String Apellido) {
-        this.Apellido = Apellido;
+        this.apellido = Apellido;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String Email) {
-        this.Email = Email;
+        this.email = Email;
     }
 
     public Date getFechaNac() {
-        return FechaNac;
+        return fechaNac;
     }
 
     public void setFechaNac(Date FechaNac) {
-        this.FechaNac = FechaNac;
+        this.fechaNac = FechaNac;
     }
     
 }

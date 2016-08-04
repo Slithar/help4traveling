@@ -10,5 +10,9 @@ package Presentacion;
  * @author Mauro
  */
 public class Presentacion {
-    
+    public static void main (String [ ] args) {
+ 
+          System.out.println("Hello World.");
+ 
+        }
 }

@@ -10,60 +10,53 @@ import java.util.*;
  * @author Mauro
  */
 public class Reserva {
-    private int Numero;
-    private Date Fecha;
-    private int Precio;
-    private ArrayList<Cliente> Cliente;
-    private ArrayList<Reserva> Reserva;
-    private ArrayList<Promocion> ReservaPromociones;
+    private int numero;
+    private Date fecha;
+    private int precio;
+    private ArrayList<Cliente> Clientes;
+  //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
+    private ArrayList<Promocion> reservaPromociones;
     //falta estado
 
     public ArrayList<Promocion> getReservaPromociones() {
-        return ReservaPromociones;
+        return reservaPromociones;
     }
 
     public void setReservaPromociones(ArrayList<Promocion> ReservaPromociones) {
-        this.ReservaPromociones = ReservaPromociones;
+        this.reservaPromociones = ReservaPromociones;
     }
 
-    public ArrayList<Reserva> getReserva() {
-        return Reserva;
-    }
-
-    public void setReserva(ArrayList<Reserva> Reserva) {
-        this.Reserva = Reserva;
-    }
 
     public ArrayList<Cliente> getCliente() {
-        return Cliente;
+        return cliente;
     }
 
     public void setCliente(ArrayList<Cliente> Cliente) {
-        this.Cliente = Cliente;
+        this.cliente = Cliente;
     }
 
     public int getNumero() {
-        return Numero;
+        return numero;
     }
 
     public void setNumero(int Numero) {
-        this.Numero = Numero;
+        this.numero = Numero;
     }
 
     public Date getFecha() {
-        return Fecha;
+        return fecha;
     }
 
     public void setFecha(Date Fecha) {
-        this.Fecha = Fecha;
+        this.fecha = Fecha;
     }
 
     public int getPrecio() {
-        return Precio;
+        return precio;
     }
 
     public void setPrecio(int Precio) {
-        this.Precio = Precio;
+        this.precio = Precio;
     }
     
 }

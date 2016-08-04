@@ -10,7 +10,32 @@ import java.util.*;
  * @author Mauro
  */
 public class Imagen {
-    private String Path;
-    private Cliente Cliente;
-    private Proveedor Proveedor;
+    private String path;
+    private Cliente cliente;
+    private Proveedor proveedor;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+    
 }
