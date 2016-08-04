@@ -4,11 +4,23 @@
  * and open the template in the editor.
  */
 package Datos;
+import java.sql.*;
+import Datos.ConexionBD;
 
 /**
  *
  * @author Mauro
  */
 public class Datos {
+    public Datos(){
+        
+    }
     
+    public String probar() throws SQLException, ClassNotFoundException{
+        ConexionBD c = new ConexionBD();
+        
+        
+        c.conectar();
+        return "listoo";
+    }
 }
