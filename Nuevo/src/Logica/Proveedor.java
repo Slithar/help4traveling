@@ -10,5 +10,6 @@ package Logica;
  * @author Mauro
  */
 public class Proveedor extends Usuario {
-   
+    private String nombreProveedor;
+    private String link;
 }

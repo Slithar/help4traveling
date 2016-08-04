@@ -11,13 +11,35 @@ import java.util.*;
  */
 public class Reserva {
     private int numero;
+
     private Date fecha;
     private int precio;
     private ArrayList<Cliente> clientes;
   //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
+    private ArrayList<Servicio> serviciosReserva;
     private ArrayList<Promocion> reservaPromociones;
     //falta estado
+    
+    public Reserva() {
+        
+    }
 
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public ArrayList<Servicio> getServiciosReserva() {
+        return serviciosReserva;
+    }
+
+    public void setServiciosReserva(ArrayList<Servicio> serviciosReserva) {
+        this.serviciosReserva = serviciosReserva;
+    }
+    
     public ArrayList<Promocion> getReservaPromociones() {
         return reservaPromociones;
     }
