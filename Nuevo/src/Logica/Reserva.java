@@ -13,7 +13,7 @@ public class Reserva {
     private int numero;
     private Date fecha;
     private int precio;
-    private ArrayList<Cliente> Clientes;
+    private ArrayList<Cliente> clientes;
   //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
     private ArrayList<Promocion> reservaPromociones;
     //falta estado
@@ -28,11 +28,11 @@ public class Reserva {
 
 
     public ArrayList<Cliente> getCliente() {
-        return cliente;
+        return clientes;
     }
 
     public void setCliente(ArrayList<Cliente> Cliente) {
-        this.cliente = Cliente;
+        this.clientes = Cliente;
     }
 
     public int getNumero() {

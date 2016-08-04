@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Presentacion;
-
+import java.util.*;
 /**
  *
  * @author Mauro
@@ -12,7 +12,7 @@ package Presentacion;
 public class Presentacion {
     public static void main (String [ ] args) {
  
-          System.out.println("Hello World.");
- 
+          help4travelingUI nuevo = new help4travelingUI();
+          nuevo.setVisible(true);
         }
 }
