@@ -21,6 +21,10 @@ public class Datos {
         
         
         c.conectar();
-        return "listoo";
+        String resultado = "listoo";
+        
+        c.cerrar();
+        
+        return resultado;
     }
 }
