@@ -21,6 +21,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     public frmMenuPrincipal() {
         initComponents();
         //add(new Panel());
+        //hola otro comentario de master
         
     }
 
