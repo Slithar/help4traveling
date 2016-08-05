@@ -13,7 +13,9 @@ import java.util.*;
 /**
  *
  * @author Mauro
+ * 
  */
+
 public class Presentacion {
     public static void main (String [ ] args) {
         
@@ -26,6 +28,16 @@ public class Presentacion {
         menuPrincipal.setLocationRelativeTo(null);
 
         menuPrincipal.setVisible(true);
+        menuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuPrincipal.setTitle("Help4Traveling - Menú principal");
+        
+        menuPrincipal.setContentPane(new Panel());
+        
+        //menuPrincipal.add(new Panel());
+        
+        
+
     }
 }
+
+

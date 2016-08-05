@@ -6,6 +6,8 @@
 package Presentacion;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.text.AttributedCharacterIterator;
 
 /**
  *
@@ -18,6 +20,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
      */
     public frmMenuPrincipal() {
         initComponents();
+        //add(new Panel());
+        
     }
 
     /**
@@ -30,7 +34,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem2 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
         mbBarra = new javax.swing.JMenuBar();
         mInicio = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
@@ -55,17 +58,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
-        );
 
         mInicio.setText("Inicio");
 
@@ -145,11 +137,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 333, Short.MAX_VALUE)
         );
 
         pack();
@@ -199,10 +191,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
         
     }
+    
+   
+    
+
+    
+    //public void paintCom
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu mConsultas;
     private javax.swing.JMenu mInicio;
     private javax.swing.JMenu mRegServicios;
@@ -225,3 +222,27 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miSalir;
     // End of variables declaration//GEN-END:variables
 }
+
+class Panel extends JPanel{
+    
+    public Panel(){
+        
+        
+    }
+    
+    @Override
+    public void paintComponent(Graphics g){
+        Toolkit miPantalla = Toolkit.getDefaultToolkit();
+        Dimension tamanio = getSize();
+        
+        ImageIcon imagen = new ImageIcon(getClass().getResource("imagenes/aficheMenuPrincipal.png"));
+        
+        g.drawImage(imagen.getImage(), 0, 0, tamanio.width, tamanio.height, null);
+        
+        setOpaque(false);
+       
+        super.paintComponent(g);
+    }
+}
+
+
