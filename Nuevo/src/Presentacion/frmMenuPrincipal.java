@@ -20,6 +20,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
      */
     public frmMenuPrincipal() {
         initComponents();
+        //aca el comentario de mi rama
         //add(new Panel());
         
     }
