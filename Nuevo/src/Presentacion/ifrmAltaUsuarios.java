@@ -24,7 +24,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     
     private String rutaImagen = "";
     
-    public ifrmAltaUsuarios() {
+    public ifrmAltaUsuarios(frmMenuPrincipal menuPrincipal) {
         setTitle("Registro de usuarios");
         
         initComponents();
@@ -36,6 +36,12 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         lblImagenPerfil.setSize(200, 200);
         setImagenPerfil("imagenes/perfil.PNG", "defecto");
         setRutaImagen("imagenes/perfil.PNG");
+        
+        
+        //setLocation(tamanioMenuPrincipal.width/2, tamanioMenuPrincipal.height/2);
+        Dimension tamanioVentana = this.getSize();
+        //System.out.println(tamanioMenuPrincipal.width);
+        setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
         //System.out.println(lblImagenPerfil.getWidth());
         
     }
@@ -298,11 +304,11 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             .addComponent(lblEmpresa)
                             .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSitioWeb)
                     .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);

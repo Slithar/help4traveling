@@ -28,9 +28,10 @@ public class fchImagenes extends javax.swing.JFrame {
         initComponents();
         iFrame = i;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG, GIF", "jpg", "png", "gif");
         fchImagen.setFileFilter(filtroTipo);
-        //JOptionPane.showMessageDialog(null, fchImagen);
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1900 - tamanioVentana.width)/2, (900 - tamanioVentana.height)/2);
         
         
     }
