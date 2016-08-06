@@ -14,15 +14,24 @@ import java.text.AttributedCharacterIterator;
  * @author usuario
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
-
+   // private ifrmAltaUsuarios altaUsuarios = new ifrmAltaUsuarios();
+    private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios();
     /**
      * Creates new form frmMenuPrincipal
      */
     public frmMenuPrincipal() {
         initComponents();
+        //add(altaUsuarios);
         //aca el comentario de mi rama
         //add(new Panel());
         //hola otro comentario de master
+        Panel nuevoPanel = new Panel(vAltaUsuarios);
+        setContentPane(nuevoPanel);
+        
+        
+        
+        
+       
         
     }
 
@@ -36,6 +45,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem2 = new javax.swing.JMenuItem();
+        ifNuevo = new javax.swing.JInternalFrame();
         mbBarra = new javax.swing.JMenuBar();
         mInicio = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
@@ -61,6 +71,19 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        ifNuevo.setVisible(true);
+
+        javax.swing.GroupLayout ifNuevoLayout = new javax.swing.GroupLayout(ifNuevo.getContentPane());
+        ifNuevo.getContentPane().setLayout(ifNuevoLayout);
+        ifNuevoLayout.setHorizontalGroup(
+            ifNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 251, Short.MAX_VALUE)
+        );
+        ifNuevoLayout.setVerticalGroup(
+            ifNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 178, Short.MAX_VALUE)
+        );
+
         mInicio.setText("Inicio");
 
         miSalir.setText("Salir");
@@ -76,6 +99,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mRegistros.setText("Registros");
 
         miRegUsuarios.setText("Usuarios");
+        miRegUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegUsuariosActionPerformed(evt);
+            }
+        });
         mRegistros.add(miRegUsuarios);
 
         miRegCategorias.setText("Categorías");
@@ -139,11 +167,17 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(ifNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(ifNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,6 +190,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_miActualizarReservaActionPerformed
+
+    private void miRegUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegUsuariosActionPerformed
+        // TODO add your handling code here:
+        //System.out.println("click!");
+       // altaUsuarios.setVisible(true);
+       vAltaUsuarios.show();
+        
+    }//GEN-LAST:event_miRegUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,6 +243,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     //public void paintCom
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JInternalFrame ifNuevo;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu mConsultas;
     private javax.swing.JMenu mInicio;
@@ -228,8 +271,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 class Panel extends JPanel{
     
     public Panel(){
-        
-        
+              
+    }
+    
+    public Panel(ifrmAltaUsuarios vUsuarios){
+        add(vUsuarios);
     }
     
     @Override

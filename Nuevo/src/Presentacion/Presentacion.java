@@ -31,7 +31,6 @@ public class Presentacion {
         menuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuPrincipal.setTitle("Help4Traveling - Menú principal");
         
-        menuPrincipal.setContentPane(new Panel());
         
         //menuPrincipal.add(new Panel());
         
