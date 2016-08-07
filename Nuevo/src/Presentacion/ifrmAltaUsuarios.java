@@ -11,9 +11,12 @@ import javax.swing.*;
 import javax.swing.filechooser.*;
 import java.io.*;
 import java.util.*;
+import java.sql.*;
 import Logica.Usuario;
 import Logica.Cliente;
 import Logica.Proveedor;
+import Logica.ControladorClientes;
+import Logica.ControladorProveedores;
 //import javax.swing.filechooser.*;
 
 /**
@@ -28,38 +31,22 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     
     private String rutaImagen = "";
     private Usuario nuevoUsuario;
+    private ControladorClientes clientesHandler = new ControladorClientes();
+    private ControladorProveedores proveedoresHandler = new ControladorProveedores();
     
     public ifrmAltaUsuarios(frmMenuPrincipal menuPrincipal) {
         setTitle("Registro de usuarios");
         
         initComponents();
         
-        cmbTipoUsuario.addItem("Cliente");
-        cmbTipoUsuario.addItem("Proveedor");
+        
         panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20));
         aparecerDatosProveedor(false);
         lblImagenPerfil.setSize(200, 200);
-        setImagenPerfil("perfiles/perfil.PNG", "defecto");
-        setRutaImagen("perfiles/perfil.PNG");
         
         
-        //setLocation(tamanioMenuPrincipal.width/2, tamanioMenuPrincipal.height/2);
-        Dimension tamanioVentana = this.getSize();
-        //System.out.println(tamanioMenuPrincipal.width);
-        setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
-        //System.out.println(lblImagenPerfil.getWidth());
         
-        //spnDia = new JSpinner(new SpinnerNumberModel(1,1,31,1));
-        spnDia.setModel(new SpinnerNumberModel(1,1,31,1));
-        spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
-        
-        Calendar fecha = Calendar.getInstance();
-        
-        //System.out.println(fecha.get(Calendar.YEAR));
-        
-        spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
-       // spnAnio.set
-       //System.out.println(System.currentTimeMillis());
+        limpiar();
         
     }
     
@@ -86,6 +73,33 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         lblSitioWeb.setVisible(b);
         txtEmpresa.setVisible(b);
         txtSitioWeb.setVisible(b);
+    }
+    
+    public void limpiar(){
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
+        
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(new String[]{"Cliente", "Proveedor"});
+        cmbTipoUsuario.setModel(modelo);
+        /*if(cmbTipoUsuario)
+        cmbTipoUsuario.addItem("Cliente");
+        cmbTipoUsuario.addItem("Proveedor");*/
+        //cmbTipoUsuario.
+        
+        txtNickname.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCorreo.setText("");
+        spnDia.setModel(new SpinnerNumberModel(1,1,31,1));
+        spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
+        Calendar fecha = Calendar.getInstance();
+        spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
+        cmbTipoUsuario.setSelectedItem("Cliente");
+        aparecerDatosProveedor(false);
+        setImagenPerfil("perfiles/perfil.PNG", "defecto");
+        setRutaImagen("perfiles/perfil.PNG");
+        
+        txtNickname.requestFocus();
     }
     
     
@@ -154,6 +168,23 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Nickname:");
@@ -399,6 +430,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //System.out.println(spnAnio.getValue());
+        boolean imagenCorrecta = false;
+        
         if(txtNickname.getText().length() == 0){
             JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNickname.requestFocus();
@@ -419,6 +452,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
             String fechaNac = spnAnio.getValue() + "-" + spnMes.getValue() + "-" + spnDia.getValue();
         
             if(cmbTipoUsuario.getSelectedItem() == "Proveedor"){
+                
                 if(txtEmpresa.getText().length() == 0){
                     JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de empresa del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                     txtEmpresa.requestFocus();
@@ -440,12 +474,40 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     spnAnio.requestFocus();
                 }
                 else{
+                    
                     try{
-                        nuevoUsuario.copiarPerfil();
+                        
+                        if(this.rutaImagen != "perfiles/perfil.PNG")
+                            imagenCorrecta = nuevoUsuario.copiarPerfil();
+                        else
+                            imagenCorrecta = true;
+                        
                     }
                     catch(IOException ex){
                         JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         lblImagenPerfil.requestFocus();
+                    }
+                    if(imagenCorrecta){
+                        
+                        try{
+                           if(!proveedoresHandler.existeNickname(nuevoUsuario)){
+                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                txtNickname.requestFocus();
+                            }
+                           else{
+                                proveedoresHandler.agregarProveedor((Proveedor) nuevoUsuario);
+                                JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                limpiar();
+                           }
+                        }
+                        catch(SQLException ex){
+                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch(ClassNotFoundException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        
                     }
                 }
             }
@@ -462,16 +524,45 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                 }
                 else{
                     try{
-                        nuevoUsuario.copiarPerfil();
+                        if(this.rutaImagen != "perfiles/perfil.PNG")
+                            imagenCorrecta = nuevoUsuario.copiarPerfil();
+                        else
+                            imagenCorrecta = true;
                     }
                     catch(IOException ex){
                         JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         lblImagenPerfil.requestFocus();
                     }
+                    if(imagenCorrecta){
+                        
+                        try{
+                           if(!clientesHandler.existeNickname((Cliente) nuevoUsuario)){
+                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                txtNickname.requestFocus();
+                            }
+                           else{
+                                clientesHandler.agregarCliente(nuevoUsuario);
+                                JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                limpiar();
+                           }
+                        }
+                        catch(SQLException ex){
+                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch(ClassNotFoundException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        
+                    }
                 }
             }
         }        
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        limpiar();
+    }//GEN-LAST:event_formInternalFrameClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

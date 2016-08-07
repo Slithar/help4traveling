@@ -25,4 +25,20 @@ public class Proveedor extends Usuario {
         this.nombreEmpresa = nombreEmpresa;
         this.link = link;
     }
+    
+    public String getNombreEmpresa(){
+        return this.nombreEmpresa;
+    }
+    
+    public String getLink(){
+        return this.link;
+    }
+    
+    public void setNombreEmpresa(String nombreEmpresa){
+        this.nombreEmpresa = nombreEmpresa;
+    }
+    
+    public void setLink(String link){
+        this.link = link;
+    }
 }

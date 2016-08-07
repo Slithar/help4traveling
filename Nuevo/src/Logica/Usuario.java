@@ -44,12 +44,12 @@ public class Usuario {
         
     }
 
-    public Imagen getImagenCliente() {
+    public Imagen getImagenUsuario() {
         return imagenUsuario;
     }
 
-    public void setImagenCliente(Imagen ImagenCliente) {
-        this.imagenUsuario = ImagenCliente;
+    public void setImagenUsuario(Imagen imagenUsuario) {
+        this.imagenUsuario = imagenUsuario;
     }
 
     public String getNickname() {
@@ -127,13 +127,9 @@ public class Usuario {
     }
     
     public boolean copiarPerfil() throws IOException{
-        try{
-            imagenUsuario.copiarImagen(this.nickname);
-            return true;
-        }
-        catch(IOException ex){
-            return false;
-        }
+        imagenUsuario.copiarImagen(this.nickname);
+        return true;
+        
     }
     
 }

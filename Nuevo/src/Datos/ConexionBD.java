@@ -13,6 +13,10 @@ import java.sql.*;
 public class ConexionBD {
     private Connection conn;
     
+    public ConexionBD(){
+        conn = null;
+    }
+    
     public Connection conectar() throws SQLException, ClassNotFoundException{
         if(conn == null){
             try{
@@ -32,6 +36,6 @@ public class ConexionBD {
     
     public void cerrar() throws SQLException{
         if(conn != null)
-            conn.close();
+            conn = null;
     }
 }
