@@ -22,9 +22,17 @@ public class ControladorProveedores {
         
         DatosUsuarios proveedor = new DatosUsuarios();
         if(proveedor.selectCountUsuarios(p.getNickname()) == 0)
-            return true;
+            return false;
         else
-            return false;              
+            return true;              
+    }
+    
+    public boolean existeNombreEmpresa(Proveedor p) throws SQLException, ClassNotFoundException{
+        DatosProveedores proveedor = new DatosProveedores();
+        if(proveedor.selectCountNombreEmpresa(p.getNombreEmpresa()) == 0)
+            return false;
+        else
+            return true;
     }
     
     public void agregarProveedor(Proveedor p) throws SQLException, ClassNotFoundException{

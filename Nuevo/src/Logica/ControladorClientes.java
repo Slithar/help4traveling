@@ -21,9 +21,9 @@ public class ControladorClientes {
         
         DatosUsuarios cliente = new DatosUsuarios();
         if(cliente.selectCountUsuarios(c.getNickname()) == 0)
-            return true;
+            return false;
         else
-            return false;              
+            return true;              
     }
     
     public void agregarCliente(Usuario c) throws SQLException, ClassNotFoundException{

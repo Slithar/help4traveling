@@ -62,4 +62,25 @@ public class DatosProveedores {
         conexion.cerrar();
     }
     
+    public int selectCountNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
+        int cant = 0;
+        
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from proveedores where nombreEmpresa = ?");
+        
+        pConsulta.setString(1, nombreEmpresa);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            cant = rs.getInt("cantidad");
+        }
+        
+        rs.close();
+        conexion.cerrar();
+        
+        return cant;
+    }
+    
 }

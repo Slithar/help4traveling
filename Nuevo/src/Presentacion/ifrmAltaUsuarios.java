@@ -95,6 +95,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         Calendar fecha = Calendar.getInstance();
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
         cmbTipoUsuario.setSelectedItem("Cliente");
+        txtEmpresa.setText("");
+        txtSitioWeb.setText("");
         aparecerDatosProveedor(false);
         setImagenPerfil("perfiles/perfil.PNG", "defecto");
         setRutaImagen("perfiles/perfil.PNG");
@@ -490,19 +492,26 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     if(imagenCorrecta){
                         
                         try{
-                           if(!proveedoresHandler.existeNickname(nuevoUsuario)){
+                           if(proveedoresHandler.existeNickname(nuevoUsuario)){
                                 JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                 txtNickname.requestFocus();
                             }
                            else{
-                                proveedoresHandler.agregarProveedor((Proveedor) nuevoUsuario);
-                                JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                limpiar();
+                                if(proveedoresHandler.existeNombreEmpresa((Proveedor) nuevoUsuario)){
+                                    JOptionPane.showMessageDialog(this, "El nombre de emprsa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                    txtEmpresa.requestFocus();
+                                }
+                                else{
+                                    proveedoresHandler.agregarProveedor((Proveedor) nuevoUsuario);
+                                    JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                    limpiar();  
+                                }
                            }
                         }
                         catch(SQLException ex){
                             //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                             JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                         }
                         catch(ClassNotFoundException ex){
                             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -536,7 +545,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     if(imagenCorrecta){
                         
                         try{
-                           if(!clientesHandler.existeNickname((Cliente) nuevoUsuario)){
+                           if(clientesHandler.existeNickname((Cliente) nuevoUsuario)){
                                 JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                 txtNickname.requestFocus();
                             }
