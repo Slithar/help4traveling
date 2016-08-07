@@ -5,7 +5,9 @@
  */
 
 package Logica;
+import java.io.IOException;
 import java.util.*;
+
 /**
  *
  * @author Mauro
@@ -15,15 +17,39 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String email;
-    private Date fechaNac;
-    private Imagen imagenCliente;
+    private String fechaNac;
+    private Imagen imagenUsuario;
+    
+    public Usuario(){
+        nickname = "";
+        nombre = "";
+        apellido = "";
+        email = "";
+        fechaNac = "";
+        imagenUsuario = new Imagen("perfiles/perfil.PNG", this);
+        
+    }
+    
+    public Usuario(String nickname, String nombre, String apellido, String email, String fechaNac, String rutaImagen){
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.fechaNac = fechaNac;
+        Imagen imagenUsuario = new Imagen(rutaImagen, this);
+        this.imagenUsuario = imagenUsuario;
+        
+        
+        
+        
+    }
 
     public Imagen getImagenCliente() {
-        return imagenCliente;
+        return imagenUsuario;
     }
 
     public void setImagenCliente(Imagen ImagenCliente) {
-        this.imagenCliente = ImagenCliente;
+        this.imagenUsuario = ImagenCliente;
     }
 
     public String getNickname() {
@@ -58,12 +84,56 @@ public class Usuario {
         this.email = Email;
     }
 
-    public Date getFechaNac() {
+    public String getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Date FechaNac) {
+    public void setFechaNac(String FechaNac) {
         this.fechaNac = FechaNac;
+    }
+    
+    public boolean correoValido(){
+        int cantArrobas = 0;
+        for(int i = 0; i < this.email.length(); i++){
+            if(this.email.charAt(i) == '@')
+                cantArrobas++;
+        }
+        if(cantArrobas == 1)
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean fechaValida(){
+        String[] fecha = this.fechaNac.split("-");
+        //System.out.println(fecha[1] + " * " + fecha[2]);
+        if("1".equals(fecha[1]) || "3".equals(fecha[1]) || "5".equals(fecha[1]) || "7".equals(fecha[1]) || "8".equals(fecha[1]) || "10".equals(fecha[1]) || "12".equals(fecha[1])){
+            return true;
+        }
+        else{
+            if("4".equals(fecha[1]) || "6".equals(fecha[1]) || "9".equals(fecha[1]) || "11".equals(fecha[1])){
+                if("31".equals(fecha[2]))
+                    return false;
+                else 
+                    return true;
+            }
+            else{
+                if("30".equals(fecha[2]) || "31".equals(fecha[2]))
+                    return false;
+                else 
+                    return true;
+            }
+        }
+    }
+    
+    public boolean copiarPerfil() throws IOException{
+        try{
+            imagenUsuario.copiarImagen(this.nickname);
+            return true;
+        }
+        catch(IOException ex){
+            return false;
+        }
     }
     
 }

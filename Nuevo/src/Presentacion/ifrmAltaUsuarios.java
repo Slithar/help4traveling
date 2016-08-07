@@ -10,6 +10,10 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 import java.io.*;
+import java.util.*;
+import Logica.Usuario;
+import Logica.Cliente;
+import Logica.Proveedor;
 //import javax.swing.filechooser.*;
 
 /**
@@ -23,6 +27,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
      */
     
     private String rutaImagen = "";
+    private Usuario nuevoUsuario;
     
     public ifrmAltaUsuarios(frmMenuPrincipal menuPrincipal) {
         setTitle("Registro de usuarios");
@@ -34,8 +39,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20));
         aparecerDatosProveedor(false);
         lblImagenPerfil.setSize(200, 200);
-        setImagenPerfil("imagenes/perfil.PNG", "defecto");
-        setRutaImagen("imagenes/perfil.PNG");
+        setImagenPerfil("perfiles/perfil.PNG", "defecto");
+        setRutaImagen("perfiles/perfil.PNG");
         
         
         //setLocation(tamanioMenuPrincipal.width/2, tamanioMenuPrincipal.height/2);
@@ -43,6 +48,18 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         //System.out.println(tamanioMenuPrincipal.width);
         setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
         //System.out.println(lblImagenPerfil.getWidth());
+        
+        //spnDia = new JSpinner(new SpinnerNumberModel(1,1,31,1));
+        spnDia.setModel(new SpinnerNumberModel(1,1,31,1));
+        spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
+        
+        Calendar fecha = Calendar.getInstance();
+        
+        //System.out.println(fecha.get(Calendar.YEAR));
+        
+        spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
+       // spnAnio.set
+       //System.out.println(System.currentTimeMillis());
         
     }
     
@@ -323,6 +340,11 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelSurLayout = new javax.swing.GroupLayout(panelSur);
         panelSur.setLayout(panelSurLayout);
@@ -356,6 +378,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cmbTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoUsuarioActionPerformed
@@ -373,6 +396,82 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         selectorImagen.setVisible(true);
        
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //System.out.println(spnAnio.getValue());
+        if(txtNickname.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNickname.requestFocus();
+        }
+        else if(txtNombre.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNombre.requestFocus();
+        }
+        else if(txtApellido.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el apellido del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtApellido.requestFocus();
+        }
+        else if(txtCorreo.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el correo electrónico del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtCorreo.requestFocus();
+        }
+        else{
+            String fechaNac = spnAnio.getValue() + "-" + spnMes.getValue() + "-" + spnDia.getValue();
+        
+            if(cmbTipoUsuario.getSelectedItem() == "Proveedor"){
+                if(txtEmpresa.getText().length() == 0){
+                    JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de empresa del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    txtEmpresa.requestFocus();
+                }
+                else if(txtSitioWeb.getText().length() == 0){
+                    JOptionPane.showMessageDialog(this, "No se ha ingresado el link al sitio web del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    txtSitioWeb.requestFocus();
+                }
+
+
+                //Date fechaNac = new Date(spnAnio.getValue(), spnMes.getValue(), spnDia.getValue());
+                nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
+                if(!nuevoUsuario.correoValido()){
+                   JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                   txtCorreo.requestFocus();
+                }
+                else if(!nuevoUsuario.fechaValida()){
+                    JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    spnAnio.requestFocus();
+                }
+                else{
+                    try{
+                        nuevoUsuario.copiarPerfil();
+                    }
+                    catch(IOException ex){
+                        JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        lblImagenPerfil.requestFocus();
+                    }
+                }
+            }
+            else{
+                nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
+
+                if(!nuevoUsuario.correoValido()){
+                   JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                   txtCorreo.requestFocus();
+                }
+                else if(!nuevoUsuario.fechaValida()){
+                    JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    spnAnio.requestFocus();
+                }
+                else{
+                    try{
+                        nuevoUsuario.copiarPerfil();
+                    }
+                    catch(IOException ex){
+                        JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        lblImagenPerfil.requestFocus();
+                    }
+                }
+            }
+        }        
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
