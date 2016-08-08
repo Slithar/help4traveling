@@ -28,7 +28,7 @@ public class ControladorClientes {
     
     public void agregarCliente(Usuario c) throws SQLException, ClassNotFoundException{
         DatosClientes cliente = new DatosClientes();
-        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac());
+        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());
         if(c.getImagenUsuario().getPath() != "perfiles/perfil.PNG"){
             cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());
         }

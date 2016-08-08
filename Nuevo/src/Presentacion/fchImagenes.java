@@ -76,11 +76,19 @@ public class fchImagenes extends javax.swing.JFrame {
         
         if(comando == JFileChooser.APPROVE_SELECTION){
             File archivoSeleccionado = imagen.getSelectedFile();
-            String ruta = (String) archivoSeleccionado.getPath();
-            iFrame.setImagenPerfil(ruta, "absolurta");
-            iFrame.setRutaImagen(ruta);
-            this.setVisible(false);
-            
+            String extension = (String) archivoSeleccionado.getPath().substring(archivoSeleccionado.getPath().length() - 3, archivoSeleccionado.getPath().length()).toUpperCase();
+            if(extension.equals("GIF") || extension.equals("JPG") || extension.equals("PNG")){
+                String ruta = (String) archivoSeleccionado.getPath();
+                iFrame.setImagenPerfil(ruta, "absolurta");
+                iFrame.setRutaImagen(ruta);
+                this.setVisible(false);
+            }
+            else{
+                JOptionPane.showMessageDialog(iFrame, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }   
+        }
+        else{
+            this.dispose();
         }
     }//GEN-LAST:event_fchImagenActionPerformed
 

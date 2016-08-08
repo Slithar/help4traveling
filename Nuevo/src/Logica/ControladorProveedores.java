@@ -37,7 +37,7 @@ public class ControladorProveedores {
     
     public void agregarProveedor(Proveedor p) throws SQLException, ClassNotFoundException{
         DatosProveedores proveedor = new DatosProveedores();
-        proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac());
+        proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString());
         proveedor.agregarDatosProveedor(p.getNickname(), p.getNombreEmpresa(), p.getLink());
         if(p.getImagenUsuario().getPath() != "perfiles/perfil.PNG"){
             proveedor.agregarImagen(p.getNickname(), p.getImagenUsuario().getPath());

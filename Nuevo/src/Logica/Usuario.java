@@ -17,7 +17,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String email;
-    private String fechaNac;
+    private Fecha fechaNac;
     private Imagen imagenUsuario;
     
     public Usuario(){
@@ -25,12 +25,12 @@ public class Usuario {
         nombre = "";
         apellido = "";
         email = "";
-        fechaNac = "";
+        fechaNac = new Fecha();
         imagenUsuario = new Imagen("perfiles/perfil.PNG", this);
         
     }
     
-    public Usuario(String nickname, String nombre, String apellido, String email, String fechaNac, String rutaImagen){
+    public Usuario(String nickname, String nombre, String apellido, String email, Fecha fechaNac, String rutaImagen){
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -84,11 +84,11 @@ public class Usuario {
         this.email = Email;
     }
 
-    public String getFechaNac() {
+    public Fecha getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(String FechaNac) {
+    public void setFechaNac(Fecha FechaNac) {
         this.fechaNac = FechaNac;
     }
     
@@ -105,8 +105,7 @@ public class Usuario {
     }
     
     public boolean fechaValida(){
-        String[] fecha = this.fechaNac.split("-");
-        //System.out.println(fecha[1] + " * " + fecha[2]);
+        /*String[] fecha = this.fechaNac.split("-");
         if("1".equals(fecha[1]) || "3".equals(fecha[1]) || "5".equals(fecha[1]) || "7".equals(fecha[1]) || "8".equals(fecha[1]) || "10".equals(fecha[1]) || "12".equals(fecha[1])){
             return true;
         }
@@ -123,6 +122,21 @@ public class Usuario {
                 else 
                     return true;
             }
+        }*/
+        if(fechaNac.getMes() == 1 || fechaNac.getMes() == 3 || fechaNac.getMes() == 5 || fechaNac.getMes() == 7 || fechaNac.getMes() == 8 || fechaNac.getMes() == 10 || fechaNac.getMes() == 12){
+            return true;
+        }
+        else if(fechaNac.getMes() == 4 || fechaNac.getMes() == 6 || fechaNac.getMes() == 9 || fechaNac.getMes() == 11){
+            if(fechaNac.getDia() == 31)
+                return false;
+            else
+                return true;
+        }
+        else{
+            if(fechaNac.getDia() == 30 || fechaNac.getDia() == 31)
+                return false;
+            else
+                return true;
         }
     }
     

@@ -12,11 +12,13 @@ import javax.swing.filechooser.*;
 import java.io.*;
 import java.util.*;
 import java.sql.*;
+import Logica.Fecha;
 import Logica.Usuario;
 import Logica.Cliente;
 import Logica.Proveedor;
 import Logica.ControladorClientes;
 import Logica.ControladorProveedores;
+
 //import javax.swing.filechooser.*;
 
 /**
@@ -433,6 +435,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //System.out.println(spnAnio.getValue());
         boolean imagenCorrecta = false;
+        Fecha fechaNac = new Fecha((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
         
         if(txtNickname.getText().length() == 0){
             JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -451,7 +454,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
             txtCorreo.requestFocus();
         }
         else{
-            String fechaNac = spnAnio.getValue() + "-" + spnMes.getValue() + "-" + spnDia.getValue();
+            //String fechaNac = spnAnio.getValue() + "-" + spnMes.getValue() + "-" + spnDia.getValue();
         
             if(cmbTipoUsuario.getSelectedItem() == "Proveedor"){
                 
@@ -463,10 +466,10 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "No se ha ingresado el link al sitio web del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                     txtSitioWeb.requestFocus();
                 }
-
-
+                
+                
                 //Date fechaNac = new Date(spnAnio.getValue(), spnMes.getValue(), spnDia.getValue());
-                nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
+                nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
                 if(!nuevoUsuario.correoValido()){
                    JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                    txtCorreo.requestFocus();

@@ -18,7 +18,7 @@ public class Cliente extends Usuario {
         
     }
     
-    public Cliente(String nickname, String nombre, String apellido, String email, String fechaNac, String rutaCliente, ArrayList reservasCliente){
+    public Cliente(String nickname, String nombre, String apellido, String email, Fecha fechaNac, String rutaCliente, ArrayList reservasCliente){
         super(nickname, nombre, apellido, email, fechaNac, rutaCliente);
         this.reservasCliente = reservasCliente;  
     }
