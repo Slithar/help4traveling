@@ -6,7 +6,9 @@
 
 package Logica;
 import java.io.IOException;
+import java.io.*;
 import java.util.*;
+import java.time.*;
 
 /**
  *
@@ -17,7 +19,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String email;
-    private Fecha fechaNac;
+    private LocalDate fechaNac;
     private Imagen imagenUsuario;
     
     public Usuario(){
@@ -25,23 +27,20 @@ public class Usuario {
         nombre = "";
         apellido = "";
         email = "";
-        fechaNac = new Fecha();
+        fechaNac = LocalDate.of(1900, 1, 1);
         imagenUsuario = new Imagen("perfiles/perfil.PNG", this);
         
     }
     
-    public Usuario(String nickname, String nombre, String apellido, String email, Fecha fechaNac, String rutaImagen){
+    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaImagen){
+        
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNac = fechaNac;
         Imagen imagenUsuario = new Imagen(rutaImagen, this);
-        this.imagenUsuario = imagenUsuario;
-        
-        
-        
-        
+        this.imagenUsuario = imagenUsuario;        
     }
 
     public Imagen getImagenUsuario() {
@@ -84,13 +83,13 @@ public class Usuario {
         this.email = Email;
     }
 
-    public Fecha getFechaNac() {
+    public LocalDate getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Fecha FechaNac) {
+    public void setFechaNac(LocalDate FechaNac) {
         this.fechaNac = FechaNac;
-    }
+    }   
     
     public boolean correoValido(){
         int cantArrobas = 0;
@@ -104,41 +103,24 @@ public class Usuario {
             return false;
     }
     
-    public boolean fechaValida(){
-        /*String[] fecha = this.fechaNac.split("-");
-        if("1".equals(fecha[1]) || "3".equals(fecha[1]) || "5".equals(fecha[1]) || "7".equals(fecha[1]) || "8".equals(fecha[1]) || "10".equals(fecha[1]) || "12".equals(fecha[1])){
+    /*public boolean fechaValida(){
+        
+        if(fechaNac.getMonthValue() == 1 || fechaNac.getMonthValue() == 3 || fechaNac.getMonthValue() == 5 || fechaNac.getMonthValue() == 7 || fechaNac.getMonthValue() == 8 || fechaNac.getMonthValue() == 10 || fechaNac.getMonthValue() == 12){
             return true;
         }
-        else{
-            if("4".equals(fecha[1]) || "6".equals(fecha[1]) || "9".equals(fecha[1]) || "11".equals(fecha[1])){
-                if("31".equals(fecha[2]))
-                    return false;
-                else 
-                    return true;
-            }
-            else{
-                if("30".equals(fecha[2]) || "31".equals(fecha[2]))
-                    return false;
-                else 
-                    return true;
-            }
-        }*/
-        if(fechaNac.getMes() == 1 || fechaNac.getMes() == 3 || fechaNac.getMes() == 5 || fechaNac.getMes() == 7 || fechaNac.getMes() == 8 || fechaNac.getMes() == 10 || fechaNac.getMes() == 12){
-            return true;
-        }
-        else if(fechaNac.getMes() == 4 || fechaNac.getMes() == 6 || fechaNac.getMes() == 9 || fechaNac.getMes() == 11){
-            if(fechaNac.getDia() == 31)
+        else if(fechaNac.getMonthValue() == 4 || fechaNac.getMonthValue() == 6 || fechaNac.getMonthValue() == 9 || fechaNac.getMonthValue() == 11){
+            if(fechaNac.getDayOfMonth()== 31)
                 return false;
             else
                 return true;
         }
         else{
-            if(fechaNac.getDia() == 30 || fechaNac.getDia() == 31)
+            if(fechaNac.getDayOfMonth() == 30 || fechaNac.getDayOfMonth() == 31)
                 return false;
             else
                 return true;
         }
-    }
+    }*/
     
     public boolean copiarPerfil() throws IOException{
         imagenUsuario.copiarImagen(this.nickname);

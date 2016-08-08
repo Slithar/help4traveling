@@ -18,6 +18,7 @@ import Logica.Cliente;
 import Logica.Proveedor;
 import Logica.ControladorClientes;
 import Logica.ControladorProveedores;
+import java.time.*;
 
 //import javax.swing.filechooser.*;
 
@@ -435,8 +436,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //System.out.println(spnAnio.getValue());
         boolean imagenCorrecta = false;
-        Fecha fechaNac = new Fecha((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-        
+        LocalDate fechaNac;
+               
         if(txtNickname.getText().length() == 0){
             JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNickname.requestFocus();
@@ -455,120 +456,133 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         }
         else{
             //String fechaNac = spnAnio.getValue() + "-" + spnMes.getValue() + "-" + spnDia.getValue();
-        
-            if(cmbTipoUsuario.getSelectedItem() == "Proveedor"){
-                
-                if(txtEmpresa.getText().length() == 0){
-                    JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de empresa del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    txtEmpresa.requestFocus();
-                }
-                else if(txtSitioWeb.getText().length() == 0){
-                    JOptionPane.showMessageDialog(this, "No se ha ingresado el link al sitio web del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    txtSitioWeb.requestFocus();
-                }
-                
-                
-                //Date fechaNac = new Date(spnAnio.getValue(), spnMes.getValue(), spnDia.getValue());
-                nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
-                if(!nuevoUsuario.correoValido()){
-                   JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                   txtCorreo.requestFocus();
-                }
-                else if(!nuevoUsuario.fechaValida()){
-                    JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    spnAnio.requestFocus();
-                }
-                else{
-                    
-                    try{
-                        
-                        if(this.rutaImagen != "perfiles/perfil.PNG")
-                            imagenCorrecta = nuevoUsuario.copiarPerfil();
-                        else
-                            imagenCorrecta = true;
-                        
-                    }
-                    catch(IOException ex){
-                        JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        lblImagenPerfil.requestFocus();
-                    }
-                    if(imagenCorrecta){
-                        
-                        try{
-                           if(proveedoresHandler.existeNickname(nuevoUsuario)){
-                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                txtNickname.requestFocus();
-                            }
-                           else{
-                                if(proveedoresHandler.existeNombreEmpresa((Proveedor) nuevoUsuario)){
-                                    JOptionPane.showMessageDialog(this, "El nombre de emprsa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                    txtEmpresa.requestFocus();
-                                }
-                                else{
-                                    proveedoresHandler.agregarProveedor((Proveedor) nuevoUsuario);
-                                    JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                    limpiar();  
-                                }
-                           }
-                        }
-                        catch(SQLException ex){
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        catch(ClassNotFoundException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        
-                    }
-                }
+            boolean fechaValida = false;
+            
+            try{
+                LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
+                fechaValida = true;
             }
-            else{
-                nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
+            catch(DateTimeException ex){
+                JOptionPane.showMessageDialog(this, "El fomato de la fecha de nacimiento ingresada para el nuevo usuario es inválida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                fechaValida = false;
+            }
+            
+            if(fechaValida){
+                fechaNac = LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
+                if(cmbTipoUsuario.getSelectedItem() == "Proveedor"){
+                
+                    if(txtEmpresa.getText().length() == 0){
+                        JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de empresa del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        txtEmpresa.requestFocus();
+                    }
+                    else if(txtSitioWeb.getText().length() == 0){
+                        JOptionPane.showMessageDialog(this, "No se ha ingresado el link al sitio web del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        txtSitioWeb.requestFocus();
+                    }
 
-                if(!nuevoUsuario.correoValido()){
-                   JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                   txtCorreo.requestFocus();
-                }
-                else if(!nuevoUsuario.fechaValida()){
-                    JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    spnAnio.requestFocus();
+                    nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText()); 
+
+
+                    if(!nuevoUsuario.correoValido()){
+                       JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                       txtCorreo.requestFocus();
+                    }
+                    /*else if(!nuevoUsuario.fechaValida()){
+                        JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        spnAnio.requestFocus();
+                    }*/
+                    else{
+
+                        try{
+
+                            if(this.rutaImagen != "perfiles/perfil.PNG")
+                                imagenCorrecta = nuevoUsuario.copiarPerfil();
+                            else
+                                imagenCorrecta = true;
+
+                        }
+                        catch(IOException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                            lblImagenPerfil.requestFocus();
+                        }
+                        if(imagenCorrecta){
+
+                            try{
+                               if(proveedoresHandler.existeNickname(nuevoUsuario)){
+                                    JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                    txtNickname.requestFocus();
+                                }
+                               else{
+                                    if(proveedoresHandler.existeNombreEmpresa((Proveedor) nuevoUsuario)){
+                                        JOptionPane.showMessageDialog(this, "El nombre de emprsa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                        txtEmpresa.requestFocus();
+                                    }
+                                    else{
+                                        proveedoresHandler.agregarProveedor((Proveedor) nuevoUsuario);
+                                        JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                        limpiar();  
+                                    }
+                               }
+                            }
+                            catch(SQLException ex){
+                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                            catch(ClassNotFoundException ex){
+                                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        }
+                    }
                 }
                 else{
-                    try{
-                        if(this.rutaImagen != "perfiles/perfil.PNG")
-                            imagenCorrecta = nuevoUsuario.copiarPerfil();
-                        else
-                            imagenCorrecta = true;
+                    nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
+
+                    if(!nuevoUsuario.correoValido()){
+                       JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                       txtCorreo.requestFocus();
                     }
-                    catch(IOException ex){
-                        JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        lblImagenPerfil.requestFocus();
-                    }
-                    if(imagenCorrecta){
-                        
+                    /*else if(!nuevoUsuario.fechaValida()){
+                        JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        spnAnio.requestFocus();
+                    }*/
+                    else{
                         try{
-                           if(clientesHandler.existeNickname((Cliente) nuevoUsuario)){
-                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                txtNickname.requestFocus();
+                            if(this.rutaImagen != "perfiles/perfil.PNG")
+                                imagenCorrecta = nuevoUsuario.copiarPerfil();
+                            else
+                                imagenCorrecta = true;
+                        }
+                        catch(IOException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                            lblImagenPerfil.requestFocus();
+                        }
+                        if(imagenCorrecta){
+
+                            try{
+                               if(clientesHandler.existeNickname((Cliente) nuevoUsuario)){
+                                    JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                    txtNickname.requestFocus();
+                                }
+                               else{
+                                    clientesHandler.agregarCliente(nuevoUsuario);
+                                    JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                    limpiar();
+                               }
                             }
-                           else{
-                                clientesHandler.agregarCliente(nuevoUsuario);
-                                JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                limpiar();
-                           }
+                            catch(SQLException ex){
+                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                            catch(ClassNotFoundException ex){
+                                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+
                         }
-                        catch(SQLException ex){
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        catch(ClassNotFoundException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        
                     }
                 }
-            }
+            }            
         }        
     }//GEN-LAST:event_btnAceptarActionPerformed
 

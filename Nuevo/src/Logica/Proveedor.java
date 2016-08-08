@@ -5,6 +5,7 @@
  */
 package Logica;
 import java.util.*;
+import java.time.*;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Proveedor extends Usuario {
         link = "";
     }
     
-    public Proveedor(String nickname, String nombre, String apellido, String email, Fecha fechaNac, String rutaProveedor, String nombreEmpresa, String link){
+    public Proveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaProveedor, String nombreEmpresa, String link){
         super(nickname, nombre, apellido, email, fechaNac, rutaProveedor);
         this.nombreEmpresa = nombreEmpresa;
         this.link = link;
