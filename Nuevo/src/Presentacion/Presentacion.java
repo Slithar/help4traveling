@@ -24,7 +24,8 @@ public class Presentacion {
         frmMenuPrincipal menuPrincipal = new frmMenuPrincipal();
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         Dimension tamanioPantalla = miPantalla.getScreenSize();
-        menuPrincipal.setSize(1400, 900);
+        //Cambié acá también, un tamaño para mi pantalla
+        menuPrincipal.setSize(1300, 730);
         menuPrincipal.setLocationRelativeTo(null);
 
         menuPrincipal.setVisible(true);
@@ -33,7 +34,7 @@ public class Presentacion {
         
         menuPrincipal.setContentPane(new Panel());
         
-        //menuPrincipal.add(new Panel());
+        menuPrincipal.add(new Panel());
         
         
 
