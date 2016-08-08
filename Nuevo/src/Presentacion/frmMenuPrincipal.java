@@ -241,7 +241,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
-class Panel extends JPanel{
+class Panel extends JDesktopPane{
     
     public Panel(){
               
