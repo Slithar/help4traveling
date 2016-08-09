@@ -6,6 +6,7 @@
 package Presentacion;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import Logica.ControladorProveedores;
@@ -20,6 +21,21 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     /**
      * Creates new form ifrmAltaServicio
      */
+    private JLabel lblImagen1 = new JLabel();
+    private JLabel lblImagen2;
+    private JLabel lblImagen3;
+    
+    private String rutaImagen1 = "";
+    private String rutaImagen2 = "";
+    private String rutaImagen3 = "";
+    
+    //private JLabel lblSeleccionado;
+    
+    private JMenuItem miEliminar1 = new JMenuItem("Eliminar");
+    private JMenuItem miEliminar2 = new JMenuItem("Eliminar");
+    private JMenuItem miEliminar3 = new JMenuItem("Eliminar");
+     
+    
     public ifrmAltaServicio() {
         initComponents();
         this.setTitle("Registro de nuevo servicio");
@@ -43,8 +59,66 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+         
+        //lblImagen1.setIcon(new IconImage(get))
+        lblImagen1.setSize(143, 143);
+        panelImagenes.add(lblImagen1);
+        lblImagen1.setLocation(0, 0);
+        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        agregarPopup(1);
+        
+        /*JLabel lblImagen2 = new JLabel();
+        lblImagen2.setSize(143, 143);
+        
+        panelImagenes.add(lblImagen2);
+        
+        lblImagen2.setLocation(190, 0);
+        
+        lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        JLabel lblImagen3 = new JLabel();
+        lblImagen3.setSize(143, 143);
+        panelImagenes.add(lblImagen3);
+        lblImagen3.setLocation(380, 0);
+        lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
+        
+        //lblSeleccionado = lblImagen1;
+            
+        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+        /*setImagenLabel(lblImagen2, "../Logica/ImagenesServicios/agregarImagenServicio.png");
+        setImagenLabel(lblImagen3, "../Logica/ImagenesServicios/agregarImagenServicio.png");*/
+        
+        lblImagen1.addMouseListener(new OyenteLabel(this));
         
         
+                
+        
+    }
+    
+    public void agregarPopup(int sub){
+        if(sub == 1){
+            JPopupMenu eliminarImagen1 = new JPopupMenu();            
+            miEliminar1.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminar1.addActionListener(new OyentePopup());
+            eliminarImagen1.add(miEliminar1);
+            lblImagen1.setComponentPopupMenu(eliminarImagen1);
+        }
+        else if(sub == 2){
+            JPopupMenu eliminarImagen2 = new JPopupMenu();
+            //JMenuItem miEliminar2 = new JMenuItem("Eliminar");
+            miEliminar2.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminar2.addActionListener(new OyentePopup());
+            eliminarImagen2.add(miEliminar2);
+            lblImagen2.setComponentPopupMenu(eliminarImagen2);
+        }
+        else if(sub == 3){
+            JPopupMenu eliminarImagen3 = new JPopupMenu();
+            //JMenuItem miEliminar3 = new JMenuItem("Eliminar");
+            miEliminar3.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminar3.addActionListener(new OyentePopup());
+            eliminarImagen3.add(miEliminar3);
+            lblImagen3.setComponentPopupMenu(eliminarImagen3);
+        }
     }
     
     public void cargarComboBox(JComboBox combo, ArrayList datos, boolean opcional){
@@ -54,6 +128,208 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         if(opcional){
             combo.addItem("No corresponde");
         }
+    }
+    
+    public void setImagenLabel(String ruta, String tipo){
+        //System.out.println("entre");
+        JLabel lblImagen = labelActual();
+        if(tipo.equals("defecto")){
+            ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
+            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
+            lblImagen.setIcon(imagenDimensionada);
+        }
+        else{
+            ImageIcon imagenPerfil = new ImageIcon(ruta);
+            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
+            lblImagen.setIcon(imagenDimensionada);
+            
+            if(lblImagen == lblImagen1){
+                //System.out.println("2");
+                rutaImagen1 = ruta;
+                lblImagen2 = new JLabel();
+                lblImagen2.setSize(143, 143);
+                panelImagenes.add(lblImagen2);
+                lblImagen2.setLocation(190, 0);
+                lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                lblImagen2.addMouseListener(new OyenteLabel(this));
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                //lblImagen2.setComponentPopupMenu(eliminarImagen1);
+                agregarPopup(2);
+            }
+            else if(lblImagen == lblImagen2){
+                //System.out.println("3");
+                rutaImagen2 = ruta;
+                lblImagen3 = new JLabel();
+                lblImagen3.setSize(143, 143);
+                panelImagenes.add(lblImagen3);
+                lblImagen3.setLocation(380, 0);
+                lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                lblImagen3.addMouseListener(new OyenteLabel(this));
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                //lblImagen3.setComponentPopupMenu(eliminarImagen2);
+                agregarPopup(3);
+            }
+            else{
+                rutaImagen3 = ruta;
+            }
+        }       
+    }
+    
+    public boolean cambioValido(JLabel label){
+        if(label == lblImagen1){
+            if(rutaImagen1 == "")
+                return true;
+            else
+                return false;
+        }
+        else if(label == lblImagen2){
+            if(rutaImagen2 == "")
+                return true;
+            else
+                return false;
+        }
+        else{
+            if(rutaImagen3 == "")
+                return true;
+            else
+                return false;
+        }
+    }
+    
+    public JLabel labelActual(){
+        
+        if(lblImagen2 == null){
+            return lblImagen1;
+        }
+        else if(lblImagen3 == null)
+            return lblImagen2;
+        else
+            return lblImagen3;
+    }
+    
+    private class OyenteLabel implements MouseListener{
+        
+        private JLabel lblImagen;
+        private ifrmAltaServicio vAltaServicio;
+        
+        public OyenteLabel(ifrmAltaServicio ifrm){
+            this.vAltaServicio = ifrm;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getButton() == MouseEvent.BUTTON1){
+                
+                //lblImagen = (JLabel) e.getSource();
+                if(cambioValido((JLabel) e.getSource())){
+                    fchImagenes selectorImagen = new fchImagenes(vAltaServicio);
+                    selectorImagen.setVisible(true);
+                }
+                
+            }
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+        }
+        
+    }
+    
+    private class OyentePopup implements ActionListener{
+        
+        private JLabel lblImagen;
+        
+        public OyentePopup(){
+            //lblImagen = lbl;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //System.out.println(labelSeleccionado);
+            //JOptionPane.showMessageDialog(null, e.getSource());
+            if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
+                
+                if(rutaImagen2 == ""){
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    rutaImagen1 = "";
+                }
+                else if(rutaImagen2 != "" && rutaImagen3 == ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    
+                    setImagenLabel(rutaImagen2, "absoluta");
+                                                          
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    
+                    rutaImagen1 = rutaImagen2;
+                    rutaImagen2 = "";                   
+                }
+                else if(rutaImagen3 != ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    
+                    setImagenLabel(rutaImagen2, "absoluta");
+                    
+                    setImagenLabel(rutaImagen3, "absoluta");
+                    
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    
+                    rutaImagen1 = rutaImagen2;
+                    rutaImagen2 = rutaImagen3;
+                    rutaImagen3 = "";                    
+                }                
+            }
+            else if(e.getSource() == miEliminar2 && rutaImagen2 != ""){
+                
+                if(rutaImagen3 == ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    rutaImagen2 = "";
+                }
+                
+                else if(rutaImagen3 != ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    setImagenLabel(rutaImagen3, "absoluta");
+                    rutaImagen2 = rutaImagen3;
+                    rutaImagen3 = "";
+                }
+            }
+            else if(e.getSource() == miEliminar3 && rutaImagen2 != ""){
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                rutaImagen3 = "";
+            }
+        }
+        
     }
 
     /**
@@ -85,7 +361,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         panelBotones = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        panelImagenes = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,8 +416,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Cancelar");
-        jButton1.setMaximumSize(new java.awt.Dimension(77, 23));
-        jButton1.setMinimumSize(new java.awt.Dimension(77, 23));
         jButton1.setPreferredSize(new java.awt.Dimension(95, 26));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,15 +453,15 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelImagenesLayout = new javax.swing.GroupLayout(panelImagenes);
+        panelImagenes.setLayout(panelImagenesLayout);
+        panelImagenesLayout.setHorizontalGroup(
+            panelImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 524, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        panelImagenesLayout.setVerticalGroup(
+            panelImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 143, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
@@ -202,7 +476,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblSitioWeb2)
                                 .addGap(112, 112, 112)
@@ -222,7 +495,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblSitioWeb1)
                                 .addGap(83, 83, 83)
-                                .addComponent(cmbCiudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(cmbCiudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(46, 46, 46)))
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,9 +520,9 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(lblEmpresa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb)
                             .addComponent(cmbCiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,7 +534,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb2)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
                 .addGap(40, 40, 40)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -290,7 +564,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTree jTree1;
@@ -300,6 +573,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSitioWeb2;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelDatos;
+    private javax.swing.JPanel panelImagenes;
     private javax.swing.JTextField txtNickname;
     // End of variables declaration//GEN-END:variables
 }

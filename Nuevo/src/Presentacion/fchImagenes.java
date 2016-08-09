@@ -17,7 +17,8 @@ public class fchImagenes extends javax.swing.JFrame {
     /**
      * Creates new form fchImagenes
      */
-    private ifrmAltaUsuarios iFrame;
+    private ifrmAltaUsuarios iAltaUsuario;
+    private ifrmAltaServicio iAltaServicio;
     
     public fchImagenes() {
         initComponents();
@@ -26,7 +27,19 @@ public class fchImagenes extends javax.swing.JFrame {
     
     public fchImagenes(ifrmAltaUsuarios i){
         initComponents();
-        iFrame = i;
+        iAltaUsuario = i;
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG, GIF", "jpg", "png", "gif");
+        fchImagen.setFileFilter(filtroTipo);
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1900 - tamanioVentana.width)/2, (900 - tamanioVentana.height)/2);
+        
+        
+    }
+    
+     public fchImagenes(ifrmAltaServicio i){
+        initComponents();
+        iAltaServicio = i;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG, GIF", "jpg", "png", "gif");
         fchImagen.setFileFilter(filtroTipo);
@@ -78,13 +91,24 @@ public class fchImagenes extends javax.swing.JFrame {
             File archivoSeleccionado = imagen.getSelectedFile();
             String extension = (String) archivoSeleccionado.getPath().substring(archivoSeleccionado.getPath().length() - 3, archivoSeleccionado.getPath().length()).toUpperCase();
             if(extension.equals("GIF") || extension.equals("JPG") || extension.equals("PNG")){
+                //System.out.println("1");
                 String ruta = (String) archivoSeleccionado.getPath();
-                iFrame.setImagenPerfil(ruta, "absolurta");
-                iFrame.setRutaImagen(ruta);
+                if(iAltaUsuario != null){
+                    iAltaUsuario.setImagenPerfil(ruta, "absoluta");
+                    iAltaUsuario.setRutaImagen(ruta);
+                }
+                else if(iAltaServicio != null){
+                    iAltaServicio.setImagenLabel(ruta, "absoluta");
+                    //iAltaServicio.setRutaImagen(ruta);
+                }
+                
                 this.setVisible(false);
             }
             else{
-                JOptionPane.showMessageDialog(iFrame, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                if(iAltaUsuario != null)
+                    JOptionPane.showMessageDialog(iAltaUsuario, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                else if(iAltaServicio != null)
+                    JOptionPane.showMessageDialog(iAltaServicio, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }   
         }
         else{

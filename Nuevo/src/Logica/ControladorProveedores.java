@@ -45,7 +45,7 @@ public class ControladorProveedores {
         }
     }
     
-    public ArrayList<Ciudad> getCiudades() throws SQLException, ClassNotFoundException{
+    public ArrayList getCiudades() throws SQLException, ClassNotFoundException{
         DatosCiudades ciudades = new DatosCiudades();
         
         ArrayList<Ciudad> arrayCiudades = ciudades.selectAllCiudades();
@@ -59,7 +59,7 @@ public class ControladorProveedores {
         
     }
     
-    public ArrayList<Proveedor> getProveedores() throws SQLException, ClassNotFoundException{
+    public ArrayList getProveedores() throws SQLException, ClassNotFoundException{
         DatosProveedores proveedores = new DatosProveedores();
         
         ArrayList<Proveedor> arrayProveedores = proveedores.selectAllProveedores();

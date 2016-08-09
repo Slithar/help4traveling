@@ -18,6 +18,7 @@ import Logica.Cliente;
 import Logica.Proveedor;
 import Logica.ControladorClientes;
 import Logica.ControladorProveedores;
+import java.awt.event.MouseEvent;
 import java.time.*;
 
 //import javax.swing.filechooser.*;
@@ -63,8 +64,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
             ImageIcon imagenPerfil = new ImageIcon(ruta);
             ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
             lblImagenPerfil.setIcon(imagenDimensionada);    
-        }
-        
+        }        
     }
     
     public void setRutaImagen(String r){
@@ -428,8 +428,10 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmbTipoUsuarioActionPerformed
 
     private void lblImagenPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenPerfilMouseClicked
-        fchImagenes selectorImagen = new fchImagenes(this);
-        selectorImagen.setVisible(true);
+        if(evt.getButton() == MouseEvent.BUTTON1){
+            fchImagenes selectorImagen = new fchImagenes(this);
+            selectorImagen.setVisible(true);
+        }
        
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
