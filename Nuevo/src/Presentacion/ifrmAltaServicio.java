@@ -34,6 +34,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private JMenuItem miEliminar1 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar2 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar3 = new JMenuItem("Eliminar");
+    
+    private JFrame visor;
      
     
     public ifrmAltaServicio() {
@@ -66,29 +68,18 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         lblImagen1.setLocation(0, 0);
         lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
         agregarPopup(1);
-        
-        /*JLabel lblImagen2 = new JLabel();
-        lblImagen2.setSize(143, 143);
-        
-        panelImagenes.add(lblImagen2);
-        
-        lblImagen2.setLocation(190, 0);
-        
-        lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        JLabel lblImagen3 = new JLabel();
-        lblImagen3.setSize(143, 143);
-        panelImagenes.add(lblImagen3);
-        lblImagen3.setLocation(380, 0);
-        lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
-        
-        //lblSeleccionado = lblImagen1;
-            
+                    
         setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-        /*setImagenLabel(lblImagen2, "../Logica/ImagenesServicios/agregarImagenServicio.png");
-        setImagenLabel(lblImagen3, "../Logica/ImagenesServicios/agregarImagenServicio.png");*/
         
         lblImagen1.addMouseListener(new OyenteLabel(this));
+        
+        /*JFrame marco = new JFrame();
+        marco.setBounds(515, 200, 900, 600);
+        marco.setVisible(true);*/
+        /*frmVisor visor = new frmVisor();
+        visor.setBounds(515, 200, 900, 600);
+        visor.setVisible(true);*/
+        
         
         
                 
@@ -219,13 +210,19 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if(e.getButton() == MouseEvent.BUTTON1){
-                
-                //lblImagen = (JLabel) e.getSource();
                 if(cambioValido((JLabel) e.getSource())){
                     fchImagenes selectorImagen = new fchImagenes(vAltaServicio);
                     selectorImagen.setVisible(true);
                 }
-                
+                else{
+                    if((JLabel) e.getSource() == lblImagen1)
+                        visor = new JFrame(rutaImagen1);
+                    
+                    //visor.setUndecorated(true);
+                    visor.setBackground(Color.WHITE);
+                    visor.setBounds(515, 200, 900, 600);
+                    visor.setVisible(true);
+                }
             }
             
         }
@@ -324,7 +321,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     rutaImagen3 = "";
                 }
             }
-            else if(e.getSource() == miEliminar3 && rutaImagen2 != ""){
+            else if(e.getSource() == miEliminar3 && rutaImagen3 != ""){
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
                 rutaImagen3 = "";
             }
