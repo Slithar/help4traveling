@@ -16,6 +16,7 @@ import java.text.AttributedCharacterIterator;
 public class frmMenuPrincipal extends javax.swing.JFrame {
    // private ifrmAltaUsuarios altaUsuarios = new ifrmAltaUsuarios();
     private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this);
+    Panel nuevoPanel = new Panel();
     /**
      * Creates new form frmMenuPrincipal
      */
@@ -25,7 +26,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         //aca el comentario de mi rama
         //add(new Panel());
         //hola otro comentario de master
-        Panel nuevoPanel = new Panel(vAltaUsuarios);
+        
         setContentPane(nuevoPanel);       
     }
 
@@ -92,6 +93,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mRegServicios.setText("Servicios");
 
         miRegServiciosNuevo.setText("Nuevo");
+        miRegServiciosNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegServiciosNuevoActionPerformed(evt);
+            }
+        });
         mRegServicios.add(miRegServiciosNuevo);
 
         miRegServiciosActualizar.setText("Actualizar");
@@ -169,9 +175,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         //System.out.println("click!");
        // altaUsuarios.setVisible(true);
+       nuevoPanel.add(vAltaUsuarios);
        vAltaUsuarios.show();
         
     }//GEN-LAST:event_miRegUsuariosActionPerformed
+
+    private void miRegServiciosNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosNuevoActionPerformed
+        
+        ifrmAltaServicio vAltaServicio = new ifrmAltaServicio();
+        nuevoPanel.add(vAltaServicio);
+        vAltaServicio.show();
+        
+    }//GEN-LAST:event_miRegServiciosNuevoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,9 +262,9 @@ class Panel extends JDesktopPane{
               
     }
     
-    public Panel(ifrmAltaUsuarios vUsuarios){
+    /*public Panel(ifrmAltaUsuarios vUsuarios){
         add(vUsuarios);
-    }
+    }*/
     
     @Override
     public void paintComponent(Graphics g){

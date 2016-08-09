@@ -7,6 +7,7 @@ package Logica;
 
 import Datos.*;
 import java.sql.*;
+import java.util.*;
 
 /**
  *
@@ -42,6 +43,33 @@ public class ControladorProveedores {
         if(p.getImagenUsuario().getPath() != "perfiles/perfil.PNG"){
             proveedor.agregarImagen(p.getNickname(), p.getImagenUsuario().getPath());
         }
+    }
+    
+    public ArrayList<Ciudad> getCiudades() throws SQLException, ClassNotFoundException{
+        DatosCiudades ciudades = new DatosCiudades();
+        
+        ArrayList<Ciudad> arrayCiudades = ciudades.selectAllCiudades();
+        ArrayList resultado = new ArrayList();
+        
+        for(int i = 0; i < arrayCiudades.size(); i++){
+            resultado.add(i, arrayCiudades.get(i).getNombre() + " (" + arrayCiudades.get(i).getPais().getNombre() + ")");
+        }
+        
+        return resultado;
+        
+    }
+    
+    public ArrayList<Proveedor> getProveedores() throws SQLException, ClassNotFoundException{
+        DatosProveedores proveedores = new DatosProveedores();
+        
+        ArrayList<Proveedor> arrayProveedores = proveedores.selectAllProveedores();
+        ArrayList resultado = new ArrayList();
+        
+        for(int i = 0; i < arrayProveedores.size(); i++){
+            resultado.add(i, arrayProveedores.get(i).getNombreEmpresa());
+        }
+        
+        return resultado;
     }
     
 }

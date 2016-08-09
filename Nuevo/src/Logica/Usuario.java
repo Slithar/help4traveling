@@ -28,7 +28,7 @@ public class Usuario {
         apellido = "";
         email = "";
         fechaNac = LocalDate.of(1900, 1, 1);
-        imagenUsuario = new Imagen("perfiles/perfil.PNG", this);
+        imagenUsuario = new Imagen("../Logica/perfiles/perfil.PNG", this);
         
     }
     

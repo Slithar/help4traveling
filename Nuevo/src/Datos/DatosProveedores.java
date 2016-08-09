@@ -6,6 +6,8 @@
 package Datos;
 
 import java.sql.*;
+import java.util.*;
+import Logica.Proveedor;
 
 /**
  *
@@ -81,6 +83,30 @@ public class DatosProveedores {
         conexion.cerrar();
         
         return cant;
+    }
+    
+    public ArrayList<Proveedor> selectAllProveedores() throws SQLException, ClassNotFoundException{
+        ArrayList proveedores = new ArrayList();
+        int indice = 0;
+        
+        Connection conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select nombreEmpresa from proveedores order by nombreEmpresa");
+        
+        while(rs.next()){
+            Proveedor prov = new Proveedor();
+            prov.setNombreEmpresa(rs.getString("nombreEmpresa"));
+            proveedores.add(indice, prov);
+            indice++;
+        }
+        
+        rs.close();
+        conexion.cerrar();
+        
+        return proveedores;
+        
     }
     
 }

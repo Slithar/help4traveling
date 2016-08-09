@@ -56,7 +56,7 @@ public class Imagen {
     
     public void copiarImagen(String nombre) throws IOException{
         Path desde = Paths.get(this.path);
-        File fichero = new File("src/Presentacion/Perfiles/" + nombre + ".jpg");
+        File fichero = new File("src/Logica/Perfiles/" + nombre + ".jpg");
         Path hasta = Paths.get(fichero.getAbsolutePath());
        
         CopyOption[] opciones = new CopyOption[]{
@@ -65,7 +65,7 @@ public class Imagen {
         };
        
         Files.copy(desde, hasta, opciones);
-        this.path = "perfiles/" + nombre + ".jpg";
+        this.path = "../Logica/perfiles/" + nombre + ".jpg";
         
         
     }

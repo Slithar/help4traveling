@@ -14,6 +14,12 @@ public class Ciudad {
     private ArrayList<Servicio> servicios;
     private Pais pais;
 
+    public Ciudad(String nombre, ArrayList servicios, Pais pais){
+        this.nombre = nombre;
+        this.servicios = servicios;
+        this.pais = pais;
+    }
+    
     public Pais getPais() {
         return pais;
     }

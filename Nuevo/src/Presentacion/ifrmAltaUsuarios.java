@@ -101,8 +101,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         txtEmpresa.setText("");
         txtSitioWeb.setText("");
         aparecerDatosProveedor(false);
-        setImagenPerfil("perfiles/perfil.PNG", "defecto");
-        setRutaImagen("perfiles/perfil.PNG");
+        setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
+        setRutaImagen("../Logica/perfiles/perfil.PNG");
         
         txtNickname.requestFocus();
     }
@@ -414,7 +414,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cmbTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoUsuarioActionPerformed
@@ -435,6 +435,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //System.out.println(spnAnio.getValue());
+        //System.out.println(cmbTipoUsuario.getSelectedIndex());
         boolean imagenCorrecta = false;
         LocalDate fechaNac;
                

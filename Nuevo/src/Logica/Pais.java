@@ -11,7 +11,10 @@ import java.util.*;
  */
 public class Pais {
     private String nombre;
-    private ArrayList<Ciudad> ciudades;
+    
+    public Pais(String nombre){
+        this.nombre = nombre;
+    }
     
     public String getNombre() {
         return nombre;
@@ -19,14 +22,6 @@ public class Pais {
 
     public void setNombre(String Nombre) {
         this.nombre = Nombre;
-    }
-
-    public ArrayList<Ciudad> getCiudades() {
-        return ciudades;
-    }
-
-    public void setCiudades(ArrayList<Ciudad> Ciudades) {
-        this.ciudades = Ciudades;
     }
     
 }
