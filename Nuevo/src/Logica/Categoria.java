@@ -11,8 +11,17 @@ import java.util.*;
  */
 public class Categoria {
     private String nombre;
-    private ArrayList<Servicio> Servicios;
+    private ArrayList<Servicio> servicios;
 
+    public Categoria(){
+        
+    }
+    
+    public Categoria(String nombre, ArrayList servicios){
+        this.nombre = nombre;
+        this.servicios = servicios;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -22,10 +31,10 @@ public class Categoria {
     }
 
     public ArrayList<Servicio> getServicios() {
-        return Servicios;
+        return servicios;
     }
 
     public void setServicios(ArrayList<Servicio> Servicios) {
-        this.Servicios = Servicios;
+        this.servicios = Servicios;
     }
 }

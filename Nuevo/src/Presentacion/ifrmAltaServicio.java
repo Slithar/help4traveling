@@ -8,9 +8,13 @@ package Presentacion;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.tree.*;
 import java.util.*;
 import Logica.ControladorProveedores;
 import java.sql.SQLException;
+import Logica.ControladorCategorias;
+import Logica.Categoria;
+
 
 /**
  *
@@ -42,7 +46,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         initComponents();
         this.setTitle("Registro de nuevo servicio");
         Dimension tamanioVentana = this.getSize();
-        setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (800 - tamanioVentana.height)/2);
         
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         
@@ -54,9 +58,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             cargarComboBox(cmbCiudadOrigen, proveedores.getCiudades(), false);
             cargarComboBox(cmbCiudadDestino, proveedores.getCiudades(), true);
             cargarComboBox(cmbProveedor, proveedores.getProveedores(), false);
+            llenarArbol("", null);
         }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -73,17 +79,12 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         lblImagen1.addMouseListener(new OyenteLabel(this));
         
-        /*JFrame marco = new JFrame();
-        marco.setBounds(515, 200, 900, 600);
-        marco.setVisible(true);*/
-        /*frmVisor visor = new frmVisor();
-        visor.setBounds(515, 200, 900, 600);
-        visor.setVisible(true);*/
+        //Controlad  
+        lblAgregarCategoria.setSize(38, 38);
         
-        
-        
-                
-        
+        ImageIcon iconoCategoria = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
+        ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
+        lblAgregarCategoria.setIcon(iconoDimensionado);
     }
     
     public void agregarPopup(int sub){
@@ -328,6 +329,40 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
         
     }
+    
+    public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
+        /*DefaultMutableTreeNode root = new DefaultMutableTreeNode("1");
+        DefaultMutableTreeNode segundo = new DefaultMutableTreeNode("2");
+        DefaultMutableTreeNode tercero = new DefaultMutableTreeNode("3");
+        DefaultMutableTreeNode cuarto = new DefaultMutableTreeNode("4");
+        root.add(segundo);
+        root.add(tercero);
+        tercero.add(cuarto);
+        DefaultTreeModel treeModel = new DefaultTreeModel(root);
+        treeCategorias.setModel(treeModel);*/
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
+        ControladorCategorias categoriasHandler = new ControladorCategorias();
+        if(padre == ""){
+            ArrayList categoriasPadres = categoriasHandler.getCategoriasPadres();
+            //System.out.println(categoriasPadres.size());
+            for(int i = 0; i < categoriasPadres.size(); i++){
+                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
+                root.add(nodosSuperiores);
+                llenarArbol((String) categoriasPadres.get(i), nodosSuperiores);
+            }
+        }
+        else{
+            ArrayList categoriasPadres = categoriasHandler.getCategoriasHijas(new Categoria(padre, new ArrayList()));
+            for(int i = 0; i < categoriasPadres.size(); i++){
+                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
+                nodoPadre.add(nodosSuperiores);
+                llenarArbol((String) categoriasPadres.get(i), nodosSuperiores);
+            }
+        }
+        
+        DefaultTreeModel treeModel = new DefaultTreeModel(root);
+        treeCategorias.setModel(treeModel);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -354,11 +389,15 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         cmbProveedor = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        treeCategorias = new javax.swing.JTree();
         panelBotones = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         panelImagenes = new javax.swing.JPanel();
+        lblEmpresa1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstCategorias = new javax.swing.JList<>();
+        lblAgregarCategoria = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -409,7 +448,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setText("Categorías:");
 
-        jScrollPane3.setViewportView(jTree1);
+        jScrollPane3.setViewportView(treeCategorias);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Cancelar");
@@ -454,12 +493,25 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         panelImagenes.setLayout(panelImagenesLayout);
         panelImagenesLayout.setHorizontalGroup(
             panelImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelImagenesLayout.setVerticalGroup(
             panelImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 143, Short.MAX_VALUE)
         );
+
+        lblEmpresa1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblEmpresa1.setText("Categorías seleccionadas:");
+
+        lstCategorias.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane2.setViewportView(lstCategorias);
+
+        lblAgregarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAgregarCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAgregarCategoriaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -470,7 +522,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(lblEmpresa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 498, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelDatosLayout.createSequentialGroup()
@@ -494,10 +546,17 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                                 .addGap(83, 83, 83)
                                 .addComponent(cmbCiudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(46, 46, 46)))
+                        .addGap(36, 36, 36)))
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addComponent(lblEmpresa1)
+                    .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34))
             .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -512,14 +571,22 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(lblEmpresa)
                         .addGap(18, 18, 18)
-                        .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(lblEmpresa1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb)
                             .addComponent(cmbCiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -527,12 +594,12 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb1)
                             .addComponent(cmbCiudadDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(21, 21, 21)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb2)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
-                .addGap(40, 40, 40)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -549,6 +616,12 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void lblAgregarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarCategoriaMouseClicked
+        if(evt.getButton() == MouseEvent.BUTTON1){
+            
+        }
+    }//GEN-LAST:event_lblAgregarCategoriaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDescripcion;
@@ -562,15 +635,19 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JLabel lblAgregarCategoria;
     private javax.swing.JLabel lblEmpresa;
+    private javax.swing.JLabel lblEmpresa1;
     private javax.swing.JLabel lblSitioWeb;
     private javax.swing.JLabel lblSitioWeb1;
     private javax.swing.JLabel lblSitioWeb2;
+    private javax.swing.JList<String> lstCategorias;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelImagenes;
+    private javax.swing.JTree treeCategorias;
     private javax.swing.JTextField txtNickname;
     // End of variables declaration//GEN-END:variables
 }
