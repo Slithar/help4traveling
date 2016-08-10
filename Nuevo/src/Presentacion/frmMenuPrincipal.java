@@ -45,7 +45,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miSalir = new javax.swing.JMenuItem();
         mRegistros = new javax.swing.JMenu();
         miRegUsuarios = new javax.swing.JMenuItem();
-        miRegCategorias = new javax.swing.JMenuItem();
+        catMenu = new javax.swing.JMenu();
+        btnNuevaCat = new javax.swing.JMenuItem();
         mRegServicios = new javax.swing.JMenu();
         miRegServiciosNuevo = new javax.swing.JMenuItem();
         miRegServiciosActualizar = new javax.swing.JMenuItem();
@@ -87,8 +88,17 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         mRegistros.add(miRegUsuarios);
 
-        miRegCategorias.setText("Categorías");
-        mRegistros.add(miRegCategorias);
+        catMenu.setText("Categorías");
+
+        btnNuevaCat.setText("Nueva");
+        btnNuevaCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaCatActionPerformed(evt);
+            }
+        });
+        catMenu.add(btnNuevaCat);
+
+        mRegistros.add(catMenu);
 
         mRegServicios.setText("Servicios");
 
@@ -188,6 +198,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_miRegServiciosNuevoActionPerformed
 
+    private void btnNuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCatActionPerformed
+        // TODO add your handling code here:
+        nuevaCateFrame frame = new nuevaCateFrame();
+        this.add(frame);
+        frame.setVisible(true);
+    }//GEN-LAST:event_btnNuevaCatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,6 +249,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     //public void paintCom
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnNuevaCat;
+    private javax.swing.JMenu catMenu;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu mConsultas;
     private javax.swing.JMenu mInicio;
@@ -247,7 +266,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
     private javax.swing.JMenuItem miNuevaReserva;
-    private javax.swing.JMenuItem miRegCategorias;
     private javax.swing.JMenuItem miRegPromociones;
     private javax.swing.JMenuItem miRegServiciosActualizar;
     private javax.swing.JMenuItem miRegServiciosNuevo;

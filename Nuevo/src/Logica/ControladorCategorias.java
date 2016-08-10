@@ -46,5 +46,16 @@ public class ControladorCategorias {
         return resultado;
         
     }
+    public boolean agregarNuevaCategoriaPadre(Categoria c) throws SQLException, ClassNotFoundException{
+        categorias = new DatosCategorias();
+        boolean resultado = categorias.agregarCategoriaPadre(c.getNombre());
+        return resultado;
+    }
+    
+    public boolean agregarNuevaCategoriaHija(Categoria c, String padre) throws SQLException,ClassNotFoundException{
+       categorias = new DatosCategorias();
+       boolean resultado = categorias.agregarNuevaCategoriaHija(c.getNombre(), padre);
+       return resultado;
+    }
     
 }

@@ -68,5 +68,42 @@ public class DatosCategorias {
         
         return resultado;
     }
+    public boolean agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
+        
+        pConsulta.setString(1, Nombre);
+        
+        int rows = pConsulta.executeUpdate();
+        
+        if(rows>0){
+            boolean resultado = true;
+            return resultado;
+        }else{
+            boolean resultado = false;
+            return resultado;
+        }
+    }
+    public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categoriasrelacionadas VALUES (?,?)"); 
+        
+        pConsulta.setString(1,padre);
+        
+        pConsulta.setString(2, c);
+        
+        int rows = pConsulta.executeUpdate();
+        
+        
+        if(rows>0){
+            boolean resultado = true;
+            return resultado;
+        }else{
+            boolean resultado = false;
+            return resultado;
+        }
+    }
     
 }
