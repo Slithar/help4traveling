@@ -14,6 +14,12 @@ import Logica.ControladorProveedores;
 import java.sql.SQLException;
 import Logica.ControladorCategorias;
 import Logica.Categoria;
+import Logica.Ciudad;
+import Logica.ImagenServicio;
+import Logica.Proveedor;
+import Logica.Servicio;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -32,6 +38,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private String rutaImagen1 = "";
     private String rutaImagen2 = "";
     private String rutaImagen3 = "";
+    
+    private ControladorProveedores proveedores = new ControladorProveedores();
     
     //private JLabel lblSeleccionado;
     
@@ -54,7 +62,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         
-        ControladorProveedores proveedores = new ControladorProveedores();
+        
         
         //cmbCiudadOrigen.setFont(new Font("Tahoma", 11, Font.PLAIN));
         
@@ -65,8 +73,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             llenarArbol("", null);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -94,6 +102,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         lstCategorias.setModel(modeloLista);
         
         agregarPopup(4);
+               
     }
     
     public void agregarPopup(int sub){
@@ -417,7 +426,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         lstCategorias = new javax.swing.JList<>();
         lblAgregarCategoria = new javax.swing.JLabel();
         lblSitioWeb3 = new javax.swing.JLabel();
-        txtNickname1 = new javax.swing.JTextField();
+        txtNombreServicio = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -541,7 +550,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         lblSitioWeb3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblSitioWeb3.setText("Precio (En U$S):");
 
-        txtNickname1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombreServicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -551,14 +560,24 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSitioWeb)
+                            .addComponent(lblSitioWeb3))
+                        .addGap(81, 81, 81)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE))
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(cmbCiudadOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(26, 26, 26))))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1)
                             .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
-                                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblSitioWeb2)
                                 .addGap(112, 112, 112)
@@ -568,16 +587,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                                 .addGap(83, 83, 83)
                                 .addComponent(cmbCiudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
-                                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblSitioWeb)
-                                    .addComponent(lblSitioWeb3))
-                                .addGap(81, 81, 81)
-                                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbCiudadOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(panelDatosLayout.createSequentialGroup()
-                                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(36, 36, 36))
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(lblEmpresa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -595,19 +608,15 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(131, 131, 131))))
             .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelDatosLayout.createSequentialGroup()
-                    .addGap(210, 210, 210)
-                    .addComponent(txtNickname1)
-                    .addGap(292, 292, 292)))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(26, 26, 26)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel13))
+                    .addComponent(jLabel13)
+                    .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelDatosLayout.createSequentialGroup()
@@ -644,13 +653,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb2)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelDatosLayout.createSequentialGroup()
-                    .addGap(36, 36, 36)
-                    .addComponent(txtNickname1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(668, Short.MAX_VALUE)))
         );
 
         getContentPane().add(panelDatos, java.awt.BorderLayout.CENTER);
@@ -664,8 +668,120 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        //System.out.println("Precio (en U$S): " + txtPrecio.getText());
+        DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+        if(txtNombreServicio.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNombreServicio.requestFocus();
+        }
+        else if(areaDescripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado la descripción del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            areaDescripcion.requestFocus();
+        }
+        else if(txtPrecio.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el precio del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPrecio.requestFocus();
+        }
+        else if(!esNumerico(txtPrecio.getText())){
+            JOptionPane.showMessageDialog(this, "El precio ingresado para el nuevo servicio presenta un formato no válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPrecio.requestFocus();
+        }
+        else{
+            
+            if(modelo.getSize() == 0){
+               JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna categoría para el nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE); 
+            }
+            else{
+                try {
+                    if(proveedores.existeNombreServicio(txtNombreServicio.getText())){
+                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        txtNombreServicio.requestFocus();
+                    }
+                    else{
+                        String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
+                        String[] ciudad = cOrigen.split(" ");
+                        
+                        Ciudad ciudadOrigen = new Ciudad();
+                        ciudadOrigen.setNombre(ciudad[0]);
+                        
+                        ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
+                        if(rutaImagen1 != ""){
+                            imagenes.add(new ImagenServicio(rutaImagen1, new Servicio()));
+                            
+                            if(rutaImagen2 != ""){
+                                imagenes.add(new ImagenServicio(rutaImagen2, new Servicio()));
+                                
+                                if(rutaImagen3 != ""){
+                                    imagenes.add(new ImagenServicio(rutaImagen3, new Servicio()));
+                                }
+                            }
+                        }
+                        
+                        ArrayList<Categoria> categorias = obtenerCategorias(modelo);
+                        
+                        Proveedor proveedor = new Proveedor();
+                        
+                        proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
+                        
+                        if(cmbCiudadDestino.getSelectedItem() != "No corresponde"){
+                            String cDestino = (String) cmbCiudadOrigen.getSelectedItem();
+                            String[] ciudadD = cDestino.split(" ");
+
+                            Ciudad ciudadDestino = new Ciudad();
+                            ciudadDestino.setNombre(ciudad[0]);
+                        }
+                        /*for(int i = 0; i < categorias.size(); i++){
+                            System.out.println(categorias.get(i));
+                        }*/
+                            
+                        
+                        
+                        
+                    }
+                }
+                catch(SQLException ex){
+                    //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                catch(ClassNotFoundException ex){
+                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public ArrayList<Categoria> obtenerCategorias(DefaultListModel modelo){
+        ArrayList<Categoria> categorias = new ArrayList();
+        for(int i = 0; i < modelo.getSize(); i++){
+            String cat = (String) modelo.getElementAt(i);
+            int cant = contador(cat, '>');
+            String[] c = cat.split(">");
+            categorias.add(new Categoria((String) c[cant].trim(), new ArrayList()));
+        }
+        
+        return categorias;
+    }
+    
+    public int contador(String cadena, char letra){
+        int cant = 0;
+        
+        for(int i = 0; i < cadena.length(); i++){
+            if(cadena.charAt(i) == letra)
+                cant++;
+        }
+        
+        return cant;
+    }
+    
+    public boolean esNumerico(String txt){
+        try{
+            Integer.parseInt(txt);
+            return true;
+        }
+        catch(NumberFormatException ex){
+            return false;
+        }
+    }
     
     public boolean categoriaRepetida(DefaultListModel modelo, String categoria){
         boolean repetido = false;
@@ -675,7 +791,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             if(modelo.getElementAt(i).equals(rutaCategoria))
                 repetido = true;
         }
-        System.out.print("/");
+        //System.out.print("/");
         return repetido;
     }
     
@@ -736,7 +852,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelImagenes;
     private javax.swing.JTree treeCategorias;
-    private javax.swing.JTextField txtNickname1;
+    private javax.swing.JTextField txtNombreServicio;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

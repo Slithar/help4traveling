@@ -12,6 +12,10 @@ import java.util.*;
 public class Pais {
     private String nombre;
     
+    public Pais(){
+        this.nombre = "";
+    }
+    
     public Pais(String nombre){
         this.nombre = nombre;
     }

@@ -72,4 +72,13 @@ public class ControladorProveedores {
         return resultado;
     }
     
+    public boolean existeNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
+        DatosServicios servicios = new DatosServicios();
+        
+        if(servicios.selectCountNombreServicio(nombre) == 0)
+            return false;
+        else
+            return true;
+    }
+    
 }

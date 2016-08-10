@@ -20,6 +20,36 @@ public class Servicio {
     private ArrayList<Categoria> categoriasServicio;
     private Ciudad origen;
     private Ciudad destino;
+
+    public Servicio() {
+        nombreServicio = "";
+        descripcionServicio = "";
+        precioServicio = 0;
+        proveedorServicio = new Proveedor();
+        imagenesServicio = new ArrayList<ImagenServicio>();
+        reservasServicio = new ArrayList<Reserva>();
+        promocionesServicio = new ArrayList<Promocion>();
+        categoriasServicio = new ArrayList<Categoria>();
+        origen = new Ciudad();
+        destino = new Ciudad();
+    }
+    
+    public Servicio(String nombreServicio, String descripcionServicio, int previoServicio, Proveedor proveedorServicio,ArrayList<ImagenServicio> imagenesServicio, ArrayList<Reserva> reservasServicio, ArrayList<Promocion> promocionesServicio, ArrayList<Categoria> categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){
+        this.nombreServicio = nombreServicio;
+        this.descripcionServicio = descripcionServicio;
+        this.precioServicio = precioServicio;
+        this.proveedorServicio = proveedorServicio;
+        this.imagenesServicio = imagenesServicio;
+        this.reservasServicio = reservasServicio;
+        this.promocionesServicio = promocionesServicio;
+        this.categoriasServicio = categoriasServicio;
+        this.origen = origen;
+        this.destino = (tieneDestino) ? destino : null;        
+    }
+
+    /*public Servicio() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
     
     public ArrayList<Categoria> getCategoriasServicio() {
         return categoriasServicio;
