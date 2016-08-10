@@ -39,6 +39,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private JMenuItem miEliminar2 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar3 = new JMenuItem("Eliminar");
     
+    private JMenuItem miEliminarCategoria = new JMenuItem("Eliminar");
+    
+    private String rutaCategoria = "";
+    
     private JFrame visor;
      
     
@@ -85,6 +89,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         ImageIcon iconoCategoria = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
         ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
         lblAgregarCategoria.setIcon(iconoDimensionado);
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        lstCategorias.setModel(modeloLista);
+        
+        agregarPopup(4);
     }
     
     public void agregarPopup(int sub){
@@ -110,6 +119,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             miEliminar3.addActionListener(new OyentePopup());
             eliminarImagen3.add(miEliminar3);
             lblImagen3.setComponentPopupMenu(eliminarImagen3);
+        }
+        else if(sub == 4){
+            JPopupMenu eliminarCategoria = new JPopupMenu();
+            miEliminarCategoria.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminarCategoria.addActionListener(new OyentePopup());
+            eliminarCategoria.add(miEliminarCategoria);
+            lstCategorias.setComponentPopupMenu(eliminarCategoria);
         }
     }
     
@@ -326,20 +342,18 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
                 rutaImagen3 = "";
             }
+            else if(e.getSource() == miEliminarCategoria){
+                
+                DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                modelo.remove(lstCategorias.getSelectedIndex());
+                lstCategorias.setModel(modelo);
+            }
         }
         
     }
     
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
-        /*DefaultMutableTreeNode root = new DefaultMutableTreeNode("1");
-        DefaultMutableTreeNode segundo = new DefaultMutableTreeNode("2");
-        DefaultMutableTreeNode tercero = new DefaultMutableTreeNode("3");
-        DefaultMutableTreeNode cuarto = new DefaultMutableTreeNode("4");
-        root.add(segundo);
-        root.add(tercero);
-        tercero.add(cuarto);
-        DefaultTreeModel treeModel = new DefaultTreeModel(root);
-        treeCategorias.setModel(treeModel);*/
+        
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
         ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
@@ -448,6 +462,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setText("Categorías:");
 
+        treeCategorias.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                treeCategoriasValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(treeCategorias);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -615,12 +634,48 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
+    public boolean categoriaRepetida(DefaultListModel modelo, String categoria){
+        boolean repetido = false;
+        //System.out.println(modelo.getSize());
+        for(int i = 0; i < modelo.getSize(); i++){
+            //System.out.print(modelo.getElementAt(i) + " - " + rutaCategoria);
+            if(modelo.getElementAt(i).equals(rutaCategoria))
+                repetido = true;
+        }
+        System.out.print("/");
+        return repetido;
+    }
+    
     private void lblAgregarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarCategoriaMouseClicked
         if(evt.getButton() == MouseEvent.BUTTON1){
+            DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+            if(categoriaRepetida(modelo, rutaCategoria)){
+                JOptionPane.showMessageDialog(this, "La categoría ya se encuentra agregada para el servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                modelo.addElement(rutaCategoria);                
+            }
+            lstCategorias.setModel(modelo);
+            
             
         }
     }//GEN-LAST:event_lblAgregarCategoriaMouseClicked
+
+    private void treeCategoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeCategoriasValueChanged
+        rutaCategoria = "";
+        TreePath path = evt.getPath();
+        Object[] nodos = path.getPath();
+        for(int i = 0; i < nodos.length; i++){
+            if(i != 0)
+                rutaCategoria = rutaCategoria + nodos[i].toString();
+            if(i < nodos.length-1 && i != 0)            
+                rutaCategoria = rutaCategoria + " > ";
+            
+        }
+        
+        //System.out.println(rutaCategoria);
+    }//GEN-LAST:event_treeCategoriasValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
