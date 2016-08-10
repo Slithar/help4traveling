@@ -5,6 +5,9 @@
  */
 package Logica;
 
+import java.io.*;
+import java.nio.file.*;
+
 /**
  *
  * @author usuario
@@ -37,6 +40,20 @@ public class ImagenServicio {
     
     public void setServicio(Servicio servicio){
         this.servicio = servicio;
+    }
+    
+    public void copiarImagen(String nombre) throws IOException{
+        Path desde = Paths.get(this.path);
+        File fichero = new File("src/Logica/ImagenesServicios/" + nombre + ".jpg");
+        Path hasta = Paths.get(fichero.getAbsolutePath());
+       
+        CopyOption[] opciones = new CopyOption[]{
+          StandardCopyOption.REPLACE_EXISTING,
+          StandardCopyOption.COPY_ATTRIBUTES
+        };
+       
+        Files.copy(desde, hasta, opciones);
+        this.path = "../Logica/ImagenesServicios/" + nombre + ".jpg";       
     }
     
 }

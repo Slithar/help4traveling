@@ -34,7 +34,7 @@ public class Servicio {
         destino = new Ciudad();
     }
     
-    public Servicio(String nombreServicio, String descripcionServicio, int previoServicio, Proveedor proveedorServicio,ArrayList<ImagenServicio> imagenesServicio, ArrayList<Reserva> reservasServicio, ArrayList<Promocion> promocionesServicio, ArrayList<Categoria> categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){
+    public Servicio(String nombreServicio, String descripcionServicio, int precioServicio, Proveedor proveedorServicio,ArrayList<ImagenServicio> imagenesServicio, ArrayList<Reserva> reservasServicio, ArrayList<Promocion> promocionesServicio, ArrayList<Categoria> categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){
         this.nombreServicio = nombreServicio;
         this.descripcionServicio = descripcionServicio;
         this.precioServicio = precioServicio;
@@ -44,7 +44,12 @@ public class Servicio {
         this.promocionesServicio = promocionesServicio;
         this.categoriasServicio = categoriasServicio;
         this.origen = origen;
-        this.destino = (tieneDestino) ? destino : null;        
+        if(tieneDestino)
+            this.destino = destino;
+        else
+            this.destino = new Ciudad();
+        
+        System.out.println(this.destino.getNombre());                
     }
 
     /*public Servicio() {

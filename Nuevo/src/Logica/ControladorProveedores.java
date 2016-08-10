@@ -81,4 +81,38 @@ public class ControladorProveedores {
             return true;
     }
     
+    public void agregarServicio(Servicio s) throws SQLException, ClassNotFoundException{
+        
+        DatosServicios servicios = new DatosServicios();
+        
+        boolean tieneDestino = true;
+        
+        if(s.getDestino().getNombre().equals("No"))
+            tieneDestino = false;
+        else
+            tieneDestino = true;
+        
+        //System.out.println(s.getDestino().getNombre());
+        
+        /*if(tieneDestino)
+            System.out.println("destino si");
+        else
+            System.out.println("destino no");*/
+        
+        servicios.insertar(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), tieneDestino);
+        
+        ArrayList<Categoria> categoriasServicio = s.getCategoriasServicio();
+        
+        for(int i = 0; i < categoriasServicio.size(); i++){
+            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre());
+        }
+        
+        ArrayList<ImagenServicio> imagenes = s.getImagenesServicio();
+        
+        for(int i = 0; i <imagenes.size(); i++){
+            servicios.agregarImagen(imagenes.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        }
+        
+    }
+    
 }

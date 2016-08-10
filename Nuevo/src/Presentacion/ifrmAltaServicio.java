@@ -18,6 +18,7 @@ import Logica.Ciudad;
 import Logica.ImagenServicio;
 import Logica.Proveedor;
 import Logica.Servicio;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,11 +99,74 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
         lblAgregarCategoria.setIcon(iconoDimensionado);
         
+        //limpiar();
+        
         DefaultListModel modeloLista = new DefaultListModel();
         lstCategorias.setModel(modeloLista);
         
         agregarPopup(4);
                
+    }
+    
+    public void limpiar(){
+        txtNombreServicio.setText("");
+        areaDescripcion.setText("");
+        txtPrecio.setText("");        
+        
+        if(lblImagen3 != null){
+            lblImagen3.setVisible(false);
+            lblImagen3 = null;
+            rutaImagen3 = "";
+            
+            if(lblImagen2 != null){
+                lblImagen2.setVisible(false);
+                lblImagen2 = null;
+                rutaImagen2 = "";
+            }
+        }
+        else if(lblImagen2 != null){
+            lblImagen2.setVisible(false);
+            lblImagen2 = null;
+            rutaImagen2 = ""; 
+        }
+        
+        
+        
+               
+        
+        rutaImagen1 = "";
+        
+        /*lblImagen1.setSize(143, 143);
+        panelImagenes.add(lblImagen1);
+        lblImagen1.setLocation(0, 0);
+        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
+        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+        //agregarPopup(1);
+        
+        //lblImagen1.addMouseListener(new OyenteLabel(this));
+               
+        txtPrecio.setText("");
+        cmbCiudadOrigen.setSelectedIndex(0);
+        cmbCiudadDestino.setSelectedIndex(0);
+        cmbProveedor.setSelectedIndex(0);
+        try{
+            llenarArbol("", null);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        lstCategorias.setModel(modeloLista);
+        
+        txtNombreServicio.requestFocus();
+        
+        //agregarPopup(4);
+        
     }
     
     public void agregarPopup(int sub){
@@ -595,18 +659,16 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addComponent(lblEmpresa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEmpresa1)
+                    .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmpresa1)
-                            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
-                        .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(131, 131, 131))))
+                        .addGap(101, 101, 101)
+                        .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34))
             .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelDatosLayout.setVerticalGroup(
@@ -618,10 +680,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     .addComponent(jLabel13)
                     .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(lblEmpresa)
@@ -629,14 +691,14 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(46, 46, 46)
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(34, 34, 34)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(lblEmpresa1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb3)
@@ -653,7 +715,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb2)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -685,6 +747,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         else if(!esNumerico(txtPrecio.getText())){
             JOptionPane.showMessageDialog(this, "El precio ingresado para el nuevo servicio presenta un formato no válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtPrecio.requestFocus();
+        }
+        else if(cmbCiudadOrigen.getSelectedItem().equals(cmbCiudadDestino.getSelectedItem())){
+            JOptionPane.showMessageDialog(this, "La ciudad de orígen no puede ser la misma que la ciudad destino", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            cmbCiudadOrigen.requestFocus();
         }
         else{
             
@@ -723,19 +789,41 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         
                         proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
                         
-                        if(cmbCiudadDestino.getSelectedItem() != "No corresponde"){
-                            String cDestino = (String) cmbCiudadOrigen.getSelectedItem();
+                        boolean tieneDestino = false;
+                        
+                        Ciudad ciudadDestino;
+                        
+                        if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
+                            String cDestino = (String) cmbCiudadDestino.getSelectedItem();
                             String[] ciudadD = cDestino.split(" ");
 
-                            Ciudad ciudadDestino = new Ciudad();
-                            ciudadDestino.setNombre(ciudad[0]);
-                        }
-                        /*for(int i = 0; i < categorias.size(); i++){
-                            System.out.println(categorias.get(i));
-                        }*/
+                            ciudadDestino = new Ciudad();
+                            ciudadDestino.setNombre(ciudadD[0]);
                             
+                            //System.out.println("Ciudad: " + ciudadD[0]);
+                            
+                            tieneDestino = true;
+                        }
+                        else{
+                            //System.out.println("entre aca");
+                            ciudadDestino = null;
+                        }
                         
+                        for(int i = 0; i < imagenes.size(); i++){
+                            int numero = i + 1;
+                            imagenes.get(i).copiarImagen(txtNombreServicio.getText() + "-" + numero);
+                        }
                         
+                        int precio = Integer.parseInt(txtPrecio.getText());
+                        
+                        //System.out.println(precio);
+                            
+                        Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        
+                        proveedores.agregarServicio(servicio);
+                        
+                        limpiar();
+                        JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                         
                     }
                 }
@@ -745,6 +833,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 }
                 catch(ClassNotFoundException ex){
                     JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Problema con las imágenes del servicio", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

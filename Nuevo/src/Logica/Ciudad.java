@@ -15,7 +15,7 @@ public class Ciudad {
     private Pais pais;
     
     public Ciudad(){
-        this.nombre = "";
+        this.nombre = "No";
         this.servicios = new ArrayList<Servicio>();
         this.pais = new Pais();
     }
