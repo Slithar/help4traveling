@@ -136,14 +136,14 @@ public class frmVisor extends javax.swing.JFrame {
                 g.drawImage(imagen.getImage(), (900 - imagen.getIconWidth()) / 2, (550 - imagen.getIconHeight()) /2, imagen.getIconWidth(), imagen.getIconHeight(), null);
             }
             else if(imagen.getIconWidth() < imagen.getIconHeight()){
-                System.out.println("entre aca");
+                //System.out.println("entre aca");
                 if(imagen.getIconWidth() < 600 && imagen.getIconHeight() > 900){
-                    System.out.println("1");
+                    //System.out.println("1");
                     g.drawImage(imagen.getImage(), (900 - imagen.getIconWidth()) / 2, (550 - imagen.getIconHeight()) /2, imagen.getIconWidth(), 600, null);
                 }
                 else{
-                    System.out.println("2");
-                    g.drawImage(imagen.getImage(), (900 - 300) / 2, 0, 450, 600, null);
+                    //System.out.println("2");
+                    g.drawImage(imagen.getImage(), (750 - 300) / 2, 0, 450, 600, null);
                 }
             }
             else{
