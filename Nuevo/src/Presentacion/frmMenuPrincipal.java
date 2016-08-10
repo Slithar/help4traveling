@@ -187,7 +187,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         vAltaServicio.show();
         
     }//GEN-LAST:event_miRegServiciosNuevoActionPerformed
-
+    
+        
     /**
      * @param args the command line arguments
      */

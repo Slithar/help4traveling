@@ -43,7 +43,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     
     private String rutaCategoria = "";
     
-    private JFrame visor;
+    private frmVisor visor;
      
     
     public ifrmAltaServicio() {
@@ -233,10 +233,14 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 }
                 else{
                     if((JLabel) e.getSource() == lblImagen1)
-                        visor = new JFrame(rutaImagen1);
+                        visor = new frmVisor(rutaImagen1);
+                    else if((JLabel) e.getSource() == lblImagen2)
+                        visor = new frmVisor(rutaImagen2);
+                    else if((JLabel) e.getSource() == lblImagen3)
+                        visor = new frmVisor(rutaImagen3);
                     
                     //visor.setUndecorated(true);
-                    visor.setBackground(Color.WHITE);
+                    //visor.setUndecorated(true);
                     visor.setBounds(515, 200, 900, 600);
                     visor.setVisible(true);
                 }
