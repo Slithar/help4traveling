@@ -13,12 +13,22 @@ public class Ciudad {
     private String nombre;
     private ArrayList<Servicio> servicios;
     private Pais pais;
+    
+    public Ciudad(){
+        this.nombre = "No";
+        this.servicios = new ArrayList<Servicio>();
+        this.pais = new Pais();
+    }
 
     public Ciudad(String nombre, ArrayList servicios, Pais pais){
         this.nombre = nombre;
         this.servicios = servicios;
         this.pais = pais;
     }
+
+    /*public Ciudad() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
     
     public Pais getPais() {
         return pais;

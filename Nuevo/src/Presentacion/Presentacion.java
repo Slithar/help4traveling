@@ -24,6 +24,7 @@ public class Presentacion {
         frmMenuPrincipal menuPrincipal = new frmMenuPrincipal();
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         Dimension tamanioPantalla = miPantalla.getScreenSize();
+
         menuPrincipal.setSize(1400, 900);
         menuPrincipal.setLocationRelativeTo(null);
 

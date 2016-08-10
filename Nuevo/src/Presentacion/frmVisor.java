@@ -24,12 +24,23 @@ public class frmVisor extends javax.swing.JFrame {
     }
     
     public frmVisor(String ruta){
+        //System.out.println("constructor");
         initComponents();
         this.ruta = ruta;
         
+        setTitle("Visualizador de imágenes");
+        
+        //this.setUndecorated(true);
+        
+        //System.out.println(ruta);
+        
         PanelVisor panel = new PanelVisor();
         
-        add(panel);
+        //System.out.println("hi");
+        
+        setContentPane(panel);
+        
+        //System.out.println("nuevo hola");
     }
 
     /**
@@ -41,18 +52,33 @@ public class frmVisor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        jPanel1.setName(""); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 651, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 466, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 466, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -99,20 +125,36 @@ public class frmVisor extends javax.swing.JFrame {
             
         }
         
-        public void paintComponent(Graphics g){
+        @Override
+        public void paint(Graphics g){
+            //System.out.println("hola");
             super.paintComponent(g);
             
             ImageIcon imagen = new ImageIcon(ruta);
-            /*Toolkit miPantalla = Toolkit.getDefaultToolkit();
-            Image imagen = miPantalla.getImage(ruta);*/
-           
-            g.drawImage(imagen.getImage(), 0, 0, 900, 600, this);
             
+            if(imagen.getIconHeight() < 600 && imagen.getIconWidth() < 900){
+                g.drawImage(imagen.getImage(), (900 - imagen.getIconWidth()) / 2, (550 - imagen.getIconHeight()) /2, imagen.getIconWidth(), imagen.getIconHeight(), null);
+            }
+            else if(imagen.getIconWidth() < imagen.getIconHeight()){
+                //System.out.println("entre aca");
+                if(imagen.getIconWidth() < 600 && imagen.getIconHeight() > 900){
+                    //System.out.println("1");
+                    g.drawImage(imagen.getImage(), (900 - imagen.getIconWidth()) / 2, (550 - imagen.getIconHeight()) /2, imagen.getIconWidth(), 600, null);
+                }
+                else{
+                    //System.out.println("2");
+                    g.drawImage(imagen.getImage(), (750 - 300) / 2, 0, 450, 600, null);
+                }
+            }
+            else{
+                g.drawImage(imagen.getImage(), 0, 0, 900, 600, null);
+            }            
             
         }
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
