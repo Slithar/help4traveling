@@ -14,7 +14,7 @@ public class Servicio {
     private String descripcionServicio;
     private int precioServicio;
     private Proveedor proveedorServicio;
-    private ArrayList<Imagen> imagenesServicio;
+    private ArrayList<ImagenServicio> imagenesServicio;
     private ArrayList<Reserva> reservasServicio;
     private ArrayList<Promocion> promocionesServicio;
     private ArrayList<Categoria> categoriasServicio;
@@ -86,11 +86,11 @@ public class Servicio {
         this.proveedorServicio = ProveedorServicio;
     }
 
-    public ArrayList<Imagen> getImagenesServicio() {
+    public ArrayList<ImagenServicio> getImagenesServicio() {
         return imagenesServicio;
     }
 
-    public void setImagenesServicio(ArrayList<Imagen> ImagenesServicio) {
+    public void setImagenesServicio(ArrayList<ImagenServicio> ImagenesServicio) {
         this.imagenesServicio = ImagenesServicio;
     }
 

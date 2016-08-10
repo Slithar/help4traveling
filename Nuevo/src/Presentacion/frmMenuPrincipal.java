@@ -164,7 +164,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_miSalirActionPerformed
 
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed

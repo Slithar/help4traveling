@@ -137,12 +137,7 @@ public class frmVisor extends javax.swing.JFrame {
             }
             else{
                 g.drawImage(imagen.getImage(), 0, 0, 900, 600, null);
-            }
-            
-            
-           
-            
-            
+            }            
             
         }
         
