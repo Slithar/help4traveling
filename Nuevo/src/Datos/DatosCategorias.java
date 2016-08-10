@@ -105,5 +105,15 @@ public class DatosCategorias {
             return resultado;
         }
     }
+    public ResultSet existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("SELECT * FROM categorias WHERE nombre=?"); 
+        
+        pConsulta.setString(1,c);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        return rs;
+    }
     
 }
