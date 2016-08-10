@@ -45,7 +45,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miSalir = new javax.swing.JMenuItem();
         mRegistros = new javax.swing.JMenu();
         miRegUsuarios = new javax.swing.JMenuItem();
-        miRegCategorias = new javax.swing.JMenuItem();
+        CatMenu = new javax.swing.JMenu();
+        NuevaCat = new javax.swing.JMenuItem();
         mRegServicios = new javax.swing.JMenu();
         miRegServiciosNuevo = new javax.swing.JMenuItem();
         miRegServiciosActualizar = new javax.swing.JMenuItem();
@@ -87,8 +88,17 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         mRegistros.add(miRegUsuarios);
 
-        miRegCategorias.setText("Categorías");
-        mRegistros.add(miRegCategorias);
+        CatMenu.setText("Categorías");
+
+        NuevaCat.setText("Nueva");
+        NuevaCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NuevaCatActionPerformed(evt);
+            }
+        });
+        CatMenu.add(NuevaCat);
+
+        mRegistros.add(CatMenu);
 
         mRegServicios.setText("Servicios");
 
@@ -164,12 +174,22 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
+        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_miSalirActionPerformed
 
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_miActualizarReservaActionPerformed
+
+    private void NuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaCatActionPerformed
+        // TODO add your handling code here:
+        /*Acá creo la instancia de agregar Categoría.
+        Tampoco anda acá.*/
+        JInternalFrame agregar = new agregarCategoria();
+        add(agregar);
+        agregar.setVisible(true);
+    }//GEN-LAST:event_NuevaCatActionPerformed
 
     private void miRegUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegUsuariosActionPerformed
         // TODO add your handling code here:
@@ -233,6 +253,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     //public void paintCom
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu CatMenu;
+    private javax.swing.JMenuItem NuevaCat;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu mConsultas;
     private javax.swing.JMenu mInicio;
@@ -248,7 +270,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
     private javax.swing.JMenuItem miNuevaReserva;
-    private javax.swing.JMenuItem miRegCategorias;
     private javax.swing.JMenuItem miRegPromociones;
     private javax.swing.JMenuItem miRegServiciosActualizar;
     private javax.swing.JMenuItem miRegServiciosNuevo;
