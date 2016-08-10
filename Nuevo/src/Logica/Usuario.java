@@ -22,8 +22,7 @@ public class Usuario {
     private LocalDate fechaNac;
     private Imagen imagenUsuario;
     
-    /*Comentario para GIT*/
-    
+        
     public Usuario(){
         nickname = "";
         nombre = "";
