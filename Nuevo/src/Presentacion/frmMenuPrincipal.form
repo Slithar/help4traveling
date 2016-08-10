@@ -37,21 +37,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miRegUsuariosActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="CatMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="miCategor&#xed;as">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Categor&#xed;as"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="NuevaCat">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Nueva"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NuevaCatActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miCategor&#xed;asActionPerformed"/>
+              </Events>
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="mRegServicios">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servicios"/>
