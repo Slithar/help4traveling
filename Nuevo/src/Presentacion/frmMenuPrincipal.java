@@ -186,7 +186,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         /*Acá creo la instancia de agregar Categoría.
         Tampoco anda acá.*/
-        JInternalFrame agregar = new agregarCategoria();
+        nuevaCateFrame agregar = new nuevaCateFrame();
         add(agregar);
         agregar.setVisible(true);
     }//GEN-LAST:event_NuevaCatActionPerformed
