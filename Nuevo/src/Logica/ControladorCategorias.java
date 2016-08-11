@@ -64,7 +64,7 @@ public class ControladorCategorias {
        categorias = new DatosCategorias();
        ArrayList existeCate = categorias.existeCategoria(c.getNombre());
        boolean existe;
-       if(existeCate.isEmpty()){
+       if(!existeCate.isEmpty()){
            existe = true;
        }else{
            existe= false;

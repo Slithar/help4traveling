@@ -26,7 +26,11 @@ public class DatosCategorias {
         
         ArrayList<Categoria> resultado = new ArrayList();
         
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         Statement st = conn.createStatement();
         
@@ -50,7 +54,11 @@ public class DatosCategorias {
         
         ArrayList<Categoria> resultado = new ArrayList();
         
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("select categoriaHija from categoriasrelacionadas where categoriaPadre = ?");
         
@@ -74,7 +82,11 @@ public class DatosCategorias {
 
     
     public int agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
         
@@ -85,11 +97,15 @@ public class DatosCategorias {
         //conexion.cerrar();
         
         conn.close();
-        
+
         return rows;
     }
     public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categoriasrelacionadas VALUES (?,?)"); 
         
@@ -116,7 +132,11 @@ public class DatosCategorias {
         
     }
     public ArrayList existeCategoria(String c) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("SELECT * FROM categorias WHERE nombre=?"); 
         
