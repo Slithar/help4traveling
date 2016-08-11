@@ -157,7 +157,7 @@ public class DatosCategorias {
         
         //conexion.cerrar();
         
-        conn.close();
+        conn.close();// He hecho un cambio para pablo
         
         return cates;
     }
