@@ -14,14 +14,20 @@ import java.sql.*;
  */
 public class DatosServicios {
     
-    private ConexionBD conexion;
+    //private ConexionBD conexion;
     
     public DatosServicios(){
-        conexion = new ConexionBD();
+        //conexion = new ConexionBD();
     }
     
     public int selectCountNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from servicios where nombre = ?");
         
@@ -37,13 +43,20 @@ public class DatosServicios {
         
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
     
     public void insertar(String nombre, String nombreProveedor, String ciudadOrigen, String ciudadDestino, String descripcion, int precio, boolean tieneDestino) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         if(tieneDestino){
             PreparedStatement pConsulta = conn.prepareStatement("insert into servicios values (?, ?, ?, ?, ?, ?)");
@@ -69,11 +82,19 @@ public class DatosServicios {
             pConsulta.executeUpdate();
         }
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
         PreparedStatement pConsulta = conn.prepareStatement("insert into categoriasdeservicios values(?, ?, ?)");
         pConsulta.setString(1, nombreServicio);
         pConsulta.setString(2, nombreProveedor);
@@ -81,11 +102,19 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarImagen(String ruta, String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
         PreparedStatement pConsulta = conn.prepareStatement("insert into imagenesservicios values(?, ?, ?)");
         pConsulta.setString(1, ruta);
         pConsulta.setString(2, nombreServicio);
@@ -93,7 +122,8 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
 }

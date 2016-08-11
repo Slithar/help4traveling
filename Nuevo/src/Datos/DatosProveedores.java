@@ -15,14 +15,20 @@ import Logica.Proveedor;
  */
 public class DatosProveedores {
     
-    private ConexionBD conexion;
+    //private ConexionBD conexion;
     
     public DatosProveedores(){
-        conexion = new ConexionBD();
+        //conexion = new ConexionBD();
     }
     
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, false)");
         
@@ -34,11 +40,18 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarDatosProveedor(String nickname, String nombreEmpresa, String link) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into proveedores values(?, ?, ?)");
         
@@ -48,11 +61,18 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into imagenesusuarios values(?, ?)");
         
@@ -61,13 +81,20 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public int selectCountNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
         int cant = 0;
         
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from proveedores where nombreEmpresa = ?");
         
@@ -80,7 +107,8 @@ public class DatosProveedores {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return cant;
     }
@@ -89,7 +117,13 @@ public class DatosProveedores {
         ArrayList proveedores = new ArrayList();
         int indice = 0;
         
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         Statement st = conn.createStatement();
         
@@ -103,7 +137,8 @@ public class DatosProveedores {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return proveedores;
         

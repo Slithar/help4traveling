@@ -12,14 +12,20 @@ import java.sql.*;
  */
 public class DatosClientes {
     
-    private ConexionBD conexion;
+    //private ConexionBD conexion;
     
     public DatosClientes(){
-        conexion = new ConexionBD();
+        //conexion = new ConexionBD();
     }
    
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, true)");
         
@@ -31,11 +37,17 @@ public class DatosClientes {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        conn.close();
     }
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into imagenesusuarios values(?, ?)");
         
@@ -44,7 +56,7 @@ public class DatosClientes {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        conn.close();
     }
     
 }

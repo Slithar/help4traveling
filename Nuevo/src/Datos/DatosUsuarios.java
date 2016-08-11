@@ -12,10 +12,10 @@ import java.sql.*;
  */
 public class DatosUsuarios {
     
-    private ConexionBD conexion;
+    //private ConexionBD conexion;
     
     public DatosUsuarios(){
-        conexion = new ConexionBD();
+        //conexion = new ConexionBD();
     }
     
     public int selectCountUsuarios(String nickname) throws SQLException, ClassNotFoundException{
@@ -23,7 +23,12 @@ public class DatosUsuarios {
        // Statement st = null;
         
                 
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
                
         PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from usuarios where nickname = ?");
         
@@ -39,7 +44,8 @@ public class DatosUsuarios {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return num;
         

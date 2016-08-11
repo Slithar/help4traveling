@@ -498,7 +498,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
 
                         try{
 
-                            if(this.rutaImagen != "perfiles/perfil.PNG")
+                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
                                 imagenCorrecta = nuevoUsuario.copiarPerfil();
                             else
                                 imagenCorrecta = true;
@@ -552,7 +552,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     }*/
                     else{
                         try{
-                            if(this.rutaImagen != "perfiles/perfil.PNG")
+                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
                                 imagenCorrecta = nuevoUsuario.copiarPerfil();
                             else
                                 imagenCorrecta = true;

@@ -15,12 +15,18 @@ import Logica.Pais;
  */
 public class DatosCiudades {
     
-    private ConexionBD conexion =  new ConexionBD();
+    //private ConexionBD conexion =  new ConexionBD();
     
     public ArrayList<Ciudad> selectAllCiudades() throws SQLException, ClassNotFoundException{
         ArrayList ciudades = new ArrayList();
         int indice = 0;
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         Statement st = conn.createStatement();
         
@@ -32,7 +38,8 @@ public class DatosCiudades {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return ciudades;
     }

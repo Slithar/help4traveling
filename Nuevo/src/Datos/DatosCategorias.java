@@ -15,10 +15,10 @@ import Logica.Servicio;
  */
 public class DatosCategorias {
     
-    private ConexionBD conexion;
+    //private ConexionBD conexion;
     
     public DatosCategorias(){
-        conexion = new ConexionBD();
+        //conexion = new ConexionBD();
     }
     
     public ArrayList selectCategoriasPadres() throws SQLException, ClassNotFoundException{
@@ -26,7 +26,13 @@ public class DatosCategorias {
         
         ArrayList<Categoria> resultado = new ArrayList();
         
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         Statement st = conn.createStatement();
         
@@ -39,7 +45,7 @@ public class DatosCategorias {
         }
         
         rs.close();
-        conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
@@ -49,7 +55,13 @@ public class DatosCategorias {
         
         ArrayList<Categoria> resultado = new ArrayList();
         
-        Connection conn = conexion.conectar();
+        //Connection conn = conexion.conectar();
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("select categoriaHija from categoriasrelacionadas where categoriaPadre = ?");
         
@@ -64,7 +76,7 @@ public class DatosCategorias {
         }
         
         rs.close();
-        conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
