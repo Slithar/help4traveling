@@ -26,6 +26,8 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
      */
     public nuevaCateFrame() {
         initComponents();
+        this.setTitle("Agregar nueva Categoría");
+        this.setLocation(400, 130);
         try{
         llenarArbol("", null);
         }catch(SQLException ex){
