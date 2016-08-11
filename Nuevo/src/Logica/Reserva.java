@@ -5,6 +5,7 @@
  */
 package Logica;
 import java.util.*;
+import java.time.*;
 /**
  *
  * @author Mauro
@@ -12,7 +13,7 @@ import java.util.*;
 public class Reserva {
     private int numero;
 
-    private Date fecha;
+    private LocalDate fecha;
     private int precio;
     private ArrayList<Cliente> clientes;
   //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
@@ -65,11 +66,11 @@ public class Reserva {
         this.numero = Numero;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date Fecha) {
+    public void setFecha(LocalDate Fecha) {
         this.fecha = Fecha;
     }
 

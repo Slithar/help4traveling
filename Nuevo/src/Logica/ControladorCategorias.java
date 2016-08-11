@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author usuario
  */
-public class ControladorCategorias {
+public class ControladorCategorias implements IControladorCategorias{
     
     DatosCategorias categorias;
     
@@ -21,6 +21,7 @@ public class ControladorCategorias {
         
     }
     
+    @Override
     public ArrayList getCategoriasPadres() throws SQLException, ClassNotFoundException{
         categorias = new DatosCategorias();
         
@@ -35,6 +36,7 @@ public class ControladorCategorias {
         
     }
     
+    @Override
     public ArrayList getCategoriasHijas(Categoria c) throws SQLException, ClassNotFoundException{
         categorias = new DatosCategorias();
         
@@ -48,6 +50,7 @@ public class ControladorCategorias {
         return resultado;
         
     }    
+    @Override
     public boolean agregarNuevaCategoriaPadre(Categoria c) throws SQLException, ClassNotFoundException{
         categorias = new DatosCategorias();
         int rows = categorias.agregarCategoriaPadre(c.getNombre());
@@ -60,6 +63,7 @@ public class ControladorCategorias {
         }
     }
     
+    @Override
     public boolean agregarNuevaCategoriaHija(Categoria c, String padre) throws SQLException,ClassNotFoundException{
        categorias = new DatosCategorias();
        ArrayList existeCate = categorias.existeCategoria(c.getNombre());

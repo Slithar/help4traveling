@@ -6,20 +6,26 @@
 package Logica;
 
 import Datos.*;
+import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
  *
  * @author usuario
  */
-public class ControladorProveedores {
+public class ControladorProveedores implements IControladorProveedores{
     
     public ControladorProveedores(){
         
     }
     
-    public boolean existeNickname(Usuario p) throws SQLException, ClassNotFoundException{
+    @Override
+    public boolean existeNickname(String nickname) throws SQLException, ClassNotFoundException{
+        
+        Proveedor p = new Proveedor();
+        p.setNickname(nickname);
         
         DatosUsuarios proveedor = new DatosUsuarios();
         if(proveedor.selectCountUsuarios(p.getNickname()) == 0)
@@ -28,7 +34,18 @@ public class ControladorProveedores {
             return true;              
     }
     
-    public boolean existeNombreEmpresa(Proveedor p) throws SQLException, ClassNotFoundException{
+    @Override
+    public boolean correoValido(String correo){
+        Proveedor p = new Proveedor();
+        
+        return p.correoValido();
+    }
+    
+    @Override
+    public boolean existeNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
+        Proveedor p = new Proveedor();        
+        p.setNombreEmpresa(nombreEmpresa);
+        
         DatosProveedores proveedor = new DatosProveedores();
         if(proveedor.selectCountNombreEmpresa(p.getNombreEmpresa()) == 0)
             return false;
@@ -36,7 +53,33 @@ public class ControladorProveedores {
             return true;
     }
     
-    public void agregarProveedor(Proveedor p) throws SQLException, ClassNotFoundException{
+    
+    @Override
+    public boolean copiarPerfil(String nickname, String rutaImagen) throws IOException{
+        Proveedor p = new Proveedor();
+        p.setNickname(nickname);
+        p.setImagen(rutaImagen);
+        
+        try{
+            p.copiarPerfil();
+            return true;
+        }
+        catch(IOException ex){
+            return false;
+        }
+        
+    }
+    
+    /*@Override
+    public boolean existeNombreEmpresa(String nombreEmpresa){
+        
+        
+        //return p.
+    }*/
+    
+    @Override
+    public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String rutaImagen, String empresa, String sitioWeb) throws SQLException, ClassNotFoundException{
+        Proveedor p =new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb);
         DatosProveedores proveedor = new DatosProveedores();
         proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString());
         proveedor.agregarDatosProveedor(p.getNickname(), p.getNombreEmpresa(), p.getLink());
@@ -45,6 +88,7 @@ public class ControladorProveedores {
         }
     }
     
+    @Override
     public ArrayList getCiudades() throws SQLException, ClassNotFoundException{
         DatosCiudades ciudades = new DatosCiudades();
         
@@ -59,6 +103,7 @@ public class ControladorProveedores {
         
     }
     
+    @Override
     public ArrayList getProveedores() throws SQLException, ClassNotFoundException{
         DatosProveedores proveedores = new DatosProveedores();
         
@@ -72,6 +117,7 @@ public class ControladorProveedores {
         return resultado;
     }
     
+    @Override
     public boolean existeNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
         DatosServicios servicios = new DatosServicios();
         
@@ -81,6 +127,7 @@ public class ControladorProveedores {
             return true;
     }
     
+    @Override
     public void agregarServicio(Servicio s) throws SQLException, ClassNotFoundException{
         
         DatosServicios servicios = new DatosServicios();

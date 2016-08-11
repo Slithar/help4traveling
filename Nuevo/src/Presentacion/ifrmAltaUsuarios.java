@@ -12,12 +12,7 @@ import javax.swing.filechooser.*;
 import java.io.*;
 import java.util.*;
 import java.sql.*;
-import Logica.Fecha;
-import Logica.Usuario;
-import Logica.Cliente;
-import Logica.Proveedor;
-import Logica.ControladorClientes;
-import Logica.ControladorProveedores;
+import Logica.*;
 import java.awt.event.MouseEvent;
 import java.time.*;
 
@@ -34,11 +29,16 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
      */
     
     private String rutaImagen = "";
-    private Usuario nuevoUsuario;
-    private ControladorClientes clientesHandler = new ControladorClientes();
-    private ControladorProveedores proveedoresHandler = new ControladorProveedores();
+    //private Usuario nuevoUsuario;
+    private IControladorClientes iccli;
+    private IControladorProveedores icprov;
+    //private 
     
-    public ifrmAltaUsuarios(frmMenuPrincipal menuPrincipal) {
+    public ifrmAltaUsuarios() {        
+        initComponents();               
+    }
+    
+    public ifrmAltaUsuarios(IControladorClientes iccli, IControladorProveedores icprov) {
         setTitle("Registro de usuarios");
         
         initComponents();
@@ -46,11 +46,12 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         
         panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20));
         aparecerDatosProveedor(false);
-        lblImagenPerfil.setSize(200, 200);
-        
-        
+        lblImagenPerfil.setSize(200, 200); 
         
         limpiar();
+        
+        this.iccli = iccli;
+        this.icprov = icprov;
         
     }
     
@@ -483,10 +484,10 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         txtSitioWeb.requestFocus();
                     }
 
-                    nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText()); 
+                    //nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText()); 
 
 
-                    if(!nuevoUsuario.correoValido()){
+                    if(!icprov.correoValido(txtCorreo.getText())){
                        JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                        txtCorreo.requestFocus();
                     }
@@ -499,7 +500,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         try{
 
                             if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                                imagenCorrecta = nuevoUsuario.copiarPerfil();
+                                imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutaImagen);
                             else
                                 imagenCorrecta = true;
 
@@ -511,17 +512,17 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         if(imagenCorrecta){
 
                             try{
-                               if(proveedoresHandler.existeNickname(nuevoUsuario)){
+                               if(icprov.existeNickname(txtNickname.getText())){
                                     JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                     txtNickname.requestFocus();
                                 }
                                else{
-                                    if(proveedoresHandler.existeNombreEmpresa((Proveedor) nuevoUsuario)){
-                                        JOptionPane.showMessageDialog(this, "El nombre de emprsa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                    if(icprov.existeNombreEmpresa(txtEmpresa.getText())){
+                                        JOptionPane.showMessageDialog(this, "El nombre de empresa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                         txtEmpresa.requestFocus();
                                     }
                                     else{
-                                        proveedoresHandler.agregarProveedor((Proveedor) nuevoUsuario);
+                                        icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
                                         JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                         limpiar();  
                                     }
@@ -529,8 +530,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             }
                             catch(SQLException ex){
                                 //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                             }
                             catch(ClassNotFoundException ex){
                                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -540,9 +541,9 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     }
                 }
                 else{
-                    nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
+                    //nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
 
-                    if(!nuevoUsuario.correoValido()){
+                    if(!iccli.correoValido(txtCorreo.getText())){
                        JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                        txtCorreo.requestFocus();
                     }
@@ -553,7 +554,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     else{
                         try{
                             if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                                imagenCorrecta = nuevoUsuario.copiarPerfil();
+                                imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
                             else
                                 imagenCorrecta = true;
                         }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Presentacion;
+import Logica.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -15,8 +16,12 @@ import java.text.AttributedCharacterIterator;
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
    // private ifrmAltaUsuarios altaUsuarios = new ifrmAltaUsuarios();
-    private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this);
+    //private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios();
     Panel nuevoPanel = new Panel();
+    private IControladorClientes iccli;
+    private IControladorProveedores icprov;
+    private IControladorCategorias iccat;
+    private IControladorPromociones icprom;
     /**
      * Creates new form frmMenuPrincipal
      */
@@ -27,9 +32,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         //add(new Panel());
         //hola otro comentario de master
         
-        setContentPane(nuevoPanel);       
+        setContentPane(nuevoPanel);
+        Fabrica fab = new Fabrica();
+        iccli = fab.getIControladorClientes();
+        icprov = fab.getIControladorProveedores();
+        iccat = fab.getIControladorCategorias();
+        icprom = fab.getIControladorPromociones();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -190,6 +200,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         //System.out.println("click!");
        // altaUsuarios.setVisible(true);
+       ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this.iccli, this.icprov);
        nuevoPanel.add(vAltaUsuarios);
        vAltaUsuarios.show();
         

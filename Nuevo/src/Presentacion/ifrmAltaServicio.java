@@ -12,12 +12,7 @@ import javax.swing.tree.*;
 import java.util.*;
 import Logica.ControladorProveedores;
 import java.sql.SQLException;
-import Logica.ControladorCategorias;
-import Logica.Categoria;
-import Logica.Ciudad;
-import Logica.ImagenServicio;
-import Logica.Proveedor;
-import Logica.Servicio;
+import Logica.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,9 +48,15 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private String rutaCategoria = "";
     
     private frmVisor visor;
+    
+    private IControladorProveedores icprov;
      
     
-    public ifrmAltaServicio() {
+    public ifrmAltaServicio(){
+        
+    }
+    
+    public ifrmAltaServicio(IControladorProveedores icprov) {
         initComponents();
         this.setTitle("Registro de nuevo servicio");
         Dimension tamanioVentana = this.getSize();
@@ -105,6 +106,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         lstCategorias.setModel(modeloLista);
         
         agregarPopup(4);
+        
+        this.icprov = icprov;
                
     }
     

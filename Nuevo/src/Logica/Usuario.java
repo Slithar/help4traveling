@@ -90,7 +90,11 @@ public class Usuario {
 
     public void setFechaNac(LocalDate FechaNac) {
         this.fechaNac = FechaNac;
-    }   
+    } 
+    
+    public void setImagen(String ruta){
+        this.imagenUsuario = new Imagen(ruta, this);
+    }
     
     public boolean correoValido(){
         int cantArrobas = 0;
