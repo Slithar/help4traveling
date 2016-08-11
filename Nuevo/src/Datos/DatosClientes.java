@@ -19,7 +19,11 @@ public class DatosClientes {
     }
    
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, true)");
         
@@ -36,7 +40,11 @@ public class DatosClientes {
     }
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("insert into imagenesusuarios values(?, ?)");
         

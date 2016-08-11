@@ -20,7 +20,11 @@ public class DatosCiudades {
     public ArrayList<Ciudad> selectAllCiudades() throws SQLException, ClassNotFoundException{
         ArrayList ciudades = new ArrayList();
         int indice = 0;
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         Statement st = conn.createStatement();
         

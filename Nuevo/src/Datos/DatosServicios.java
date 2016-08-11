@@ -21,7 +21,11 @@ public class DatosServicios {
     }
     
     public int selectCountNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from servicios where nombre = ?");
         
@@ -44,7 +48,11 @@ public class DatosServicios {
     }
     
     public void insertar(String nombre, String nombreProveedor, String ciudadOrigen, String ciudadDestino, String descripcion, int precio, boolean tieneDestino) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         
         if(tieneDestino){
             PreparedStatement pConsulta = conn.prepareStatement("insert into servicios values (?, ?, ?, ?, ?, ?)");
@@ -75,7 +83,12 @@ public class DatosServicios {
     }
     
     public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
         PreparedStatement pConsulta = conn.prepareStatement("insert into categoriasdeservicios values(?, ?, ?)");
         pConsulta.setString(1, nombreServicio);
         pConsulta.setString(2, nombreProveedor);
@@ -88,7 +101,11 @@ public class DatosServicios {
     }
     
     public void agregarImagen(String ruta, String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
-        Connection conn = conexion.conectar();
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
         PreparedStatement pConsulta = conn.prepareStatement("insert into imagenesservicios values(?, ?, ?)");
         pConsulta.setString(1, ruta);
         pConsulta.setString(2, nombreServicio);
