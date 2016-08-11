@@ -10,3 +10,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/Nuevo/nbproject/private/
+/Nuevo/build/
+/JTree/nbproject/private/
+/JTree - 2/nbproject/private/
+/JTree - 2/build/
+/Estaticas/nbproject/private/
+/Estaticas/build/
+/TipoDeMadera/nbproject/private/
+/Nuevo/dist/
