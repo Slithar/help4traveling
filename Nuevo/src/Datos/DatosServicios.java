@@ -37,7 +37,8 @@ public class DatosServicios {
         
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
@@ -69,7 +70,8 @@ public class DatosServicios {
             pConsulta.executeUpdate();
         }
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria) throws SQLException, ClassNotFoundException{
@@ -81,7 +83,8 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarImagen(String ruta, String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
@@ -93,7 +96,8 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
 }

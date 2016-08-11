@@ -39,7 +39,8 @@ public class DatosUsuarios {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return num;
         

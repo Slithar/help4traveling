@@ -32,7 +32,9 @@ public class DatosCiudades {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
+        
         
         return ciudades;
     }

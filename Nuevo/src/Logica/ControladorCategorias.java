@@ -6,6 +6,7 @@
 package Logica;
 import java.util.*;
 import Datos.DatosCategorias;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 /**
  *
@@ -45,6 +46,37 @@ public class ControladorCategorias {
         
         return resultado;
         
+    }
+    
+    public boolean agregarNuevaCategoriaPadre(Categoria c) throws SQLException, ClassNotFoundException{
+        categorias = new DatosCategorias();
+        int rows = categorias.agregarCategoriaPadre(c.getNombre());
+        if(rows>0){
+            boolean resultado = true;
+            return resultado;
+        }else{
+            boolean resultado = false;
+            return resultado;
+        }
+    }
+    
+    public boolean agregarNuevaCategoriaHija(Categoria c, String padre) throws SQLException,ClassNotFoundException{
+       categorias = new DatosCategorias();
+       ArrayList existeCate = categorias.existeCategoria(c.getNombre());
+       boolean existe;
+       if(existeCate.isEmpty()){
+           existe = true;
+       }else{
+           existe= false;
+       }
+       if(existe==true){
+       boolean resultado = categorias.agregarNuevaCategoriaHija(c.getNombre(), padre);
+       return resultado;
+       }else{
+           categorias.agregarCategoriaPadre(c.getNombre());
+           boolean resultado = categorias.agregarNuevaCategoriaHija(c.getNombre(), padre);
+           return resultado;
+       }
     }
     
 }

@@ -39,7 +39,8 @@ public class DatosCategorias {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
@@ -64,9 +65,79 @@ public class DatosCategorias {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return resultado;
+    }
+    
+    public int agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
+        
+        pConsulta.setString(1, Nombre);
+        
+        int rows = pConsulta.executeUpdate();
+        
+        //conexion.cerrar();
+        
+        conn.close();
+        
+        return rows;
+    }
+    public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categoriasrelacionadas VALUES (?,?)"); 
+        
+        pConsulta.setString(1,padre);
+        
+        pConsulta.setString(2, c);
+        
+        int rows = pConsulta.executeUpdate();
+        
+        
+        boolean resultado;
+        if(rows>0){
+            resultado = true;
+        }else{
+            resultado = false;
+        }
+        
+        //conexion.cerrar();
+        
+        conn.close();
+        
+        return resultado;
+        
+        
+    }
+    public ArrayList existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("SELECT * FROM categorias WHERE nombre=?"); 
+        
+        pConsulta.setString(1,c);
+        
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        ArrayList cates = new ArrayList();
+        
+        while(rs.next()){
+            Categoria categoria = new Categoria(rs.getString("categoriaHija"), new ArrayList());
+            cates.add(categoria);
+            //indice++;
+        }
+            
+        rs.close();
+        
+        //conexion.cerrar();
+        
+        conn.close();
+        
+        return cates;
     }
     
 }
