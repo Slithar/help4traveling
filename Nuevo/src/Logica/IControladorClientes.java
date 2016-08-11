@@ -6,6 +6,7 @@
 package Logica;
 import java.io.IOException;
 import java.sql.*;
+import java.time.*;
 
 /**
  *
@@ -14,6 +15,6 @@ import java.sql.*;
 public interface IControladorClientes {
     public abstract boolean correoValido(String correo);
     public abstract boolean copiarPerfil(String nickname, String rutaImagen) throws IOException;
-    public abstract boolean existeNickname(Usuario c) throws SQLException, ClassNotFoundException;
-    public abstract void agregarCliente(Usuario c) throws SQLException, ClassNotFoundException;
+    public abstract boolean existeNickname(String c) throws SQLException, ClassNotFoundException;
+    public abstract void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac,String rutaImagen) throws SQLException, ClassNotFoundException;
 }

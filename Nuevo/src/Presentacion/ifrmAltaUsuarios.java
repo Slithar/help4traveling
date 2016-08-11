@@ -565,12 +565,12 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         if(imagenCorrecta){
 
                             try{
-                               if(clientesHandler.existeNickname((Cliente) nuevoUsuario)){
+                               if(iccli.existeNickname(txtNickname.getText())){
                                     JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                     txtNickname.requestFocus();
                                 }
                                else{
-                                    clientesHandler.agregarCliente(nuevoUsuario);
+                                   iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
                                     JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                     limpiar();
                                }

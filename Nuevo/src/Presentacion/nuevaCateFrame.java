@@ -31,8 +31,8 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         try{
         llenarArbol("", null);
         }catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -149,37 +149,54 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         ControladorCategorias CC = new ControladorCategorias();
         String elegido="";
+        boolean resultado=false;
         TreePath[] paths = newCategoriaTree.getSelectionPaths();
         if(paths != null){
             for (TreePath path : paths) {
                    Object P = path.getLastPathComponent();
                    elegido = P.toString();
             }
-            Categoria catAgregar = new Categoria();
-            catAgregar.setNombre(txtNombreCat.getText());
+           String catAgregar = txtNombreCat.getText();
+            
             try {
-                boolean resultado = CC.agregarNuevaCategoriaHija(catAgregar,elegido );
-                if(resultado == true){
-                   JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
-                   this.llenarArbol("", null);
-                }
+                resultado = CC.agregarNuevaCategoriaHija(catAgregar,elegido );
+                System.out.println("Primer try");
+                txtNombreCat.setText(null);
             } catch (SQLException ex) {
-                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                txtNombreCat.setText(null);
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if(resultado == true){
+                   JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
+                try {
+                    this.llenarArbol("", null);
+                    System.out.println("Segundo try");
+                    txtNombreCat.setText(null);
+                } catch (SQLException ex) {
+                    txtNombreCat.setText(null);
+                    JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la acción solicitada","ERROR",JOptionPane.ERROR_MESSAGE);
+                    //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
         }
         else{
-            Categoria catAgregar = new Categoria();
-            catAgregar.setNombre(txtNombreCat.getText());
+            String catAgregar = txtNombreCat.getText();
             try {
-               boolean resultado = CC.agregarNuevaCategoriaPadre(catAgregar);
+               resultado = CC.agregarNuevaCategoriaPadre(catAgregar);
                if(resultado == true){
                    JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
                    this.llenarArbol("", null);
+                   txtNombreCat.setText(null);
                }
             } catch (SQLException ex) {
-                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la accion solicitada.","ERROR",JOptionPane.ERROR_MESSAGE);
+                txtNombreCat.setText(null);
+                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -187,15 +204,6 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAgregarCatActionPerformed
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
-        /*DefaultMutableTreeNode root = new DefaultMutableTreeNode("1");
-        DefaultMutableTreeNode segundo = new DefaultMutableTreeNode("2");
-        DefaultMutableTreeNode tercero = new DefaultMutableTreeNode("3");
-        DefaultMutableTreeNode cuarto = new DefaultMutableTreeNode("4");
-        root.add(segundo);
-        root.add(tercero);
-        tercero.add(cuarto);
-        DefaultTreeModel treeModel = new DefaultTreeModel(root);
-        treeCategorias.setModel(treeModel);*/
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
         ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
@@ -208,7 +216,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
             }
         }
         else{
-            ArrayList categoriasPadres = categoriasHandler.getCategoriasHijas(new Categoria(padre, new ArrayList()));
+            ArrayList categoriasPadres = categoriasHandler.getCategoriasHijas((padre));
             for(int i = 0; i < categoriasPadres.size(); i++){
                 DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
                 nodoPadre.add(nodosSuperiores);

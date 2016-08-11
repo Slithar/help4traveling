@@ -37,10 +37,10 @@ public class ControladorCategorias implements IControladorCategorias{
     }
     
     @Override
-    public ArrayList getCategoriasHijas(Categoria c) throws SQLException, ClassNotFoundException{
+    public ArrayList getCategoriasHijas(String c) throws SQLException, ClassNotFoundException{
         categorias = new DatosCategorias();
         
-        ArrayList<Categoria> categoriasPadres = categorias.selectCategoriasHijas(c.getNombre());
+        ArrayList<Categoria> categoriasPadres = categorias.selectCategoriasHijas(c);
         ArrayList<String> resultado = new ArrayList();
         
         for(int i = 0; i < categoriasPadres.size(); i++){
@@ -51,9 +51,9 @@ public class ControladorCategorias implements IControladorCategorias{
         
     }    
     @Override
-    public boolean agregarNuevaCategoriaPadre(Categoria c) throws SQLException, ClassNotFoundException{
+    public boolean agregarNuevaCategoriaPadre(String c) throws SQLException, ClassNotFoundException{
         categorias = new DatosCategorias();
-        int rows = categorias.agregarCategoriaPadre(c.getNombre());
+        int rows = categorias.agregarCategoriaPadre(c);
         if(rows>0){
             boolean resultado = true;
             return resultado;
@@ -64,9 +64,9 @@ public class ControladorCategorias implements IControladorCategorias{
     }
     
     @Override
-    public boolean agregarNuevaCategoriaHija(Categoria c, String padre) throws SQLException,ClassNotFoundException{
+    public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
        categorias = new DatosCategorias();
-       ArrayList existeCate = categorias.existeCategoria(c.getNombre());
+       ArrayList existeCate = categorias.existeCategoria(c);
        boolean existe;
        if(!existeCate.isEmpty()){
            existe = true;
@@ -74,11 +74,11 @@ public class ControladorCategorias implements IControladorCategorias{
            existe= false;
        }
        if(existe==true){
-       boolean resultado = categorias.agregarNuevaCategoriaHija(c.getNombre(), padre);
+       boolean resultado = categorias.agregarNuevaCategoriaHija(c, padre);
        return resultado;
        }else{
-           categorias.agregarCategoriaPadre(c.getNombre());
-           boolean resultado = categorias.agregarNuevaCategoriaHija(c.getNombre(), padre);
+           categorias.agregarCategoriaPadre(c);
+           boolean resultado = categorias.agregarNuevaCategoriaHija(c, padre);
            return resultado;
        }
     }

@@ -150,7 +150,7 @@ public class DatosCategorias {
         while(rs.next()){
             Categoria categoria = new Categoria(rs.getString("categoriaHija"), new ArrayList());
             cates.add(categoria);
-            //indice++;
+            //indice 
         }
             
         rs.close();

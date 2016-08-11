@@ -7,6 +7,7 @@ package Logica;
 import Datos.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 
 /**
  *
@@ -39,21 +40,21 @@ public class ControladorClientes implements IControladorClientes{
         
     }
     @Override
-    public boolean existeNickname(Usuario c) throws SQLException, ClassNotFoundException{
+    public boolean existeNickname(String c) throws SQLException, ClassNotFoundException{
         
         DatosUsuarios cliente = new DatosUsuarios();
-        if(cliente.selectCountUsuarios(c.getNickname()) == 0)
+        if(cliente.selectCountUsuarios(c) == 0)
             return false;
         else
             return true;              
     }
     
     @Override
-    public void agregarCliente(Usuario c) throws SQLException, ClassNotFoundException{
+    public void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException{
         DatosClientes cliente = new DatosClientes();
-        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());
-        if(c.getImagenUsuario().getPath() != "perfiles/perfil.PNG"){
-            cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());
+        cliente.insertar(nickname, nombre,apellido, mail, FechaNac.toString());
+        if(rutaImagen != "perfiles/perfil.PNG"){
+            cliente.agregarImagen(nickname, rutaImagen);
         }
     }
     
