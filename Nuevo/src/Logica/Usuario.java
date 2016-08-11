@@ -22,6 +22,7 @@ public class Usuario {
     private LocalDate fechaNac;
     private Imagen imagenUsuario;
     
+        
     public Usuario(){
         nickname = "";
         nombre = "";

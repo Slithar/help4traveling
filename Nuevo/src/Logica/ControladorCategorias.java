@@ -5,6 +5,7 @@
  */
 package Logica;
 import java.util.*;
+import java.sql.*;
 import Datos.DatosCategorias;
 import java.sql.ResultSet;
 import java.sql.SQLException;

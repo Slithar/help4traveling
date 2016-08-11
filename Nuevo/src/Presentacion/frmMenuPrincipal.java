@@ -90,7 +90,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         btnNuevaCat.setText("Categoria");
         btnNuevaCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevaCatActionPerformed(evt);
+                NuevaCatActionPerformed(evt);
             }
         });
         mRegistros.add(btnNuevaCat);
@@ -169,12 +169,22 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
+        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_miSalirActionPerformed
 
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_miActualizarReservaActionPerformed
+
+    private void NuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaCatActionPerformed
+        // TODO add your handling code here:
+        /*Acá creo la instancia de agregar Categoría.
+        Tampoco anda acá.*/
+        nuevaCateFrame agregar = new nuevaCateFrame();
+        add(agregar);
+        agregar.setVisible(true);
+    }//GEN-LAST:event_NuevaCatActionPerformed
 
     private void miRegUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegUsuariosActionPerformed
         // TODO add your handling code here:
