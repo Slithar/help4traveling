@@ -19,8 +19,6 @@ public class DatosClientes {
     }
    
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
-        //Connection conn = conexion.conectar();
-        
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
@@ -37,12 +35,11 @@ public class DatosClientes {
         
         pConsulta.executeUpdate();
         
+        //conexion.cerrar();
         conn.close();
     }
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
-        //Connection conn = conexion.conectar();
-        
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
@@ -56,6 +53,7 @@ public class DatosClientes {
         
         pConsulta.executeUpdate();
         
+        //conexion.cerrar();
         conn.close();
     }
     

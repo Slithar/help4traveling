@@ -23,7 +23,6 @@ public class DatosUsuarios {
        // Statement st = null;
         
                 
-        //Connection conn = conexion.conectar();
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();

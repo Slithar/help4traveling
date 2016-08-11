@@ -26,8 +26,6 @@ public class DatosCategorias {
         
         ArrayList<Categoria> resultado = new ArrayList();
         
-        //Connection conn = conexion.conectar();
-        
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
@@ -45,6 +43,7 @@ public class DatosCategorias {
         }
         
         rs.close();
+        //conexion.cerrar();
         conn.close();
         
         return resultado;
@@ -54,8 +53,6 @@ public class DatosCategorias {
         //int indice = 0;
         
         ArrayList<Categoria> resultado = new ArrayList();
-        
-        //Connection conn = conexion.conectar();
         
         Connection conn;
         
@@ -76,16 +73,18 @@ public class DatosCategorias {
         }
         
         rs.close();
+        //conexion.cerrar();
         conn.close();
         
         return resultado;
     }
+
+
     
     public int agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
+        Connection conn;
         
         ConexionBD conexion = new ConexionBD();
-        
-        Connection conn;
         
         conn = conexion.conectar();
         
@@ -98,14 +97,13 @@ public class DatosCategorias {
         //conexion.cerrar();
         
         conn.close();
-        
+
         return rows;
     }
     public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
+        Connection conn;
         
         ConexionBD conexion = new ConexionBD();
-        
-        Connection conn;
         
         conn = conexion.conectar();
         
@@ -134,10 +132,9 @@ public class DatosCategorias {
         
     }
     public ArrayList existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Connection conn;
         
         ConexionBD conexion = new ConexionBD();
-        
-        Connection conn;
         
         conn = conexion.conectar();
         
@@ -164,5 +161,6 @@ public class DatosCategorias {
         
         return cates;
     }
+
     
 }

@@ -22,7 +22,7 @@ public class ConexionBD {
             try{
                 Class.forName("com.mysql.jdbc.Driver");
                 
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/help4traveling", "help4traveling", "help4traveling");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/help4traveling?autoReconnect=true", "help4traveling", "help4traveling");
             }
             catch(SQLException ex){
                 throw new SQLException(ex);
