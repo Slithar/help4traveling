@@ -31,7 +31,8 @@ public class DatosClientes {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
@@ -44,7 +45,8 @@ public class DatosClientes {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
 }

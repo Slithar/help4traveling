@@ -34,7 +34,8 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarDatosProveedor(String nickname, String nombreEmpresa, String link) throws SQLException, ClassNotFoundException{
@@ -48,7 +49,8 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
@@ -61,7 +63,8 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
     }
     
     public int selectCountNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
@@ -80,7 +83,8 @@ public class DatosProveedores {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return cant;
     }
@@ -103,7 +107,9 @@ public class DatosProveedores {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        
+        conn.close();
         
         return proveedores;
         

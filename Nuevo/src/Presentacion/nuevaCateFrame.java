@@ -159,7 +159,8 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                 boolean resultado = CC.agregarNuevaCategoriaHija(catAgregar,elegido );
                 if(resultado == true){
                    JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
-               }
+                   this.llenarArbol("", null);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -173,6 +174,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                boolean resultado = CC.agregarNuevaCategoriaPadre(catAgregar);
                if(resultado == true){
                    JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
+                   this.llenarArbol("", null);
                }
             } catch (SQLException ex) {
                 Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);

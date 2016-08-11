@@ -14,12 +14,47 @@ public class Servicio {
     private String descripcionServicio;
     private int precioServicio;
     private Proveedor proveedorServicio;
-    private ArrayList<Imagen> imagenesServicio;
+    private ArrayList<ImagenServicio> imagenesServicio;
     private ArrayList<Reserva> reservasServicio;
     private ArrayList<Promocion> promocionesServicio;
     private ArrayList<Categoria> categoriasServicio;
     private Ciudad origen;
     private Ciudad destino;
+
+    public Servicio() {
+        nombreServicio = "";
+        descripcionServicio = "";
+        precioServicio = 0;
+        proveedorServicio = new Proveedor();
+        imagenesServicio = new ArrayList<ImagenServicio>();
+        reservasServicio = new ArrayList<Reserva>();
+        promocionesServicio = new ArrayList<Promocion>();
+        categoriasServicio = new ArrayList<Categoria>();
+        origen = new Ciudad();
+        destino = new Ciudad();
+    }
+    
+    public Servicio(String nombreServicio, String descripcionServicio, int precioServicio, Proveedor proveedorServicio,ArrayList<ImagenServicio> imagenesServicio, ArrayList<Reserva> reservasServicio, ArrayList<Promocion> promocionesServicio, ArrayList<Categoria> categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){
+        this.nombreServicio = nombreServicio;
+        this.descripcionServicio = descripcionServicio;
+        this.precioServicio = precioServicio;
+        this.proveedorServicio = proveedorServicio;
+        this.imagenesServicio = imagenesServicio;
+        this.reservasServicio = reservasServicio;
+        this.promocionesServicio = promocionesServicio;
+        this.categoriasServicio = categoriasServicio;
+        this.origen = origen;
+        if(tieneDestino)
+            this.destino = destino;
+        else
+            this.destino = new Ciudad();
+        
+        System.out.println(this.destino.getNombre());                
+    }
+
+    /*public Servicio() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
     
     public ArrayList<Categoria> getCategoriasServicio() {
         return categoriasServicio;
@@ -86,11 +121,11 @@ public class Servicio {
         this.proveedorServicio = ProveedorServicio;
     }
 
-    public ArrayList<Imagen> getImagenesServicio() {
+    public ArrayList<ImagenServicio> getImagenesServicio() {
         return imagenesServicio;
     }
 
-    public void setImagenesServicio(ArrayList<Imagen> ImagenesServicio) {
+    public void setImagenesServicio(ArrayList<ImagenServicio> ImagenesServicio) {
         this.imagenesServicio = ImagenesServicio;
     }
 

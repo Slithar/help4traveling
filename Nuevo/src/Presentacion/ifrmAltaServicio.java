@@ -14,6 +14,13 @@ import Logica.ControladorProveedores;
 import java.sql.SQLException;
 import Logica.ControladorCategorias;
 import Logica.Categoria;
+import Logica.Ciudad;
+import Logica.ImagenServicio;
+import Logica.Proveedor;
+import Logica.Servicio;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -33,13 +40,19 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private String rutaImagen2 = "";
     private String rutaImagen3 = "";
     
+    private ControladorProveedores proveedores = new ControladorProveedores();
+    
     //private JLabel lblSeleccionado;
     
     private JMenuItem miEliminar1 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar2 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar3 = new JMenuItem("Eliminar");
     
-    private JFrame visor;
+    private JMenuItem miEliminarCategoria = new JMenuItem("Eliminar");
+    
+    private String rutaCategoria = "";
+    
+    private frmVisor visor;
      
     
     public ifrmAltaServicio() {
@@ -50,7 +63,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         
-        ControladorProveedores proveedores = new ControladorProveedores();
+        
         
         //cmbCiudadOrigen.setFont(new Font("Tahoma", 11, Font.PLAIN));
         
@@ -61,8 +74,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             llenarArbol("", null);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -85,6 +98,75 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         ImageIcon iconoCategoria = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
         ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
         lblAgregarCategoria.setIcon(iconoDimensionado);
+        
+        //limpiar();
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        lstCategorias.setModel(modeloLista);
+        
+        agregarPopup(4);
+               
+    }
+    
+    public void limpiar(){
+        txtNombreServicio.setText("");
+        areaDescripcion.setText("");
+        txtPrecio.setText("");        
+        
+        if(lblImagen3 != null){
+            lblImagen3.setVisible(false);
+            lblImagen3 = null;
+            rutaImagen3 = "";
+            
+            if(lblImagen2 != null){
+                lblImagen2.setVisible(false);
+                lblImagen2 = null;
+                rutaImagen2 = "";
+            }
+        }
+        else if(lblImagen2 != null){
+            lblImagen2.setVisible(false);
+            lblImagen2 = null;
+            rutaImagen2 = ""; 
+        }
+        
+        
+        
+               
+        
+        rutaImagen1 = "";
+        
+        /*lblImagen1.setSize(143, 143);
+        panelImagenes.add(lblImagen1);
+        lblImagen1.setLocation(0, 0);
+        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
+        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+        //agregarPopup(1);
+        
+        //lblImagen1.addMouseListener(new OyenteLabel(this));
+               
+        txtPrecio.setText("");
+        cmbCiudadOrigen.setSelectedIndex(0);
+        cmbCiudadDestino.setSelectedIndex(0);
+        cmbProveedor.setSelectedIndex(0);
+        try{
+            llenarArbol("", null);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        lstCategorias.setModel(modeloLista);
+        
+        txtNombreServicio.requestFocus();
+        
+        //agregarPopup(4);
+        
     }
     
     public void agregarPopup(int sub){
@@ -110,6 +192,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             miEliminar3.addActionListener(new OyentePopup());
             eliminarImagen3.add(miEliminar3);
             lblImagen3.setComponentPopupMenu(eliminarImagen3);
+        }
+        else if(sub == 4){
+            JPopupMenu eliminarCategoria = new JPopupMenu();
+            miEliminarCategoria.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminarCategoria.addActionListener(new OyentePopup());
+            eliminarCategoria.add(miEliminarCategoria);
+            lstCategorias.setComponentPopupMenu(eliminarCategoria);
         }
     }
     
@@ -217,10 +306,14 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 }
                 else{
                     if((JLabel) e.getSource() == lblImagen1)
-                        visor = new JFrame(rutaImagen1);
+                        visor = new frmVisor(rutaImagen1);
+                    else if((JLabel) e.getSource() == lblImagen2)
+                        visor = new frmVisor(rutaImagen2);
+                    else if((JLabel) e.getSource() == lblImagen3)
+                        visor = new frmVisor(rutaImagen3);
                     
                     //visor.setUndecorated(true);
-                    visor.setBackground(Color.WHITE);
+                    //visor.setUndecorated(true);
                     visor.setBounds(515, 200, 900, 600);
                     visor.setVisible(true);
                 }
@@ -326,20 +419,18 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
                 rutaImagen3 = "";
             }
+            else if(e.getSource() == miEliminarCategoria){
+                
+                DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                modelo.remove(lstCategorias.getSelectedIndex());
+                lstCategorias.setModel(modelo);
+            }
         }
         
     }
     
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
-        /*DefaultMutableTreeNode root = new DefaultMutableTreeNode("1");
-        DefaultMutableTreeNode segundo = new DefaultMutableTreeNode("2");
-        DefaultMutableTreeNode tercero = new DefaultMutableTreeNode("3");
-        DefaultMutableTreeNode cuarto = new DefaultMutableTreeNode("4");
-        root.add(segundo);
-        root.add(tercero);
-        tercero.add(cuarto);
-        DefaultTreeModel treeModel = new DefaultTreeModel(root);
-        treeCategorias.setModel(treeModel);*/
+        
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
         ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
@@ -376,7 +467,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         panelDatos = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        txtNickname = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         lblEmpresa = new javax.swing.JLabel();
         lblSitioWeb = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -398,6 +489,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstCategorias = new javax.swing.JList<>();
         lblAgregarCategoria = new javax.swing.JLabel();
+        lblSitioWeb3 = new javax.swing.JLabel();
+        txtNombreServicio = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -416,7 +509,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Nombre del servicio:");
 
-        txtNickname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPrecio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         lblEmpresa.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblEmpresa.setText("Imágenes:");
@@ -448,6 +541,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setText("Categorías:");
 
+        treeCategorias.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                treeCategoriasValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(treeCategorias);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -477,7 +575,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(101, 101, 101)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBotonesLayout.setVerticalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,6 +611,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             }
         });
 
+        lblSitioWeb3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblSitioWeb3.setText("Precio (En U$S):");
+
+        txtNombreServicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
@@ -521,32 +624,40 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(lblEmpresa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 498, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSitioWeb)
+                            .addComponent(lblSitioWeb3))
+                        .addGap(81, 81, 81)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE))
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(cmbCiudadOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(26, 26, 26))))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblSitioWeb2)
                                 .addGap(112, 112, 112)
                                 .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(52, 52, 52)
-                                .addComponent(txtNickname))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
-                                .addComponent(lblSitioWeb)
-                                .addGap(90, 90, 90)
-                                .addComponent(cmbCiudadOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblSitioWeb1)
                                 .addGap(83, 83, 83)
                                 .addComponent(cmbCiudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(36, 36, 36)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(lblEmpresa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEmpresa1)
                     .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -555,7 +666,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                             .addComponent(jLabel13)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
+                        .addGap(101, 101, 101)
                         .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34))
             .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -566,27 +677,33 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addComponent(jLabel13)
+                    .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(lblEmpresa)
                         .addGap(18, 18, 18)
-                        .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(lblEmpresa1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(lblEmpresa1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSitioWeb3)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb)
                             .addComponent(cmbCiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -597,9 +714,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGap(21, 21, 21)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb2)
-                            .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                            .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -609,18 +725,195 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        //System.out.println("Precio (en U$S): " + txtPrecio.getText());
+        DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+        if(txtNombreServicio.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNombreServicio.requestFocus();
+        }
+        else if(areaDescripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado la descripción del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            areaDescripcion.requestFocus();
+        }
+        else if(txtPrecio.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el precio del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPrecio.requestFocus();
+        }
+        else if(!esNumerico(txtPrecio.getText())){
+            JOptionPane.showMessageDialog(this, "El precio ingresado para el nuevo servicio presenta un formato no válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPrecio.requestFocus();
+        }
+        else if(cmbCiudadOrigen.getSelectedItem().equals(cmbCiudadDestino.getSelectedItem())){
+            JOptionPane.showMessageDialog(this, "La ciudad de orígen no puede ser la misma que la ciudad destino", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            cmbCiudadOrigen.requestFocus();
+        }
+        else{
+            
+            if(modelo.getSize() == 0){
+               JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna categoría para el nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE); 
+            }
+            else{
+                try {
+                    if(proveedores.existeNombreServicio(txtNombreServicio.getText())){
+                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        txtNombreServicio.requestFocus();
+                    }
+                    else{
+                        String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
+                        String[] ciudad = cOrigen.split(" ");
+                        
+                        Ciudad ciudadOrigen = new Ciudad();
+                        ciudadOrigen.setNombre(ciudad[0]);
+                        
+                        ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
+                        if(rutaImagen1 != ""){
+                            imagenes.add(new ImagenServicio(rutaImagen1, new Servicio()));
+                            
+                            if(rutaImagen2 != ""){
+                                imagenes.add(new ImagenServicio(rutaImagen2, new Servicio()));
+                                
+                                if(rutaImagen3 != ""){
+                                    imagenes.add(new ImagenServicio(rutaImagen3, new Servicio()));
+                                }
+                            }
+                        }
+                        
+                        ArrayList<Categoria> categorias = obtenerCategorias(modelo);
+                        
+                        Proveedor proveedor = new Proveedor();
+                        
+                        proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
+                        
+                        boolean tieneDestino = false;
+                        
+                        Ciudad ciudadDestino;
+                        
+                        if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
+                            String cDestino = (String) cmbCiudadDestino.getSelectedItem();
+                            String[] ciudadD = cDestino.split(" ");
 
+                            ciudadDestino = new Ciudad();
+                            ciudadDestino.setNombre(ciudadD[0]);
+                            
+                            //System.out.println("Ciudad: " + ciudadD[0]);
+                            
+                            tieneDestino = true;
+                        }
+                        else{
+                            //System.out.println("entre aca");
+                            ciudadDestino = null;
+                        }
+                        
+                        for(int i = 0; i < imagenes.size(); i++){
+                            int numero = i + 1;
+                            imagenes.get(i).copiarImagen(txtNombreServicio.getText() + "-" + numero);
+                        }
+                        
+                        int precio = Integer.parseInt(txtPrecio.getText());
+                        
+                        //System.out.println(precio);
+                            
+                        Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        
+                        proveedores.agregarServicio(servicio);
+                        
+                        limpiar();
+                        JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                        
+                    }
+                }
+                catch(SQLException ex){
+                    //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                catch(ClassNotFoundException ex){
+                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Problema con las imágenes del servicio", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public ArrayList<Categoria> obtenerCategorias(DefaultListModel modelo){
+        ArrayList<Categoria> categorias = new ArrayList();
+        for(int i = 0; i < modelo.getSize(); i++){
+            String cat = (String) modelo.getElementAt(i);
+            int cant = contador(cat, '>');
+            String[] c = cat.split(">");
+            categorias.add(new Categoria((String) c[cant].trim(), new ArrayList()));
+        }
+        
+        return categorias;
+    }
+    
+    public int contador(String cadena, char letra){
+        int cant = 0;
+        
+        for(int i = 0; i < cadena.length(); i++){
+            if(cadena.charAt(i) == letra)
+                cant++;
+        }
+        
+        return cant;
+    }
+    
+    public boolean esNumerico(String txt){
+        try{
+            Integer.parseInt(txt);
+            return true;
+        }
+        catch(NumberFormatException ex){
+            return false;
+        }
+    }
+    
+    public boolean categoriaRepetida(DefaultListModel modelo, String categoria){
+        boolean repetido = false;
+        //System.out.println(modelo.getSize());
+        for(int i = 0; i < modelo.getSize(); i++){
+            //System.out.print(modelo.getElementAt(i) + " - " + rutaCategoria);
+            if(modelo.getElementAt(i).equals(rutaCategoria))
+                repetido = true;
+        }
+        //System.out.print("/");
+        return repetido;
+    }
+    
     private void lblAgregarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarCategoriaMouseClicked
         if(evt.getButton() == MouseEvent.BUTTON1){
+            DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+            if(categoriaRepetida(modelo, rutaCategoria)){
+                JOptionPane.showMessageDialog(this, "La categoría ya se encuentra agregada para el servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                modelo.addElement(rutaCategoria);                
+            }
+            lstCategorias.setModel(modelo);
+            
             
         }
     }//GEN-LAST:event_lblAgregarCategoriaMouseClicked
+
+    private void treeCategoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeCategoriasValueChanged
+        rutaCategoria = "";
+        TreePath path = evt.getPath();
+        Object[] nodos = path.getPath();
+        for(int i = 0; i < nodos.length; i++){
+            if(i != 0)
+                rutaCategoria = rutaCategoria + nodos[i].toString();
+            if(i < nodos.length-1 && i != 0)            
+                rutaCategoria = rutaCategoria + " > ";
+            
+        }
+        
+        //System.out.println(rutaCategoria);
+    }//GEN-LAST:event_treeCategoriasValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -643,11 +936,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSitioWeb;
     private javax.swing.JLabel lblSitioWeb1;
     private javax.swing.JLabel lblSitioWeb2;
+    private javax.swing.JLabel lblSitioWeb3;
     private javax.swing.JList<String> lstCategorias;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelImagenes;
     private javax.swing.JTree treeCategorias;
-    private javax.swing.JTextField txtNickname;
+    private javax.swing.JTextField txtNombreServicio;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

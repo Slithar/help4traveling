@@ -45,7 +45,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miSalir = new javax.swing.JMenuItem();
         mRegistros = new javax.swing.JMenu();
         miRegUsuarios = new javax.swing.JMenuItem();
-        catMenu = new javax.swing.JMenu();
         btnNuevaCat = new javax.swing.JMenuItem();
         mRegServicios = new javax.swing.JMenu();
         miRegServiciosNuevo = new javax.swing.JMenuItem();
@@ -88,17 +87,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         mRegistros.add(miRegUsuarios);
 
-        catMenu.setText("Categorías");
-
-        btnNuevaCat.setText("Nueva");
+        btnNuevaCat.setText("Categoria");
         btnNuevaCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevaCatActionPerformed(evt);
             }
         });
-        catMenu.add(btnNuevaCat);
-
-        mRegistros.add(catMenu);
+        mRegistros.add(btnNuevaCat);
 
         mRegServicios.setText("Servicios");
 
@@ -174,7 +169,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_miSalirActionPerformed
 
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
@@ -200,11 +195,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void btnNuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCatActionPerformed
         // TODO add your handling code here:
-        nuevaCateFrame frame = new nuevaCateFrame();
-        this.add(frame);
-        frame.setVisible(true);
+        nuevaCateFrame agregar = new nuevaCateFrame();
+        add(agregar);
+        agregar.setVisible(true);
     }//GEN-LAST:event_btnNuevaCatActionPerformed
-
+    
+        
     /**
      * @param args the command line arguments
      */
@@ -250,7 +246,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnNuevaCat;
-    private javax.swing.JMenu catMenu;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu mConsultas;
     private javax.swing.JMenu mInicio;

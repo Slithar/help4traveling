@@ -39,7 +39,8 @@ public class DatosCategorias {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
@@ -64,11 +65,15 @@ public class DatosCategorias {
         }
         
         rs.close();
-        conexion.cerrar();
+        //conexion.cerrar();
+        conn.close();
         
         return resultado;
     }
-    public boolean agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
+
+
+    
+    public int agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
         Connection conn = conexion.conectar();
         
         PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
@@ -77,13 +82,11 @@ public class DatosCategorias {
         
         int rows = pConsulta.executeUpdate();
         
-        if(rows>0){
-            boolean resultado = true;
-            return resultado;
-        }else{
-            boolean resultado = false;
-            return resultado;
-        }
+        //conexion.cerrar();
+        
+        conn.close();
+        
+        return rows;
     }
     public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
         Connection conn = conexion.conectar();
@@ -97,13 +100,46 @@ public class DatosCategorias {
         int rows = pConsulta.executeUpdate();
         
         
+        boolean resultado;
         if(rows>0){
-            boolean resultado = true;
-            return resultado;
+            resultado = true;
         }else{
-            boolean resultado = false;
-            return resultado;
+            resultado = false;
         }
+        
+        //conexion.cerrar();
+        
+        conn.close();
+        
+        return resultado;
+        
+        
+    }
+    public ArrayList existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Connection conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("SELECT * FROM categorias WHERE nombre=?"); 
+        
+        pConsulta.setString(1,c);
+        
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        ArrayList cates = new ArrayList();
+        
+        while(rs.next()){
+            Categoria categoria = new Categoria(rs.getString("categoriaHija"), new ArrayList());
+            cates.add(categoria);
+            //indice++;
+        }
+            
+        rs.close();
+        
+        //conexion.cerrar();
+        
+        conn.close();
+        
+        return cates;
     }
     
 }
