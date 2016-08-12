@@ -22,14 +22,14 @@ public class ControladorCategorias implements IControladorCategorias{
     }
     
     @Override
-    public ArrayList getCategoriasPadres() throws SQLException, ClassNotFoundException{
+    public ArrayList<DataCategoria> getCategoriasPadres() throws SQLException, ClassNotFoundException{
         categorias = new DatosCategorias();
         
         ArrayList<Categoria> categoriasPadres = categorias.selectCategoriasPadres();
-        ArrayList<String> resultado = new ArrayList();
+        ArrayList<DataCategoria> resultado = new ArrayList<DataCategoria>();
         
         for(int i = 0; i < categoriasPadres.size(); i++){
-            resultado.add(categoriasPadres.get(i).getNombre());
+            resultado.add(new DataCategoria(categoriasPadres.get(i).getNombre()));
         }
         
         return resultado;
@@ -37,14 +37,18 @@ public class ControladorCategorias implements IControladorCategorias{
     }
     
     @Override
-    public ArrayList getCategoriasHijas(String c) throws SQLException, ClassNotFoundException{
+    public ArrayList<DataCategoria> getCategoriasHijas(String c) throws SQLException, ClassNotFoundException{
+        
+        Categoria cat = new Categoria();
+        cat.setNombre(c);
+        
         categorias = new DatosCategorias();
         
-        ArrayList<Categoria> categoriasPadres = categorias.selectCategoriasHijas(c);
-        ArrayList<String> resultado = new ArrayList();
+        ArrayList<Categoria> categoriasPadres = categorias.selectCategoriasHijas(cat.getNombre());
+        ArrayList<DataCategoria> resultado = new ArrayList<DataCategoria>();
         
         for(int i = 0; i < categoriasPadres.size(); i++){
-            resultado.add(categoriasPadres.get(i).getNombre());
+            resultado.add(new DataCategoria(categoriasPadres.get(i).getNombre()));
         }
         
         return resultado;

@@ -35,7 +35,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private String rutaImagen2 = "";
     private String rutaImagen3 = "";
     
-    private ControladorProveedores proveedores = new ControladorProveedores();
+    //private ControladorProveedores proveedores = new ControladorProveedores();
     
     //private JLabel lblSeleccionado;
     
@@ -50,14 +50,18 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private frmVisor visor;
     
     private IControladorProveedores icprov;
+    private IControladorCategorias iccat;
      
     
     public ifrmAltaServicio(){
         
     }
     
-    public ifrmAltaServicio(IControladorProveedores icprov) {
+    public ifrmAltaServicio(IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
+        this.icprov = icprov;
+        this.iccat = iccat;
+        
         this.setTitle("Registro de nuevo servicio");
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (800 - tamanioVentana.height)/2);
@@ -69,9 +73,9 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         //cmbCiudadOrigen.setFont(new Font("Tahoma", 11, Font.PLAIN));
         
         try{
-            cargarComboBox(cmbCiudadOrigen, proveedores.getCiudades(), false);
-            cargarComboBox(cmbCiudadDestino, proveedores.getCiudades(), true);
-            cargarComboBox(cmbProveedor, proveedores.getProveedores(), false);
+            cargarComboBoxCiudades(cmbCiudadOrigen, icprov.getCiudades(), false);
+            cargarComboBoxCiudades(cmbCiudadDestino, icprov.getCiudades(), true);
+            cargarComboBoxProveedores(cmbProveedor, icprov.getProveedores(), false);
             llenarArbol("", null);
         }
         catch(SQLException ex){
@@ -107,7 +111,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         agregarPopup(4);
         
-        this.icprov = icprov;
+        
                
     }
     
@@ -131,11 +135,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             lblImagen2.setVisible(false);
             lblImagen2 = null;
             rutaImagen2 = ""; 
-        }
-        
-        
-        
-               
+        }               
         
         rutaImagen1 = "";
         
@@ -205,9 +205,18 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
     }
     
-    public void cargarComboBox(JComboBox combo, ArrayList datos, boolean opcional){
+    public void cargarComboBoxCiudades(JComboBox combo, ArrayList<DataCiudad> datos, boolean opcional){
         for(int i = 0; i < datos.size(); i++){
-            combo.addItem(datos.get(i));
+            combo.addItem(datos.get(i).getNombre() + " (" + datos.get(i).getPais() + ")");
+        }
+        if(opcional){
+            combo.addItem("No corresponde");
+        }
+    }
+    
+    public void cargarComboBoxProveedores(JComboBox combo, ArrayList<DataProveedor> datos, boolean opcional){
+        for(int i = 0; i < datos.size(); i++){
+            combo.addItem(datos.get(i).getNombreEmpresa());
         }
         if(opcional){
             combo.addItem("No corresponde");
@@ -435,22 +444,22 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
-        ControladorCategorias categoriasHandler = new ControladorCategorias();
+        //ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
-            ArrayList categoriasPadres = categoriasHandler.getCategoriasPadres();
+            ArrayList<DataCategoria> categoriasPadres = iccat.getCategoriasPadres();
             //System.out.println(categoriasPadres.size());
             for(int i = 0; i < categoriasPadres.size(); i++){
-                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
+                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i).getNombre());
                 root.add(nodosSuperiores);
-                llenarArbol((String) categoriasPadres.get(i), nodosSuperiores);
+                llenarArbol((String) categoriasPadres.get(i).getNombre(), nodosSuperiores);
             }
         }
         else{
-            ArrayList categoriasPadres = categoriasHandler.getCategoriasHijas(new Categoria(padre, new ArrayList()));
-            for(int i = 0; i < categoriasPadres.size(); i++){
-                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
+            ArrayList<DataCategoria> categoriasHijas = iccat.getCategoriasHijas(padre);
+            for(int i = 0; i < categoriasHijas.size(); i++){
+                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasHijas.get(i).getNombre());
                 nodoPadre.add(nodosSuperiores);
-                llenarArbol((String) categoriasPadres.get(i), nodosSuperiores);
+                llenarArbol(categoriasHijas.get(i).getNombre(), nodosSuperiores);
             }
         }
         
@@ -574,10 +583,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         panelBotonesLayout.setHorizontalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addGap(268, 268, 268)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
+                .addGap(256, 256, 256)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBotonesLayout.setVerticalGroup(
@@ -762,7 +771,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             }
             else{
                 try {
-                    if(proveedores.existeNombreServicio(txtNombreServicio.getText())){
+                    if(icprov.existeNombreServicio(txtNombreServicio.getText())){
                         JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         txtNombreServicio.requestFocus();
                     }
@@ -770,38 +779,45 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
                         String[] ciudad = cOrigen.split(" ");
                         
-                        Ciudad ciudadOrigen = new Ciudad();
-                        ciudadOrigen.setNombre(ciudad[0]);
+                        //Ciudad ciudadOrigen = new Ciudad();
+                        //ciudadOrigen.setNombre(ciudad[0]);
+                        String ciudadOrigen = ciudad[0];
                         
-                        ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
+                        ArrayList<String> imagenes = new ArrayList<String>();
                         if(rutaImagen1 != ""){
-                            imagenes.add(new ImagenServicio(rutaImagen1, new Servicio()));
+                            imagenes.add(rutaImagen1);
                             
                             if(rutaImagen2 != ""){
-                                imagenes.add(new ImagenServicio(rutaImagen2, new Servicio()));
+                                imagenes.add(rutaImagen2);
                                 
                                 if(rutaImagen3 != ""){
-                                    imagenes.add(new ImagenServicio(rutaImagen3, new Servicio()));
+                                    imagenes.add(rutaImagen3);
                                 }
                             }
                         }
                         
-                        ArrayList<Categoria> categorias = obtenerCategorias(modelo);
+                        ArrayList<String> categorias = obtenerCategorias(modelo);
                         
-                        Proveedor proveedor = new Proveedor();
+                        //Proveedor proveedor = new Proveedor();
                         
-                        proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
+                        //proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
+                        
+                        String proveedor = (String) cmbProveedor.getSelectedItem();
+                        
+                        
                         
                         boolean tieneDestino = false;
                         
-                        Ciudad ciudadDestino;
+                        String ciudadDestino;
                         
                         if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
                             String cDestino = (String) cmbCiudadDestino.getSelectedItem();
                             String[] ciudadD = cDestino.split(" ");
 
-                            ciudadDestino = new Ciudad();
-                            ciudadDestino.setNombre(ciudadD[0]);
+                            //ciudadDestino = new Ciudad();
+                            //ciudadDestino.setNombre(ciudadD[0]);
+                            
+                            ciudadDestino = ciudadD[0];
                             
                             //System.out.println("Ciudad: " + ciudadD[0]);
                             
@@ -809,21 +825,22 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         }
                         else{
                             //System.out.println("entre aca");
-                            ciudadDestino = null;
+                            ciudadDestino = "";
                         }
                         
                         for(int i = 0; i < imagenes.size(); i++){
                             int numero = i + 1;
-                            imagenes.get(i).copiarImagen(txtNombreServicio.getText() + "-" + numero);
+                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + numero);
+                            imagenes.set(i, "../Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + numero + ".jpg");
                         }
                         
                         int precio = Integer.parseInt(txtPrecio.getText());
                         
                         //System.out.println(precio);
                             
-                        Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        //Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         
-                        proveedores.agregarServicio(servicio);
+                        icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         
                         limpiar();
                         JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
@@ -843,13 +860,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
     
-    public ArrayList<Categoria> obtenerCategorias(DefaultListModel modelo){
-        ArrayList<Categoria> categorias = new ArrayList();
+    public ArrayList<String> obtenerCategorias(DefaultListModel modelo){
+        ArrayList<String> categorias = new ArrayList();
         for(int i = 0; i < modelo.getSize(); i++){
             String cat = (String) modelo.getElementAt(i);
             int cant = contador(cat, '>');
             String[] c = cat.split(">");
-            categorias.add(new Categoria((String) c[cant].trim(), new ArrayList()));
+            categorias.add((String) c[cant].trim());
         }
         
         return categorias;

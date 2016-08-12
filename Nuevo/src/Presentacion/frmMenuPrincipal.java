@@ -208,9 +208,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void miRegServiciosNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosNuevoActionPerformed
         
-        ifrmAltaServicio vAltaServicio = new ifrmAltaServicio();
+        //System.out.println("1");
+        ifrmAltaServicio vAltaServicio = new ifrmAltaServicio(icprov, iccat);
+        //System.out.println("1");
         nuevoPanel.add(vAltaServicio);
+        //System.out.println("1");
         vAltaServicio.show();
+        //System.out.println("1");
         
     }//GEN-LAST:event_miRegServiciosNuevoActionPerformed
 

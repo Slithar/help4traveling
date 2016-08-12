@@ -388,11 +388,11 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         panelSurLayout.setHorizontalGroup(
             panelSurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSurLayout.createSequentialGroup()
-                .addContainerGap(273, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86)
+                .addContainerGap(235, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209))
+                .addGap(82, 82, 82)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(251, 251, 251))
         );
         panelSurLayout.setVerticalGroup(
             panelSurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

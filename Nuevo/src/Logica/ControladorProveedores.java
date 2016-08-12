@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.*;
 
 /**
  *
@@ -37,6 +41,7 @@ public class ControladorProveedores implements IControladorProveedores{
     @Override
     public boolean correoValido(String correo){
         Proveedor p = new Proveedor();
+        p.setEmail(correo);
         
         return p.correoValido();
     }
@@ -89,14 +94,14 @@ public class ControladorProveedores implements IControladorProveedores{
     }
     
     @Override
-    public ArrayList getCiudades() throws SQLException, ClassNotFoundException{
+    public ArrayList<DataCiudad> getCiudades() throws SQLException, ClassNotFoundException{
         DatosCiudades ciudades = new DatosCiudades();
         
         ArrayList<Ciudad> arrayCiudades = ciudades.selectAllCiudades();
-        ArrayList resultado = new ArrayList();
+        ArrayList<DataCiudad> resultado = new ArrayList();
         
         for(int i = 0; i < arrayCiudades.size(); i++){
-            resultado.add(i, arrayCiudades.get(i).getNombre() + " (" + arrayCiudades.get(i).getPais().getNombre() + ")");
+            resultado.add(i, new DataCiudad(arrayCiudades.get(i).getNombre(), arrayCiudades.get(i).getPais().getNombre()));
         }
         
         return resultado;
@@ -104,14 +109,17 @@ public class ControladorProveedores implements IControladorProveedores{
     }
     
     @Override
-    public ArrayList getProveedores() throws SQLException, ClassNotFoundException{
+    public ArrayList<DataProveedor> getProveedores() throws SQLException, ClassNotFoundException{
         DatosProveedores proveedores = new DatosProveedores();
         
         ArrayList<Proveedor> arrayProveedores = proveedores.selectAllProveedores();
-        ArrayList resultado = new ArrayList();
+        ArrayList<DataProveedor> resultado = new ArrayList();
         
         for(int i = 0; i < arrayProveedores.size(); i++){
-            resultado.add(i, arrayProveedores.get(i).getNombreEmpresa());
+            String nombreEmpresa = arrayProveedores.get(i).getNombreEmpresa();
+            DataProveedor dp = new DataProveedor();
+            dp.setNombreEmpresa(nombreEmpresa);
+            resultado.add(dp);
         }
         
         return resultado;
@@ -119,25 +127,47 @@ public class ControladorProveedores implements IControladorProveedores{
     
     @Override
     public boolean existeNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
+        
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        
         DatosServicios servicios = new DatosServicios();
         
-        if(servicios.selectCountNombreServicio(nombre) == 0)
+        if(servicios.selectCountNombreServicio(s.getNombreServicio()) == 0)
             return false;
         else
             return true;
     }
     
     @Override
-    public void agregarServicio(Servicio s) throws SQLException, ClassNotFoundException{
+    public void agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+        
+        Proveedor prov = new Proveedor();
+        prov.setNombreEmpresa(nombreProveedor);
+        
+        ArrayList<ImagenServicio> imagenesServicio = new ArrayList<ImagenServicio>();
+        ArrayList<Categoria> categoriasServicio = new ArrayList<Categoria>();
+        
+        for(int i = 0; i < imagenes.size(); i++){
+            imagenesServicio.add(new ImagenServicio(imagenes.get(i), new Servicio()));            
+        }
+        
+        for(int i = 0; i < categorias.size(); i++){
+            //JOptionPane.showMessageDialog(null, categorias.get(i));
+            categoriasServicio.add(new Categoria(categorias.get(i), new ArrayList()));
+        }
+        
+        Servicio s = new Servicio(nombre, descripcion, precio, prov, imagenesServicio, reservas, promociones, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()),  new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);  
+        
         
         DatosServicios servicios = new DatosServicios();
         
-        boolean tieneDestino = true;
+        boolean hayDestino = true;
         
         if(s.getDestino().getNombre().equals("No"))
-            tieneDestino = false;
+            hayDestino = false;
         else
-            tieneDestino = true;
+            hayDestino = true;
         
         //System.out.println(s.getDestino().getNombre());
         
@@ -146,20 +176,39 @@ public class ControladorProveedores implements IControladorProveedores{
         else
             System.out.println("destino no");*/
         
+        
+        //JOptionPane.showMessageDialog(null, s.getProveedorServicio().getNombreEmpresa());
+        
         servicios.insertar(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), tieneDestino);
         
-        ArrayList<Categoria> categoriasServicio = s.getCategoriasServicio();
+        
+        
+        //ArrayList<Categoria> categoriasServicio = s.getCategoriasServicio();
+        categoriasServicio = s.getCategoriasServicio();
         
         for(int i = 0; i < categoriasServicio.size(); i++){
+            //JOptionPane.showMessageDialog(null, categoriasServicio.get(i).getNombre());
             servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre());
         }
         
-        ArrayList<ImagenServicio> imagenes = s.getImagenesServicio();
+        //ArrayList<ImagenServicio> imagenes = s.getImagenesServicio();
+        imagenesServicio = s.getImagenesServicio();
         
-        for(int i = 0; i <imagenes.size(); i++){
-            servicios.agregarImagen(imagenes.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        for(int i = 0; i <imagenesServicio.size(); i++){
+            servicios.agregarImagen(imagenesServicio.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
         }
         
+    }
+    
+    @Override
+    public void copiarImagenServicio(String nombreActual, String nombreDestino) throws IOException{
+        ImagenServicio is = new ImagenServicio(nombreActual, new Servicio());
+        //try {
+        is.copiarImagen(nombreDestino);
+        //} catch (IOException ex) {
+            //Logger.getLogger(ControladorProveedores.class.getName()).log(Level.SEVERE, null, ex);
+            //throws ex;
+        //}
     }
     
 }

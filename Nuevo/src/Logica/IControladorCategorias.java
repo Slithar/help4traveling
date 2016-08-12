@@ -13,8 +13,8 @@ import java.util.*;
  */
 public interface IControladorCategorias {
     
-    public abstract ArrayList getCategoriasPadres() throws SQLException, ClassNotFoundException;
-    public abstract ArrayList getCategoriasHijas(String c) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataCategoria> getCategoriasPadres() throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataCategoria> getCategoriasHijas(String c) throws SQLException, ClassNotFoundException;
     public abstract boolean agregarNuevaCategoriaPadre(String c) throws SQLException, ClassNotFoundException;
     public abstract boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException, ClassNotFoundException;
     
