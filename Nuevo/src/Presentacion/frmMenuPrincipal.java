@@ -116,6 +116,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mRegServicios.add(miRegServiciosNuevo);
 
         miRegServiciosActualizar.setText("Actualizar");
+        miRegServiciosActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegServiciosActualizarActionPerformed(evt);
+            }
+        });
         mRegServicios.add(miRegServiciosActualizar);
 
         mRegistros.add(mRegServicios);
@@ -224,6 +229,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         add(agregar);
         agregar.setVisible(true);
     }//GEN-LAST:event_miCategoriasActionPerformed
+
+    private void miRegServiciosActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosActualizarActionPerformed
+        ifrmActualizarServicio vActualizarServicio = new ifrmActualizarServicio(icprov, iccat);
+        nuevoPanel.add(vActualizarServicio);
+        vActualizarServicio.setVisible(true);
+    }//GEN-LAST:event_miRegServiciosActualizarActionPerformed
     
         
     /**

@@ -126,14 +126,17 @@ public class ControladorProveedores implements IControladorProveedores{
     }
     
     @Override
-    public boolean existeNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
+    public boolean existeNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
         
         Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
         s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
         
         DatosServicios servicios = new DatosServicios();
         
-        if(servicios.selectCountNombreServicio(s.getNombreServicio()) == 0)
+        if(servicios.selectCountNombreServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa()) == 0)
             return false;
         else
             return true;
@@ -225,6 +228,78 @@ public class ControladorProveedores implements IControladorProveedores{
             //Logger.getLogger(ControladorProveedores.class.getName()).log(Level.SEVERE, null, ex);
             //throws ex;
         //}
+    }
+    
+    @Override
+    public ArrayList<DataServicio> getServicios() throws SQLException, ClassNotFoundException{
+        DatosServicios servicios = new DatosServicios();
+        
+        ArrayList<Servicio> todosLosServicios = servicios.selectNombreServicios();
+        ArrayList<DataServicio> resultado = new ArrayList<DataServicio>();
+        
+        for(int i = 0; i < todosLosServicios.size(); i++){
+            DataServicio ds = new DataServicio();
+            ds.setNombreServicio(todosLosServicios.get(i).getNombreServicio());
+            ds.setNombreProveedor(todosLosServicios.get(i).getProveedorServicio().getNombreEmpresa());
+            resultado.add(ds);
+        }
+        
+        return resultado;
+    }
+    
+    @Override
+    public DataServicio getDatosServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios servicios = new DatosServicios();
+        
+        Servicio datosServicio = servicios.selectServicioPorNombre(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        DataServicio ds = new DataServicio();
+        
+        ds.setNombreProveedor(datosServicio.getProveedorServicio().getNombreEmpresa());
+        ds.setDescripcionServicio(datosServicio.getDescripcionServicio());
+        ds.setPrecioServicio(datosServicio.getPrecioServicio());
+        
+        return ds;
+    }
+    
+    @Override
+    public DataCiudad getCiudadOrigen(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        Ciudad ciudadOrigen = ds.getCiudadOrigen(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        
+        DataCiudad resultadoCiudad = new DataCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais().getNombre());
+        
+        return resultadoCiudad;
+        
+    }
+    
+    public DataCiudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        Ciudad ciudadDestino = ds.getCiudadDestino(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        
+        DataCiudad resultadoCiudad = new DataCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais().getNombre());
+        
+        return resultadoCiudad;
+        
     }
     
 }

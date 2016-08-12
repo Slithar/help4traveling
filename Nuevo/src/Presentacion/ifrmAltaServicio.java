@@ -719,7 +719,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb)
                             .addComponent(cmbCiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(21, 21, 21)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb1)
                             .addComponent(cmbCiudadDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -771,8 +771,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             }
             else{
                 try {
-                    if(icprov.existeNombreServicio(txtNombreServicio.getText())){
-                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    if(icprov.existeNombreServicio(txtNombreServicio.getText(), (String) cmbProveedor.getSelectedItem())){
+                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso por el proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         txtNombreServicio.requestFocus();
                     }
                     else{
@@ -830,7 +830,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         
                         for(int i = 0; i < imagenes.size(); i++){
                             int numero = i + 1;
-                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + numero);
+                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero);
                             imagenes.set(i, "../Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + numero + ".jpg");
                         }
                         
