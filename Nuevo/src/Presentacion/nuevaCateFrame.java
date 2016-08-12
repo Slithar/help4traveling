@@ -5,8 +5,7 @@
  */
 package Presentacion;
 import javax.swing.tree.*;
-import Logica.Categoria;
-import Logica.ControladorCategorias;
+import Logica.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,12 +23,22 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
     /**
      * Creates new form nuevaCateFrame
      */
+    
+    private IControladorCategorias iccat;
+    
     public nuevaCateFrame() {
+        initComponents();        
+    }
+    
+    public nuevaCateFrame(IControladorCategorias iccat){
         initComponents();
+        
+        this.iccat = iccat;
+        
         this.setTitle("Agregar nueva Categoría");
         this.setLocation(400, 130);
         try{
-        llenarArbol("", null);
+            llenarArbol("", null);
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -57,6 +66,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         btnAgregarCat = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
 
         lblNombreCat.setText("Nombre de la Categoría");
@@ -104,7 +114,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                 .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombrePadre))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         treePaneLayout.setVerticalGroup(
             treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,7 +131,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                         .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAgregarCat)
                             .addComponent(btnCancelar))
-                        .addGap(0, 122, Short.MAX_VALUE))
+                        .addGap(0, 127, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -147,7 +157,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
 
     private void btnAgregarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCatActionPerformed
         // TODO add your handling code here:
-        ControladorCategorias CC = new ControladorCategorias();
+        //ControladorCategorias CC = new ControladorCategorias();
         String elegido="";
         boolean resultado=false;
         TreePath[] paths = newCategoriaTree.getSelectionPaths();
@@ -159,7 +169,7 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
            String catAgregar = txtNombreCat.getText();
             
             try {
-                resultado = CC.agregarNuevaCategoriaHija(catAgregar,elegido );
+                resultado = iccat.agregarNuevaCategoriaHija(catAgregar, elegido);
                 System.out.println("Primer try");
                 txtNombreCat.setText(null);
             } catch (SQLException ex) {
@@ -182,12 +192,12 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                }
+            }
         }
         else{
             String catAgregar = txtNombreCat.getText();
             try {
-               resultado = CC.agregarNuevaCategoriaPadre(catAgregar);
+               resultado = iccat.agregarNuevaCategoriaPadre(catAgregar);
                if(resultado == true){
                    JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
                    this.llenarArbol("", null);
@@ -205,22 +215,22 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarCatActionPerformed
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
-        ControladorCategorias categoriasHandler = new ControladorCategorias();
+        //ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
-            ArrayList categoriasPadres = categoriasHandler.getCategoriasPadres();
+            ArrayList<DataCategoria> categoriasPadres = iccat.getCategoriasPadres();
             //System.out.println(categoriasPadres.size());
             for(int i = 0; i < categoriasPadres.size(); i++){
-                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
+                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i).getNombre());
                 root.add(nodosSuperiores);
-                llenarArbol((String) categoriasPadres.get(i), nodosSuperiores);
+                llenarArbol((String) categoriasPadres.get(i).getNombre(), nodosSuperiores);
             }
         }
         else{
-            ArrayList categoriasPadres = categoriasHandler.getCategoriasHijas((padre));
-            for(int i = 0; i < categoriasPadres.size(); i++){
-                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i));
+            ArrayList<DataCategoria> categoriasHijas = iccat.getCategoriasHijas(padre);
+            for(int i = 0; i < categoriasHijas.size(); i++){
+                DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasHijas.get(i).getNombre());
                 nodoPadre.add(nodosSuperiores);
-                llenarArbol((String) categoriasPadres.get(i), nodosSuperiores);
+                llenarArbol(categoriasHijas.get(i).getNombre(), nodosSuperiores);
             }
         }
         

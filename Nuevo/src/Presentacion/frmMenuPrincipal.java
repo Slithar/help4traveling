@@ -220,7 +220,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void miCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCategoriasActionPerformed
         // TODO add your handling code here:
-        nuevaCateFrame agregar = new nuevaCateFrame();
+        nuevaCateFrame agregar = new nuevaCateFrame(this.iccat);
         add(agregar);
         agregar.setVisible(true);
     }//GEN-LAST:event_miCategoriasActionPerformed

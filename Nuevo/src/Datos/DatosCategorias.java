@@ -81,7 +81,7 @@ public class DatosCategorias {
 
 
     
-    public int agregarCategoriaPadre(String Nombre) throws SQLException, ClassNotFoundException{
+    public int agregarCategoriaPadre(String nombre) throws SQLException, ClassNotFoundException{
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
@@ -90,7 +90,7 @@ public class DatosCategorias {
         
         PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
         
-        pConsulta.setString(1, Nombre);
+        pConsulta.setString(1, nombre);
         
         int rows = pConsulta.executeUpdate();
         
