@@ -12,6 +12,7 @@ import Logica.Servicio;
 import Logica.Proveedor;
 import Logica.Ciudad;
 import Logica.Pais;
+import Logica.Categoria;
 
 
 /**
@@ -249,6 +250,37 @@ public class DatosServicios {
         conn.close();
         
         return c;
+        
+    }
+    
+    public ArrayList<Categoria> getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select nombreCategoria, rutaCategoria from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        //Categoria c = new Ciudad();
+        
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        
+        while(rs.next()){
+            categorias.add(new Categoria(rs.getString("nombreCategoria"), rs.getString("rutaCategoria"), new ArrayList()));
+            //c.setPais(new Pais(rs.getString("nombrePais")));
+        }
+        
+        rs.close();
+        
+        conn.close();
+        
+        return categorias;
         
     }
     
