@@ -11,14 +11,16 @@ import java.util.*;
  */
 public class Categoria {
     private String nombre;
+    private String rutaCategoria;
     private ArrayList<Servicio> servicios;
 
     public Categoria(){
         
     }
     
-    public Categoria(String nombre, ArrayList servicios){
+    public Categoria(String nombre, String rutaCategoria, ArrayList servicios){
         this.nombre = nombre;
+        this.rutaCategoria = rutaCategoria;
         this.servicios = servicios;
     }
     
@@ -28,6 +30,14 @@ public class Categoria {
 
     public void setNombre(String Nombre) {
         this.nombre = Nombre;
+    }
+    
+    public String getRutaCategoria(){
+        return this.rutaCategoria;
+    }
+    
+    public void setRutaCategoria(String rutaCategoria){
+        this.rutaCategoria = rutaCategoria;
     }
 
     public ArrayList<Servicio> getServicios() {

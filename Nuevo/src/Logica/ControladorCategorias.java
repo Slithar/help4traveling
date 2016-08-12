@@ -57,7 +57,7 @@ public class ControladorCategorias implements IControladorCategorias{
     @Override
     public boolean agregarNuevaCategoriaPadre(String c) throws SQLException, ClassNotFoundException{
         
-        Categoria cat = new Categoria(c, new ArrayList());
+        Categoria cat = new Categoria(c, "", new ArrayList());
         
         categorias = new DatosCategorias();
         int rows = categorias.agregarCategoriaPadre(cat.getNombre());
@@ -73,7 +73,7 @@ public class ControladorCategorias implements IControladorCategorias{
     @Override
     public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
        
-       Categoria catHija = new Categoria(c, new ArrayList());
+       Categoria catHija = new Categoria(c, "", new ArrayList());
        
        categorias = new DatosCategorias();
        ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());

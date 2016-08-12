@@ -37,7 +37,7 @@ public class DatosCategorias {
         ResultSet rs = st.executeQuery("select nombre from categorias where nombre not in(select categoriaHija from categoriasrelacionadas)");
         
         while(rs.next()){
-            Categoria c = new Categoria(rs.getString("nombre"), new ArrayList());
+            Categoria c = new Categoria(rs.getString("nombre"), "", new ArrayList());
             resultado.add(c);
             //indice++;
         }
@@ -67,7 +67,7 @@ public class DatosCategorias {
         ResultSet rs = pConsulta.executeQuery();
         
         while(rs.next()){
-            Categoria c = new Categoria(rs.getString("categoriaHija"), new ArrayList());
+            Categoria c = new Categoria(rs.getString("categoriaHija"), "", new ArrayList());
             resultado.add(c);
             //indice++;
         }
@@ -148,7 +148,7 @@ public class DatosCategorias {
         ArrayList cates = new ArrayList();
         
         while(rs.next()){
-            Categoria categoria = new Categoria(rs.getString("categoriaHija"), new ArrayList());
+            Categoria categoria = new Categoria(rs.getString("categoriaHija"), "", new ArrayList());
             cates.add(categoria);
             //indice 
         }

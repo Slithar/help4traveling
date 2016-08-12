@@ -11,6 +11,7 @@ package Logica;
  */
 public class DataCategoria {
     private String nombre;
+    private String rutaCategoria;
 
     public DataCategoria() {
     }
@@ -27,5 +28,12 @@ public class DataCategoria {
         this.nombre = nombre;
     }
     
-    
+    public String getRutaCategoria() {
+        return rutaCategoria;
+    }
+
+    public void setRutaCategoria(String rutaCategoria) {
+        this.rutaCategoria = rutaCategoria;
+    }
+   
 }

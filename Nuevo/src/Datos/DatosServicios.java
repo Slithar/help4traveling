@@ -6,6 +6,7 @@
 package Datos;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -82,17 +83,21 @@ public class DatosServicios {
         conn.close();
     }
     
-    public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria) throws SQLException, ClassNotFoundException{
+    public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria, String rutaCategoria) throws SQLException, ClassNotFoundException{
+        
+        //JOptionPane.showMessageDialog(null, nombreCategoria);
+        
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("insert into categoriasdeservicios values(?, ?, ?)");
+        PreparedStatement pConsulta = conn.prepareStatement("insert into categoriasdeservicios values(?, ?, ?, ?)");
         pConsulta.setString(1, nombreServicio);
         pConsulta.setString(2, nombreProveedor);
         pConsulta.setString(3, nombreCategoria);
+        pConsulta.setString(4, rutaCategoria);
         
         pConsulta.executeUpdate();
         

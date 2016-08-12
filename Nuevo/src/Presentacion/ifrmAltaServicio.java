@@ -207,7 +207,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     
     public void cargarComboBoxCiudades(JComboBox combo, ArrayList<DataCiudad> datos, boolean opcional){
         for(int i = 0; i < datos.size(); i++){
-            combo.addItem(datos.get(i).getNombre() + " (" + datos.get(i).getPais() + ")");
+            combo.addItem(datos.get(i).getNombre() + ", " + datos.get(i).getPais());
         }
         if(opcional){
             combo.addItem("No corresponde");
@@ -777,11 +777,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     }
                     else{
                         String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
-                        String[] ciudad = cOrigen.split(" ");
+                        String[] ciudad = cOrigen.split(",");
                         
                         //Ciudad ciudadOrigen = new Ciudad();
                         //ciudadOrigen.setNombre(ciudad[0]);
-                        String ciudadOrigen = ciudad[0];
+                        String ciudadOrigen = ciudad[0].trim();
                         
                         ArrayList<String> imagenes = new ArrayList<String>();
                         if(rutaImagen1 != ""){
@@ -812,12 +812,12 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         
                         if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
                             String cDestino = (String) cmbCiudadDestino.getSelectedItem();
-                            String[] ciudadD = cDestino.split(" ");
+                            String[] ciudadD = cDestino.split(",");
 
                             //ciudadDestino = new Ciudad();
                             //ciudadDestino.setNombre(ciudadD[0]);
                             
-                            ciudadDestino = ciudadD[0];
+                            ciudadDestino = ciudadD[0].trim();
                             
                             //System.out.println("Ciudad: " + ciudadD[0]);
                             
@@ -864,15 +864,15 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         ArrayList<String> categorias = new ArrayList();
         for(int i = 0; i < modelo.getSize(); i++){
             String cat = (String) modelo.getElementAt(i);
-            int cant = contador(cat, '>');
-            String[] c = cat.split(">");
-            categorias.add((String) c[cant].trim());
+            /*int cant = contador(cat, '>');
+            String[] c = cat.split(">");*/
+            categorias.add((String) cat);
         }
         
         return categorias;
     }
     
-    public int contador(String cadena, char letra){
+   /* public int contador(String cadena, char letra){
         int cant = 0;
         
         for(int i = 0; i < cadena.length(); i++){
@@ -881,7 +881,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
         
         return cant;
-    }
+    }*/
     
     public boolean esNumerico(String txt){
         try{

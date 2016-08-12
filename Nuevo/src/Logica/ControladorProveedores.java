@@ -154,8 +154,24 @@ public class ControladorProveedores implements IControladorProveedores{
         
         for(int i = 0; i < categorias.size(); i++){
             //JOptionPane.showMessageDialog(null, categorias.get(i));
-            categoriasServicio.add(new Categoria(categorias.get(i), new ArrayList()));
+            String cat = (String) categorias.get(i);
+            //int cant = contador(cat, '>');
+            
+            int cant = 0;
+        
+            for(int j = 0; j < cat.length(); j++){
+                if(cat.charAt(j) == '>')
+                    cant++;
+            }
+            
+            String[] c = cat.split(">");
+            //categorias.add((String) cat);
+            
+            categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));
         }
+        
+       
+        
         
         Servicio s = new Servicio(nombre, descripcion, precio, prov, imagenesServicio, reservas, promociones, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()),  new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);  
         
@@ -188,7 +204,7 @@ public class ControladorProveedores implements IControladorProveedores{
         
         for(int i = 0; i < categoriasServicio.size(); i++){
             //JOptionPane.showMessageDialog(null, categoriasServicio.get(i).getNombre());
-            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre());
+            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre(), categoriasServicio.get(i).getRutaCategoria());
         }
         
         //ArrayList<ImagenServicio> imagenes = s.getImagenesServicio();
