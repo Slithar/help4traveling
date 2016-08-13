@@ -500,7 +500,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         try{
 
                             if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                                imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutaImagen);
+                                imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutaImagen);                            
                             else
                                 imagenCorrecta = true;
 
@@ -510,7 +510,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             lblImagenPerfil.requestFocus();
                         }
                         if(imagenCorrecta){
-
+                            this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
                             try{
                                if(icprov.existeNickname(txtNickname.getText())){
                                     JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -563,7 +563,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             lblImagenPerfil.requestFocus();
                         }
                         if(imagenCorrecta){
-
+                            this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
                             try{
                                if(iccli.existeNickname(txtNickname.getText())){
                                     JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);

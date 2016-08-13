@@ -53,7 +53,7 @@ public class ImagenServicio {
         };
        
         Files.copy(desde, hasta, opciones);
-        this.path = "../Logica/ImagenesServicios/" + nombre + ".jpg";       
+        this.path = "src/Logica/ImagenesServicios/" + nombre + ".jpg";       
     }
     
 }

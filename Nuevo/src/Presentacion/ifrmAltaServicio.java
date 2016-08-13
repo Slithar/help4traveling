@@ -778,9 +778,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     else{
                         String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
                         String[] ciudad = cOrigen.split(",");
-                        
-                        //Ciudad ciudadOrigen = new Ciudad();
-                        //ciudadOrigen.setNombre(ciudad[0]);
                         String ciudadOrigen = ciudad[0].trim();
                         
                         ArrayList<String> imagenes = new ArrayList<String>();
@@ -831,7 +828,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         for(int i = 0; i < imagenes.size(); i++){
                             int numero = i + 1;
                             icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero);
-                            imagenes.set(i, "../Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + numero + ".jpg");
+                            imagenes.set(i, "src/Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero + ".jpg");
                         }
                         
                         int precio = Integer.parseInt(txtPrecio.getText());

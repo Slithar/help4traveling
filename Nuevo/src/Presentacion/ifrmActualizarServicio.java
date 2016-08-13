@@ -7,17 +7,39 @@ package Presentacion;
 
 import Logica.*;
 import java.awt.*;
+import java.io.File;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.tree.*;
+import java.awt.event.*;
+import java.io.IOException;
 
 /**
  *
  * @author usuario
  */
 public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
+    
+    private JLabel lblImagen1 = new JLabel();
+    private JLabel lblImagen2;
+    private JLabel lblImagen3;
+    
+    private String rutaImagen1 = "";
+    private String rutaImagen2 = "";
+    private String rutaImagen3 = "";
+    
+    private JMenuItem miEliminar1 = new JMenuItem("Eliminar");
+    private JMenuItem miEliminar2 = new JMenuItem("Eliminar");
+    private JMenuItem miEliminar3 = new JMenuItem("Eliminar");
+    
+    private JMenuItem miEliminarCategoria = new JMenuItem("Eliminar");
+    
+    private String rutaCategoria = "";
+    
+    private frmVisor visor;
+    
     
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
@@ -34,18 +56,26 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         this.icprov = icprov;
         this.iccat = iccat;
         
+        //System.out.println("entre");
+        
         setTitle("Actualizar servicio");
-        /*setSize(858, 793);*/
+        setSize(858, 793);
         Dimension tamanioVentana = this.getSize();
         
         setLocation((1400 - tamanioVentana.width)/2, (825 - tamanioVentana.height)/2);
         
-        try{            
+        try{     
+            //System.out.println("1");
             cargarComboBoxServicios(cmbNombreServicios, icprov.getServicios(), false);
+            //System.out.println("2");
             cargarComboBoxCiudades(cmbCiudadOrigen, icprov.getCiudades(), false);
+            //System.out.println("3");
             cargarComboBoxCiudades(cmbCiudadDestino, icprov.getCiudades(), true);
+            //System.out.println("4");
             cargarComboBoxProveedores(cmbProveedor, icprov.getProveedores(), false);
+            //System.out.println("5");
             llenarArbol("", null);
+            //System.out.println("6");
             
         }
         catch(SQLException ex){
@@ -56,14 +86,89 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
+        //System.out.println("entre");
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        lstCategorias.setModel(modeloLista);
+        //System.out.println("entre");
         lblAgregarCategoria.setSize(38, 38);
+        
+        //System.out.println("entre");
         
         ImageIcon iconoCategoria = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
         ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
         lblAgregarCategoria.setIcon(iconoDimensionado);
         
+        //lblSitioWeb4.setLocation(200, 200);
+        //cmbProveedor.setForeground(Color.BLACK);
+        //System.out.println("entre");
+        lblImagen1.setSize(143, 143);
+        panelImagenes.add(lblImagen1);
+        lblImagen1.setLocation(0, 0);
+        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
+        lblImagen1.setVisible(true);
+        //System.out.println("entre");
         panelDatos.setVisible(false);
         panelBotones.setVisible(false);
+        
+        
+    }
+    
+    public void setImagenLabel(String ruta, String tipo){
+        //System.out.println("entre");
+        JLabel lblImagen = labelActual();
+        if(tipo.equals("defecto")){
+            //System.out.println("hola");
+            ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
+            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
+            lblImagen.setIcon(imagenDimensionada);
+        }
+        else{
+            ImageIcon imagenPerfil = new ImageIcon(ruta);
+            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
+            lblImagen.setIcon(imagenDimensionada);
+            
+            if(lblImagen == lblImagen1){
+                //System.out.println("2");
+                rutaImagen1 = ruta;
+                lblImagen2 = new JLabel();
+                lblImagen2.setSize(143, 143);
+                panelImagenes.add(lblImagen2);
+                lblImagen2.setLocation(190, 0);
+                lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                lblImagen2.addMouseListener(new OyenteLabel(this));
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                //lblImagen2.setComponentPopupMenu(eliminarImagen1);
+                agregarPopup(2);
+            }
+            else if(lblImagen == lblImagen2){
+                //System.out.println("3");
+                rutaImagen2 = ruta;
+                lblImagen3 = new JLabel();
+                lblImagen3.setSize(143, 143);
+                panelImagenes.add(lblImagen3);
+                lblImagen3.setLocation(380, 0);
+                lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                lblImagen3.addMouseListener(new OyenteLabel(this));
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                //lblImagen3.setComponentPopupMenu(eliminarImagen2);
+                agregarPopup(3);
+            }
+            else{
+                rutaImagen3 = ruta;
+            }
+        }       
+    }
+    
+    public JLabel labelActual(){
+        
+        if(lblImagen2 == null){
+            return lblImagen1;
+        }
+        else if(lblImagen3 == null)
+            return lblImagen2;
+        else
+            return lblImagen3;
     }
     
     public void cargarComboBoxServicios(JComboBox combo, ArrayList<DataServicio> datos, boolean opcional){
@@ -92,7 +197,200 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             combo.addItem("No corresponde");
         }
     }
+    
+    public void agregarPopup(int sub){
+        if(sub == 1){
+            JPopupMenu eliminarImagen1 = new JPopupMenu();            
+            miEliminar1.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminar1.addActionListener(new OyentePopup());
+            eliminarImagen1.add(miEliminar1);
+            lblImagen1.setComponentPopupMenu(eliminarImagen1);
+        }
+        else if(sub == 2){
+            JPopupMenu eliminarImagen2 = new JPopupMenu();
+            //JMenuItem miEliminar2 = new JMenuItem("Eliminar");
+            miEliminar2.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminar2.addActionListener(new OyentePopup());
+            eliminarImagen2.add(miEliminar2);
+            lblImagen2.setComponentPopupMenu(eliminarImagen2);
+        }
+        else if(sub == 3){
+            JPopupMenu eliminarImagen3 = new JPopupMenu();
+            //JMenuItem miEliminar3 = new JMenuItem("Eliminar");
+            miEliminar3.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminar3.addActionListener(new OyentePopup());
+            eliminarImagen3.add(miEliminar3);
+            lblImagen3.setComponentPopupMenu(eliminarImagen3);
+        }
+        else if(sub == 4){
+            JPopupMenu eliminarCategoria = new JPopupMenu();
+            miEliminarCategoria.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
+            miEliminarCategoria.addActionListener(new OyentePopup());
+            eliminarCategoria.add(miEliminarCategoria);
+            lstCategorias.setComponentPopupMenu(eliminarCategoria);
+        }
+    }
+    
+    private class OyenteLabel implements MouseListener{
+        
+        private JLabel lblImagen;
+        private ifrmActualizarServicio vActualizarServicio;
+        
+        public OyenteLabel(ifrmActualizarServicio ifrm){
+            this.vActualizarServicio = ifrm;
+        }
 
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getButton() == MouseEvent.BUTTON1){
+                if(cambioValido((JLabel) e.getSource())){
+                    fchImagenes selectorImagen = new fchImagenes(vActualizarServicio);
+                    selectorImagen.setVisible(true);
+                }
+                else{
+                    if((JLabel) e.getSource() == lblImagen1)
+                        visor = new frmVisor(rutaImagen1);
+                    else if((JLabel) e.getSource() == lblImagen2)
+                        visor = new frmVisor(rutaImagen2);
+                    else if((JLabel) e.getSource() == lblImagen3)
+                        visor = new frmVisor(rutaImagen3);
+                    
+                    //visor.setUndecorated(true);
+                    //visor.setUndecorated(true);
+                    visor.setBounds(515, 200, 900, 600);
+                    visor.setVisible(true);
+                }
+            }
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+        }
+        
+    }
+    
+    public boolean cambioValido(JLabel label){
+        if(label == lblImagen1){
+            if(rutaImagen1 == "")
+                return true;
+            else
+                return false;
+        }
+        else if(label == lblImagen2){
+            if(rutaImagen2 == "")
+                return true;
+            else
+                return false;
+        }
+        else{
+            if(rutaImagen3 == "")
+                return true;
+            else
+                return false;
+        }
+    }
+    
+    private class OyentePopup implements ActionListener{
+        private JLabel lblImagen;
+        
+        public OyentePopup(){
+            //lblImagen = lbl;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //System.out.println(labelSeleccionado);
+            //JOptionPane.showMessageDialog(null, e.getSource());
+            if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
+                
+                if(rutaImagen2 == ""){
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    rutaImagen1 = "";
+                }
+                else if(rutaImagen2 != "" && rutaImagen3 == ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    
+                    setImagenLabel(rutaImagen2, "absoluta");
+                                                          
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    
+                    rutaImagen1 = rutaImagen2;
+                    rutaImagen2 = "";                   
+                }
+                else if(rutaImagen3 != ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    
+                    setImagenLabel(rutaImagen2, "absoluta");
+                    
+                    setImagenLabel(rutaImagen3, "absoluta");
+                    
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    
+                    rutaImagen1 = rutaImagen2;
+                    rutaImagen2 = rutaImagen3;
+                    rutaImagen3 = "";                    
+                }                
+            }
+            else if(e.getSource() == miEliminar2 && rutaImagen2 != ""){
+                
+                if(rutaImagen3 == ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                    rutaImagen2 = "";
+                }
+                
+                else if(rutaImagen3 != ""){
+                    lblImagen3.setVisible(false);
+                    lblImagen3 = null;
+                    
+                    setImagenLabel(rutaImagen3, "absoluta");
+                    rutaImagen2 = rutaImagen3;
+                    rutaImagen3 = "";
+                }
+            }
+            else if(e.getSource() == miEliminar3 && rutaImagen3 != ""){
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                rutaImagen3 = "";
+            }
+            else if(e.getSource() == miEliminarCategoria){
+                
+                DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                modelo.remove(lstCategorias.getSelectedIndex());
+                lstCategorias.setModel(modelo);
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,6 +577,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         lblSitioWeb2.setText("Proveedor:");
 
         cmbProveedor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cmbProveedor.setEnabled(false);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setText("Categorías:");
@@ -396,13 +695,8 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //System.out.println("Precio (en U$S): " + txtPrecio.getText());
-        /*DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-        if(txtNombreServicio.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            txtNombreServicio.requestFocus();
-        }
-        else if(areaDescripcion.getText().equals("")){
+        DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+        if(areaDescripcion.getText().equals("")){
             JOptionPane.showMessageDialog(this, "No se ha ingresado la descripción del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             areaDescripcion.requestFocus();
         }
@@ -419,136 +713,190 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             cmbCiudadOrigen.requestFocus();
         }
         else{
-
             if(modelo.getSize() == 0){
-                JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna categoría para el nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+               JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna categoría para el nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE); 
             }
             else{
-                try {
-                    if(icprov.existeNombreServicio(txtNombreServicio.getText())){
-                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        txtNombreServicio.requestFocus();
-                    }
-                    else{
-                        String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
+                String servicioSeleccionado = (String) cmbNombreServicios.getSelectedItem();
+                String[] nombreServicio = servicioSeleccionado.split("<");
+                String proveedorServicio = nombreServicio[1].substring(0, nombreServicio[1].length() - 1);
+                try{
+                    ArrayList<DataImagen> imagenesAnteriores = icprov.getImagenes(nombreServicio[0], proveedorServicio);
+                    
+                    /*for(int i = 0; i < imagenesAnteriores.size(); i++){
+                        File ficheroImagen = new File(imagenesAnteriores.get(i).getPath());
+                        File rutaAbsoluta = new File(ficheroImagen.getAbsolutePath());
+                        rutaAbsoluta.delete();
+                    }*/
+                    
+                    String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
                         String[] ciudad = cOrigen.split(",");
-
-                        //Ciudad ciudadOrigen = new Ciudad();
-                        //ciudadOrigen.setNombre(ciudad[0]);
                         String ciudadOrigen = ciudad[0].trim();
-
+                        
                         ArrayList<String> imagenes = new ArrayList<String>();
                         if(rutaImagen1 != ""){
                             imagenes.add(rutaImagen1);
-
+                            
                             if(rutaImagen2 != ""){
                                 imagenes.add(rutaImagen2);
-
+                                
                                 if(rutaImagen3 != ""){
                                     imagenes.add(rutaImagen3);
                                 }
                             }
                         }
-
+                        
                         ArrayList<String> categorias = obtenerCategorias(modelo);
-
-                        //Proveedor proveedor = new Proveedor();
-
-                        //proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
-
-                        String proveedor = (String) cmbProveedor.getSelectedItem();
-
+                        
                         boolean tieneDestino = false;
-
+                        
                         String ciudadDestino;
-
+                        
                         if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
                             String cDestino = (String) cmbCiudadDestino.getSelectedItem();
                             String[] ciudadD = cDestino.split(",");
-
-                            //ciudadDestino = new Ciudad();
-                            //ciudadDestino.setNombre(ciudadD[0]);
-
+                            
                             ciudadDestino = ciudadD[0].trim();
-
-                            //System.out.println("Ciudad: " + ciudadD[0]);
-
+                            
                             tieneDestino = true;
                         }
                         else{
-                            //System.out.println("entre aca");
                             ciudadDestino = "";
                         }
-
+                        
                         for(int i = 0; i < imagenes.size(); i++){
                             int numero = i + 1;
-                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + numero);
-                            imagenes.set(i, "../Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + numero + ".jpg");
+                            icprov.copiarImagenServicio(imagenes.get(i), nombreServicio[0] + "-" + proveedorServicio + "-" + numero);
+                            imagenes.set(i, "src/Logica/ImagenesServicios/" + nombreServicio[0] + "-" + proveedorServicio + "-" + numero + ".jpg");
                         }
-
+                        
                         int precio = Integer.parseInt(txtPrecio.getText());
-
-                        //System.out.println(precio);
-
-                        //Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
-
-                        icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
-
-                        limpiar();
-                        JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-
-                    }
+                        
+                        icprov.modificarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        //icprov.agregarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        panelDatos.setVisible(false);
+                        panelBotones.setVisible(false);
+                        cmbNombreServicios.setSelectedIndex(0);
+                        llenarArbol("", null);
+                        JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido modificado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                
                 }
                 catch(SQLException ex){
-                    //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
                 catch(ClassNotFoundException ex){
                     JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Problema con las imágenes del servicio", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Hay un problema en las imágenes del servicio", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
+                
             }
-        }*/
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
+    public ArrayList<String> obtenerCategorias(DefaultListModel modelo){
+        ArrayList<String> categorias = new ArrayList();
+        for(int i = 0; i < modelo.getSize(); i++){
+            String cat = (String) modelo.getElementAt(i);
+            /*int cant = contador(cat, '>');
+            String[] c = cat.split(">");*/
+            categorias.add((String) cat);
+        }
+        
+        return categorias;
+    }
+    
+    public boolean esNumerico(String txt){
+        try{
+            Integer.parseInt(txt);
+            return true;
+        }
+        catch(NumberFormatException ex){
+            return false;
+        }
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void treeCategoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeCategoriasValueChanged
-        /*rutaCategoria = "";
+        rutaCategoria = "";
         TreePath path = evt.getPath();
         Object[] nodos = path.getPath();
         for(int i = 0; i < nodos.length; i++){
             if(i != 0)
-            rutaCategoria = rutaCategoria + nodos[i].toString();
-            if(i < nodos.length-1 && i != 0)
-            rutaCategoria = rutaCategoria + " > ";
-
-        }*/
-
-        //System.out.println(rutaCategoria);
+                rutaCategoria = rutaCategoria + nodos[i].toString();
+            if(i < nodos.length-1 && i != 0)            
+                rutaCategoria = rutaCategoria + " > ";
+            
+        }
     }//GEN-LAST:event_treeCategoriasValueChanged
-
+    
+    public boolean categoriaRepetida(DefaultListModel modelo, String categoria){
+        boolean repetido = false;
+        //System.out.println(modelo.getSize());
+        for(int i = 0; i < modelo.getSize(); i++){
+            //System.out.print(modelo.getElementAt(i) + " - " + rutaCategoria);
+            if(modelo.getElementAt(i).equals(rutaCategoria))
+                repetido = true;
+        }
+        //System.out.print("/");
+        return repetido;
+    }
+    
     private void lblAgregarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarCategoriaMouseClicked
-        /*if(evt.getButton() == MouseEvent.BUTTON1){
+        if(evt.getButton() == MouseEvent.BUTTON1){
             DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
             if(categoriaRepetida(modelo, rutaCategoria)){
                 JOptionPane.showMessageDialog(this, "La categoría ya se encuentra agregada para el servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }
             else{
-                modelo.addElement(rutaCategoria);
+                modelo.addElement(rutaCategoria);                
             }
             lstCategorias.setModel(modelo);
-
-        }*/
+            
+            
+        }
     }//GEN-LAST:event_lblAgregarCategoriaMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            // TODO add your handling code here:
+            lblImagen1.setSize(143, 143);
+            panelImagenes.add(lblImagen1);
+            lblImagen1.setLocation(0, 0);
+            lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            //lblImagen1.addMouseListener(new Oye);
+            //System.out.println("entre");
+            //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+            lblImagen1.addMouseListener(new OyenteLabel(this));
+            lblImagen1.setVisible(true);
+            agregarPopup(1);
+            
+            if(lblImagen3 != null){
+                lblImagen3.setVisible(false);
+                lblImagen3 = null;
+                rutaImagen3 = "";
+
+                if(lblImagen2 != null){
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    rutaImagen2 = "";
+                }
+            }
+            else if(lblImagen2 != null){
+                lblImagen2.setVisible(false);
+                lblImagen2 = null;
+                rutaImagen2 = "";
+            }               
+
+            rutaImagen1 = "";
+            
+            setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+            
             String servicioSeleccionado = (String) cmbNombreServicios.getSelectedItem();
             String[] nombreServicio = servicioSeleccionado.split("<");
             String proveedorServicio = nombreServicio[1].substring(0, nombreServicio[1].length() - 1);
@@ -557,6 +905,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             areaDescripcion.setText(datosServicio.getDescripcionServicio());
             txtPrecio.setText(String.valueOf(datosServicio.getPrecioServicio()));
             cmbProveedor.setSelectedItem(datosServicio.getNombreProveedor());
+            //lblSitioWeb4.setText(datosServicio.getNombreProveedor());
             panelDatos.setVisible(true);
                        
             DataCiudad datosCiudad = icprov.getCiudadOrigen(nombreServicio[0], proveedorServicio);
@@ -570,6 +919,50 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             else{
                 cmbCiudadDestino.setSelectedItem(datosCiudad.getNombre() + ", " + datosCiudad.getPais());
             }
+            
+            //System.out.println("1");
+            DefaultListModel modelo = new DefaultListModel();
+            
+            //System.out.println("1");
+            
+            ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias(nombreServicio[0], proveedorServicio);
+            //System.out.println("1");
+            for(int i = 0; i < categoriasDelServicio.size(); i++){
+                modelo.addElement(categoriasDelServicio.get(i).getRutaCategoria());
+            }
+            //System.out.println("1");
+            lstCategorias.setModel(modelo);
+            agregarPopup(4);
+            //System.out.println("1");
+            
+            ArrayList<DataImagen> imagenesDelServicio = new ArrayList<DataImagen>();
+            
+            imagenesDelServicio = icprov.getImagenes(nombreServicio[0], proveedorServicio);
+            
+            //System.out.println(imagenesDelServicio.size());
+            
+            setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+        
+            if(imagenesDelServicio.size() == 0){
+                
+                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+            }
+            else{
+                for(int i = 0; i < imagenesDelServicio.size(); i++){
+                    File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
+                    //System.out.println(ficheroImagen.getAbsolutePath());
+                   // System.out.println(ficheroImagen.getAbsolutePath());
+                    //setImagenLabel(imagenesDelServicio.get(i).getPath(), "defecto");
+                    setImagenLabel(ficheroImagen.getAbsolutePath(), "absoluta");
+                }
+
+                if(imagenesDelServicio.size() < 3){
+                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                }
+
+            }
+            panelDatos.setVisible(true);
+            panelBotones.setVisible(true);
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -583,6 +976,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         
+        //System.out.println("entre");
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
         //ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
@@ -604,7 +998,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         }
         
         DefaultTreeModel treeModel = new DefaultTreeModel(root);
-        treeCategorias.setModel(treeModel);
+        treeCategorias.setModel(treeModel);       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

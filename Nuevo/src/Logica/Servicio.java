@@ -49,7 +49,7 @@ public class Servicio {
         else
             this.destino = new Ciudad();
         
-        System.out.println(this.destino.getNombre());                
+        //System.out.println(this.destino.getNombre());                
     }
 
     /*public Servicio() {

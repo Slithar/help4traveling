@@ -13,6 +13,7 @@ import Logica.Proveedor;
 import Logica.Ciudad;
 import Logica.Pais;
 import Logica.Categoria;
+import Logica.ImagenServicio;
 
 
 /**
@@ -280,7 +281,118 @@ public class DatosServicios {
         
         conn.close();
         
-        return categorias;
+        return categorias;        
+    }
+    
+    public ArrayList<ImagenServicio> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select ruta from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        //System.out.println("entree acá");
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        //Categoria c = new Ciudad();
+        
+        ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
+        
+        if(rs != null){
+            //System.out.println("entree");
+            while(rs.next()){
+                imagenes.add(new ImagenServicio(rs.getString("ruta"), new Servicio()));
+                //System.out.println("agreguee");
+                //c.setPais(new Pais(rs.getString("nombrePais")));
+            }
+        }
+        
+        
+        rs.close();
+        
+        conn.close();
+        
+        return imagenes;
+        
+    }
+    
+    public void eliminarImagenes(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareStatement("delete from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        pConsulta.setString(1, nombreServicio);
+        pConsulta.setString(2, nombreProveedor);
+        
+        pConsulta.executeUpdate();
+        
+        //conexion.cerrar();
+        conn.close();
+    }
+    
+    public void eliminarCategorias(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareStatement("delete from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        pConsulta.setString(1, nombreServicio);
+        pConsulta.setString(2, nombreProveedor);
+        
+        pConsulta.executeUpdate();
+        
+        //conexion.cerrar();
+        conn.close();
+    }
+    
+    public void modificarServicio(String nombre, String nombreProveedor, String ciudadOrigen, String ciudadDestino, String descripcion, int precio, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        //pConsulta;
+        //JOptionPane.showMessageDialog(null, descripcion + " - " + precio + " - " + ciudadOrigen + " - " + nombre + " - " + nombreProveedor);
+        
+        if(tieneDestino){
+            PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = ? where nombre = ? and nombreProveedor = ?");
+            //System.out.println("1: " + ciudadDestino);
+            pConsulta.setString(1, descripcion);
+            pConsulta.setInt(2, precio);
+            pConsulta.setString(3, ciudadOrigen);
+            pConsulta.setString(4, ciudadDestino);
+            pConsulta.setString(5, nombre);
+            pConsulta.setString(6, nombreProveedor);
+            
+            pConsulta.executeUpdate();
+            
+        }
+        else{
+            PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = null where nombre = ? and nombreProveedor = ?");
+            //System.out.println("1");
+            pConsulta.setString(1, descripcion);
+            pConsulta.setInt(2, precio);
+            pConsulta.setString(3, ciudadOrigen);
+            pConsulta.setString(4, nombre);
+            pConsulta.setString(5, nombreProveedor);
+            
+            pConsulta.executeUpdate();
+        }
+        
+        
+        
+        conn.close();
         
     }
     
