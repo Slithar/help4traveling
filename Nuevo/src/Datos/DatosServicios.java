@@ -396,4 +396,32 @@ public class DatosServicios {
         
     }
     
+    public ArrayList<Servicio> getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select nombre, nombreProveedor from servicios where nombre like ?");
+        
+        pConsulta.setString(1, "%" + nombre + "%");
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            Servicio s = new Servicio();
+            s.setNombreServicio(rs.getString("nombre"));
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            s.setProveedorServicio(p);
+            
+            servicios.add(s);
+        }
+        
+        return servicios;
+    }
+    
 }

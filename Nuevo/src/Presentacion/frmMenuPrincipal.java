@@ -157,6 +157,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsProveedores);
 
         miConsServicios.setText("Servicios");
+        miConsServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsServiciosActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsServicios);
 
         miConsPromociones.setText("Promociones");
@@ -235,6 +240,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         nuevoPanel.add(vActualizarServicio);
         vActualizarServicio.setVisible(true);
     }//GEN-LAST:event_miRegServiciosActualizarActionPerformed
+
+    private void miConsServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsServiciosActionPerformed
+       ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat);
+       nuevoPanel.add(vInformacionServicio);
+       vInformacionServicio.setVisible(true);
+    }//GEN-LAST:event_miConsServiciosActionPerformed
     
         
     /**

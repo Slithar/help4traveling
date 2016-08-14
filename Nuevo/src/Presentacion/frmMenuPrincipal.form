@@ -119,6 +119,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servicios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miConsServiciosActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miConsPromociones">
               <Properties>

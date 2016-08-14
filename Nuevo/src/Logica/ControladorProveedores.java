@@ -416,4 +416,25 @@ public class ControladorProveedores implements IControladorProveedores{
         
     }
     
+    @Override
+    public ArrayList<DataServicio> getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException{
+        
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList<Servicio> servicios = ds.getServiciosPorBusqueda(s.getNombreServicio());
+        ArrayList<DataServicio> resultadoServicio = new ArrayList<DataServicio>();
+        
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio serv = new DataServicio();
+            serv.setNombreServicio(servicios.get(i).getNombreServicio());
+            serv.setNombreProveedor(servicios.get(i).getProveedorServicio().getNombreEmpresa());
+            resultadoServicio.add(serv);
+        }
+        
+        return resultadoServicio;
+    }
+    
 }
