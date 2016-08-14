@@ -50,7 +50,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         Dimension tamanioVentana = this.getSize();
         
-        setLocation((1400 - tamanioVentana.width)/2, (850 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
         
         panelDatos.setVisible(false);
         
