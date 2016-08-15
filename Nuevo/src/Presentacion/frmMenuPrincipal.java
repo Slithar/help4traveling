@@ -158,6 +158,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsPromociones);
 
         miConsReservas.setText("Reservas");
+        miConsReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsReservasActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsReservas);
 
         mbBarra.add(mConsultas);
@@ -224,6 +229,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         add(agregar);
         agregar.setVisible(true);
     }//GEN-LAST:event_miCategoriasActionPerformed
+
+    private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
+        // TODO add your handling code here:
+        VerInfoReserva agregar = new VerInfoReserva(this.iccli);
+      //  add(agregar);
+        agregar.setVisible(true);
+        
+    }//GEN-LAST:event_miConsReservasActionPerformed
     
         
     /**

@@ -6,6 +6,9 @@
 package Datos;
 import java.sql.*;
 import Datos.ConexionBD;
+import Logica.Ciudad;
+import Logica.Pais;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,4 +30,27 @@ public class Datos {
         
         return resultado;
     }
+    public ResultSet verInfoReserva()throws SQLException, ClassNotFoundException{
+        ResultSet res=null;
+         Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        try{
+        res = st.executeQuery("select *,  from cantidadreservas");
+             
+        } catch (Exception e) {
+            System.out.println("Problema al consultar la base de datos 1 ");
+        }
+        res.close();
+        //conexion.cerrar();
+        conn.close();
+        
+        return res;
+        
+    }
+           
 }
