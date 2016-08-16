@@ -26,4 +26,6 @@ public interface IControladorProveedores {
     public abstract void agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException;
     public abstract void copiarImagenServicio(String nombreActual, String nombreDestino) throws IOException;
     
+    public abstract ArrayList<DataServicio> getServicios() throws SQLException, ClassNotFoundException;
+    
 }

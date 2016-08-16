@@ -7,7 +7,8 @@ package Datos;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-
+import java.util.*;
+import Logica.*;
 
 /**
  *
@@ -120,6 +121,33 @@ public class DatosServicios {
         
         //conexion.cerrar();
         conn.close();
+    }
+    
+    public ArrayList<DataServicio> getServicios() throws SQLException, ClassNotFoundException{
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn=conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("SELECT * FROM servicios");
+        
+        ResultSet resultado;
+        
+        resultado = pConsulta.executeQuery();
+        
+        ArrayList<DataServicio> arrayServicio = new ArrayList();
+        
+        while(resultado.next()){
+           DataServicio servicio = new DataServicio();
+           servicio.setNombreServicio(resultado.getString("nombre"));
+           servicio.setPrecioServicio(resultado.getInt("precio"));
+           servicio.setNombreProveedor(resultado.getString("nombreProveedor"));
+           arrayServicio.add(servicio);
+        }
+        
+        return arrayServicio;
     }
     
 }

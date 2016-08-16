@@ -227,4 +227,12 @@ public class ControladorProveedores implements IControladorProveedores{
         //}
     }
     
+    
+    @Override
+    public ArrayList<DataServicio> getServicios() throws SQLException, ClassNotFoundException{
+        DatosServicios servicios = new DatosServicios();
+        ArrayList<DataServicio> arrayServicios = new ArrayList();
+        arrayServicios = servicios.getServicios();
+        return arrayServicios;
+    }
 }
