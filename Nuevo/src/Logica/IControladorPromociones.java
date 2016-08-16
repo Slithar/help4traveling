@@ -11,5 +11,5 @@ import java.util.*;
  * @author usuario
  */
 public interface IControladorPromociones {
-    
+    public int devolverPrecio(String cadena);
 }

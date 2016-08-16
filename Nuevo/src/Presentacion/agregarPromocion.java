@@ -5,6 +5,7 @@
  */
 package Presentacion;
 import Logica.*;
+import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -12,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 /**
  *
  * @author Mauro
@@ -20,6 +23,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     private IControladorPromociones icprom;
     private IControladorProveedores icprov;
     private String Seleccionado;
+    private int Precio;
     /**
      * Creates new form agregarPromocion
      */
@@ -31,6 +35,10 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         DefaultListModel modeloElegir = new DefaultListModel();
         listaServiciosElegidos.setModel(modeloElegir);
         getServicios();
+        this.txtprecioTotal.setEnabled(false);
+        //Dimension tamanio = new Dimension();
+        //spnDescuento.setModel(new SpinnerNumberModel(0, 1, 100, 1));
+        spnDescuento.setModel(new SpinnerNumberModel(0,0,100,1));
     }
     public boolean servicioRepetido(DefaultListModel modelo, String Seleccionado){
         boolean repetido = false;
@@ -77,15 +85,16 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         listaServiciosElegidos = new javax.swing.JList<>();
         elegirServicio = new javax.swing.JButton();
         eliminarServicio = new javax.swing.JButton();
-        nombrePromocion = new javax.swing.JTextField();
-        descuentoPromocion = new javax.swing.JTextField();
-        precioTotal = new javax.swing.JTextField();
+        txtnombrePromocion = new javax.swing.JTextField();
+        txtprecioTotal = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         agregarPromocion = new javax.swing.JButton();
         salir = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        spnDescuento = new javax.swing.JSpinner();
+        jLabel5 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Agregar Promoción");
@@ -125,24 +134,27 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Nombre Servicio - Precio - Proveedor");
 
+        jLabel5.setText("%");
+
         javax.swing.GroupLayout agregarPromoPanelLayout = new javax.swing.GroupLayout(agregarPromoPanel);
         agregarPromoPanel.setLayout(agregarPromoPanelLayout);
         agregarPromoPanelLayout.setHorizontalGroup(
             agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agregarPromoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtprecioTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3)
+                        .addComponent(txtnombrePromocion))
                     .addGroup(agregarPromoPanelLayout.createSequentialGroup()
-                        .addComponent(agregarPromocion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(salir))
-                    .addComponent(precioTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(descuentoPromocion)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(nombrePromocion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(spnDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,6 +167,12 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
                 .addGap(23, 23, 23))
+            .addGroup(agregarPromoPanelLayout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(agregarPromocion)
+                .addGap(18, 18, 18)
+                .addComponent(salir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         agregarPromoPanelLayout.setVerticalGroup(
             agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,25 +187,25 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
                             .addComponent(elegirServicio)
                             .addComponent(eliminarServicio))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(agregarPromoPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(nombrePromocion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtnombrePromocion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addComponent(descuentoPromocion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(spnDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(precioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(agregarPromocion)
-                            .addComponent(salir))
-                        .addGap(97, 97, 97))))
+                        .addComponent(txtprecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(agregarPromoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregarPromocion)
+                    .addComponent(salir))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,8 +238,10 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             String valor = listaServicios.getSelectedValue();
             modelo.addElement(valor);
             listaServiciosElegidos.setModel(modelo);
+            Precio += this.icprom.devolverPrecio(valor);
+            this.txtprecioTotal.setText(String.valueOf(Precio));
         }else{
-            JOptionPane.showMessageDialog(this, "El servicio ya forma parte de la promoción.", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El servicio ya forma parte de la promoción.", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_elegirServicioActionPerformed
 
@@ -230,7 +250,14 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         DefaultListModel modelo = new DefaultListModel();
         modelo = (DefaultListModel) listaServiciosElegidos.getModel();
         if(modelo.size()<1){
-            JOptionPane.showMessageDialog(this, "Una promoción debe contener al menos un servicio. ", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Una promoción debe contener al menos un servicio. ", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        }else{
+            if(this.txtnombrePromocion.getText()!= null) {
+                JOptionPane.showMessageDialog(this,"No pueden quedar campos vacíos.","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+                this.txtnombrePromocion.requestFocus();
+            }else{
+                
+                }
         }
     }//GEN-LAST:event_agregarPromocionActionPerformed
     
@@ -238,19 +265,20 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel agregarPromoPanel;
     private javax.swing.JButton agregarPromocion;
-    private javax.swing.JTextField descuentoPromocion;
     private javax.swing.JButton elegirServicio;
     private javax.swing.JButton eliminarServicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> listaServicios;
     private javax.swing.JList<String> listaServiciosElegidos;
-    private javax.swing.JTextField nombrePromocion;
-    private javax.swing.JTextField precioTotal;
     private javax.swing.JButton salir;
+    private javax.swing.JSpinner spnDescuento;
+    private javax.swing.JTextField txtnombrePromocion;
+    private javax.swing.JTextField txtprecioTotal;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,5 +14,9 @@ public class ControladorPromociones implements IControladorPromociones{
     public ControladorPromociones(){
         
     }
-    
+    public int devolverPrecio(String cadena){
+        String [] array = cadena.split(",");
+        int A = Integer.parseInt(array[1].trim());
+        return A;
+    }
 }
