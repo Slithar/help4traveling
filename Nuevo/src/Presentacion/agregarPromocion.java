@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import java.math.*;
 /**
  *
  * @author Mauro
@@ -24,6 +25,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     private IControladorProveedores icprov;
     private String Seleccionado;
     private int Precio;
+    private ArrayList<Integer> todosLosPrecios = new ArrayList<Integer>();
     /**
      * Creates new form agregarPromocion
      */
@@ -238,8 +240,17 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             String valor = listaServicios.getSelectedValue();
             modelo.addElement(valor);
             listaServiciosElegidos.setModel(modelo);
-            Precio += this.icprom.devolverPrecio(valor);
-            this.txtprecioTotal.setText(String.valueOf(Precio));
+            todosLosPrecios.add(icprom.devolverPrecio(valor));            
+            Precio = obtenerPrecio();
+            
+            //Precio += this.icprom.devolverPrecio(valor);
+            System.out.println(Precio);
+            if((Integer)spnDescuento.getValue()!=0){
+                Precio = Precio - ( (Precio * (Integer)spnDescuento.getValue() ) / 100  );
+                this.txtprecioTotal.setText(String.valueOf(Precio));
+            }else{
+                this.txtprecioTotal.setText(String.valueOf(Precio));
+            }
         }else{
             JOptionPane.showMessageDialog(this, "El servicio ya forma parte de la promoción.", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
@@ -261,6 +272,14 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_agregarPromocionActionPerformed
     
+    public int obtenerPrecio(){
+        Precio = 0;
+        for(int i = 0; i < todosLosPrecios.size(); i++){
+            Precio += todosLosPrecios.get(i);
+        }
+        
+        return Precio;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel agregarPromoPanel;
