@@ -35,6 +35,10 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     
     private frmVisor visor;
     
+    private class modeloTabla extends DefaultTableModel{
+        
+    };
+    
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
     
@@ -68,7 +72,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         lblImagen1.setVisible(true);
         
-        DefaultTableModel modelo = new DefaultTableModel();
+        /*DefaultTableModel modelo = new DefaultTableModel();*/
+        modeloTabla modelo = new modeloTabla();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
         
         try{
@@ -148,6 +153,14 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbServicios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbServiciosKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tbServiciosKeyTyped(evt);
             }
         });
         jScrollPane2.setViewportView(tbServicios);
@@ -413,50 +426,78 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             lblProveedor.setText((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
 
             try {
+                
                 DataServicio datosServicio = icprov.getDatosServicio((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-                lblDescripcion.setText(datosServicio.getDescripcionServicio());
-                lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
-                //lblOrigen.
+                if(datosServicio.getDescripcionServicio() != ""){
+                    lblDescripcion.setText(datosServicio.getDescripcionServicio());
+                    lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
+                    //lblOrigen.
 
-                DataCiudad ciudad = icprov.getCiudadOrigen((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-                lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
+                    DataCiudad ciudad = icprov.getCiudadOrigen((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+                    lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
 
-                ciudad = icprov.getCiudadDestino((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-                if(ciudad.getNombre().equals("No"))
-                    lblDestino.setText("No corresponde");
-                else
-                    lblDestino.setText(ciudad.getNombre() + ", " + ciudad.getPais());
-                
-                ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-                
-                DefaultListModel modeloLista = new DefaultListModel();
-                
-                for(int i = 0; i < categoriasDelServicio.size(); i++){
-                    modeloLista.addElement(categoriasDelServicio.get(i).getRutaCategoria());
-                }
-                
-                lstCategorias.setModel(modeloLista);
-                
-                ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-                
-                //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
-                
-                if(imagenesDelServicio.size() == 0){
-                    
-                    lblImagenes.setVisible(true);
+                    ciudad = icprov.getCiudadDestino((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+                    if(ciudad.getNombre().equals("No"))
+                        lblDestino.setText("No corresponde");
+                    else
+                        lblDestino.setText(ciudad.getNombre() + ", " + ciudad.getPais());
+
+                    ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+
+                    DefaultListModel modeloLista = new DefaultListModel();
+
+                    for(int i = 0; i < categoriasDelServicio.size(); i++){
+                        modeloLista.addElement(categoriasDelServicio.get(i).getRutaCategoria());
+                    }
+
+                    lstCategorias.setModel(modeloLista);
+
+                    ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+
+                    //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
+
+                    if(imagenesDelServicio.size() == 0){
+
+                        lblImagenes.setVisible(true);
+                    }
+                    else{
+                        for(int i = 0; i < imagenesDelServicio.size(); i++){
+                            File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
+                            String rutaAbsoluta = ficheroImagen.getAbsolutePath();
+
+                            setImagenLabel(rutaAbsoluta, "absoluta");
+                        }
+                        lblImagenes.setVisible(false);
+                    }
+
+
+                    panelDatos.setVisible(true);
                 }
                 else{
-                    for(int i = 0; i < imagenesDelServicio.size(); i++){
-                        File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
-                        String rutaAbsoluta = ficheroImagen.getAbsolutePath();
+                    if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado, posiblemente se haya editado algún dato del mismo en la tabla ¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
+                        txtBusqueda.setText("");
+                        modeloTabla modelo = new modeloTabla();
+                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
 
-                        setImagenLabel(rutaAbsoluta, "absoluta");
+                        try{
+                            ArrayList<DataServicio> datosServicios = icprov.getServicios();
+
+                            for(int i = 0; i < datosServicios.size(); i++){
+                                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+                            }
+
+                            tbServicios.setModel(modelo);
+                        }
+                        catch(SQLException ex){
+                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch(ClassNotFoundException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
-                    lblImagenes.setVisible(false);
                 }
                 
-                
-                panelDatos.setVisible(true);
 
             }
             catch(SQLException ex){
@@ -590,6 +631,14 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_txtBusquedaKeyTyped
+
+    private void tbServiciosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyTyped
+        
+    }//GEN-LAST:event_tbServiciosKeyTyped
+
+    private void tbServiciosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyPressed
+        //JOptionPane.showMessageDialog(this, "No");
+    }//GEN-LAST:event_tbServiciosKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
