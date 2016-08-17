@@ -54,7 +54,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mInicio = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
         mRegistros = new javax.swing.JMenu();
-        miRegUsuarios = new javax.swing.JMenuItem();
+        miRegClientes = new javax.swing.JMenuItem();
+        miRegProveedores = new javax.swing.JMenuItem();
         miCategorias = new javax.swing.JMenuItem();
         mRegServicios = new javax.swing.JMenu();
         miRegServiciosNuevo = new javax.swing.JMenuItem();
@@ -89,13 +90,16 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         mRegistros.setText("Registros");
 
-        miRegUsuarios.setText("Usuarios");
-        miRegUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        miRegClientes.setText("Clientes");
+        miRegClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRegUsuariosActionPerformed(evt);
+                miRegClientesActionPerformed(evt);
             }
         });
-        mRegistros.add(miRegUsuarios);
+        mRegistros.add(miRegClientes);
+
+        miRegProveedores.setText("Proveedores");
+        mRegistros.add(miRegProveedores);
 
         miCategorias.setText("Categorias");
         miCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +205,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         agregar.setVisible(true);
     }//GEN-LAST:event_NuevaCatActionPerformed
 
-    private void miRegUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegUsuariosActionPerformed
+    private void miRegClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegClientesActionPerformed
         // TODO add your handling code here:
         //System.out.println("click!");
        // altaUsuarios.setVisible(true);
@@ -209,7 +213,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
        nuevoPanel.add(vAltaUsuarios);
        vAltaUsuarios.show();
         
-    }//GEN-LAST:event_miRegUsuariosActionPerformed
+    }//GEN-LAST:event_miRegClientesActionPerformed
 
     private void miRegServiciosNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosNuevoActionPerformed
         
@@ -299,10 +303,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
     private javax.swing.JMenuItem miNuevaReserva;
+    private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
+    private javax.swing.JMenuItem miRegProveedores;
     private javax.swing.JMenuItem miRegServiciosActualizar;
     private javax.swing.JMenuItem miRegServiciosNuevo;
-    private javax.swing.JMenuItem miRegUsuarios;
     private javax.swing.JMenuItem miSalir;
     // End of variables declaration//GEN-END:variables
 }

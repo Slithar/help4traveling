@@ -72,10 +72,10 @@ public class DatosClientes {
         
         Statement st = conn.createStatement();
         
-        ResultSet rs = st.executeQuery("select * from cantidadreservas");
+        ResultSet rs = st.executeQuery("select numeroReserva from cantidadReservasPromociones union select numeroReserva from cantidadreservasservicios");
         
         while(rs.next()){
-            System.out.println("a");
+            //System.out.println("a");
             reservas.add(indice,rs.getString("numeroReserva"));
             indice++;
         }

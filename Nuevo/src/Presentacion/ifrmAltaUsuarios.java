@@ -45,14 +45,13 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         
         
         panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20));
-        aparecerDatosProveedor(false);
+        //aparecerDatosProveedor(false);
         lblImagenPerfil.setSize(200, 200); 
         
         limpiar();
         
         this.iccli = iccli;
-        this.icprov = icprov;
-        
+        this.icprov = icprov;        
     }
     
     public void setImagenPerfil(String ruta, String tipo){
@@ -72,19 +71,19 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         this.rutaImagen = r;
     }
     
-    public void aparecerDatosProveedor(boolean b){
+    /*public void aparecerDatosProveedor(boolean b){
         lblEmpresa.setVisible(b);
         lblSitioWeb.setVisible(b);
         txtEmpresa.setVisible(b);
         txtSitioWeb.setVisible(b);
-    }
+    }*/
     
     public void limpiar(){
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
         
         DefaultComboBoxModel modelo = new DefaultComboBoxModel(new String[]{"Cliente", "Proveedor"});
-        cmbTipoUsuario.setModel(modelo);
+        //cmbTipoUsuario.setModel(modelo);
         /*if(cmbTipoUsuario)
         cmbTipoUsuario.addItem("Cliente");
         cmbTipoUsuario.addItem("Proveedor");*/
@@ -98,12 +97,14 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
         Calendar fecha = Calendar.getInstance();
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
-        cmbTipoUsuario.setSelectedItem("Cliente");
+        /*cmbTipoUsuario.setSelectedItem("Cliente");
         txtEmpresa.setText("");
         txtSitioWeb.setText("");
-        aparecerDatosProveedor(false);
+        aparecerDatosProveedor(false);*/
         setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
         setRutaImagen("../Logica/perfiles/perfil.PNG");
+        
+        //panelPerfil.setBorder(BorderFactory.createTitledBorder("Imagen de perfil"));
         
         txtNickname.requestFocus();
     }
@@ -133,17 +134,11 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         spnDia = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        cmbTipoUsuario = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         spnMes = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         spnAnio = new javax.swing.JSpinner();
-        lblEmpresa = new javax.swing.JLabel();
-        txtEmpresa = new javax.swing.JTextField();
-        lblSitioWeb = new javax.swing.JLabel();
-        txtSitioWeb = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        panelPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         lblImagenPerfil = new javax.swing.JLabel();
         panelSur = new javax.swing.JPanel();
@@ -222,16 +217,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Fecha de nacimiento:");
 
-        cmbTipoUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cmbTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoUsuarioActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Tipo de usuario:");
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("/");
 
@@ -241,12 +226,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         jLabel4.setText("/");
 
         spnAnio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        lblEmpresa.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblEmpresa.setText("Nombre de empresa:");
-
-        lblSitioWeb.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblSitioWeb.setText("Sitio web:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Foto de perfil:");
@@ -258,27 +237,27 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelPerfilLayout = new javax.swing.GroupLayout(panelPerfil);
+        panelPerfil.setLayout(panelPerfilLayout);
+        panelPerfilLayout.setHorizontalGroup(
+            panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPerfilLayout.createSequentialGroup()
+                .addGroup(panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPerfilLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel5))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                    .addGroup(panelPerfilLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelPerfilLayout.setVerticalGroup(
+            panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPerfilLayout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -286,16 +265,13 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(jLabel12)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(lblEmpresa)
-                    .addComponent(lblSitioWeb))
+                    .addComponent(jLabel1))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -311,20 +287,20 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(txtNickname)
                     .addComponent(txtNombre)
                     .addComponent(txtApellido)
-                    .addComponent(txtCorreo)
-                    .addComponent(cmbTipoUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtEmpresa)
-                    .addComponent(txtSitioWeb))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                    .addComponent(txtCorreo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(txtNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -348,21 +324,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                                 .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4)
                                 .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEmpresa)
-                            .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSitioWeb)
-                    .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                            .addComponent(jLabel1))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -387,7 +350,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         panelSur.setLayout(panelSurLayout);
         panelSurLayout.setHorizontalGroup(
             panelSurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSurLayout.createSequentialGroup()
+            .addGroup(panelSurLayout.createSequentialGroup()
                 .addContainerGap(235, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82)
@@ -397,7 +360,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         panelSurLayout.setVerticalGroup(
             panelSurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSurLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(15, 15, 15)
                 .addGroup(panelSurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -418,16 +381,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void cmbTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoUsuarioActionPerformed
-        // TODO add your handling code here:
-        if(cmbTipoUsuario.getSelectedItem() == "Cliente")
-            aparecerDatosProveedor(false);
-        else{
-            aparecerDatosProveedor(true);
-            txtEmpresa.requestFocus();
-        }
-    }//GEN-LAST:event_cmbTipoUsuarioActionPerformed
-
     private void lblImagenPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenPerfilMouseClicked
         if(evt.getButton() == MouseEvent.BUTTON1){
             fchImagenes selectorImagen = new fchImagenes(this);
@@ -443,24 +396,77 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         LocalDate fechaNac;
                
         if(txtNickname.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNickname.requestFocus();
         }
         else if(txtNombre.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNombre.requestFocus();
         }
         else if(txtApellido.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el apellido del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el apellido del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtApellido.requestFocus();
         }
         else if(txtCorreo.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el correo electrónico del nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el correo electrónico del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtCorreo.requestFocus();
         }
         else{
-            //String fechaNac = spnAnio.getValue() + "-" + spnMes.getValue() + "-" + spnDia.getValue();
             boolean fechaValida = false;
+                    
+            try{
+                LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
+                fechaValida = true;
+            }
+            catch(DateTimeException ex){
+                JOptionPane.showMessageDialog(this, "El fomato de la fecha de nacimiento ingresada para el nuevo cliente es inválida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                fechaValida = false;
+            }
+            
+            if(fechaValida){
+                fechaNac = LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
+                
+                if(!iccli.correoValido(txtCorreo.getText())){
+                       JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                       txtCorreo.requestFocus();
+                    }
+                    else{
+                        try{
+                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
+                                imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
+                            else
+                                imagenCorrecta = true;
+                        }
+                        catch(IOException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                            lblImagenPerfil.requestFocus();
+                        }
+                        if(imagenCorrecta){
+
+                            try{
+                               if(iccli.existeNickname(txtNickname.getText())){
+                                    JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                    txtNickname.requestFocus();
+                                }
+                               else{
+                                   iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
+                                    JOptionPane.showMessageDialog(this, "El nuevo cliente ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                    limpiar();
+                               }
+                            }
+                            catch(SQLException ex){
+                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                            catch(ClassNotFoundException ex){
+                                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        }
+                    }
+            }
+            /*boolean fechaValida = false;
             
             try{
                 LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
@@ -473,28 +479,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
             
             if(fechaValida){
                 fechaNac = LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-                if(cmbTipoUsuario.getSelectedItem() == "Proveedor"){
                 
-                    if(txtEmpresa.getText().length() == 0){
-                        JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de empresa del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        txtEmpresa.requestFocus();
-                    }
-                    else if(txtSitioWeb.getText().length() == 0){
-                        JOptionPane.showMessageDialog(this, "No se ha ingresado el link al sitio web del proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        txtSitioWeb.requestFocus();
-                    }
-
-                    //nuevoUsuario = new Proveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText()); 
-
-
-                    if(!icprov.correoValido(txtCorreo.getText())){
-                       JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                       txtCorreo.requestFocus();
-                    }
-                    /*else if(!nuevoUsuario.fechaValida()){
-                        JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        spnAnio.requestFocus();
-                    }*/
                     else{
 
                         try{
@@ -547,10 +532,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                        JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                        txtCorreo.requestFocus();
                     }
-                    /*else if(!nuevoUsuario.fechaValida()){
-                        JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento ingresada para el nuevo usuario no es válida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        spnAnio.requestFocus();
-                    }*/
                     else{
                         try{
                             if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
@@ -587,7 +568,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         }
                     }
                 }
-            }            
+            } */           
         }        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -599,7 +580,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cmbTipoUsuario;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JFileChooser jFileChooser1;
@@ -608,24 +588,19 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblEmpresa;
     private javax.swing.JLabel lblImagenPerfil;
-    private javax.swing.JLabel lblSitioWeb;
+    private javax.swing.JPanel panelPerfil;
     private javax.swing.JPanel panelSur;
     private javax.swing.JSpinner spnAnio;
     private javax.swing.JSpinner spnDia;
     private javax.swing.JSpinner spnMes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNickname;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtSitioWeb;
     // End of variables declaration//GEN-END:variables
 }
