@@ -20,6 +20,16 @@ public class Promocion {
         return nombre;
     }
 
+    public Promocion() {
+    }
+    
+    public Promocion(String nombre, int descuento, int precio) {
+        this.nombre = nombre;
+        this.descuento = descuento;
+        this.precio = precio;
+    }
+    
+
     public void setNombre(String Nombre) {
         this.nombre = Nombre;
     }

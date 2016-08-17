@@ -25,6 +25,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     private IControladorProveedores icprov;
     private String Seleccionado;
     private int Precio;
+    private boolean control=false;
     private ArrayList<Integer> todosLosPrecios = new ArrayList<Integer>();
     /**
      * Creates new form agregarPromocion
@@ -71,6 +72,16 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             Logger.getLogger(agregarPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void eliminarServicio(){
+        String elegido = "";
+        elegido = this.listaServiciosElegidos.getSelectedValue();
+        DefaultListModel modelo = (DefaultListModel)this.listaServiciosElegidos.getModel();
+        modelo.removeElement(elegido);
+    }
+    public void actualizarPrecio(){
+        Precio = this.icprom.obtenerPrecio(Precio, todosLosPrecios, (Integer)this.spnDescuento.getValue());
+        this.txtprecioTotal.setText(String.valueOf(Precio));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,6 +124,11 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         });
 
         eliminarServicio.setText("Quitar");
+        eliminarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarServicioActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Nombre de la promoción.");
 
@@ -135,6 +151,12 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         });
 
         jLabel4.setText("Nombre Servicio - Precio - Proveedor");
+
+        spnDescuento.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnDescuentoStateChanged(evt);
+            }
+        });
 
         jLabel5.setText("%");
 
@@ -240,17 +262,8 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             String valor = listaServicios.getSelectedValue();
             modelo.addElement(valor);
             listaServiciosElegidos.setModel(modelo);
-            todosLosPrecios.add(icprom.devolverPrecio(valor));            
-            Precio = obtenerPrecio();
-            
-            //Precio += this.icprom.devolverPrecio(valor);
-            System.out.println(Precio);
-            if((Integer)spnDescuento.getValue()!=0){
-                Precio = Precio - ( (Precio * (Integer)spnDescuento.getValue() ) / 100  );
-                this.txtprecioTotal.setText(String.valueOf(Precio));
-            }else{
-                this.txtprecioTotal.setText(String.valueOf(Precio));
-            }
+            todosLosPrecios.add(icprom.devolverPrecio(valor));            ;
+            actualizarPrecio();
         }else{
             JOptionPane.showMessageDialog(this, "El servicio ya forma parte de la promoción.", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
@@ -263,23 +276,37 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         if(modelo.size()<1){
             JOptionPane.showMessageDialog(this, "Una promoción debe contener al menos un servicio. ", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }else{
-            if(this.txtnombrePromocion.getText()!= null) {
+            if(this.txtnombrePromocion.getText()== null) {
                 JOptionPane.showMessageDialog(this,"No pueden quedar campos vacíos.","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
                 this.txtnombrePromocion.requestFocus();
             }else{
-                
+                    String nombre = this.txtnombrePromocion.getText();
+                    int descuento=(Integer)(this.spnDescuento.getValue());
+                    int precioTotal =Integer.parseInt(this.txtprecioTotal.getText());
+                try {
+                   control= this.icprom.agregarNuevaPromocion(nombre,descuento,precioTotal);
+                   control = this.icprom.agregarServiciosPromocion(nombre, modelo);
+                   if(control==true)
+                    JOptionPane.showMessageDialog(this, "La promocion se ha agregado con exito", "EXITO", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(agregarPromocion.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 }
         }
     }//GEN-LAST:event_agregarPromocionActionPerformed
+
+    private void spnDescuentoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnDescuentoStateChanged
+        // TODO add your handling code here:
+            actualizarPrecio();
+    }//GEN-LAST:event_spnDescuentoStateChanged
+
+    private void eliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarServicioActionPerformed
+        // TODO add your handling code here:
+        eliminarServicio();
+    }//GEN-LAST:event_eliminarServicioActionPerformed
     
-    public int obtenerPrecio(){
-        Precio = 0;
-        for(int i = 0; i < todosLosPrecios.size(); i++){
-            Precio += todosLosPrecios.get(i);
-        }
-        
-        return Precio;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel agregarPromoPanel;
