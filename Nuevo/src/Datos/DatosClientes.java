@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 package Datos;
+import Logica.Ciudad;
+import Logica.DataCantidadReservas;
+import Logica.Pais;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -56,5 +61,55 @@ public class DatosClientes {
         //conexion.cerrar();
         conn.close();
     }
-    
+    public ArrayList verInfoReserva()throws SQLException, ClassNotFoundException{
+       ArrayList reservas = new ArrayList();
+        int indice = 0;
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from cantidadreservas");
+        
+        while(rs.next()){
+            System.out.println("a");
+            reservas.add(indice,rs.getString("numeroReserva"));
+            indice++;
+        }
+        
+        rs.close();
+        //conexion.cerrar();
+        conn.close();
+        
+        
+        return reservas;
+        
+    }
+  public  DataCantidadReservas getReserva(String numeroRes){
+      DataCantidadReservas dtaux = new DataCantidadReservas();
+      Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+      try{  
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from cantidadreservas where numeroReserva="+numeroRes);
+        
+        while(rs.next()){
+           dtaux.setCantidad(rs.getInt("cantidad"));
+           
+           
+           
+        }
+         rs.close();
+        //conexion.cerrar();
+        conn.close();
+      }catch(Exception e){}
+      return dtaux; 
+  }  
 }
