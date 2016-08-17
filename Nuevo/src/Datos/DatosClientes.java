@@ -96,12 +96,20 @@ public class DatosClientes {
       try{  
         conn = conexion.conectar();
         
-        Statement st = conn.createStatement();
+        PreparedStatement pConsulta = conn.prepareStatement("select * from cantidadreservas where numeroReserva=?");
         
-        ResultSet rs = st.executeQuery("select * from cantidadreservas where numeroReserva="+numeroRes);
+        pConsulta.setString(1, numeroRes);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        //Statement st = conn.createStatement();
+        
+        //ResultSet rs = st.executeQuery("select * from cantidadreservas where numeroReserva="+numeroRes);
         
         while(rs.next()){
-           dtaux.setCantidad(rs.getInt("cantidad"));
+           
+           /* dtaux
+            dtaux.setCantidad(rs.getInt("cantidad"));*/
            
            
            
