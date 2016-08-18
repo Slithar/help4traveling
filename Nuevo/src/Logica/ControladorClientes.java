@@ -8,6 +8,7 @@ import Datos.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -56,6 +57,27 @@ public class ControladorClientes implements IControladorClientes{
         if(rutaImagen != "perfiles/perfil.PNG"){
             cliente.agregarImagen(nickname, rutaImagen);
         }
+    }
+
+    @Override
+    public ArrayList<DataCliente> getClientes() throws SQLException, ClassNotFoundException {
+        ArrayList <DataCliente> resultado = new ArrayList();
+        
+        DatosClientes cliente = new DatosClientes();
+        ArrayList <Cliente> arrayClientes = cliente.selectAllClientes();
+        
+        for(int i=0; i< arrayClientes.size(); i++){
+            DataCliente cli = new DataCliente();
+            cli.setNickname(arrayClientes.get(i).getNickname());
+            cli.setNombre(arrayClientes.get(i).getNombre());
+            cli.setApellido(arrayClientes.get(i).getApellido());
+            cli.setEmail(arrayClientes.get(i).getEmail());
+            cli.setFechaNac(LocalDate.parse(String.valueOf(arrayClientes.get(i).getFechaNac())));
+            
+            resultado.add(cli);
+        }
+        
+        return resultado;
     }
     
 }

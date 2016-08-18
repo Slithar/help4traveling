@@ -5,6 +5,9 @@
  */
 package Logica;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  *
  * @author usuario
@@ -13,6 +16,15 @@ public class ControladorPromociones implements IControladorPromociones{
     
     public ControladorPromociones(){
         
+    }
+
+    @Override
+    public ArrayList<DataPromocion> getPromociones() throws SQLException, ClassNotFoundException {
+        ArrayList<DataPromocion> resultado = new ArrayList();
+        //no implementado aun
+        
+        
+        return resultado;
     }
     
 }

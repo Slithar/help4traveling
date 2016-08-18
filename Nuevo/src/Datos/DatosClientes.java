@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package Datos;
+import Logica.Cliente;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -55,6 +58,35 @@ public class DatosClientes {
         
         //conexion.cerrar();
         conn.close();
+    }
+    
+    public ArrayList<Cliente> selectAllClientes() throws SQLException, ClassNotFoundException{
+        ArrayList<Cliente> resultado = new ArrayList();
+        
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from usuarios order by nickname");
+        
+        while(rs.next()){
+           Cliente cli = new Cliente();
+           cli.setNickname(rs.getString("nickname"));
+           cli.setNombre(rs.getString("nombre"));
+           cli.setApellido(rs.getString("apellido"));
+           cli.setEmail(rs.getString("email"));
+           cli.setFechaNac(LocalDate.parse(rs.getString("fechaNacimiento")));
+           
+           resultado.add(cli);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return resultado;
+        
     }
     
 }

@@ -133,6 +133,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mReservas.setText("Reservas");
 
         miNuevaReserva.setText("Nueva reserva");
+        miNuevaReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevaReservaActionPerformed(evt);
+            }
+        });
         mReservas.add(miNuevaReserva);
 
         miCancelarReserva.setText("Cancelar reserva");
@@ -246,6 +251,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
        nuevoPanel.add(vInformacionServicio);
        vInformacionServicio.setVisible(true);
     }//GEN-LAST:event_miConsServiciosActionPerformed
+
+    private void miNuevaReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevaReservaActionPerformed
+        // TODO add your handling code here:
+        ifrmAltaReservas vAltaReserva;
+        vAltaReserva = new ifrmAltaReservas(icprov, iccli, icprom);
+        nuevoPanel.add(vAltaReserva);
+        //vNuevaReserva.setVisible(true);
+        vAltaReserva.show();
+    }//GEN-LAST:event_miNuevaReservaActionPerformed
     
         
     /**

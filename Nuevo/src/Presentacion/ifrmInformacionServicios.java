@@ -60,7 +60,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
         tbServicios.requestFocus();
-        
+   
         lblImagen1.addMouseListener(new OyenteLabel());
         lblImagen1.setSize(143, 143);
         panelImagenes.add(lblImagen1);

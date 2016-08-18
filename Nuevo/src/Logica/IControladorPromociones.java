@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -11,5 +12,6 @@ import java.util.*;
  * @author usuario
  */
 public interface IControladorPromociones {
+     public abstract ArrayList<DataPromocion> getPromociones() throws SQLException, ClassNotFoundException;
     
 }
