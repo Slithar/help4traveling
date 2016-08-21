@@ -19,5 +19,6 @@ public interface IControladorClientes {
     public abstract boolean existeNickname(String c) throws SQLException, ClassNotFoundException;
     public abstract void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac,String rutaImagen) throws SQLException, ClassNotFoundException;
     public abstract ArrayList verInfoReserva()throws SQLException, ClassNotFoundException;
-    public abstract DataCantidadReservas getReserva(String nombreRes)throws SQLException, ClassNotFoundException;
+    public abstract DataReserva getReserva(String nombreRes)throws SQLException, ClassNotFoundException;
+    public abstract ArrayList  getReservasPromo(String numeroProm);
 }
