@@ -126,14 +126,17 @@ public class ControladorProveedores implements IControladorProveedores{
     }
     
     @Override
-    public boolean existeNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
+    public boolean existeNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
         
         Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
         s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
         
         DatosServicios servicios = new DatosServicios();
         
-        if(servicios.selectCountNombreServicio(s.getNombreServicio()) == 0)
+        if(servicios.selectCountNombreServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa()) == 0)
             return false;
         else
             return true;
@@ -225,6 +228,213 @@ public class ControladorProveedores implements IControladorProveedores{
             //Logger.getLogger(ControladorProveedores.class.getName()).log(Level.SEVERE, null, ex);
             //throws ex;
         //}
+    }
+    
+    @Override
+    public ArrayList<DataServicio> getServicios() throws SQLException, ClassNotFoundException{
+        DatosServicios servicios = new DatosServicios();
+        
+        ArrayList<Servicio> todosLosServicios = servicios.selectNombreServicios();
+        ArrayList<DataServicio> resultado = new ArrayList<DataServicio>();
+        
+        for(int i = 0; i < todosLosServicios.size(); i++){
+            DataServicio ds = new DataServicio();
+            ds.setNombreServicio(todosLosServicios.get(i).getNombreServicio());
+            ds.setNombreProveedor(todosLosServicios.get(i).getProveedorServicio().getNombreEmpresa());
+            resultado.add(ds);
+        }
+        
+        return resultado;
+    }
+    
+    @Override
+    public DataServicio getDatosServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios servicios = new DatosServicios();
+        
+        Servicio datosServicio = servicios.selectServicioPorNombre(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        DataServicio ds = new DataServicio();
+        
+        ds.setNombreProveedor(datosServicio.getProveedorServicio().getNombreEmpresa());
+        ds.setDescripcionServicio(datosServicio.getDescripcionServicio());
+        ds.setPrecioServicio(datosServicio.getPrecioServicio());
+        
+        return ds;
+    }
+    
+    @Override
+    public DataCiudad getCiudadOrigen(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        Ciudad ciudadOrigen = ds.getCiudadOrigen(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        
+        DataCiudad resultadoCiudad = new DataCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais().getNombre());
+        
+        return resultadoCiudad;
+        
+    }
+    
+    public DataCiudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        Ciudad ciudadDestino = ds.getCiudadDestino(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        
+        DataCiudad resultadoCiudad = new DataCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais().getNombre());
+        
+        return resultadoCiudad;
+        
+    }
+    
+    @Override
+    public ArrayList<DataCategoria> getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList<Categoria> resultadoCategorias = ds.getCategorias(nombre, nombreProveedor);
+        
+        ArrayList<DataCategoria> categoriasDelServicio = new ArrayList<DataCategoria>();
+        
+        for(int i = 0; i < resultadoCategorias.size(); i++){
+            categoriasDelServicio.add(new DataCategoria(resultadoCategorias.get(i).getNombre(), resultadoCategorias.get(i).getRutaCategoria()));
+        }
+        
+        return categoriasDelServicio;
+    }
+    
+    @Override
+    public ArrayList<DataImagen> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList<ImagenServicio> resultadoImagenes = ds.getImagenes(nombre, nombreProveedor);
+        
+        ArrayList<DataImagen> imagenesDelServicio = new ArrayList<DataImagen>();
+        
+        //System.out.println(resultadoImagenes.size());
+        
+        if(resultadoImagenes.size() > 0){
+            for(int i = 0; i < resultadoImagenes.size(); i++){
+                imagenesDelServicio.add(new DataImagen(resultadoImagenes.get(i).getPath(), ""));
+            }
+        }
+        
+        return imagenesDelServicio;
+    }
+    
+    @Override
+    public void modificarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+        
+        //Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        /*s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);*/
+        
+        DatosServicios servicios = new DatosServicios();
+        
+        ArrayList<ImagenServicio> imagenesServicio = new ArrayList<ImagenServicio>();
+        
+        for(int i = 0; i < imagenes.size(); i++){
+            imagenesServicio.add(new ImagenServicio(imagenes.get(i), new Servicio()));
+        }
+        
+        ArrayList<Categoria> categoriasServicio = new ArrayList<Categoria>();
+        
+        for(int i = 0; i < categorias.size(); i++){
+            
+            String cat = (String) categorias.get(i);
+            //int cant = contador(cat, '>');
+            
+            int cant = 0;
+        
+            for(int j = 0; j < cat.length(); j++){
+                if(cat.charAt(j) == '>')
+                    cant++;
+            }
+            
+            String[] c = cat.split(">");
+            
+            categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));
+        }
+        
+        Servicio s = new Servicio(nombre, descripcion, precio, p, imagenesServicio, reservas, promociones, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()), new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);
+        
+        boolean hayDestino = true;
+        
+        if(s.getDestino().getNombre().equals("No"))
+            hayDestino = false;
+        else
+            hayDestino = true;
+        
+        servicios.modificarServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), hayDestino);
+        
+        servicios.eliminarImagenes(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        servicios.eliminarCategorias(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        
+        categoriasServicio = s.getCategoriasServicio();
+        
+        for(int i = 0; i < categoriasServicio.size(); i++){
+            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre(), categoriasServicio.get(i).getRutaCategoria());
+        }
+        
+        imagenesServicio = s.getImagenesServicio();
+        
+        for(int i = 0; i <imagenesServicio.size(); i++){
+            servicios.agregarImagen(imagenesServicio.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());
+        }
+        
+        
+        
+        //this.agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino);
+        
+    }
+    
+    @Override
+    public ArrayList<DataServicio> getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException{
+        
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList<Servicio> servicios = ds.getServiciosPorBusqueda(s.getNombreServicio());
+        ArrayList<DataServicio> resultadoServicio = new ArrayList<DataServicio>();
+        
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio serv = new DataServicio();
+            serv.setNombreServicio(servicios.get(i).getNombreServicio());
+            serv.setNombreProveedor(servicios.get(i).getProveedorServicio().getNombreEmpresa());
+            resultadoServicio.add(serv);
+        }
+        
+        return resultadoServicio;
     }
     
 }

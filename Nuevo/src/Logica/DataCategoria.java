@@ -16,6 +16,11 @@ public class DataCategoria {
     public DataCategoria() {
     }
 
+    public DataCategoria(String nombre, String rutaCategoria) {
+        this.nombre = nombre;
+        this.rutaCategoria = rutaCategoria;
+    }
+
     public DataCategoria(String nombre) {
         this.nombre = nombre;
     }

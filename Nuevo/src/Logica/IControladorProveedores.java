@@ -22,8 +22,16 @@ public interface IControladorProveedores {
     public abstract void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String rutaImagen, String empresa, String sitioWeb) throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataCiudad> getCiudades() throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataProveedor> getProveedores() throws SQLException, ClassNotFoundException;
-    public abstract boolean existeNombreServicio(String nombre) throws SQLException, ClassNotFoundException;
+    public abstract boolean existeNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
     public abstract void agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException;
     public abstract void copiarImagenServicio(String nombreActual, String nombreDestino) throws IOException;
-    
+    public abstract ArrayList<DataServicio> getServicios() throws SQLException, ClassNotFoundException;
+    public abstract DataServicio getDatosServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
+    public abstract DataCiudad getCiudadOrigen(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
+    public abstract DataCiudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataCategoria> getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataImagen> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
+    public abstract void modificarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataServicio> getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException;
+
 }

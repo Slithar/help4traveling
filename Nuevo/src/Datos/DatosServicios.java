@@ -6,7 +6,14 @@
 package Datos;
 
 import java.sql.*;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.util.*;
+import Logica.Servicio;
+import Logica.Proveedor;
+import Logica.Ciudad;
+import Logica.Pais;
+import Logica.Categoria;
+import Logica.ImagenServicio;
 
 
 /**
@@ -21,16 +28,17 @@ public class DatosServicios {
         //conexion = new ConexionBD();
     }
     
-    public int selectCountNombreServicio(String nombre) throws SQLException, ClassNotFoundException{
+    public int selectCountNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from servicios where nombre = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from servicios where nombre = ? and nombreProveedor = ?");
         
         pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
         
         ResultSet rs = pConsulta.executeQuery();
         
@@ -120,6 +128,300 @@ public class DatosServicios {
         
         //conexion.cerrar();
         conn.close();
+    }
+    
+    public ArrayList<Servicio> selectNombreServicios() throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select nombre, nombreProveedor from servicios order by nombre");
+        
+        ArrayList<Servicio> resultado = new ArrayList<Servicio>();
+        
+        while(rs.next()){
+            Servicio s = new Servicio();
+            s.setNombreServicio(rs.getString("nombre"));
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            s.setProveedorServicio(p);
+            
+            resultado.add(s);
+        }
+        
+        rs.close();
+        
+        conn.close();
+        
+        return resultado;
+    }
+    
+    public Servicio selectServicioPorNombre(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        /*Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select nombre from servicios order by nombre");
+        
+        ArrayList<Servicio> resultado = new ArrayList<Servicio>();*/
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select nombreProveedor, descripcion, precio from servicios where nombre = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        Servicio s = new Servicio();
+        
+        while(rs.next()){
+            
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            s.setProveedorServicio(p);
+            s.setDescripcionServicio(rs.getString("descripcion"));
+            s.setPrecioServicio(rs.getInt("precio"));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return s;
+    }
+    
+    public Ciudad getCiudadOrigen(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select s.ciudadOrigen, c.nombrePais from servicios s, ciudades c where s.ciudadOrigen = c.nombre and s.nombre = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        Ciudad c = new Ciudad();
+        
+        while(rs.next()){
+            c.setNombre(rs.getString("ciudadOrigen"));
+            c.setPais(new Pais(rs.getString("nombrePais")));
+        }
+        
+        rs.close();
+        
+        conn.close();
+        
+        return c;
+    }
+    
+    public Ciudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select s.ciudadDestino, c.nombrePais from servicios s, ciudades c where s.ciudadDestino = c.nombre and s.nombre = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        Ciudad c = new Ciudad();
+        
+        while(rs.next()){
+            c.setNombre(rs.getString("ciudadDestino"));
+            c.setPais(new Pais(rs.getString("nombrePais")));
+        }
+        
+        rs.close();
+        
+        conn.close();
+        
+        return c;
+        
+    }
+    
+    public ArrayList<Categoria> getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select nombreCategoria, rutaCategoria from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        //Categoria c = new Ciudad();
+        
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        
+        while(rs.next()){
+            categorias.add(new Categoria(rs.getString("nombreCategoria"), rs.getString("rutaCategoria"), new ArrayList()));
+            //c.setPais(new Pais(rs.getString("nombrePais")));
+        }
+        
+        rs.close();
+        
+        conn.close();
+        
+        return categorias;        
+    }
+    
+    public ArrayList<ImagenServicio> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select ruta from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, nombreProveedor);
+        
+        //System.out.println("entree acá");
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        //Categoria c = new Ciudad();
+        
+        ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
+        
+        if(rs != null){
+            //System.out.println("entree");
+            while(rs.next()){
+                imagenes.add(new ImagenServicio(rs.getString("ruta"), new Servicio()));
+                //System.out.println("agreguee");
+                //c.setPais(new Pais(rs.getString("nombrePais")));
+            }
+        }
+        
+        
+        rs.close();
+        
+        conn.close();
+        
+        return imagenes;
+        
+    }
+    
+    public void eliminarImagenes(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareStatement("delete from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        pConsulta.setString(1, nombreServicio);
+        pConsulta.setString(2, nombreProveedor);
+        
+        pConsulta.executeUpdate();
+        
+        //conexion.cerrar();
+        conn.close();
+    }
+    
+    public void eliminarCategorias(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareStatement("delete from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        pConsulta.setString(1, nombreServicio);
+        pConsulta.setString(2, nombreProveedor);
+        
+        pConsulta.executeUpdate();
+        
+        //conexion.cerrar();
+        conn.close();
+    }
+    
+    public void modificarServicio(String nombre, String nombreProveedor, String ciudadOrigen, String ciudadDestino, String descripcion, int precio, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+        
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        //pConsulta;
+        //JOptionPane.showMessageDialog(null, descripcion + " - " + precio + " - " + ciudadOrigen + " - " + nombre + " - " + nombreProveedor);
+        
+        if(tieneDestino){
+            PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = ? where nombre = ? and nombreProveedor = ?");
+            //System.out.println("1: " + ciudadDestino);
+            pConsulta.setString(1, descripcion);
+            pConsulta.setInt(2, precio);
+            pConsulta.setString(3, ciudadOrigen);
+            pConsulta.setString(4, ciudadDestino);
+            pConsulta.setString(5, nombre);
+            pConsulta.setString(6, nombreProveedor);
+            
+            pConsulta.executeUpdate();
+            
+        }
+        else{
+            PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = null where nombre = ? and nombreProveedor = ?");
+            //System.out.println("1");
+            pConsulta.setString(1, descripcion);
+            pConsulta.setInt(2, precio);
+            pConsulta.setString(3, ciudadOrigen);
+            pConsulta.setString(4, nombre);
+            pConsulta.setString(5, nombreProveedor);
+            
+            pConsulta.executeUpdate();
+        }
+        
+        
+        
+        conn.close();
+        
+    }
+    
+    public ArrayList<Servicio> getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select nombre, nombreProveedor from servicios where nombre like ?");
+        
+        pConsulta.setString(1, "%" + nombre + "%");
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            Servicio s = new Servicio();
+            s.setNombreServicio(rs.getString("nombre"));
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            s.setProveedorServicio(p);
+            
+            servicios.add(s);
+        }
+        
+        return servicios;
     }
     
 }

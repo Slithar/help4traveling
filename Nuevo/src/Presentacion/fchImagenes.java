@@ -19,6 +19,7 @@ public class fchImagenes extends javax.swing.JFrame {
      */
     private ifrmAltaUsuarios iAltaUsuario;
     private ifrmAltaServicio iAltaServicio;
+    private ifrmActualizarServicio iActualizarServicio;
     
     public fchImagenes() {
         initComponents();
@@ -37,9 +38,19 @@ public class fchImagenes extends javax.swing.JFrame {
         
     }
     
-     public fchImagenes(ifrmAltaServicio i){
+    public fchImagenes(ifrmAltaServicio i){
         initComponents();
         iAltaServicio = i;
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG, GIF", "jpg", "png", "gif");
+        fchImagen.setFileFilter(filtroTipo);
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1900 - tamanioVentana.width)/2, (900 - tamanioVentana.height)/2);       
+    }
+    
+    public fchImagenes(ifrmActualizarServicio i){
+        initComponents();
+        iActualizarServicio = i;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG, GIF", "jpg", "png", "gif");
         fchImagen.setFileFilter(filtroTipo);
@@ -101,6 +112,10 @@ public class fchImagenes extends javax.swing.JFrame {
                     iAltaServicio.setImagenLabel(ruta, "absoluta");
                     //iAltaServicio.setRutaImagen(ruta);
                 }
+                else if(iActualizarServicio != null){
+                    iActualizarServicio.setImagenLabel(ruta, "absoluta");
+                }
+                    
                 
                 this.setVisible(false);
             }

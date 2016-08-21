@@ -654,7 +654,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1)
-                            .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblSitioWeb2)
                                 .addGap(112, 112, 112)
@@ -666,7 +665,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelImagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(26, 26, 26))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(lblEmpresa)
@@ -720,7 +720,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb)
                             .addComponent(cmbCiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(21, 21, 21)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb1)
                             .addComponent(cmbCiudadDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -772,16 +772,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             }
             else{
                 try {
-                    if(icprov.existeNombreServicio(txtNombreServicio.getText())){
-                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    if(icprov.existeNombreServicio(txtNombreServicio.getText(), (String) cmbProveedor.getSelectedItem())){
+                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso por el proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         txtNombreServicio.requestFocus();
                     }
                     else{
                         String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
                         String[] ciudad = cOrigen.split(",");
-                        
-                        //Ciudad ciudadOrigen = new Ciudad();
-                        //ciudadOrigen.setNombre(ciudad[0]);
                         String ciudadOrigen = ciudad[0].trim();
                         
                         ArrayList<String> imagenes = new ArrayList<String>();
@@ -831,8 +828,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         
                         for(int i = 0; i < imagenes.size(); i++){
                             int numero = i + 1;
-                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + numero);
-                            imagenes.set(i, "../Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + numero + ".jpg");
+                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero);
+                            imagenes.set(i, "src/Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero + ".jpg");
                         }
                         
                         int precio = Integer.parseInt(txtPrecio.getText());

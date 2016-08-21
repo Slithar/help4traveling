@@ -120,6 +120,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mRegServicios.add(miRegServiciosNuevo);
 
         miRegServiciosActualizar.setText("Actualizar");
+        miRegServiciosActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegServiciosActualizarActionPerformed(evt);
+            }
+        });
         mRegServicios.add(miRegServiciosActualizar);
 
         mRegistros.add(mRegServicios);
@@ -156,6 +161,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsProveedores);
 
         miConsServicios.setText("Servicios");
+        miConsServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsServiciosActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsServicios);
 
         miConsPromociones.setText("Promociones");
@@ -234,6 +244,17 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         agregar.setVisible(true);
     }//GEN-LAST:event_miCategoriasActionPerformed
 
+    private void miRegServiciosActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosActualizarActionPerformed
+        ifrmActualizarServicio vActualizarServicio = new ifrmActualizarServicio(icprov, iccat);
+        nuevoPanel.add(vActualizarServicio);
+        vActualizarServicio.setVisible(true);
+    }//GEN-LAST:event_miRegServiciosActualizarActionPerformed
+
+    private void miConsServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsServiciosActionPerformed
+       ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat);
+       nuevoPanel.add(vInformacionServicio);
+       vInformacionServicio.setVisible(true);
+    }//GEN-LAST:event_miConsServiciosActionPerformed
     private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
         // TODO add your handling code here:
         VerInfoReserva agregar = new VerInfoReserva(this.iccli);
