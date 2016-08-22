@@ -99,6 +99,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mRegistros.add(miRegClientes);
 
         miRegProveedores.setText("Proveedores");
+        miRegProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegProveedoresActionPerformed(evt);
+            }
+        });
         mRegistros.add(miRegProveedores);
 
         miCategorias.setText("Categorias");
@@ -262,6 +267,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
       agregar.setVisible(true);
         
     }//GEN-LAST:event_miConsReservasActionPerformed
+
+    private void miRegProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegProveedoresActionPerformed
+        ifrmAltaProveedores vProveedores = new ifrmAltaProveedores(icprov);
+        nuevoPanel.add(vProveedores);
+        vProveedores.setVisible(true);
+    }//GEN-LAST:event_miRegProveedoresActionPerformed
     
         
     /**
