@@ -75,25 +75,73 @@ public class ControladorClientes implements IControladorClientes {
     public DataReserva getReserva(String numeroRes){
         DataReserva dtAux =new  DataReserva ();
         DatosClientes datCli = new DatosClientes();
-     Reserva res= datCli.getReserva(numeroRes);
+        ArrayList <DataCantidadReservasPromociones> listProm= new ArrayList();
+        ArrayList <DataCantidadReservasServicios> listServ= new ArrayList();
+        Reserva res= datCli.getReserva(numeroRes);
      dtAux.setNumero(res.getNumero());
      dtAux.setCliente(res.getCliente().getNickname());
      dtAux.setPrecio(res.getPrecio());
      dtAux.setFecha(res.getFecha());
      dtAux.setEstado(String.valueOf(res.getEstado()));
-     dtAux.setReservaPromociones(res.getReservacantPromociones());
-     dtAux.setServiciosReserva(res.getServiciosReserva());
-     
+     if(res.getReservacantPromociones().size() > 0){
+         for(int i=0;i<res.getReservacantPromociones().size();i++){
+            cantidadReservasPromociones promAux= res.getReservacantPromociones().get(i);
+            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre());
+            listProm.add(dataProm);
+
+
+         }
+         for(int i=0;i<res.getServiciosReserva().size();i++){
+             cantidadReservasServicios promServ =res.getServiciosReserva().get(i);
+             DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(),promServ.getFechaInicio(),promServ.getFechaFin(),0,promServ.getNombreS(),promServ.getProveedor().getNombreEmpresa());
+             listServ.add(promServi);
+
+         }
+     }
+          
      return dtAux;
         
     }
+    @Override
       public ArrayList getReservasPromo(String numeroProm){
           DatosClientes dataux = new DatosClientes();
-        return dataux.getReservasPromo(numeroProm);
+     /*ArrayList <DataCantidadReservasPromociones> listProm= new ArrayList();
+
+        for(int i=0;i<dataux.getReservasPromo(numeroProm).size();i++){
+        cantidadReservasPromociones promAux= (cantidadReservasPromociones) dataux.getReservasPromo(numeroProm).get(i);
+        DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre());
+        listProm.add(dataProm);
+        
+   
+     }
+        return listProm;*/
+        ArrayList<cantidadReservasPromociones> listProm = new ArrayList();
+        listProm = dataux.getReservasPromo(numeroProm);
+        
+        ArrayList<DataCantidadReservasPromociones> dataListProm = new ArrayList<DataCantidadReservasPromociones>();
+        for(int i=0;i<listProm.size();i++){
+            cantidadReservasPromociones promAux= (cantidadReservasPromociones) listProm.get(i);
+            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre());
+            dataListProm.add(dataProm);
+        }
+        
+        return dataListProm;
       }
+      
+    @Override
        public ArrayList getReservasServ(String numeroServ){
           DatosClientes dataux = new DatosClientes();
-        return dataux.getServiciosPromo(numeroServ);
+          ArrayList <cantidadReservasServicios> listServ= new ArrayList();
+          listServ = dataux.getServiciosPromo(numeroServ);
+          
+          ArrayList<DataCantidadReservasServicios> dataListServ = new ArrayList<DataCantidadReservasServicios>();
+           for(int i=0;i<listServ.size();i++){
+         cantidadReservasServicios promServ = listServ.get(i);
+         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(),promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());
+         dataListServ.add(promServi);
+         
+     }     
+           return dataListServ;
       }
       
     public ArrayList verInfoCliente()throws SQLException, ClassNotFoundException {

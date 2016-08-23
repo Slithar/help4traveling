@@ -263,7 +263,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
         // TODO add your handling code here:
         VerInfoReserva agregar = new VerInfoReserva(this.iccli);
-       //add(agregar);  
+       //add(agregar);
+       //nuevoPanel.add(agregar);
       agregar.setVisible(true);
         
     }//GEN-LAST:event_miConsReservasActionPerformed

@@ -20,7 +20,14 @@ public class Reserva {
     private Estado  estado;
     
     public Reserva() {
+        this.numero = 0;
+        this.fecha = LocalDate.of(1990, 1, 1);
+        this.cliente=new Cliente();
+        this.estado=Estado.REGISTRADA;
+        this.serviciosReserva=new ArrayList();
+        this.reservacantPromociones=new ArrayList();
         
+               
     }
     
     

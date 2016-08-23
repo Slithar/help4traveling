@@ -30,6 +30,12 @@ public class DataCantidadReservasServicios {
         this.servicio = servicio;
         this.proveedor = proveedor;
     }
+    public DataCantidadReservasServicios(int cantidad, LocalDate fechaInicio, LocalDate fechaFin ) {
+        this.cantidad = cantidad;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+       
+    }
 
     public int getCantidad() {
         return cantidad;
@@ -63,12 +69,12 @@ public class DataCantidadReservasServicios {
         this.reserva = reserva;
     }
 
-    public String getPromocion() {
+    public String getProveedor() {
         return proveedor;
     }
 
-    public void setPromocion(String promocion) {
-        this.proveedor = promocion;
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
     }
 
     public String getServicio() {

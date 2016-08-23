@@ -27,6 +27,12 @@ public class DataCantidadReservasPromociones {
         this.reserva = reserva;
         this.promocion = promocion;
     }
+      public DataCantidadReservasPromociones(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, String promocion) {
+        this.cantidad = cantidad;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.promocion = promocion;
+    }
 
     public int getCantidad() {
         return cantidad;
