@@ -39,7 +39,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     }
     
     public ifrmAltaUsuarios(IControladorClientes iccli, IControladorProveedores icprov) {
-        setTitle("Registro de usuarios");
+        setTitle("Registro de clientes");
         
         initComponents();
         

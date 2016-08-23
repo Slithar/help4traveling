@@ -18,6 +18,7 @@ public class fchImagenes extends javax.swing.JFrame {
      * Creates new form fchImagenes
      */
     private ifrmAltaUsuarios iAltaUsuario;
+    private ifrmAltaProveedores iAltaProveedores;
     private ifrmAltaServicio iAltaServicio;
     private ifrmActualizarServicio iActualizarServicio;
     
@@ -36,6 +37,16 @@ public class fchImagenes extends javax.swing.JFrame {
         setLocation((1900 - tamanioVentana.width)/2, (900 - tamanioVentana.height)/2);
         
         
+    }
+    
+    public fchImagenes(ifrmAltaProveedores i){
+        initComponents();
+        iAltaProveedores = i;
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        FileNameExtensionFilter filtroTipo = new FileNameExtensionFilter("JPG, PNG, GIF", "jpg", "png", "gif");
+        fchImagen.setFileFilter(filtroTipo);
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1900 - tamanioVentana.width)/2, (900 - tamanioVentana.height)/2);       
     }
     
     public fchImagenes(ifrmAltaServicio i){
@@ -108,6 +119,10 @@ public class fchImagenes extends javax.swing.JFrame {
                     iAltaUsuario.setImagenPerfil(ruta, "absoluta");
                     iAltaUsuario.setRutaImagen(ruta);
                 }
+                else if(iAltaProveedores != null){                    
+                    iAltaProveedores.agregarImagenPerfil(ruta);
+                    //System.out.println("listo");
+                }
                 else if(iAltaServicio != null){
                     iAltaServicio.setImagenLabel(ruta, "absoluta");
                     //iAltaServicio.setRutaImagen(ruta);
@@ -124,6 +139,10 @@ public class fchImagenes extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(iAltaUsuario, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 else if(iAltaServicio != null)
                     JOptionPane.showMessageDialog(iAltaServicio, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                if(iAltaProveedores != null)
+                    JOptionPane.showMessageDialog(iAltaProveedores, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                else if(iActualizarServicio != null)
+                    JOptionPane.showMessageDialog(iActualizarServicio, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }   
         }
         else{
