@@ -23,7 +23,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
     
     private ArrayList<LabelImagen> perfiles;
     
-    IControladorProveedores icprov;
+    private String rutaImagen = "";
+    
+    private IControladorProveedores icprov;
     
     public ifrmAltaProveedores() {
         initComponents();
@@ -67,47 +69,58 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "La imagen de perfil seleccionada ya se encuentra cargada", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            int i = 0;
             LabelImagen lblImagen1 = new LabelImagen();
             lblImagen1.setSize(100, 100);
             lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
             lblImagen1.addMouseListener(new OyenteLabel());
             LabelImagen imagen = new LabelImagen(ruta);
             imagen.setSize(100, 100);
+            
+            JPopupMenu jpmEliminar = new JPopupMenu();
+            MenuItemPopup pm = new MenuItemPopup(lblImagen1, "Eliminar");
+            pm.addActionListener(new OyentePopup());
+            jpmEliminar.add(pm);
+            
+            lblImagen1.setComponentPopupMenu(jpmEliminar);
 
             perfiles.add(imagen);
             if(perfiles.get(0) == imagen){
                 setImagenPerfil(ruta, "absoluta");
                 panelImagenes.add(lblImagen1);
-                lblImagen1.setLocation(0, 0);
+                /*lblImagen1.setLocation(0, 0);
                 ImageIcon imagenPerfil = new ImageIcon(ruta);
                 ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen1.getWidth(), lblImagen1.getHeight(), Image.SCALE_DEFAULT));
                 lblImagen1.setIcon(imagenDimensionadaPerfil);
-                lblImagen1.setRutaImagen(ruta);
+                lblImagen1.setRutaImagen(ruta);*/
             }
-            else{
-                lblImagen1.setVisible(false);
-                for( i = 0; i < perfiles.size(); i++){
-                //JOptionPane.showMessageDialog(this, perfiles.get(i).getRutaImagen());            
-                    ImageIcon imagenPerfil = new ImageIcon(perfiles.get(i).getRutaImagen());
-                    ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(perfiles.get(i).getWidth(), perfiles.get(i).getHeight(), Image.SCALE_DEFAULT));
-                    perfiles.get(i).setIcon(imagenDimensionadaPerfil);       
-
-                    panelImagenes.add(perfiles.get(i));
-
-
-
-                    perfiles.get(i).setLocation(i * 135, 0);
-
-                }           
-
-                if(i > 3){
-                    panelImagenes.setPreferredSize(new Dimension(i * 135, 100));
-                    panelPerfiles.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-                }
-            }
+            //else{
+            lblImagen1.setVisible(false);
+            refrescarPerfiles();
+            //}
         }
         
+    }
+    
+    public void refrescarPerfiles(){
+        int i = 0;
+        for( i = 0; i < perfiles.size(); i++){
+            //JOptionPane.showMessageDialog(this, perfiles.get(i).getRutaImagen());            
+            ImageIcon imagenPerfil = new ImageIcon(perfiles.get(i).getRutaImagen());
+            ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(perfiles.get(i).getWidth(), perfiles.get(i).getHeight(), Image.SCALE_DEFAULT));
+            perfiles.get(i).setIcon(imagenDimensionadaPerfil);       
+
+            panelImagenes.add(perfiles.get(i));
+            perfiles.get(i).setLocation(i * 135, 0);
+        }      
+        
+        panelImagenes.setPreferredSize(new Dimension(i * 135, 100));
+
+        if(i > 3){            
+            panelPerfiles.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+        }
+        else{
+            panelPerfiles.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+        }
     }
     
     public boolean existeImagenPerfil(String ruta){
@@ -130,7 +143,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             ImageIcon imagenPerfil = new ImageIcon(ruta);
             ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
             lblImagenPerfil.setIcon(imagenDimensionada);    
-        }        
+        } 
+        
+        this.rutaImagen = ruta;
     }
     
     private class LabelImagen extends JLabel{
@@ -144,7 +159,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             /**** ACÁ ME QUEDE *****/
             
             JPopupMenu jpmEliminar = new JPopupMenu();
-            jpmEliminar.add(new MenuItemPopup(this, "Eliminar"));
+            MenuItemPopup pm = new MenuItemPopup(this, "Eliminar");
+            pm.addActionListener(new OyentePopup());
+            jpmEliminar.add(pm);
             
             this.setComponentPopupMenu(jpmEliminar);
         }
@@ -213,11 +230,39 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         
     }
     
-    /*private class OyentePopup implements ActionListener{
+    private class OyentePopup implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MenuItemPopup objetoEvento = (MenuItemPopup) e.getSource();
+            String ruta = objetoEvento.getLabelAsociado().getRutaImagen();
+            
+            int i = 0;
+            boolean encontrado = false;
+            
+            while(!encontrado && i < perfiles.size()){
+                if(perfiles.get(i).getRutaImagen().equals(ruta)){
+                    Container parent = perfiles.get(i).getParent();
+                    parent.removeAll();
+                    parent.repaint();
+                    String rutaEliminar = perfiles.get(i).getRutaImagen();
+                    perfiles.remove(perfiles.get(i));
+                    if(rutaImagen.equals(rutaEliminar) && perfiles.size() > 0)
+                        setImagenPerfil(perfiles.get(0).getRutaImagen(), "absoluta");
+                    refrescarPerfiles();
+                    if(perfiles.size() == 0){
+                        setImagenPerfil("../Logica/Perfiles/perfil.png", "defecto");
+                    }
+                    
+                }
+                
+                i++;
+            }
+        }
 
       
         
-    }*/
+    }
 
 
     /**
@@ -377,6 +422,8 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nombre de empresa:");
 
+        txtSitioWeb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Sitio web:");
 
@@ -479,12 +526,11 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                         .addGap(24, 24, 24)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18))
+                            .addComponent(jLabel2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
