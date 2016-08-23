@@ -15,7 +15,7 @@ public class cantidadReservasServicios {
     //private Reserva reserva;
     private Proveedor proveedor;
     private Servicio servicio;
-    private String nombre;
+    //private String nombre;
     private int cantidad;
     private int totalLinea;
     private LocalDate fechaInicio;

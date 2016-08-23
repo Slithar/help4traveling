@@ -16,7 +16,7 @@ public class cantidadReservasPromociones {
     private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private String nombrePromocion;   
+    //private String nombrePromocion;   
     private Promocion promocion;
 
     public String getNombreP(){
