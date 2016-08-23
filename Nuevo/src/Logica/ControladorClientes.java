@@ -78,6 +78,8 @@ public class ControladorClientes implements IControladorClientes {
      dtAux.setPrecio(res.getPrecio());
      dtAux.setFecha(res.getFecha());
      dtAux.setEstado(res.getEstado());
+     dtAux.setReservaPromociones(res.getReservacantPromociones());
+     dtAux.setServiciosReserva(res.getServiciosReserva());
      
      return dtAux;
         
@@ -86,6 +88,11 @@ public class ControladorClientes implements IControladorClientes {
           DatosClientes dataux = new DatosClientes();
         return dataux.getReservasPromo(numeroProm);
       }
+       public ArrayList getReservasServ(String numeroServ){
+          DatosClientes dataux = new DatosClientes();
+        return dataux.getServiciosPromo(numeroServ);
+      }
+      
     public ArrayList verInfoCliente()throws SQLException, ClassNotFoundException {
         DataCliente clientes = new DataCliente();
         DatosClientes dataux = new DatosClientes();

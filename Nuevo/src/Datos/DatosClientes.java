@@ -12,6 +12,7 @@ import Logica.Promocion;
 import Logica.Reserva;
 import Logica.Servicio;
 import Logica.cantidadReservasPromociones;
+import Logica.cantidadReservasServicios;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.Month;
@@ -154,6 +155,7 @@ public class DatosClientes {
                cantidadReservasPromociones cantProm = new cantidadReservasPromociones();
               cantProm.setnombreP(rsCant.getString("nombrePromocion"));
                cantProm.setCantidad(rsCant.getInt("cantidad"));
+               cantProm.setTotalL(rsCant.getInt("totalLinea"));
                String fechaR=rsCant.getString("fechaInicio");
            String[] partesFecha= fechaR.split("-");
            LocalDate fechaReserva=LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]),Integer.parseInt(partesFecha[2]));
@@ -166,7 +168,7 @@ public class DatosClientes {
               dtProm.add(cantProm);
                
            }
-          // dtaux.setReservaPromociones(listProm);
+          //dtaux.setReservaPromociones(listProm);
         
          rsCant.close();
         //conexion.cerrar();
@@ -175,6 +177,39 @@ public class DatosClientes {
       return dtProm; 
         
   }
+  public ArrayList getServiciosPromo(String numeroSer){
+  ArrayList<cantidadReservasServicios>  dtSer= new ArrayList();
+    Connection conn;  
+    ConexionBD conexion = new ConexionBD();
+      try{  
+        conn = conexion.conectar();
+        Statement st = conn.createStatement();
+          ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and numeroReserva="+numeroSer);
+      
+          while(rsCant.next()){
+               cantidadReservasServicios cantSer = new cantidadReservasServicios();
+               cantSer.setNombreS(rsCant.getString("nombreServicio"));
+               cantSer.setCantidad(rsCant.getInt("cantidad"));
+               cantSer.setTotalLinea(rsCant.getInt("totalLinea"));
+               String fechaR=rsCant.getString("fechaInicio");
+           String[] partesFecha= fechaR.split("-");
+           LocalDate fechaReserva=LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]),Integer.parseInt(partesFecha[2]));
+           cantSer.setFechaInicio(fechaReserva);
+            String fechaRf=rsCant.getString("fechaFin");
+           String[] partesFechaf= fechaRf.split("-");
+           LocalDate fechaReservaf=LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]),Integer.parseInt(partesFechaf[2]));
+           cantSer.setFechaFin(fechaReservaf);
+           
+              dtSer.add(cantSer);
+            }
+         rsCant.close();
+        //conexion.cerrar();
+        conn.close();
+      }catch(Exception e){}
+      return dtSer;     
+  }
+      
+       
 public ArrayList verInfoCliente() throws SQLException, ClassNotFoundException{
     ArrayList clientes = new ArrayList();
     int indice =0;

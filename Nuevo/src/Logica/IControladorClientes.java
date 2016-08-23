@@ -21,4 +21,5 @@ public interface IControladorClientes {
     public abstract ArrayList verInfoReserva()throws SQLException, ClassNotFoundException;
     public abstract DataReserva getReserva(String nombreRes)throws SQLException, ClassNotFoundException;
     public abstract ArrayList  getReservasPromo(String numeroProm);
+    public abstract ArrayList getReservasServ(String numeroServ);
 }

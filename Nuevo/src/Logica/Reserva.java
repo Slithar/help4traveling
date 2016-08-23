@@ -17,7 +17,7 @@ public class Reserva {
     private int precio;
     private Cliente clientes;
   //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
-    private ArrayList<Servicio> serviciosReserva;
+    private ArrayList<cantidadReservasServicios> serviciosReserva;
     private ArrayList<Promocion> reservaPromociones;
     private ArrayList<cantidadReservasPromociones> reservacantPromociones;
     String  estado;
@@ -41,11 +41,11 @@ public class Reserva {
         this.clientes = clientes;
     }
 
-    public ArrayList<Servicio> getServiciosReserva() {
+    public ArrayList<cantidadReservasServicios> getServiciosReserva() {
         return serviciosReserva;
     }
 
-    public void setServiciosReserva(ArrayList<Servicio> serviciosReserva) {
+    public void setServiciosReserva(ArrayList<cantidadReservasServicios> serviciosReserva) {
         this.serviciosReserva = serviciosReserva;
     }
     
