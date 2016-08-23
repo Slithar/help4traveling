@@ -122,7 +122,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             panelPerfiles.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
         }
         
-        //Después del merge
+        
     }
     
     public boolean existeImagenPerfil(String ruta){
