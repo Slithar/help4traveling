@@ -250,9 +250,10 @@ public class VerInfoReserva extends javax.swing.JFrame {
        this.jPrecio.setText(dtcant.getPrecio()+"");
        this.jFecha.setText(dtcant.getFecha().toString());
        this.jEstado.setText(dtcant.getEstado());
-       
+        
        ArrayList <cantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);
-       if(listProm.size()>0){  
+       System.out.println(listProm.size());
+       System.out.println(dtcant.getServiciosReserva().size());
        for(int i=0;i<listProm.size();i++){
            cantidadReservasPromociones promAux=listProm.get(i);
             Object[] fila = {promAux.getNombreP(), promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin()};
@@ -260,20 +261,6 @@ public class VerInfoReserva extends javax.swing.JFrame {
                 datosPromocionServ.addRow(fila);
         }
         jTable.setModel(datosPromocionServ);
-        
-       }
-     
-           ArrayList <cantidadReservasServicios> listServ =this.iccli.getReservasServ(selected);
-             if(listServ.size()==0){
-           System.out.println("entro"); 
-           for(int i=0;i<listServ.size();i++){
-           cantidadReservasServicios serAux=listServ.get(i);
-            Object[] fila = {serAux.getNombreS(), serAux.getCantidad(),serAux.getFechaInicio(),serAux.getFechaFin()};
-               
-                datosPromocionServ.addRow(fila);
-        }
-        jTable.setModel(datosPromocionServ);
-       }
    }catch(Exception e){}
    
         // TODO add your handling code here:
@@ -338,3 +325,4 @@ public class VerInfoReserva extends javax.swing.JFrame {
     private javax.swing.JList<String> listRes;
     // End of variables declaration//GEN-END:variables
 }
+//aca

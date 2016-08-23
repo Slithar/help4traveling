@@ -98,8 +98,8 @@ public class DatosClientes {
     }
   public  Reserva getReserva(String numeroRes){
       Reserva dtaux = new Reserva();
-      ArrayList <Promocion> listProm = new ArrayList();
-      ArrayList <Servicio> listServ= new ArrayList();
+      ArrayList <cantidadReservasPromociones> listProm = new ArrayList();
+      ArrayList <cantidadReservasServicios> listServ= new ArrayList();
       Connection conn;
         
         ConexionBD conexion = new ConexionBD();
@@ -125,16 +125,16 @@ public class DatosClientes {
            dtaux.setFecha(fechaReserva);
            dtaux.setEstado(rs.getString("estado"));
            
-           ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva="+numeroRes);
-           while(rsCant.next()){
-               Promocion prom = new Promocion();
-               prom.setDescuento(rsCant.getInt("descuento"));
-               prom.setNombre(rsCant.getString("nombrePromocion"));
-               prom.setPrecio(rsCant.getInt("precio"));
-               listProm.add(prom);
-               
-           }
-           dtaux.setReservaPromociones(listProm);
+//           ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva="+numeroRes);
+//           while(rsCant.next()){
+//               Promocion prom = new Promocion();
+//               prom.setDescuento(rsCant.getInt("descuento"));
+//               prom.setNombre(rsCant.getString("nombrePromocion"));
+//               prom.setPrecio(rsCant.getInt("precio"));
+//               listProm.add(prom);
+//               
+//           }
+//           dtaux.setReservaPromociones(listProm);
         }
          rs.close();
         //conexion.cerrar();
