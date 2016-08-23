@@ -7,8 +7,13 @@ package Presentacion;
 import Logica.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import javax.swing.*;
+import java.time.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.ScrollPaneConstants.*;
 
 /**
@@ -62,6 +67,44 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
         Calendar fecha = Calendar.getInstance();
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));       
+    }
+    
+    public void limpiar(){
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
+        
+        txtNickname.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCorreo.setText("");
+        spnDia.setModel(new SpinnerNumberModel(1,1,31,1));
+        spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
+        Calendar fecha = Calendar.getInstance();
+        spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
+        txtNombreEmpresa.setText("");
+        txtSitioWeb.setText("");
+        /*cmbTipoUsuario.setSelectedItem("Cliente");
+        txtEmpresa.setText("");
+        txtSitioWeb.setText("");
+        aparecerDatosProveedor(false);*/
+        //perfiles = new ArrayList<LabelImagen>();
+        if(perfiles.size() > 0){
+            Container parent = perfiles.get(0).getParent();
+            //int i = 0;
+            while(perfiles.size() > 0){
+                perfiles.remove(0);
+            }
+            parent.removeAll();
+            parent.repaint();
+            
+        }
+        
+        refrescarPerfiles();
+        setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
+        
+        //JOptionPane.showMessageDialog(this, perfiles.);
+        
+        txtNickname.requestFocus();
     }
     
     public void agregarImagenPerfil(String ruta){
@@ -120,9 +163,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         }
         else{
             panelPerfiles.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
-        }
-        
-        
+        }       
     }
     
     public boolean existeImagenPerfil(String ruta){
@@ -567,24 +608,32 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //System.out.println(spnAnio.getValue());
         //System.out.println(cmbTipoUsuario.getSelectedIndex());
-        /*boolean imagenCorrecta = false;
+        boolean imagenCorrecta = false;
         LocalDate fechaNac;
 
         if(txtNickname.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nickname del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNickname.requestFocus();
         }
         else if(txtNombre.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNombre.requestFocus();
         }
         else if(txtApellido.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el apellido del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el apellido del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtApellido.requestFocus();
         }
         else if(txtCorreo.getText().length() == 0){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el correo electrónico del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el correo electrónico del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtCorreo.requestFocus();
+        }
+        else if(txtNombreEmpresa.getText() == ""){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de empresa del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNombreEmpresa.requestFocus();
+        }
+        else if(txtSitioWeb.getText() == ""){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el link del sitio web del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNombreEmpresa.requestFocus();
         }
         else{
             boolean fechaValida = false;
@@ -597,71 +646,31 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "El fomato de la fecha de nacimiento ingresada para el nuevo cliente es inválida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 fechaValida = false;
             }
-
+            
             if(fechaValida){
                 fechaNac = LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-
-                if(!iccli.correoValido(txtCorreo.getText())){
-                    JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    txtCorreo.requestFocus();
-                }
-                else{
-                    try{
-                        if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                        imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
-                        else
-                        imagenCorrecta = true;
-                    }
-                    catch(IOException ex){
-                        JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        lblImagenPerfil.requestFocus();
-                    }
-                    if(imagenCorrecta){
-
-                        try{
-                            if(iccli.existeNickname(txtNickname.getText())){
-                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                txtNickname.requestFocus();
-                            }
-                            else{
-                                iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
-                                JOptionPane.showMessageDialog(this, "El nuevo cliente ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                limpiar();
-                            }
+                
+                ArrayList<String> rutasImagenes = new ArrayList<String>();
+                
+                /*try{
+                    if(this.perfiles.size() > 0){
+                        
+                        for(int i = 0; i < perfiles.size(); i++){
+                            rutasImagenes.add(perfiles.get(i).getRutaImagen());
                         }
-                        catch(SQLException ex){
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutasImagenes);
+                        for(int i = 0; i < rutasImagenes.size(); i++){
+                            rutasImagenes.remove(i);
                         }
-                        catch(ClassNotFoundException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        for(int i = 0; i < perfiles.size(); i++){
+                            int num = i + 1;
+                            perfiles.get(i).setRutaImagen("src/Logica/perfiles/" + txtNickname.getText() + "-" + num + ".jpg");
                         }
-
+                        for(int i = 0; i < perfiles.size(); i++){
+                            rutasImagenes.add(perfiles.get(i).getRutaImagen());
+                        }
                     }
-                }
-            }
-            /*boolean fechaValida = false;
-
-            try{
-                LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-                fechaValida = true;
-            }
-            catch(DateTimeException ex){
-                JOptionPane.showMessageDialog(this, "El fomato de la fecha de nacimiento ingresada para el nuevo usuario es inválida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                fechaValida = false;
-            }
-
-            if(fechaValida){
-                fechaNac = LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-
-                else{
-
-                    try{
-
-                        if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                        imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutaImagen);
-                        else
+                    else
                         imagenCorrecta = true;
 
                     }
@@ -669,38 +678,65 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         lblImagenPerfil.requestFocus();
                     }
-                    if(imagenCorrecta){
+                    if(imagenCorrecta){*/
 
-                        try{
-                            if(icprov.existeNickname(txtNickname.getText())){
-                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                txtNickname.requestFocus();
-                            }
-                            else{
-                                if(icprov.existeNombreEmpresa(txtEmpresa.getText())){
-                                    JOptionPane.showMessageDialog(this, "El nombre de empresa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                    txtEmpresa.requestFocus();
-                                }
-                                else{
-                                    icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
-                                    JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                    limpiar();
-                                }
-                            }
-                        }
-                        catch(SQLException ex){
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        catch(ClassNotFoundException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-
+                try{
+                    if(icprov.existeNickname(txtNickname.getText())){
+                        JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        txtNickname.requestFocus();
                     }
+                    else{
+                        if(icprov.existeNombreEmpresa(txtNombreEmpresa.getText())){
+                            JOptionPane.showMessageDialog(this, "El nombre de empresa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                            txtNombreEmpresa.requestFocus();
+                        }
+                        else{
+                            if(this.perfiles.size() > 0){
+                        
+                            for(int i = 0; i < perfiles.size(); i++){
+                                rutasImagenes.add(perfiles.get(i).getRutaImagen());
+                            }
+                            imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutasImagenes);
+                            
+                            while(rutasImagenes.size() > 0){
+                                rutasImagenes.remove(0);
+                            }
+                            for(int i = 0; i < perfiles.size(); i++){
+                                int num = i + 1;
+                                perfiles.get(i).setRutaImagen("src/Logica/perfiles/" + txtNickname.getText() + "-" + num + ".jpg");
+                            }
+                            for(int i = 0; i < perfiles.size(); i++){
+                                rutasImagenes.add(perfiles.get(i).getRutaImagen());
+                            }
+                        }
+                        else
+                            imagenCorrecta = true;
+
+                        }
+                        if(imagenCorrecta){
+                            icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutasImagenes, txtNombreEmpresa.getText(), txtSitioWeb.getText(), new HashMap<String, Servicio>());
+                            JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                            limpiar();
+                        }
+                    }
+                    
                 }
+                catch(SQLException ex){
+                    //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                catch(ClassNotFoundException ex){
+                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    lblImagenPerfil.requestFocus();
+                }
+
             }
-            else{
+                //}
+        }
+        /*else{
                 //nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
 
                 if(!iccli.correoValido(txtCorreo.getText())){
@@ -742,9 +778,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
 
                     }
                 }
-            }
-        } 
-        }*/
+            }*/
+        
+        //}
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

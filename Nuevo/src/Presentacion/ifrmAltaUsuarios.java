@@ -15,6 +15,8 @@ import java.sql.*;
 import Logica.*;
 import java.awt.event.MouseEvent;
 import java.time.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //import javax.swing.filechooser.*;
 
@@ -421,7 +423,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                        txtCorreo.requestFocus();
                     }
                     else{
-                        try{
+                        /*try{
                             if(this.rutaImagen != "../Logica/perfiles/perfil.PNG"){
                                 imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
                                 this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
@@ -433,29 +435,40 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                             lblImagenPerfil.requestFocus();
                         }
-                        if(imagenCorrecta){
+                        if(imagenCorrecta){*/
 
-                            try{
-                               if(iccli.existeNickname(txtNickname.getText())){
-                                    JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                    txtNickname.requestFocus();
+                        try{
+                            if(iccli.existeNickname(txtNickname.getText())){
+                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                txtNickname.requestFocus();
+                            }
+                            else{
+                                if(this.rutaImagen != "../Logica/perfiles/perfil.PNG"){
+                                    imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
+                                    this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
                                 }
-                               else{
-                                   iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
+                                else
+                                    imagenCorrecta = true;
+                                if(imagenCorrecta){
+                                    iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
                                     JOptionPane.showMessageDialog(this, "El nuevo cliente ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                     limpiar();
-                               }
+                                }
                             }
-                            catch(SQLException ex){
-                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
-                            catch(ClassNotFoundException ex){
-                                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
-
                         }
+                        catch(SQLException ex){
+                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch(ClassNotFoundException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                            lblImagenPerfil.requestFocus();
+                        }
+
+                        //}
                     }
             }
             /*boolean fechaValida = false;
