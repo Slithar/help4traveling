@@ -43,7 +43,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    ifrmAltaReservas(IControladorProveedores icprov, IControladorClientes iccli, IControladorPromociones icprom) throws SQLException, ClassNotFoundException{
+    ifrmAltaReservas(IControladorProveedores icprov, IControladorClientes iccli, IControladorPromociones icprom){
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     
         initComponents();
