@@ -761,6 +761,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El precio ingresado para el nuevo servicio presenta un formato no válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtPrecio.requestFocus();
         }
+        else if(Integer.parseInt(txtPrecio.getText()) < 0){
+            JOptionPane.showMessageDialog(this, "El precio ingresado no puede ser negativo", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPrecio.requestFocus();
+        }
         else if(cmbCiudadOrigen.getSelectedItem().equals(cmbCiudadDestino.getSelectedItem())){
             JOptionPane.showMessageDialog(this, "La ciudad de orígen no puede ser la misma que la ciudad destino", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             cmbCiudadOrigen.requestFocus();
