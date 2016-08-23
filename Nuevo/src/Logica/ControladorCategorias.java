@@ -15,7 +15,9 @@ import java.sql.SQLException;
  */
 public class ControladorCategorias implements IControladorCategorias{
     
-    DatosCategorias categorias;
+    private DatosCategorias categorias;
+    
+    private HashMap<String, Categoria> ListaCategorias;
     
     public ControladorCategorias(){
         

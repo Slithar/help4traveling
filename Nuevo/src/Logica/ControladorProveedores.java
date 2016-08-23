@@ -10,8 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 import javax.swing.*;
 
@@ -20,6 +19,9 @@ import javax.swing.*;
  * @author usuario
  */
 public class ControladorProveedores implements IControladorProveedores{
+    
+    private HashMap<String, Proveedor> ListaProveedores;
+    private HashMap<String, Ciudad> ListaCiudades;
     
     public ControladorProveedores(){
         
@@ -60,7 +62,7 @@ public class ControladorProveedores implements IControladorProveedores{
     
     
     @Override
-    public boolean copiarPerfil(String nickname, String rutaImagen) throws IOException{
+    public boolean copiarPerfil(String nickname, ArrayList<String> rutaImagen) throws IOException{
         Proveedor p = new Proveedor();
         p.setNickname(nickname);
         p.setImagen(rutaImagen);
@@ -83,14 +85,18 @@ public class ControladorProveedores implements IControladorProveedores{
     }*/
     
     @Override
-    public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String rutaImagen, String empresa, String sitioWeb) throws SQLException, ClassNotFoundException{
-        Proveedor p =new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb);
+    public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios) throws SQLException, ClassNotFoundException{
+        Proveedor p = new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb, servicios);
         DatosProveedores proveedor = new DatosProveedores();
         proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString());
         proveedor.agregarDatosProveedor(p.getNickname(), p.getNombreEmpresa(), p.getLink());
-        if(p.getImagenUsuario().getPath() != "perfiles/perfil.PNG"){
-            proveedor.agregarImagen(p.getNickname(), p.getImagenUsuario().getPath());
+        ArrayList<Imagen> imagenes = p.getImagenesUsuario();
+        for(int i = 0; i < imagenes.size(); i++){
+            if(imagenes.get(i).getPath() != "perfiles/perfil.PNG"){
+                proveedor.agregarImagen(p.getNickname(), imagenes.get(i).getPath());
+            }
         }
+        
     }
     
     @Override
@@ -143,7 +149,7 @@ public class ControladorProveedores implements IControladorProveedores{
     }
     
     @Override
-    public void agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+    public void agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
         
         Proveedor prov = new Proveedor();
         prov.setNombreEmpresa(nombreProveedor);
@@ -176,7 +182,7 @@ public class ControladorProveedores implements IControladorProveedores{
        
         
         
-        Servicio s = new Servicio(nombre, descripcion, precio, prov, imagenesServicio, reservas, promociones, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()),  new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);  
+        Servicio s = new Servicio(nombre, descripcion, precio, prov, imagenesServicio, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()),  new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);  
         
         
         DatosServicios servicios = new DatosServicios();
@@ -384,7 +390,7 @@ public class ControladorProveedores implements IControladorProveedores{
             categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));
         }
         
-        Servicio s = new Servicio(nombre, descripcion, precio, p, imagenesServicio, reservas, promociones, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()), new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);
+        Servicio s = new Servicio(nombre, descripcion, precio, p, imagenesServicio, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()), new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);
         
         boolean hayDestino = true;
         

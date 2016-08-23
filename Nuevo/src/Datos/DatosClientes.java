@@ -11,6 +11,7 @@ import Logica.Pais;
 import Logica.Promocion;
 import Logica.Reserva;
 import Logica.Servicio;
+import Logica.Estado;
 import Logica.cantidadReservasPromociones;
 import Logica.cantidadReservasServicios;
 import java.sql.*;

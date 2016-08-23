@@ -13,8 +13,6 @@ import java.nio.file.*;
  */
 public class Imagen {
     private String path;
-    /*private Cliente cliente;
-    private Proveedor proveedor;*/
     private Usuario usuario;
     
     public Imagen(String path, Usuario usuario){

@@ -422,8 +422,10 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     }
                     else{
                         try{
-                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
+                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG"){
                                 imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
+                                this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
+                            }
                             else
                                 imagenCorrecta = true;
                         }

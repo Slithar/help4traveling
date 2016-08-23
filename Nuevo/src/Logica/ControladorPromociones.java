@@ -5,11 +5,15 @@
  */
 package Logica;
 
+import java.util.*;
+
 /**
  *
  * @author usuario
  */
 public class ControladorPromociones implements IControladorPromociones{
+    
+    private HashMap<String, Promocion> ListaPromociones;
     
     public ControladorPromociones(){
         

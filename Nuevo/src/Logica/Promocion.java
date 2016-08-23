@@ -14,7 +14,6 @@ public class Promocion {
     private int descuento;
     private int precio;
     private ArrayList<Servicio> Servicios;
-    private ArrayList<Reserva> Reservas;
 
     public String getNombre() {
         return nombre;
@@ -46,13 +45,5 @@ public class Promocion {
 
     public void setServicios(ArrayList<Servicio> Servicios) {
         this.Servicios = Servicios;
-    }
-
-    public ArrayList<Reserva> getReservas() {
-        return Reservas;
-    }
-
-    public void setReservas(ArrayList<Reserva> Reservas) {
-        this.Reservas = Reservas;
     }
 }

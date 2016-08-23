@@ -12,12 +12,11 @@ import java.time.*;
  * @author chaos
  */
 public class cantidadReservasPromociones {
-     private int cantidad;
-     private int totalLinea;
+    private int cantidad;
+    private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    String nombrePromocion;
-   
+    private String nombrePromocion;   
     private Promocion promocion;
 
     public String getNombreP(){

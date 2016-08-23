@@ -838,7 +838,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                             
                         //Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         
-                        icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         
                         limpiar();
                         JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);

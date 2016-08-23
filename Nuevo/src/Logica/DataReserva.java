@@ -19,7 +19,7 @@ public class DataReserva {
     private  Cliente clientes;
     private ArrayList<cantidadReservasServicios> serviciosReserva;
     private ArrayList<cantidadReservasPromociones> reservaPromociones;    
-    String  estado;
+    private String  estado;
     public DataReserva() {
     }
 

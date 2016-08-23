@@ -9,14 +9,16 @@ import Datos.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
  * @author usuario
  */
 public class ControladorClientes implements IControladorClientes {
-
+    
+    private HashMap<String, Cliente> ListaClientes;
+    
     public ControladorClientes() {
 
     }
@@ -57,9 +59,10 @@ public class ControladorClientes implements IControladorClientes {
     @Override
     public void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException {
         DatosClientes cliente = new DatosClientes();
-        cliente.insertar(nickname, nombre, apellido, mail, FechaNac.toString());
+        Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap<String, Reserva>());
+        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());
         if (rutaImagen != "perfiles/perfil.PNG") {
-            cliente.agregarImagen(nickname, rutaImagen);
+            cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());
         }
     }
 
@@ -77,7 +80,7 @@ public class ControladorClientes implements IControladorClientes {
      dtAux.setCliente(res.getCliente());
      dtAux.setPrecio(res.getPrecio());
      dtAux.setFecha(res.getFecha());
-     dtAux.setEstado(res.getEstado());
+     dtAux.setEstado(String.valueOf(res.getEstado()));
      dtAux.setReservaPromociones(res.getReservacantPromociones());
      dtAux.setServiciosReserva(res.getServiciosReserva());
      

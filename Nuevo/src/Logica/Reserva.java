@@ -12,33 +12,32 @@ import java.time.*;
  */
 public class Reserva {
     private int numero;
-
     private LocalDate fecha;
     private int precio;
-    private Cliente clientes;
-  //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
+    private Cliente cliente;
     private ArrayList<cantidadReservasServicios> serviciosReserva;
-    private ArrayList<Promocion> reservaPromociones;
     private ArrayList<cantidadReservasPromociones> reservacantPromociones;
-    String  estado;
+    private Estado  estado;
     
     public Reserva() {
         
     }
+    
+    
 
     public Cliente getCliente() {
-        return clientes;
+        return cliente;
     }
-    public String getEstado(){
+    public Estado getEstado(){
         return estado;
         
     }
-    public void setEstado(String estado){
-        this.estado=estado;
+    public void setEstado(String estado){        
+        this.estado = Estado.obtenerEstado(estado);
     }
 
-    public void setCliente(Cliente clientes) {
-        this.clientes = clientes;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public ArrayList<cantidadReservasServicios> getServiciosReserva() {
@@ -49,14 +48,6 @@ public class Reserva {
         this.serviciosReserva = serviciosReserva;
     }
     
-    public ArrayList<Promocion> getReservaPromociones() {
-        return reservaPromociones;
-    }
-    
-
-    public void setReservaPromociones(ArrayList<Promocion> ReservaPromociones) {
-        this.reservaPromociones = ReservaPromociones;
-    }
     public ArrayList<cantidadReservasPromociones> getReservacantPromociones() {
         return reservacantPromociones;
     }

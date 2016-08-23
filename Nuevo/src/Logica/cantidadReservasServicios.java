@@ -12,22 +12,22 @@ import java.time.LocalDate;
  * @author chaos
  */
 public class cantidadReservasServicios {
-    Reserva reserva;
-    Proveedor proveedor;
-    String nombre;
-     private int cantidad;
-     private int totalLinea;
+    //private Reserva reserva;
+    private Proveedor proveedor;
+    private Servicio servicio;
+    private String nombre;
+    private int cantidad;
+    private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
-    public Reserva getReserva() {
-        return reserva;
+    public Servicio getServicio() {
+        return servicio;
     }
 
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
     }
-
     public String getNombreS() {
         return nombre;
     }
