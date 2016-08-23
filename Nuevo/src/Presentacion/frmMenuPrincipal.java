@@ -266,6 +266,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
        //add(agregar);
        //nuevoPanel.add(agregar);
       agregar.setVisible(true);
+      
+      //Comentario
         
     }//GEN-LAST:event_miConsReservasActionPerformed
 
