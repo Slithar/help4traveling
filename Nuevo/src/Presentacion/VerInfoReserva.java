@@ -19,17 +19,20 @@ public class VerInfoReserva extends javax.swing.JFrame {
     /**
      * Creates new form VerInfoReserva
      */
+    
     public VerInfoReserva() {
         initComponents();
+        
     }
     private IControladorClientes iccli;
 
     public VerInfoReserva(IControladorClientes iccli) {
         this.iccli = iccli; 
         DefaultListModel model = new DefaultListModel();
+        
         try{
             ArrayList<String> numRes= this.iccli.verInfoReserva(); 
-     
+            
         for(int i =0;i<numRes.size();i++){
             model.addElement(numRes.get(i));
         }
@@ -63,12 +66,6 @@ public class VerInfoReserva extends javax.swing.JFrame {
         jFecha = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jEstado = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jCantidad = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jFechaIni = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jFechaFin = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
@@ -117,18 +114,6 @@ public class VerInfoReserva extends javax.swing.JFrame {
 
         jEstado.setText(" ");
 
-        jLabel5.setText(" Cantidad: ");
-
-        jCantidad.setText(" ");
-
-        jLabel6.setText(" Fecha Inicio: ");
-
-        jFechaIni.setText(" ");
-
-        jLabel7.setText(" Fecha Fin: ");
-
-        jFechaFin.setText(" ");
-
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -154,36 +139,20 @@ public class VerInfoReserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFechaIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jlabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jnickCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 43, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jlabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jnickCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(132, 132, 132))
         );
@@ -210,31 +179,19 @@ public class VerInfoReserva extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jEstado, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jFechaIni))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFechaFin))
-                        .addGap(51, 296, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 140, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  private String[] columnas = {"Nombre", "Cantidad", "Fecha inicio", "Fecha fin"};
+  private String[] columnas = {"Nombre", "Cantidad", "Fecha inicio", "Fecha fin", "Tipo"};
     private DefaultTableModel datosPromocionServ = new DefaultTableModel(null, columnas) {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
@@ -252,15 +209,24 @@ public class VerInfoReserva extends javax.swing.JFrame {
        this.jEstado.setText(dtcant.getEstado());
         
        ArrayList <cantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);
-       System.out.println(listProm.size());
-       System.out.println(dtcant.getServiciosReserva().size());
-       for(int i=0;i<listProm.size();i++){
+      ArrayList<cantidadReservasServicios>listServ=this.iccli.getReservasServ(selected);
+      if(listProm.size()>0){
+      for(int i=0;i<listProm.size();i++){
            cantidadReservasPromociones promAux=listProm.get(i);
-            Object[] fila = {promAux.getNombreP(), promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin()};
+            Object[] fila = {promAux.getNombreP(), promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),"promocion"};
                
                 datosPromocionServ.addRow(fila);
         }
-        jTable.setModel(datosPromocionServ);
+        jTable.setModel(datosPromocionServ);}
+      if(listServ.size()>0){
+          for(int i=0;i<listServ.size();i++){
+           cantidadReservasServicios promAux=listServ.get(i);
+            Object[] fila = {promAux.getNombreS(), promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),"servicio"};
+               
+                datosPromocionServ.addRow(fila);
+        }
+          jTable.setModel(datosPromocionServ);
+      }
    }catch(Exception e){}
    
         // TODO add your handling code here:
@@ -302,18 +268,12 @@ public class VerInfoReserva extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jCantidad;
     private javax.swing.JLabel jEstado;
     private javax.swing.JLabel jFecha;
-    private javax.swing.JLabel jFechaFin;
-    private javax.swing.JLabel jFechaIni;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jPrecio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
