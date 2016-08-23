@@ -28,12 +28,16 @@ public class cantidadReservasServicios {
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
     }
+    
     public String getNombreS() {
-        return nombre;
+        return servicio.getNombreServicio();
     }
 
     public void setNombreS(String nombre) {
-        this.nombre=nombre;
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        //this.nombre=nombre;
+        this.servicio = s;
     }
 
     public Proveedor getProveedor() {

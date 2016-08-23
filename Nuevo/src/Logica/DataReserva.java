@@ -16,18 +16,18 @@ public class DataReserva {
     private int numero;
     private LocalDate fecha;
     private int precio;
-    private  Cliente clientes;
+    private String cliente;
     private ArrayList<cantidadReservasServicios> serviciosReserva;
     private ArrayList<cantidadReservasPromociones> reservaPromociones;    
     private String  estado;
     public DataReserva() {
     }
 
-    public DataReserva(int numero, LocalDate fecha, int precio, Cliente clientess, ArrayList<cantidadReservasServicios> serviciosReserva, ArrayList<cantidadReservasPromociones> reservaPromociones) {
+    public DataReserva(int numero, LocalDate fecha, int precio, String cliente, ArrayList<cantidadReservasServicios> serviciosReserva, ArrayList<cantidadReservasPromociones> reservaPromociones) {
         this.numero = numero;
         this.fecha = fecha;
         this.precio = precio;
-        this.clientes = clientess;
+        this.cliente = cliente;
         this.serviciosReserva = serviciosReserva;
         this.reservaPromociones = reservaPromociones;
     }
@@ -56,12 +56,12 @@ public class DataReserva {
         this.precio = precio;
     }
 
-    public Cliente getCliente() {
-        return clientes;
+    public String getCliente() {
+        return cliente;
     }
 
-    public void setCliente(Cliente clientes) {
-        this.clientes = clientes;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     public ArrayList<cantidadReservasServicios> getServiciosReserva() {

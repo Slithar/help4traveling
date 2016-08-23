@@ -6,7 +6,8 @@
 package Datos;
 import Logica.Ciudad;
 import Logica.Cliente;
-import Logica.DataCantidadReservas;
+import Logica.DataCantidadReservasPromociones;
+import Logica.DataCantidadReservasServicios;
 import Logica.Pais;
 import Logica.Promocion;
 import Logica.Reserva;

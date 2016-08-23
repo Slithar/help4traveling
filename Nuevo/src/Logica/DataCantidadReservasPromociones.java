@@ -4,49 +4,29 @@
  * and open the template in the editor.
  */
 package Logica;
-
 import java.time.*;
 
 /**
  *
- * @author chaos
+ * @author usuario
  */
-public class cantidadReservasPromociones {
+public class DataCantidadReservasPromociones {
     private int cantidad;
-    private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private String nombrePromocion;   
-    private Promocion promocion;
+    private int reserva;
+    private String promocion;
 
-    public String getNombreP(){
-        /*Promocion p = new Promocion();
-        p.setNombre(nombrePromocion);
-        return nombrePromocion;*/
-        return promocion.getNombre();
-    }
-    public void setnombreP(String nombre){
-        Promocion p = new Promocion();
-        p.setNombre(nombre);
-        this.promocion = p;
-    }
-    
-    public int getTotalL(){
-        return totalLinea;
-    }
-    public void setTotalL(int totalL){
-        this.totalLinea=totalL;
-    }
- 
-
-    public Promocion getPromocion() {
-        return promocion;
+    public DataCantidadReservasPromociones() {
     }
 
-    public void setPromocion(Promocion promocion) {
+    public DataCantidadReservasPromociones(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String promocion) {
+        this.cantidad = cantidad;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.reserva = reserva;
         this.promocion = promocion;
     }
-    
 
     public int getCantidad() {
         return cantidad;
@@ -70,6 +50,22 @@ public class cantidadReservasPromociones {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public int getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(int reserva) {
+        this.reserva = reserva;
+    }
+
+    public String getPromocion() {
+        return promocion;
+    }
+
+    public void setPromocion(String promocion) {
+        this.promocion = promocion;
     }
     
     

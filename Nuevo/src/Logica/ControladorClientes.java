@@ -77,7 +77,7 @@ public class ControladorClientes implements IControladorClientes {
         DatosClientes datCli = new DatosClientes();
      Reserva res= datCli.getReserva(numeroRes);
      dtAux.setNumero(res.getNumero());
-     dtAux.setCliente(res.getCliente());
+     dtAux.setCliente(res.getCliente().getNickname());
      dtAux.setPrecio(res.getPrecio());
      dtAux.setFecha(res.getFecha());
      dtAux.setEstado(String.valueOf(res.getEstado()));

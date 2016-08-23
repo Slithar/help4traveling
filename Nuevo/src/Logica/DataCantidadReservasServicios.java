@@ -4,30 +4,31 @@
  * and open the template in the editor.
  */
 package Logica;
+
 import java.time.*;
 
 /**
  *
  * @author usuario
  */
-public class DataCantidadReservas {
+public class DataCantidadReservasServicios {
     private int cantidad;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int reserva;
-    private String promocion;
     private String servicio;
+    private String proveedor;
 
-    public DataCantidadReservas() {
+    public DataCantidadReservasServicios() {
     }
 
-    public DataCantidadReservas(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String promocion, String servicio) {
+    public DataCantidadReservasServicios(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String servicio, String proveedor ) {
         this.cantidad = cantidad;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.reserva = reserva;
-        this.promocion = promocion;
         this.servicio = servicio;
+        this.proveedor = proveedor;
     }
 
     public int getCantidad() {
@@ -63,11 +64,11 @@ public class DataCantidadReservas {
     }
 
     public String getPromocion() {
-        return promocion;
+        return proveedor;
     }
 
     public void setPromocion(String promocion) {
-        this.promocion = promocion;
+        this.proveedor = promocion;
     }
 
     public String getServicio() {
@@ -77,6 +78,4 @@ public class DataCantidadReservas {
     public void setServicio(String servicio) {
         this.servicio = servicio;
     }
-    
-    
 }
