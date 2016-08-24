@@ -81,4 +81,12 @@ public class Proveedor extends Usuario {
         return true;
         
     }
+
+    public HashMap<String, Servicio> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(HashMap<String, Servicio> servicios) {
+        this.servicios = servicios;
+    }
 }

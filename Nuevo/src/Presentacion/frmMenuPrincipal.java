@@ -8,6 +8,7 @@ import Logica.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
 
 /**
@@ -25,7 +26,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form frmMenuPrincipal
      */
-    public frmMenuPrincipal() {
+    public frmMenuPrincipal(){
         initComponents();
         //add(altaUsuarios);
         //aca el comentario de mi rama
@@ -34,10 +35,37 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
         setContentPane(nuevoPanel);
         Fabrica fab = new Fabrica();
+        iccat = fab.getIControladorCategorias();
         iccli = fab.getIControladorClientes();
         icprov = fab.getIControladorProveedores();
-        iccat = fab.getIControladorCategorias();
         icprom = fab.getIControladorPromociones();
+        
+        
+        try{
+            iccat.actualizarCategorias();
+            icprov.setListaCategorias(iccat.getListaCategorias());
+            icprov.actualizarProveedores();
+            icprov.actualizarCiudades();
+            icprom.setListaProveedores(icprov.getListaProveedores());
+            icprom.actualizarPromociones();
+            iccli.setListaPromociones(icprom.getListaPromociones());
+            iccli.setListaProveedores(icprov.getListaProveedores());            
+            iccli.actualizarClientes();
+        }
+        catch(SQLException ex){
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
+        System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
+        System.out.println("CIUDADES: " + icprov.getCantCiudades());
+        System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
+        System.out.println("CLIENTES: " + iccli.getCantClientes());
     }
     
     /**

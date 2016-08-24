@@ -7,7 +7,7 @@ package Logica;
 import java.io.IOException;
 import java.sql.*;
 import java.time.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -22,4 +22,10 @@ public interface IControladorClientes {
     public abstract DataReserva getReserva(String nombreRes)throws SQLException, ClassNotFoundException;
     public abstract ArrayList  getReservasPromo(String numeroProm);
     public abstract ArrayList getReservasServ(String numeroServ);
+    public abstract void actualizarClientes() throws SQLException, ClassNotFoundException;    
+    public abstract int getCantClientes();
+    public abstract HashMap<String, Proveedor> getListaProveedores();
+    public abstract void setListaProveedores(HashMap<String, Proveedor> ListaProveedores);
+    public abstract HashMap<String, Promocion> getListaPromociones();
+    public abstract void setListaPromociones(HashMap<String, Promocion> ListaPromociones);
 }

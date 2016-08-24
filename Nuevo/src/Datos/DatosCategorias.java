@@ -49,7 +49,7 @@ public class DatosCategorias {
         return resultado;
     }
     
-    public ArrayList selectCategoriasHijas(String categoria) throws SQLException, ClassNotFoundException{
+    public ArrayList<Categoria> selectCategoriasHijas(String categoria) throws SQLException, ClassNotFoundException{
         //int indice = 0;
         
         ArrayList<Categoria> resultado = new ArrayList();
@@ -160,6 +160,31 @@ public class DatosCategorias {
         conn.close();// He hecho un cambio para pablo
         
         return cates;
+    }
+    
+    public ArrayList<Categoria> selectAllCategorias() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from categorias order by nombre");
+        
+        while(rs.next()){
+            categorias.add(new Categoria(rs.getString("nombre"), "", new ArrayList()));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return categorias;
+        
     }
 
     

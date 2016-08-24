@@ -15,12 +15,26 @@ public class cantidadReservasServicios {
     //private Reserva reserva;
     private Proveedor proveedor;
     private Servicio servicio;
-    //private String nombre;
+    private String nombreProveedor;
+    private String nombreServicio;
     private int cantidad;
     private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
+    public cantidadReservasServicios(){
+        
+    }
+    
+    public cantidadReservasServicios(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, Proveedor proveedor, Servicio servicio) {
+        this.proveedor = proveedor;
+        this.servicio = servicio;
+        this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+    
     public Servicio getServicio() {
         return servicio;
     }
@@ -79,5 +93,22 @@ public class cantidadReservasServicios {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
+    
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }
+
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
+    }
+
     
 }

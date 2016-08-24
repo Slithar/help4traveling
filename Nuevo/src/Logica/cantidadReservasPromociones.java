@@ -16,8 +16,31 @@ public class cantidadReservasPromociones {
     private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    //private String nombrePromocion;   
+    private String nombrePromocion;   
     private Promocion promocion;
+
+    public cantidadReservasPromociones() {
+        
+    }
+    public cantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, Promocion promocion) {
+        this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.promocion = promocion;
+    }
+    
+    public String getNombrePromocion(){
+        return this.nombrePromocion;
+    }
+    
+    public void setNombrePromocion(String nombrePromocion){
+        this.nombrePromocion = nombrePromocion;
+    }
+
+    /*public cantidadReservasPromociones(int aInt, int aInt0, LocalDate of, LocalDate of0, Promocion promocion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
 
     public String getNombreP(){
         /*Promocion p = new Promocion();

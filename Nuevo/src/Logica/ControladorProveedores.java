@@ -20,11 +20,108 @@ import javax.swing.*;
  */
 public class ControladorProveedores implements IControladorProveedores{
     
+    private HashMap<String, Categoria> ListaCategorias = new HashMap<String, Categoria>();
     private HashMap<String, Proveedor> ListaProveedores;
     private HashMap<String, Ciudad> ListaCiudades;
     
     public ControladorProveedores(){
+    
+    }
+
+    public HashMap<String, Proveedor> getListaProveedores() {
+        return ListaProveedores;
+    }
+
+    public void setListaProveedores(HashMap<String, Proveedor> ListaProveedores) {
+        this.ListaProveedores = ListaProveedores;
+    }
+
+    public HashMap<String, Categoria> getListaCategorias() {
+        return ListaCategorias;
+    }
+
+    public void setListaCategorias(HashMap<String, Categoria> ListaCategorias) {
+        this.ListaCategorias = ListaCategorias;
+    }
+    
+    
+    
+    @Override
+    public void actualizarProveedores() throws SQLException, ClassNotFoundException {
+        //JOptionPane.showMessageDialog(null, ListaCategorias.size());
+        //System.out.println("**** " + ListaCategorias.size() + " ****");
+        DatosProveedores proveedores = new DatosProveedores();
+        DatosServicios servicios = new DatosServicios();
+        DatosUsuarios usuarios = new DatosUsuarios();
+        ListaProveedores = new HashMap<String, Proveedor>();
         
+        ArrayList<Proveedor> provs = proveedores.selectAllObjetosProveedores();
+        
+        for(int i = 0; i < provs.size(); i++){
+            provs.get(i).setImagenesUsuario(usuarios.selectImagenesPerfil((Proveedor) provs.get(i)));
+            ListaProveedores.put(provs.get(i).getNombreEmpresa(), provs.get(i));
+        }
+        
+        Iterator it = ListaProveedores.entrySet().iterator();
+        
+        while(it.hasNext()){
+            /*
+            Map.Entry cat = (Map.Entry) it.next();
+            System.out.println("* " + cat.getKey());
+            ArrayList<Categoria> catHijas = categorias.selectCategoriasHijas(String.valueOf(cat.getKey()));
+            Categoria c = (Categoria) cat.getValue();
+            c.setCategoriasHijas(catHijas);
+            for(int i = 0; i < c.getCategoriasHijas().size(); i++){
+                System.out.println("-- " + c.getCategoriasHijas().get(i).getNombre());
+            }
+            */
+            
+            Map.Entry prov = (Map.Entry) it.next();
+            Proveedor pr = (Proveedor) prov.getValue();
+            ArrayList<Servicio> serviciosDelProveedor = proveedores.selectServiciosPorProveedor(pr);
+            //System.out.println("PROVEEDOR: " + pr.getNombreEmpresa());
+            HashMap<String, Servicio> servs = new HashMap<String, Servicio>();
+            for(int i = 0; i < serviciosDelProveedor.size(); i++){
+                //System.out.println(" *" + serviciosDelProveedor.get(i).getNombreServicio());
+                serviciosDelProveedor.get(i).setOrigen(servicios.getCiudadOrigen(serviciosDelProveedor.get(i).getNombreServicio(), serviciosDelProveedor.get(i).getProveedorServicio().getNombreEmpresa()));
+                serviciosDelProveedor.get(i).setDestino(servicios.getCiudadDestino(serviciosDelProveedor.get(i).getNombreServicio(), serviciosDelProveedor.get(i).getProveedorServicio().getNombreEmpresa()));
+                serviciosDelProveedor.get(i).setImagenesServicio(servicios.getImagenes(serviciosDelProveedor.get(i).getNombreServicio(), serviciosDelProveedor.get(i).getProveedorServicio().getNombreEmpresa()));
+                ArrayList<Categoria> categorias = servicios.selectCategoriasDeServicio(serviciosDelProveedor.get(i));
+                ArrayList<Categoria> categoriasServ = new ArrayList<Categoria>();
+                for(int j = 0; j < categorias.size(); j++){
+                    Categoria c = (Categoria) ListaCategorias.get(categorias.get(j).getNombre());
+                    //System.out.println(" --" + c.getNombre());
+                    categoriasServ.add((Categoria) ListaCategorias.get(categorias.get(j).getNombre()));
+                }
+                serviciosDelProveedor.get(i).setCategoriasServicio(categoriasServ);
+                servs.put(serviciosDelProveedor.get(i).getNombreServicio(), serviciosDelProveedor.get(i));
+                //System.out.println(" -- " + serviciosDelProveedor.get(i).getNombreServicio());
+            }
+            pr.setServicios(servs);
+            
+        }
+    }
+
+    @Override
+    public int getCantProveedores() {
+        return ListaProveedores.size();
+    }
+    
+    @Override
+    public void actualizarCiudades() throws SQLException, ClassNotFoundException {
+        DatosCiudades ciudades = new DatosCiudades();
+        ListaCiudades = new HashMap<String, Ciudad>();
+        
+        ArrayList<Ciudad> ciudadesResultado = ciudades.selectAllCiudades();
+        
+        for(int i = 0; i < ciudadesResultado.size(); i++){
+            ListaCiudades.put(ciudadesResultado.get(i).getNombre(), ciudadesResultado.get(i));
+        }
+    }
+
+    @Override
+    public int getCantCiudades() {
+        return ListaCiudades.size();
     }
     
     @Override
@@ -459,5 +556,9 @@ public class ControladorProveedores implements IControladorProveedores{
         
         return resultadoServicio;
     }
+
+    
+
+    
     
 }

@@ -21,6 +21,31 @@ public class ControladorCategorias implements IControladorCategorias{
     
     public ControladorCategorias(){
         
+        
+    }
+    
+    public void actualizarCategorias() throws SQLException, ClassNotFoundException{
+        categorias = new DatosCategorias();
+        ListaCategorias = new HashMap<String, Categoria>();
+        ArrayList<Categoria> categoriasResultado = categorias.selectAllCategorias();
+        for(int i = 0; i < categoriasResultado.size(); i++){
+            ListaCategorias.put(categoriasResultado.get(i).getNombre(), categoriasResultado.get(i));
+        }
+        Iterator it = ListaCategorias.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry cat = (Map.Entry) it.next();
+            System.out.println("* " + cat.getKey());
+            ArrayList<Categoria> catHijas = categorias.selectCategoriasHijas(String.valueOf(cat.getKey()));
+            Categoria c = (Categoria) cat.getValue();
+            c.setCategoriasHijas(catHijas);
+            for(int i = 0; i < c.getCategoriasHijas().size(); i++){
+                System.out.println("-- " + c.getCategoriasHijas().get(i).getNombre());
+            }
+        }
+    }
+    
+    public int getCantCategorias(){
+        return ListaCategorias.size();
     }
     
     @Override
@@ -93,6 +118,16 @@ public class ControladorCategorias implements IControladorCategorias{
            boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);
            return resultado;
        }
+    }
+    
+    
+
+    public HashMap<String, Categoria> getListaCategorias() {
+        return ListaCategorias;
+    }
+
+    public void setListaCategorias(HashMap<String, Categoria> ListaCategorias) {
+        this.ListaCategorias = ListaCategorias;
     }
     
 }
