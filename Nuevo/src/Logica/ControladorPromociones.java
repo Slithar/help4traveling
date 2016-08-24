@@ -29,6 +29,14 @@ public class ControladorPromociones implements IControladorPromociones{
     public void setListaProveedores(HashMap<String, Proveedor> ListaProveedores) {
         this.ListaProveedores = ListaProveedores;
     }
+
+    public HashMap<String, Promocion> getListaPromociones() {
+        return ListaPromociones;
+    }
+
+    public void setListaPromociones(HashMap<String, Promocion> ListaPromociones) {
+        this.ListaPromociones = ListaPromociones;
+    }
     
     public void actualizarPromociones() throws SQLException, ClassNotFoundException{
         DatosPromociones promociones = new DatosPromociones();

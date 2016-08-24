@@ -22,8 +22,8 @@ public class Promocion {
         this.Servicios = Servicios;
     }
 
-    Promocion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Promocion() {
+        
     }
 
     public String getNombre() {

@@ -93,4 +93,33 @@ public class DatosUsuarios {
         return imagenes;
         
     }
+    
+    public Imagen selectImagenPerfil(Usuario u) throws SQLException, ClassNotFoundException{
+        
+        Imagen imagen = new Imagen("", u);
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        //Statement st = conn.createStatement();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select * from imagenesusuarios where nickname = ?");
+        
+        pConsulta.setString(1, u.getNickname());
+                
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            imagen = new Imagen(rs.getString("ruta"), u);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return imagen;
+        
+    }
 }
