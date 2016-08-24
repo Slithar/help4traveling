@@ -39,7 +39,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
         /** Después del merge **/
         setTitle("Ver información de reservas");
         Dimension tamanioVentana = this.getSize();
-        setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (600 - tamanioVentana.height)/2);
         
         this.iccli = iccli;
         
@@ -197,16 +197,16 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(35, 35, 35))
         );
         panelInfoLayout.setVerticalGroup(
             panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoLayout.createSequentialGroup()
                 .addGap(69, 69, 69)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(panelInfoLayout.createSequentialGroup()
                         .addComponent(jlabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -271,7 +271,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 if(listProm.size()>0){
                     for(int i=0;i<listProm.size();i++){
                         DataCantidadReservasPromociones promAux=listProm.get(i);
-                        Object[] fila = {promAux.getPromocion(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"promocion"};
+                        Object[] fila = {promAux.getPromocion(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"PROMOCIÓN"};
 
                         datosPromocionServ.addRow(fila);
                     }
@@ -281,7 +281,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 if(listServ.size()>0){
                     for(int i=0;i<listServ.size();i++){
                         DataCantidadReservasServicios promAux=listServ.get(i);
-                        Object[] fila = {promAux.getServicio() + " <" + promAux.getProveedor() + ">", promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"servicio"};
+                        Object[] fila = {promAux.getServicio() + " <" + promAux.getProveedor() + ">", promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"SERVICIO"};
 
                         datosPromocionServ.addRow(fila);
                     }
