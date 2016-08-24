@@ -17,5 +17,9 @@ public interface IControladorCategorias {
     public abstract ArrayList<DataCategoria> getCategoriasHijas(String c) throws SQLException, ClassNotFoundException;
     public abstract boolean agregarNuevaCategoriaPadre(String c) throws SQLException, ClassNotFoundException;
     public abstract boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException, ClassNotFoundException;
+    public abstract void actualizarCategorias() throws SQLException, ClassNotFoundException;    
+    public abstract int getCantCategorias();
+    public abstract HashMap<String, Categoria> getListaCategorias();
+    public abstract void setListaCategorias(HashMap<String, Categoria> ListaCategorias);
     
 }
