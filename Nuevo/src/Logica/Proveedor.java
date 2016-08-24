@@ -7,6 +7,7 @@ package Logica;
 import java.io.IOException;
 import java.util.*;
 import java.time.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,10 +29,14 @@ public class Proveedor extends Usuario {
     public Proveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, ArrayList<String> rutaProveedor, String nombreEmpresa, String link, HashMap<String, Servicio> servicios){
         super(nickname, nombre, apellido, email, fechaNac);
         
+        this.imagenesUsuario = new ArrayList<Imagen>();
+        
         this.nombreEmpresa = nombreEmpresa;
-        this.link = link;        
+        this.link = link;
+        //JOptionPane.showMessageDialog(null, rutaProveedor.size());
         for(int i = 0; i < rutaProveedor.size(); i++){
-            imagenesUsuario.add(new Imagen(rutaProveedor.get(i), this));
+            //JOptionPane.showMessageDialog(null, rutaProveedor.get(i));
+            this.imagenesUsuario.add(new Imagen(rutaProveedor.get(i), this));
         }
         this.servicios = servicios;
     }

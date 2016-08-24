@@ -65,7 +65,14 @@ public class ControladorProveedores implements IControladorProveedores{
     public boolean copiarPerfil(String nickname, ArrayList<String> rutaImagen) throws IOException{
         Proveedor p = new Proveedor();
         p.setNickname(nickname);
-        p.setImagen(rutaImagen);
+        
+        ArrayList<Imagen> imagenes = new ArrayList<Imagen>();
+        
+        for(int i = 0; i < rutaImagen.size(); i++){
+            imagenes.add(new Imagen(rutaImagen.get(i), p));
+            //String ruta = rutaImagen.get(i);
+            p.setImagenesUsuario(imagenes);
+        }
         
         try{
             p.copiarPerfil();
@@ -73,8 +80,7 @@ public class ControladorProveedores implements IControladorProveedores{
         }
         catch(IOException ex){
             return false;
-        }
-        
+        }       
     }
     
     /*@Override
@@ -86,17 +92,28 @@ public class ControladorProveedores implements IControladorProveedores{
     
     @Override
     public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios) throws SQLException, ClassNotFoundException{
+        //System.out.println("1");
         Proveedor p = new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb, servicios);
+        //System.out.println("2");
         DatosProveedores proveedor = new DatosProveedores();
+        //System.out.println("3");
         proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString());
+        //System.out.println("4");
         proveedor.agregarDatosProveedor(p.getNickname(), p.getNombreEmpresa(), p.getLink());
-        ArrayList<Imagen> imagenes = p.getImagenesUsuario();
-        for(int i = 0; i < imagenes.size(); i++){
-            if(imagenes.get(i).getPath() != "perfiles/perfil.PNG"){
-                proveedor.agregarImagen(p.getNickname(), imagenes.get(i).getPath());
-            }
+        //System.out.println("5");
+        if(rutaImagen.size() > 0){
+            ArrayList<Imagen> imagenes = p.getImagenesUsuario();
+            //System.out.println("Tamaño: " + imagenes.size());
+            for(int i = 0; i < imagenes.size(); i++){
+                if(imagenes.get(i).getPath() != "perfiles/perfil.PNG"){
+                    proveedor.agregarImagen(p.getNickname(), imagenes.get(i).getPath());
+                }
+            } 
         }
         
+        
+        
+        //System.out.println("6");
     }
     
     @Override
