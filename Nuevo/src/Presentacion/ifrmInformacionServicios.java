@@ -136,7 +136,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
-        setTitle("Ver información de servicio");
+        setTitle("Ver información de servicios");
 
         tbServicios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tbServicios.setModel(new javax.swing.table.DefaultTableModel(

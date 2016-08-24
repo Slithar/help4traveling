@@ -262,10 +262,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miConsServiciosActionPerformed
     private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
         // TODO add your handling code here:
-        VerInfoReserva agregar = new VerInfoReserva(this.iccli);
-       //add(agregar);
-       //nuevoPanel.add(agregar);
-      agregar.setVisible(true);
+        /*VerInfoReserva agregar = new VerInfoReserva(this.iccli);
+      agregar.setVisible(true);*/
+        ifrmVerInfoReserva agregar = new ifrmVerInfoReserva(this.iccli);
+        nuevoPanel.add(agregar);
+        agregar.setVisible(true);
         
     }//GEN-LAST:event_miConsReservasActionPerformed
 
