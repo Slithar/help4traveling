@@ -39,4 +39,6 @@ public interface IControladorProveedores {
     public abstract int getCantCiudades();
     public abstract HashMap<String, Categoria> getListaCategorias();
     public abstract void setListaCategorias(HashMap<String, Categoria> ListaCategorias);
+    public abstract HashMap<String, Proveedor> getListaProveedores();
+    public abstract void setListaProveedores(HashMap<String, Proveedor> ListaProveedores);
 }

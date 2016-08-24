@@ -28,6 +28,14 @@ public class ControladorProveedores implements IControladorProveedores{
     
     }
 
+    public HashMap<String, Proveedor> getListaProveedores() {
+        return ListaProveedores;
+    }
+
+    public void setListaProveedores(HashMap<String, Proveedor> ListaProveedores) {
+        this.ListaProveedores = ListaProveedores;
+    }
+
     public HashMap<String, Categoria> getListaCategorias() {
         return ListaCategorias;
     }

@@ -46,6 +46,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             icprov.setListaCategorias(iccat.getListaCategorias());
             icprov.actualizarProveedores();
             icprov.actualizarCiudades();
+            icprom.setListaProveedores(icprov.getListaProveedores());
+            icprom.actualizarPromociones();
         }
         catch(SQLException ex){
             //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -59,6 +61,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
         System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
         System.out.println("CIUDADES: " + icprov.getCantCiudades());
+        System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
     }
     
     /**

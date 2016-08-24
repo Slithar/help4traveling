@@ -15,6 +15,17 @@ public class Promocion {
     private int precio;
     private ArrayList<Servicio> Servicios;
 
+    public Promocion(String nombre, int descuento, int precio, ArrayList<Servicio> Servicios) {
+        this.nombre = nombre;
+        this.descuento = descuento;
+        this.precio = precio;
+        this.Servicios = Servicios;
+    }
+
+    Promocion() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getNombre() {
         return nombre;
     }
