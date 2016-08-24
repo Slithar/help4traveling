@@ -434,7 +434,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         catch(IOException ex){
                             JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                             lblImagenPerfil.requestFocus();
-                        }
+                        }*//*
                         if(imagenCorrecta){*/
 
                         try{
