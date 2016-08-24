@@ -36,6 +36,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
     
     public ifrmVerInfoReserva(IControladorClientes iccli) {
         initComponents();
+        /** Después del merge **/
         setTitle("Ver información de reservas");
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
