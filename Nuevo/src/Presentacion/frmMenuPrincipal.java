@@ -41,7 +41,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         icprom = fab.getIControladorPromociones();
         
         
-        try{
+        /*try{
             iccat.actualizarCategorias();
             icprov.setListaCategorias(iccat.getListaCategorias());
             icprov.actualizarProveedores();
@@ -65,7 +65,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
         System.out.println("CIUDADES: " + icprov.getCantCiudades());
         System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
-        System.out.println("CLIENTES: " + iccli.getCantClientes());
+        System.out.println("CLIENTES: " + iccli.getCantClientes());*/
     }
     
     /**
