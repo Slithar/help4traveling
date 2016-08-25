@@ -8,6 +8,7 @@
       </Border>
     </Property>
     <Property name="closable" type="boolean" value="true"/>
+    <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Ver informaci&#xf3;n de servicios"/>
   </Properties>
   <SyntheticProperties>

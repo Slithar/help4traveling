@@ -518,6 +518,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        setIconifiable(true);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Nombre del servicio:");

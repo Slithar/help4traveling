@@ -349,6 +349,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        setIconifiable(true);
 
         panelPrincipal.setLayout(new java.awt.BorderLayout());
 

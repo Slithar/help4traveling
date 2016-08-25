@@ -432,7 +432,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
-        setResizable(true);
+        setIconifiable(true);
         setTitle("Actualizar servicio");
         setToolTipText("");
 

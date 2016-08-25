@@ -68,6 +68,9 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        setIconifiable(true);
+
+        treePane.setBackground(new java.awt.Color(240, 240, 240));
 
         lblNombreCat.setText("Nombre de la Categoría");
 
