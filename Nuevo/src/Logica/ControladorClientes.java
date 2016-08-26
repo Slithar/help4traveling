@@ -161,7 +161,7 @@ public class ControladorClientes implements IControladorClientes {
     //public void realizarReserva(DataReserva dataReserva) throws SQLException, ClassNotFoundException{
     public int realizarReserva(LocalDate Fecha, int precio, String estado, String nickCliente) throws SQLException, ClassNotFoundException{
     
-        DatosClientes cli = new DatosClientes();
+        DatosReservas res = new DatosReservas();
         int numRes = 0;
         Reserva reserva = new Reserva();
         Cliente cliente = new Cliente();
@@ -170,7 +170,7 @@ public class ControladorClientes implements IControladorClientes {
         reserva.setEstado(estado);
         reserva.setFecha(Fecha);
         reserva.setPrecio(precio);
-        numRes = cli.insertarReserva(reserva.getFecha().toString(), reserva.getPrecio(), reserva.getEstado(), reserva.getCliente().getNickname());
+        numRes = res.insertarReserva(reserva.getFecha().toString(), reserva.getPrecio(), reserva.getEstado(), reserva.getCliente().getNickname());
         
         return numRes;
         
@@ -179,16 +179,16 @@ public class ControladorClientes implements IControladorClientes {
     @Override
     public void datosAsociadosReserva(int numReserva, TableModel modelo)throws SQLException, ClassNotFoundException{
         System.out.println(numReserva + "dentro");
-        DatosClientes cli = new DatosClientes();
+        DatosReservas res = new DatosReservas();
      //Tipo", "Nombre","proveedor" ,  "Cantidad", "Precio Unitario","Total", "Inicio", "Fin"
 
         for(int i = 0; i< modelo.getRowCount(); i++){
             if(modelo.getValueAt(i, 0) == "Servicio"){
                 
-                    cli.insertarServicioReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString());
+                    res.insertarServicioReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString());
             }
             else{
-                   cli.insertarPromocionReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString());
+                   res.insertarPromocionReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString());
            }
         }
         
