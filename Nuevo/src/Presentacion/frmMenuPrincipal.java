@@ -188,6 +188,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.setText("Consultas");
 
         miConsClientes.setText("Clientes");
+        miConsClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsClientesActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsClientes);
 
         miConsProveedores.setText("Proveedores");
@@ -303,6 +308,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         nuevoPanel.add(vProveedores);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_miRegProveedoresActionPerformed
+
+    private void miConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsClientesActionPerformed
+        ifrmVerInfoClientes vVerInfoCliente = new ifrmVerInfoClientes(this.iccli);
+        nuevoPanel.add(vVerInfoCliente);
+        vVerInfoCliente.setVisible(true);
+    }//GEN-LAST:event_miConsClientesActionPerformed
     
         
     /**
