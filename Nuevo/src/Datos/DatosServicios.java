@@ -423,5 +423,34 @@ public class DatosServicios {
         
         return servicios;
     }
+
+    public ArrayList<Servicio> getServicioPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException {
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        PreparedStatement st = conn.prepareStatement("SELECT servicios.* FROM servicios, serviciosdepromociones, promociones WHERE promociones.nombre = ? AND promociones.nombre=serviciosdepromociones.nombrePromocion AND serviciosdepromociones.nombreServicio = servicios.nombre and serviciosdepromociones.nombreProveedor=servicios.nombreProveedor");
+        st.setString(1, nombrePromo);
+        ArrayList<Servicio> resultado= new ArrayList();
+        ResultSet rs = st.executeQuery();
+        while(rs.next()){
+            Servicio serv = new Servicio();
+            serv.setNombreServicio(rs.getString("nombre"));
+            Proveedor prov = new Proveedor();
+            prov.setNombreEmpresa(rs.getString("nombreProveedor"));
+            serv.setProveedorServicio(prov);
+            Ciudad origen = new Ciudad(), destino = new Ciudad();
+            origen.setNombre(rs.getString("ciudadOrigen"));
+            destino.setNombre(rs.getString("ciudadDestino"));
+            serv.setOrigen(origen);
+            serv.setDestino(destino);
+            serv.setDescripcionServicio(rs.getString("descripcion"));
+            serv.setPrecioServicio(rs.getInt("precio"));
+            
+            resultado.add(serv);
+        }
+        
+        return resultado;
+    }
     
 }

@@ -6,6 +6,9 @@
 package Datos;
 import java.sql.*;
 import Datos.ConexionBD;
+import Logica.Ciudad;
+import Logica.Pais;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,4 +30,6 @@ public class Datos {
         
         return resultado;
     }
+    
+           
 }

@@ -317,6 +317,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     selectorImagen.setVisible(true);
                 }
                 else{
+                    
                     if((JLabel) e.getSource() == lblImagen1)
                         visor = new frmVisor(rutaImagen1);
                     else if((JLabel) e.getSource() == lblImagen2)

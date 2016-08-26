@@ -15,47 +15,55 @@ public class Reserva {
 
     private LocalDate fecha;
     private int precio;
-    private ArrayList<Cliente> clientes;
+    private Cliente clientes;
   //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
-    private ArrayList<Servicio> serviciosReserva;
+    private ArrayList<cantidadReservasServicios> serviciosReserva;
     private ArrayList<Promocion> reservaPromociones;
-    //falta estado
+    private ArrayList<cantidadReservasPromociones> reservacantPromociones;
+    String  estado;
     
     public Reserva() {
         
     }
 
-    public ArrayList<Cliente> getClientes() {
+    public Cliente getCliente() {
         return clientes;
     }
+    public String getEstado(){
+        return estado;
+        
+    }
+    public void setEstado(String estado){
+        this.estado=estado;
+    }
 
-    public void setClientes(ArrayList<Cliente> clientes) {
+    public void setCliente(Cliente clientes) {
         this.clientes = clientes;
     }
 
-    public ArrayList<Servicio> getServiciosReserva() {
+    public ArrayList<cantidadReservasServicios> getServiciosReserva() {
         return serviciosReserva;
     }
 
-    public void setServiciosReserva(ArrayList<Servicio> serviciosReserva) {
+    public void setServiciosReserva(ArrayList<cantidadReservasServicios> serviciosReserva) {
         this.serviciosReserva = serviciosReserva;
     }
     
     public ArrayList<Promocion> getReservaPromociones() {
         return reservaPromociones;
     }
+    
 
     public void setReservaPromociones(ArrayList<Promocion> ReservaPromociones) {
         this.reservaPromociones = ReservaPromociones;
     }
-
-
-    public ArrayList<Cliente> getCliente() {
-        return clientes;
+    public ArrayList<cantidadReservasPromociones> getReservacantPromociones() {
+        return reservacantPromociones;
     }
+    
 
-    public void setCliente(ArrayList<Cliente> Cliente) {
-        this.clientes = Cliente;
+    public void setReservacantPromociones(ArrayList<cantidadReservasPromociones> ReservaPromociones) {
+        this.reservacantPromociones = ReservaPromociones;
     }
 
     public int getNumero() {
@@ -81,5 +89,7 @@ public class Reserva {
     public void setPrecio(int Precio) {
         this.precio = Precio;
     }
+     
+    
     
 }

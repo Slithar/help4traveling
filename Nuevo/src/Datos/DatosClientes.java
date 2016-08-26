@@ -5,8 +5,19 @@
  */
 package Datos;
 import Logica.Cliente;
+import Logica.Ciudad;
+import Logica.Cliente;
+import Logica.DataCantidadReservas;
+import Logica.Pais;
+import Logica.Promocion;
+import Logica.Reserva;
+import Logica.Servicio;
+import Logica.cantidadReservasPromociones;
+import Logica.cantidadReservasServicios;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -89,4 +100,232 @@ public class DatosClientes {
         
     }
     
+    public ArrayList verInfoReserva()throws SQLException, ClassNotFoundException{
+       ArrayList reservas = new ArrayList();
+        int indice = 0;
+        Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select numero from reservas ");
+        
+        while(rs.next()){
+            //System.out.println("a");
+            reservas.add(indice,rs.getString("numero"));
+            indice++;
+        }
+        
+        rs.close();
+        //conexion.cerrar();
+        conn.close();
+        
+        
+        return reservas;
+        
+    }
+  public  Reserva getReserva(String numeroRes){
+      Reserva dtaux = new Reserva();
+      ArrayList <cantidadReservasPromociones> listProm = new ArrayList();
+      ArrayList <cantidadReservasServicios> listServ= new ArrayList();
+      Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+      try{  
+        conn = conexion.conectar();
+        
+     
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("SELECT * FROM reservas r ,usuarios u WHERE numero = "+numeroRes+" and r.nicknameCliente =u.nickname ");
+        
+        while(rs.next()){
+           Cliente c= new Cliente();
+           c.setNickname(rs.getString("nicknameCliente"));
+            dtaux.setCliente(c);
+           dtaux.setNumero(rs.getInt("numero"));
+           dtaux.setPrecio(rs.getInt("precio"));
+       
+           String fechaR=rs.getString("fecha");
+           String[] partesFecha= fechaR.split("-");
+           LocalDate fechaReserva=LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]),Integer.parseInt(partesFecha[2]));
+           dtaux.setFecha(fechaReserva);
+           dtaux.setEstado(rs.getString("estado"));
+           
+//           ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva="+numeroRes);
+//           while(rsCant.next()){
+//               Promocion prom = new Promocion();
+//               prom.setDescuento(rsCant.getInt("descuento"));
+//               prom.setNombre(rsCant.getString("nombrePromocion"));
+//               prom.setPrecio(rsCant.getInt("precio"));
+//               listProm.add(prom);
+//               
+//           }
+//           dtaux.setReservaPromociones(listProm);
+        }
+         rs.close();
+        //conexion.cerrar();
+        conn.close();
+      }catch(Exception e){}
+      return dtaux; 
+  }
+  public ArrayList getReservasPromo(String numeroProm){
+
+    ArrayList<cantidadReservasPromociones>  dtProm= new ArrayList();
+    Connection conn;  
+    ConexionBD conexion = new ConexionBD();
+      try{  
+        conn = conexion.conectar();
+        Statement st = conn.createStatement();
+          ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva="+numeroProm);
+           while(rsCant.next()){
+               cantidadReservasPromociones cantProm = new cantidadReservasPromociones();
+              cantProm.setnombreP(rsCant.getString("nombrePromocion"));
+               cantProm.setCantidad(rsCant.getInt("cantidad"));
+               cantProm.setTotalL(rsCant.getInt("totalLinea"));
+               String fechaR=rsCant.getString("fechaInicio");
+           String[] partesFecha= fechaR.split("-");
+           LocalDate fechaReserva=LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]),Integer.parseInt(partesFecha[2]));
+           cantProm.setFechaInicio(fechaReserva);
+            String fechaRf=rsCant.getString("fechaFin");
+           String[] partesFechaf= fechaRf.split("-");
+           LocalDate fechaReservaf=LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]),Integer.parseInt(partesFechaf[2]));
+           cantProm.setFechaFin(fechaReservaf);
+           
+              dtProm.add(cantProm);
+               
+           }
+          //dtaux.setReservaPromociones(listProm);
+        
+         rsCant.close();
+        //conexion.cerrar();
+        conn.close();
+      }catch(Exception e){}
+      return dtProm; 
+        
+  }
+  public ArrayList getServiciosPromo(String numeroSer){
+  ArrayList<cantidadReservasServicios>  dtSer= new ArrayList();
+    Connection conn;  
+    ConexionBD conexion = new ConexionBD();
+      try{  
+        conn = conexion.conectar();
+        Statement st = conn.createStatement();
+          ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and numeroReserva="+numeroSer);
+      
+          while(rsCant.next()){
+               cantidadReservasServicios cantSer = new cantidadReservasServicios();
+               cantSer.setNombreS(rsCant.getString("nombreServicio"));
+               cantSer.setCantidad(rsCant.getInt("cantidad"));
+               cantSer.setTotalLinea(rsCant.getInt("totalLinea"));
+               String fechaR=rsCant.getString("fechaInicio");
+           String[] partesFecha= fechaR.split("-");
+           LocalDate fechaReserva=LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]),Integer.parseInt(partesFecha[2]));
+           cantSer.setFechaInicio(fechaReserva);
+            String fechaRf=rsCant.getString("fechaFin");
+           String[] partesFechaf= fechaRf.split("-");
+           LocalDate fechaReservaf=LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]),Integer.parseInt(partesFechaf[2]));
+           cantSer.setFechaFin(fechaReservaf);
+           
+              dtSer.add(cantSer);
+            }
+         rsCant.close();
+        //conexion.cerrar();
+        conn.close();
+      }catch(Exception e){}
+      return dtSer;     
+  }
+      
+       
+public ArrayList verInfoCliente() throws SQLException, ClassNotFoundException{
+    ArrayList clientes = new ArrayList();
+    int indice =0;
+    Connection conn;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from usuarios where clientes="+1);
+        while(rs.next()){
+            //System.out.println("a");
+            clientes.add(indice,rs.getString("nickname"));
+            indice++;
+        }
+        
+        rs.close();
+        //conexion.cerrar();
+        conn.close();
+        return clientes;
+    }
+
+    public int insertarReserva(String fecha, int precio, String estado, String cliente) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        int numRes = 0;
+        
+        PreparedStatement st = conn.prepareStatement("insert into reservas (fecha, precio, estado, nicknameCliente)values (? ,? ,? ,?)", Statement.RETURN_GENERATED_KEYS);
+        
+        st.setString(1, fecha);
+        st.setInt(2, precio);
+        st.setString(3, estado);
+        st.setString(4, cliente);
+        
+        st.executeUpdate();
+        ResultSet rs = st.getGeneratedKeys();
+        if(rs != null && rs.next()){
+           numRes = rs.getInt(1);
+        }
+
+        conn.close();
+        return numRes;
+    }
+    
+    public void insertarServicioReserva(int numRes, String nombreServicio, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin ) throws SQLException, ClassNotFoundException{
+       Connection conn;
+       ConexionBD conexion = new ConexionBD();
+       conn = conexion.conectar();
+       
+       PreparedStatement st = conn.prepareStatement("insert into cantidadreservasservicios values (?, ?, ?, ?, ?, ?, ?)");
+       
+       st.setInt(1, numRes);
+       st.setString(2, nombreServicio);
+       st.setString(3, nombreProveedor);
+       st.setInt(4, cantidad);
+       st.setInt(5, totalLinea);
+       st.setString(6, fechaInicio);
+       st.setString(7, fechaFin);
+       
+       st.executeUpdate();
+       conn.close();
+       
+    }
+    
+    public void insertarPromocionReserva(int numRes, String nombrePromocion, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        PreparedStatement st = conn.prepareStatement("insert into cantidadreservaspromociones values(?, ?, ?, ?, ?, ?, ?)");
+        st.setInt(1, numRes);
+        st.setString(2, nombrePromocion);
+        st.setString(3, nombreProveedor);
+        st.setInt(4, cantidad);
+        st.setInt(5, totalLinea);
+        st.setString(6, fechaInicio);
+        st.setString(7, fechaFin);
+        
+        st.executeUpdate();
+        conn.close();
+        
+                
+    }
 }

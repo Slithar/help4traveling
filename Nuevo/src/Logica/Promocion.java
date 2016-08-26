@@ -16,6 +16,17 @@ public class Promocion {
     private ArrayList<Servicio> Servicios;
     private ArrayList<Reserva> Reservas;
 
+    public Promocion(String nombre, int descuento, int precio, ArrayList<Servicio> Servicios, ArrayList<Reserva> Reservas) {
+        this.nombre = nombre;
+        this.descuento = descuento;
+        this.precio = precio;
+        this.Servicios = Servicios;
+        this.Reservas = Reservas;
+    }
+
+    public Promocion() {
+    }
+
     public String getNombre() {
         return nombre;
     }
