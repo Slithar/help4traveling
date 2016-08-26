@@ -32,7 +32,7 @@ public class DatosPromociones {
         ResultSet rs = st.executeQuery("select * from promociones");
         
         while(rs.next()){
-            promociones.add(new Promocion(rs.getString("nombre"), rs.getInt("descuento"), rs.getInt("precio"), new ArrayList()));
+            promociones.add(new Promocion(rs.getString("nombre"), rs.getInt("descuento"), rs.getInt("precio"), new ArrayList(), new Proveedor()));
         }
         
         rs.close();

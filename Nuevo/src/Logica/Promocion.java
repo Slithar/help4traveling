@@ -14,12 +14,14 @@ public class Promocion {
     private int descuento;
     private int precio;
     private ArrayList<Servicio> Servicios;
+    private Proveedor proveedor;
 
-    public Promocion(String nombre, int descuento, int precio, ArrayList<Servicio> Servicios) {
+    public Promocion(String nombre, int descuento, int precio, ArrayList<Servicio> Servicios, Proveedor proveedor) {
         this.nombre = nombre;
         this.descuento = descuento;
         this.precio = precio;
         this.Servicios = Servicios;
+        this.proveedor = proveedor;
     }
 
     public Promocion() {
@@ -56,5 +58,13 @@ public class Promocion {
 
     public void setServicios(ArrayList<Servicio> Servicios) {
         this.Servicios = Servicios;
+    }
+    
+    public Proveedor getProveedor(){
+        return this.proveedor;
+    }
+    
+    public void setProveedor(Proveedor proveedor){
+        this.proveedor = proveedor;
     }
 }

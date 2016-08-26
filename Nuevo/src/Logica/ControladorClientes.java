@@ -175,10 +175,10 @@ public class ControladorClientes implements IControladorClientes {
      dtAux.setPrecio(res.getPrecio());
      dtAux.setFecha(res.getFecha());
      dtAux.setEstado(String.valueOf(res.getEstado()));
-     if(res.getReservacantPromociones().size() > 0){
+     /*if(res.getReservacantPromociones().size() > 0){
          for(int i=0;i<res.getReservacantPromociones().size();i++){
             cantidadReservasPromociones promAux= res.getReservacantPromociones().get(i);
-            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre());
+            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());
             listProm.add(dataProm);
 
 
@@ -189,35 +189,27 @@ public class ControladorClientes implements IControladorClientes {
              listServ.add(promServi);
 
          }
-     }
+     }*/
           
      return dtAux;
+    //return new DataReserva();
         
     }
     @Override
       public ArrayList getReservasPromo(String numeroProm){
-          DatosClientes dataux = new DatosClientes();
-     /*ArrayList <DataCantidadReservasPromociones> listProm= new ArrayList();
-
-        for(int i=0;i<dataux.getReservasPromo(numeroProm).size();i++){
-        cantidadReservasPromociones promAux= (cantidadReservasPromociones) dataux.getReservasPromo(numeroProm).get(i);
-        DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre());
-        listProm.add(dataProm);
-        
-   
-     }
-        return listProm;*/
+        DatosClientes dataux = new DatosClientes();
         ArrayList<cantidadReservasPromociones> listProm = new ArrayList();
         listProm = dataux.getReservasPromo(numeroProm);
         
         ArrayList<DataCantidadReservasPromociones> dataListProm = new ArrayList<DataCantidadReservasPromociones>();
         for(int i=0;i<listProm.size();i++){
             cantidadReservasPromociones promAux= (cantidadReservasPromociones) listProm.get(i);
-            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre());
+            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());
             dataListProm.add(dataProm);
         }
         
         return dataListProm;
+        //return new ArrayList();
       }
       
     @Override

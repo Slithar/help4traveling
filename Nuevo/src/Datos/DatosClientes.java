@@ -154,7 +154,7 @@ public class DatosClientes {
         try {
             conn = conexion.conectar();
             Statement st = conn.createStatement();
-            ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva=" + numeroProm);
+            ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and cr.nombreProveedor = p.nombreProveedor and numeroReserva=" + numeroProm);
             while (rsCant.next()) {
                 cantidadReservasPromociones cantProm = new cantidadReservasPromociones();
                 cantProm.setnombreP(rsCant.getString("nombrePromocion"));
@@ -168,6 +168,9 @@ public class DatosClientes {
                 String[] partesFechaf = fechaRf.split("-");
                 LocalDate fechaReservaf = LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]), Integer.parseInt(partesFechaf[2]));
                 cantProm.setFechaFin(fechaReservaf);
+                Proveedor p = new Proveedor();
+                p.setNombreEmpresa(rsCant.getString("nombreProveedor"));
+                cantProm.setProveedor(p);
 
                 dtProm.add(cantProm);
 
@@ -292,7 +295,7 @@ public class DatosClientes {
             String[] datosFI  = fechaInicio.split("-");
             String fechaFin = rs.getString("fechaFin");
             String[] datosFF  = fechaFin.split("-");
-            cantidadReservasPromociones crp = new cantidadReservasPromociones(rs.getInt("cantidad"), rs.getInt("totalLinea"), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Promocion());
+            cantidadReservasPromociones crp = new cantidadReservasPromociones(rs.getInt("cantidad"), rs.getInt("totalLinea"), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Promocion(), new Proveedor());
             crp.setNombrePromocion(rs.getString("nombrePromocion"));
             //System.out.println("****" + rs.getString("nombrePromocion") + "****");
             promociones.add(crp);

@@ -23,7 +23,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
     
     private IControladorClientes iccli;
     
-    private String[] columnas = {"Nombre", "Cantidad", "Fecha inicio", "Fecha fin", "Tipo"};
+        private String[] columnas = {"Nombre", "Proveedor", "Cantidad", "Fecha inicio", "Fecha fin", "Tipo"};
     private DefaultTableModel datosPromocionServ = new DefaultTableModel(null, columnas) {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
@@ -164,23 +164,31 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Cantidad", "Fecha Inicio", "Fecha Fin", "Tipo"
+                "Nombre", "Proveedor", "Cantidad", "Fecha Inicio", "Fecha Fin", "Tipo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTable);
 
         javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
@@ -272,7 +280,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 if(listProm.size()>0){
                     for(int i=0;i<listProm.size();i++){
                         DataCantidadReservasPromociones promAux=listProm.get(i);
-                        Object[] fila = {promAux.getPromocion(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"PROMOCIÓN"};
+                        Object[] fila = {promAux.getPromocion(), promAux.getProveedor(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"PROMOCIÓN"};
 
                         datosPromocionServ.addRow(fila);
                     }
@@ -282,7 +290,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 if(listServ.size()>0){
                     for(int i=0;i<listServ.size();i++){
                         DataCantidadReservasServicios promAux=listServ.get(i);
-                        Object[] fila = {promAux.getServicio() + " <" + promAux.getProveedor() + ">", promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"SERVICIO"};
+                        Object[] fila = {promAux.getServicio(), promAux.getProveedor(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"SERVICIO"};
 
                         datosPromocionServ.addRow(fila);
                     }

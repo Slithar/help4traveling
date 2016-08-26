@@ -18,16 +18,19 @@ public class cantidadReservasPromociones {
     private LocalDate fechaFin;
     private String nombrePromocion;   
     private Promocion promocion;
+    private Proveedor proveedor;
+    private String nombreProveedor;
 
     public cantidadReservasPromociones() {
         
     }
-    public cantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, Promocion promocion) {
+    public cantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, Promocion promocion, Proveedor proveedor) {
         this.cantidad = cantidad;
         this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.promocion = promocion;
+        this.proveedor = proveedor;
     }
     
     public String getNombrePromocion(){
@@ -94,6 +97,28 @@ public class cantidadReservasPromociones {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
-    
-    
+
+    public int getTotalLinea() {
+        return totalLinea;
+    }
+
+    public void setTotalLinea(int totalLinea) {
+        this.totalLinea = totalLinea;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }    
 }
