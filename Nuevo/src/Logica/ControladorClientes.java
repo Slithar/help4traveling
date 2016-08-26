@@ -238,6 +238,20 @@ public class ControladorClientes implements IControladorClientes {
 
         return dataux.verInfoReserva();
     }
-
+    
+    public ArrayList<DataCliente> getClientes()throws SQLException, ClassNotFoundException{
+        ArrayList<DataCliente> listResult = new ArrayList ();
+        DatosClientes datCli = new DatosClientes();
+        DatosUsuarios datosU =new DatosUsuarios();
+        
+        ArrayList<Cliente> listClientes =datCli.selectAllObjetosClientes();
+        for(int i=0;i<listClientes.size();i++){
+            Imagen imagenPerf = datosU.selectImagenPerfil(listClientes.get(i));
+            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath()));
+        }
+        return listResult;
+    }
+    
+    
     
 }

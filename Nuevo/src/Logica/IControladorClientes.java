@@ -20,7 +20,7 @@ public interface IControladorClientes {
     public abstract void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException;
     public abstract ArrayList verInfoReserva()throws SQLException, ClassNotFoundException;
     public abstract DataReserva getReserva(String nombreRes)throws SQLException, ClassNotFoundException;
-    public abstract ArrayList  getReservasPromo(String numeroProm);
+    public abstract ArrayList getReservasPromo(String numeroProm);
     public abstract ArrayList getReservasServ(String numeroServ);
     public abstract void actualizarClientes() throws SQLException, ClassNotFoundException;    
     public abstract int getCantClientes();
@@ -28,4 +28,6 @@ public interface IControladorClientes {
     public abstract void setListaProveedores(HashMap<String, Proveedor> ListaProveedores);
     public abstract HashMap<String, Promocion> getListaPromociones();
     public abstract void setListaPromociones(HashMap<String, Promocion> ListaPromociones);
+    public abstract ArrayList<DataCliente> getClientes()throws SQLException, ClassNotFoundException;
+    
 }

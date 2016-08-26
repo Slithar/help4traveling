@@ -103,8 +103,8 @@ public class ControladorCategorias implements IControladorCategorias{
        Categoria catHija = new Categoria(c, "", new ArrayList());
        
        categorias = new DatosCategorias();
-       ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());
-       boolean existe;
+       /*ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());
+       boolean existe = false;
        if(!existeCate.isEmpty()){
            existe = true;
        }else{
@@ -113,11 +113,11 @@ public class ControladorCategorias implements IControladorCategorias{
        if(existe==true){
             boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);
             return resultado;
-       }else{
+       }else{*/
            categorias.agregarCategoriaPadre(catHija.getNombre());
            boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);
            return resultado;
-       }
+       //}
     }
     
     
@@ -128,6 +128,16 @@ public class ControladorCategorias implements IControladorCategorias{
 
     public void setListaCategorias(HashMap<String, Categoria> ListaCategorias) {
         this.ListaCategorias = ListaCategorias;
+    }
+    
+    public boolean existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Categoria cat = new Categoria(c, "", new ArrayList());
+        DatosCategorias categorias = new DatosCategorias();
+        
+        if(categorias.existeCategoria(cat.getNombre()).size() > 0)
+            return true;
+        else
+            return false;
     }
     
 }

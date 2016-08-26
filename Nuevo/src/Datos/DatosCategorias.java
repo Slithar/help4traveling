@@ -88,7 +88,7 @@ public class DatosCategorias {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
+        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES(?)");
         
         pConsulta.setString(1, nombre);
         
@@ -148,7 +148,7 @@ public class DatosCategorias {
         ArrayList cates = new ArrayList();
         
         while(rs.next()){
-            Categoria categoria = new Categoria(rs.getString("categoriaHija"), "", new ArrayList());
+            Categoria categoria = new Categoria(rs.getString("nombre"), "", new ArrayList());
             cates.add(categoria);
             //indice 
         }
