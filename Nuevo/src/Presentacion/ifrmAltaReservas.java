@@ -60,7 +60,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     
         setTitle("Alta de Reserva");
         Dimension tamanioVentana = this.getSize();
-        setLocation((1400 - tamanioVentana.width)/2, (800 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (700 - tamanioVentana.height)/2);
         panelGeneral.setVisible(true);
         panelDatos.setVisible(true);
         panelReservas.setVisible(false);
@@ -508,20 +508,27 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-            int numRes = 0;
-        
-        try {   
-        numRes  = iccli.realizarReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), "Registrada", cmbUsuarios.getSelectedItem().toString());
-        iccli.datosAsociadosReserva(numRes, tblAsociaciones.getModel());
-        JOptionPane.showMessageDialog(this, "La accion se ha completado con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        int numRes = 0;
+        if(tblAsociaciones.getModel().getRowCount() == 0){
+           JOptionPane.showMessageDialog(this, "No se puede completar la accion, no se ha seleccionado ningun servicio o promocion", "Error", JOptionPane.INFORMATION_MESSAGE);
+           
+        }
+        else{
+            try {   
+                numRes  = iccli.realizarReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), "Registrada", cmbUsuarios.getSelectedItem().toString());
+                iccli.datosAsociadosReserva(numRes, tblAsociaciones.getModel());
+                JOptionPane.showMessageDialog(this, "La accion se ha completado con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } 
+            catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            limpiar();
         }
         
-        limpiar();
+        
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
 
@@ -586,8 +593,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             }
         ));
         
-        panelReservas.setVisible(true);
-        tblAsociaciones.setVisible(true);
+        panelReservas.setVisible(false);
+        tblAsociaciones.setVisible(false);
     }
     
      public void llenarcmbClientes(JComboBox combo, ArrayList<DataCliente> datos){
