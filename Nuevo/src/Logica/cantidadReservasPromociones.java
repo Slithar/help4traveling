@@ -46,9 +46,6 @@ public class cantidadReservasPromociones {
     }*/
 
     public String getNombreP(){
-        /*Promocion p = new Promocion();
-        p.setNombre(nombrePromocion);
-        return nombrePromocion;*/
         return promocion.getNombre();
     }
     public void setnombreP(String nombre){
