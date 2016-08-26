@@ -297,6 +297,7 @@ public class DatosClientes {
             String[] datosFF  = fechaFin.split("-");
             cantidadReservasPromociones crp = new cantidadReservasPromociones(rs.getInt("cantidad"), rs.getInt("totalLinea"), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Promocion(), new Proveedor());
             crp.setNombrePromocion(rs.getString("nombrePromocion"));
+            crp.setNombreProveedor(rs.getString("nombreProveedor"));
             //System.out.println("****" + rs.getString("nombrePromocion") + "****");
             promociones.add(crp);
         }

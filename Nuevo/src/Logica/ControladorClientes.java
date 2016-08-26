@@ -83,7 +83,8 @@ public class ControladorClientes implements IControladorClientes {
                 ArrayList<cantidadReservasPromociones> crp = clientes.selectPromocionesReserva(r.getNumero());
                 if(crp.size() > 0){
                     for(int i = 0; i < crp.size(); i++){
-                        
+                        crp.get(i).setProveedor((Proveedor) ListaProveedores.get(crp.get(i).getNombreProveedor()));
+                        System.out.println("  ** PROVEEDOR PROMOCIÓN: " + crp.get(i).getProveedor().getNombreEmpresa());
                         crp.get(i).setPromocion((Promocion) ListaPromociones.get(crp.get(i).getNombrePromocion()));
                         System.out.println("  ** PROMOCION: " + crp.get(i).getPromocion().getNombre());
                     }

@@ -41,7 +41,7 @@ public class ControladorPromociones implements IControladorPromociones{
     public void actualizarPromociones() throws SQLException, ClassNotFoundException{
         DatosPromociones promociones = new DatosPromociones();
         ListaPromociones = new HashMap<String, Promocion>();
-        ArrayList<Promocion> proms= promociones.selectAllPromociones();
+        ArrayList<Promocion> proms = promociones.selectAllPromociones();
         
         for(int i = 0; i < proms.size(); i++){
             Promocion p = (Promocion) proms.get(i);
@@ -57,6 +57,10 @@ public class ControladorPromociones implements IControladorPromociones{
                 serviciosDePromocion.add(s);
             }
             p.setServicios(serviciosDePromocion);
+            
+            Proveedor proveedor = ListaProveedores.get(p.getProveedor().getNombreEmpresa());
+            p.setProveedor(proveedor);
+            
             ListaPromociones.put(p.getNombre(), p);
         }
     }
