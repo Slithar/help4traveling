@@ -265,6 +265,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
         }
         else{
             String selected =listRes.getSelectedValue();
+            /*comentarioo*/
             try{
                 datosPromocionServ = new DefaultTableModel(null, columnas);
                 DataReserva dtcant =this.iccli.getReserva(selected);
