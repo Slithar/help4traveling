@@ -460,9 +460,15 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
            JOptionPane.showMessageDialog(this, "La fecha de Inicio debe ser anterior a la Fecha de Fin", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else for(int i = 0; i < tblAsociaciones.getRowCount(); i++){
-            if(tblAsociaciones.getValueAt(i, 1).toString().equals(lblServicio.getText()) && tblAsociaciones.getValueAt(i, 2).toString().equals(lblProveedor.getText())){
+            if( tblAsociaciones.getValueAt(i,1 ).toString().equals(lblServicio.getText())){
                 ok = false;
                 JOptionPane.showMessageDialog(this, "No se puede asociar a la reserva un mismo servicio o promocion dos veces", "ERROR", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
+                if(!tblAsociaciones.getValueAt(i, 2).toString().equals(lblProveedor.getText())){
+                    ok = false;
+                    JOptionPane.showMessageDialog(this, "No se puede asociar a la reserva un servicio o promocion de distinto proveedor", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    break;
             }
         }
         int cantidad = (Integer) spnCant.getValue();
