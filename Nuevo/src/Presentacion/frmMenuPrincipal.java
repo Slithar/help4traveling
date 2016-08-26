@@ -163,6 +163,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mRegistros.add(mRegServicios);
 
         miRegPromociones.setText("Promociones");
+        miRegPromociones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegPromocionesActionPerformed(evt);
+            }
+        });
         mRegistros.add(miRegPromociones);
 
         mbBarra.add(mRegistros);
@@ -303,6 +308,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         nuevoPanel.add(vProveedores);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_miRegProveedoresActionPerformed
+
+    private void miRegPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegPromocionesActionPerformed
+        // TODO add your handling code here:
+        agregarPromocion promo = new agregarPromocion(icprom,icprov);
+        add(promo);
+        promo.setVisible(true);
+    }//GEN-LAST:event_miRegPromocionesActionPerformed
     
         
     /**

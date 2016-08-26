@@ -69,4 +69,25 @@ public class ControladorPromociones implements IControladorPromociones{
         return ListaPromociones.size();
     }
     
+@Override
+public int getPrecio(String cadena){
+    String [] partes = new String[2];
+    partes = cadena.split("-");
+    int precio = 0;
+    precio = Integer.parseInt(partes[1]);
+    return precio;
+}
+
+public int calcularPrecio(ArrayList<Integer> precios, int Descuento){
+    int tamanio = 0;
+    int inicio = 0;
+    int precioTotal=0;
+    tamanio = precios.size();
+    for(inicio = 0; inicio<tamanio;inicio++){
+        precioTotal+=precios.get(inicio);
+    }
+    if(Descuento != 0)
+        precioTotal = precioTotal - (precioTotal * Descuento) / 100;
+    return precioTotal;
+}
 }

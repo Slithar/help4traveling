@@ -558,7 +558,24 @@ public class ControladorProveedores implements IControladorProveedores{
     }
 
     
-
+@Override
+public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException{
+    ArrayList<DataServicio> servicios = new ArrayList();
+    DatosServicios dServicios = new DatosServicios();
+    ArrayList<Servicio> servProve = new ArrayList();
+    Proveedor proveedor = new Proveedor();
+    proveedor.setNombreEmpresa(NombreProveedor);
+    servProve = dServicios.getServiciosProveedor(proveedor.getNombreEmpresa());
+    int tamanio = servProve.size();
+    int inicio = 0;
+    for (inicio = 0;inicio<tamanio;inicio++){
+        DataServicio serv = new DataServicio();
+        serv.setNombreServicio(servProve.get(inicio).getNombreServicio());
+        serv.setPrecioServicio(servProve.get(inicio).getPrecioServicio());
+        servicios.add(serv);
+    }
+    return servicios;
+}
     
     
 }
