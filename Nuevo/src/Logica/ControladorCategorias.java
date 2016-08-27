@@ -103,7 +103,7 @@ public class ControladorCategorias implements IControladorCategorias{
        Categoria catHija = new Categoria(c, "", new ArrayList());
        
        categorias = new DatosCategorias();
-       /*ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());
+       ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());
        boolean existe = false;
        if(!existeCate.isEmpty()){
            existe = true;
@@ -113,11 +113,11 @@ public class ControladorCategorias implements IControladorCategorias{
        if(existe==true){
             boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);
             return resultado;
-       }else{*/
+       }else{
            categorias.agregarCategoriaPadre(catHija.getNombre());
            boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);
            return resultado;
-       //}
+       }
     }
     
     

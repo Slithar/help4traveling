@@ -78,6 +78,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         mbBarra = new javax.swing.JMenuBar();
         mInicio = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
@@ -99,8 +100,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miConsServicios = new javax.swing.JMenuItem();
         miConsPromociones = new javax.swing.JMenuItem();
         miConsReservas = new javax.swing.JMenuItem();
+        mDatos = new javax.swing.JMenu();
+        miDatosDePrueba = new javax.swing.JMenuItem();
+        mEliminarDatos = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -218,6 +224,16 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsReservas);
 
         mbBarra.add(mConsultas);
+
+        mDatos.setText("Datos del sistema");
+
+        miDatosDePrueba.setText("Utilizar datos de prueba");
+        mDatos.add(miDatosDePrueba);
+
+        mEliminarDatos.setText("Eliminar datos");
+        mDatos.add(mEliminarDatos);
+
+        mbBarra.add(mDatos);
 
         setJMenuBar(mbBarra);
 
@@ -361,7 +377,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu mConsultas;
+    private javax.swing.JMenu mDatos;
+    private javax.swing.JMenuItem mEliminarDatos;
     private javax.swing.JMenu mInicio;
     private javax.swing.JMenu mRegServicios;
     private javax.swing.JMenu mRegistros;
@@ -375,6 +394,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsProveedores;
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
+    private javax.swing.JMenuItem miDatosDePrueba;
     private javax.swing.JMenuItem miNuevaReserva;
     private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
