@@ -227,7 +227,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         mDatos.setText("Datos del sistema");
 
-        miDatosDePrueba.setText("Utilizar datos de prueba");
+        miDatosDePrueba.setText("Cargar datos de prueba");
+        miDatosDePrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDatosDePruebaActionPerformed(evt);
+            }
+        });
         mDatos.add(miDatosDePrueba);
 
         mEliminarDatos.setText("Eliminar datos");
@@ -330,6 +335,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         nuevoPanel.add(vVerInfoCliente);
         vVerInfoCliente.setVisible(true);
     }//GEN-LAST:event_miConsClientesActionPerformed
+
+    private void miDatosDePruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDatosDePruebaActionPerformed
+        this.icprov.eliminarImagenesUsuarios();;
+        this.icprov.eliminarImagenesServicios();
+        
+        JOptionPane.showMessageDialog(this, "Datos eliminados correctamente");
+    }//GEN-LAST:event_miDatosDePruebaActionPerformed
     
         
     /**

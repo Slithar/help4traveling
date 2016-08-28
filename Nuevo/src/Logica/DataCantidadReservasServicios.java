@@ -13,6 +13,7 @@ import java.time.*;
  */
 public class DataCantidadReservasServicios {
     private int cantidad;
+     private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int reserva;
@@ -22,16 +23,18 @@ public class DataCantidadReservasServicios {
     public DataCantidadReservasServicios() {
     }
 
-    public DataCantidadReservasServicios(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String servicio, String proveedor ) {
+    public DataCantidadReservasServicios(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String servicio, String proveedor ) {
         this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.reserva = reserva;
         this.servicio = servicio;
         this.proveedor = proveedor;
     }
-    public DataCantidadReservasServicios(int cantidad, LocalDate fechaInicio, LocalDate fechaFin ) {
+    public DataCantidadReservasServicios(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin ) {
         this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
        
@@ -84,4 +87,14 @@ public class DataCantidadReservasServicios {
     public void setServicio(String servicio) {
         this.servicio = servicio;
     }
+
+    public int getTotalLinea() {
+        return totalLinea;
+    }
+
+    public void setTotalLinea(int totalLinea) {
+        this.totalLinea = totalLinea;
+    }
+    
+    
 }

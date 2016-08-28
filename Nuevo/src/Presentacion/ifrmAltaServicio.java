@@ -368,77 +368,80 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             //System.out.println(labelSeleccionado);
             //JOptionPane.showMessageDialog(null, e.getSource());
-            if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
+            if(lstCategorias.getSelectedIndex() > -1){
+                if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
-                if(rutaImagen2 == ""){
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    
-                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    rutaImagen1 = "";
+                    if(rutaImagen2 == ""){
+                        lblImagen2.setVisible(false);
+                        lblImagen2 = null;
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                        rutaImagen1 = "";
+                    }
+                    else if(rutaImagen2 != "" && rutaImagen3 == ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        lblImagen2.setVisible(false);
+                        lblImagen2 = null;
+
+                        setImagenLabel(rutaImagen2, "absoluta");
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+
+                        rutaImagen1 = rutaImagen2;
+                        rutaImagen2 = "";                   
+                    }
+                    else if(rutaImagen3 != ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        lblImagen2.setVisible(false);
+                        lblImagen2 = null;
+
+                        setImagenLabel(rutaImagen2, "absoluta");
+
+                        setImagenLabel(rutaImagen3, "absoluta");
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+
+                        rutaImagen1 = rutaImagen2;
+                        rutaImagen2 = rutaImagen3;
+                        rutaImagen3 = "";                    
+                    }                
                 }
-                else if(rutaImagen2 != "" && rutaImagen3 == ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    
-                    setImagenLabel(rutaImagen2, "absoluta");
-                                                          
-                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    
-                    rutaImagen1 = rutaImagen2;
-                    rutaImagen2 = "";                   
+                else if(e.getSource() == miEliminar2 && rutaImagen2 != ""){
+
+                    if(rutaImagen3 == ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                        rutaImagen2 = "";
+                    }
+
+                    else if(rutaImagen3 != ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        setImagenLabel(rutaImagen3, "absoluta");
+                        rutaImagen2 = rutaImagen3;
+                        rutaImagen3 = "";
+                    }
                 }
-                else if(rutaImagen3 != ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    
-                    setImagenLabel(rutaImagen2, "absoluta");
-                    
-                    setImagenLabel(rutaImagen3, "absoluta");
-                    
+                else if(e.getSource() == miEliminar3 && rutaImagen3 != ""){
                     setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    
-                    rutaImagen1 = rutaImagen2;
-                    rutaImagen2 = rutaImagen3;
-                    rutaImagen3 = "";                    
-                }                
-            }
-            else if(e.getSource() == miEliminar2 && rutaImagen2 != ""){
-                
-                if(rutaImagen3 == ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    rutaImagen2 = "";
-                }
-                
-                else if(rutaImagen3 != ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    setImagenLabel(rutaImagen3, "absoluta");
-                    rutaImagen2 = rutaImagen3;
                     rutaImagen3 = "";
                 }
-            }
-            else if(e.getSource() == miEliminar3 && rutaImagen3 != ""){
-                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                rutaImagen3 = "";
-            }
-            else if(e.getSource() == miEliminarCategoria){
-                
-                DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-                modelo.remove(lstCategorias.getSelectedIndex());
-                lstCategorias.setModel(modelo);
+                else if(e.getSource() == miEliminarCategoria){
+
+                    DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                    modelo.remove(lstCategorias.getSelectedIndex());
+                    lstCategorias.setModel(modelo);
+                }
             }
         }
+            
         
     }
     
@@ -535,6 +538,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         areaDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         areaDescripcion.setLineWrap(true);
         areaDescripcion.setRows(5);
+        areaDescripcion.setWrapStyleWord(true);
         jScrollPane1.setViewportView(areaDescripcion);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -745,122 +749,131 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //System.out.println("Precio (en U$S): " + txtPrecio.getText());
-        DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-        if(txtNombreServicio.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            txtNombreServicio.requestFocus();
+        if(cmbProveedor.getModel().getSize() == 0){
+            JOptionPane.showMessageDialog(this, "No hay proveedores cargados en el sistema", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
-        else if(areaDescripcion.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado la descripción del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            areaDescripcion.requestFocus();
-        }
-        else if(txtPrecio.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "No se ha ingresado el precio del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            txtPrecio.requestFocus();
-        }
-        else if(!esNumerico(txtPrecio.getText())){
-            JOptionPane.showMessageDialog(this, "El precio ingresado para el nuevo servicio presenta un formato no válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            txtPrecio.requestFocus();
-        }
-        else if(Integer.parseInt(txtPrecio.getText()) < 0){
-            JOptionPane.showMessageDialog(this, "El precio ingresado no puede ser negativo", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            txtPrecio.requestFocus();
-        }
-        else if(cmbCiudadOrigen.getSelectedItem().equals(cmbCiudadDestino.getSelectedItem())){
-            JOptionPane.showMessageDialog(this, "La ciudad de orígen no puede ser la misma que la ciudad destino", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            cmbCiudadOrigen.requestFocus();
+        else if(cmbProveedor.getModel().getSize() == 0){
+            JOptionPane.showMessageDialog(this, "No hay ciudades cargadas en el sistema", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            
-            if(modelo.getSize() == 0){
-               JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna categoría para el nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE); 
+            DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+            if(txtNombreServicio.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                txtNombreServicio.requestFocus();
+            }
+            else if(areaDescripcion.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "No se ha ingresado la descripción del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                areaDescripcion.requestFocus();
+            }
+            else if(txtPrecio.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "No se ha ingresado el precio del nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                txtPrecio.requestFocus();
+            }
+            else if(!esNumerico(txtPrecio.getText())){
+                JOptionPane.showMessageDialog(this, "El precio ingresado para el nuevo servicio presenta un formato no válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                txtPrecio.requestFocus();
+            }
+            else if(Integer.parseInt(txtPrecio.getText()) < 0){
+                JOptionPane.showMessageDialog(this, "El precio ingresado no puede ser negativo", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                txtPrecio.requestFocus();
+            }
+            else if(cmbCiudadOrigen.getSelectedItem().equals(cmbCiudadDestino.getSelectedItem())){
+                JOptionPane.showMessageDialog(this, "La ciudad de orígen no puede ser la misma que la ciudad destino", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                cmbCiudadOrigen.requestFocus();
             }
             else{
-                try {
-                    if(icprov.existeNombreServicio(txtNombreServicio.getText(), (String) cmbProveedor.getSelectedItem())){
-                        JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso por el proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        txtNombreServicio.requestFocus();
-                    }
-                    else{
-                        String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
-                        String[] ciudad = cOrigen.split(",");
-                        String ciudadOrigen = ciudad[0].trim();
-                        
-                        ArrayList<String> imagenes = new ArrayList<String>();
-                        if(rutaImagen1 != ""){
-                            imagenes.add(rutaImagen1);
-                            
-                            if(rutaImagen2 != ""){
-                                imagenes.add(rutaImagen2);
-                                
-                                if(rutaImagen3 != ""){
-                                    imagenes.add(rutaImagen3);
-                                }
-                            }
-                        }
-                        
-                        ArrayList<String> categorias = obtenerCategorias(modelo);
-                        
-                        //Proveedor proveedor = new Proveedor();
-                        
-                        //proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
-                        
-                        String proveedor = (String) cmbProveedor.getSelectedItem();
-                        
-                        
-                        
-                        boolean tieneDestino = false;
-                        
-                        String ciudadDestino;
-                        
-                        if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
-                            String cDestino = (String) cmbCiudadDestino.getSelectedItem();
-                            String[] ciudadD = cDestino.split(",");
 
-                            //ciudadDestino = new Ciudad();
-                            //ciudadDestino.setNombre(ciudadD[0]);
-                            
-                            ciudadDestino = ciudadD[0].trim();
-                            
-                            //System.out.println("Ciudad: " + ciudadD[0]);
-                            
-                            tieneDestino = true;
+                if(modelo.getSize() == 0){
+                   JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna categoría para el nuevo servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE); 
+                }
+                else{
+                    try {
+                        if(icprov.existeNombreServicio(txtNombreServicio.getText(), (String) cmbProveedor.getSelectedItem())){
+                            JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso por el proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                            txtNombreServicio.requestFocus();
                         }
                         else{
-                            //System.out.println("entre aca");
-                            ciudadDestino = "";
+                            String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
+                            String[] ciudad = cOrigen.split(",");
+                            String ciudadOrigen = ciudad[0].trim();
+
+                            ArrayList<String> imagenes = new ArrayList<String>();
+                            if(rutaImagen1 != ""){
+                                imagenes.add(rutaImagen1);
+
+                                if(rutaImagen2 != ""){
+                                    imagenes.add(rutaImagen2);
+
+                                    if(rutaImagen3 != ""){
+                                        imagenes.add(rutaImagen3);
+                                    }
+                                }
+                            }
+
+                            ArrayList<String> categorias = obtenerCategorias(modelo);
+
+                            //Proveedor proveedor = new Proveedor();
+
+                            //proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
+
+                            String proveedor = (String) cmbProveedor.getSelectedItem();
+
+
+
+                            boolean tieneDestino = false;
+
+                            String ciudadDestino;
+
+                            if((String) cmbCiudadDestino.getSelectedItem() != "No corresponde"){
+                                String cDestino = (String) cmbCiudadDestino.getSelectedItem();
+                                String[] ciudadD = cDestino.split(",");
+
+                                //ciudadDestino = new Ciudad();
+                                //ciudadDestino.setNombre(ciudadD[0]);
+
+                                ciudadDestino = ciudadD[0].trim();
+
+                                //System.out.println("Ciudad: " + ciudadD[0]);
+
+                                tieneDestino = true;
+                            }
+                            else{
+                                //System.out.println("entre aca");
+                                ciudadDestino = "";
+                            }
+
+                            for(int i = 0; i < imagenes.size(); i++){
+                                int numero = i + 1;
+                                icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero);
+                                imagenes.set(i, "src/Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero + ".jpg");
+                            }
+
+                            int precio = Integer.parseInt(txtPrecio.getText());
+
+                            //System.out.println(precio);
+
+                            //Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+
+                            icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+
+                            limpiar();
+                            JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+
                         }
-                        
-                        for(int i = 0; i < imagenes.size(); i++){
-                            int numero = i + 1;
-                            icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero);
-                            imagenes.set(i, "src/Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero + ".jpg");
-                        }
-                        
-                        int precio = Integer.parseInt(txtPrecio.getText());
-                        
-                        //System.out.println(precio);
-                            
-                        //Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
-                        
-                        icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
-                        
-                        limpiar();
-                        JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                        
+                    }
+                    catch(SQLException ex){
+                        //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch(ClassNotFoundException ex){
+                        JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(this, "Problema con las imágenes del servicio", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                catch(SQLException ex){
-                    //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-                catch(ClassNotFoundException ex){
-                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Problema con las imágenes del servicio", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+            } 
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
     
     public ArrayList<String> obtenerCategorias(DefaultListModel modelo){

@@ -6,6 +6,7 @@
 package Logica;
 
 import Datos.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -556,7 +557,24 @@ public class ControladorProveedores implements IControladorProveedores{
         
         return resultadoServicio;
     }
-
+    
+    public void eliminarImagenesUsuarios(){
+        File fichero = new File("src/Logica/Perfiles");
+        File[]imagenes = fichero.listFiles();
+        
+        for(int i = 0; i < imagenes.length; i++){
+            imagenes[i].delete();
+        }
+    }
+    
+    public void eliminarImagenesServicios(){
+        File fichero = new File("src/Logica/ImagenesServicios");
+        File[]imagenes = fichero.listFiles();
+        
+        for(int i = 0; i < imagenes.length; i++){
+            imagenes[i].delete();
+        }
+    }
     
 
     

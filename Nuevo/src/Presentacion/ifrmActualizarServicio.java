@@ -40,6 +40,8 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     
     private frmVisor visor;
     
+    private boolean visorAbierto = false;
+    
     
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
@@ -230,9 +232,20 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             lstCategorias.setComponentPopupMenu(eliminarCategoria);
         }
     }
+
+    public boolean isVisorAbierto() {
+        return visorAbierto;
+    }
+
+    public void setVisorAbierto(boolean visorAbierto) {
+        this.visorAbierto = visorAbierto;
+    }
+    
+    
     
     private class OyenteLabel implements MouseListener{
         
+        //private int cant = 0;
         private JLabel lblImagen;
         private ifrmActualizarServicio vActualizarServicio;
         
@@ -242,25 +255,31 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(e.getButton() == MouseEvent.BUTTON1){
-                if(cambioValido((JLabel) e.getSource())){
-                    fchImagenes selectorImagen = new fchImagenes(vActualizarServicio);
-                    selectorImagen.setVisible(true);
-                }
-                else{
-                    if((JLabel) e.getSource() == lblImagen1)
-                        visor = new frmVisor(rutaImagen1);
-                    else if((JLabel) e.getSource() == lblImagen2)
-                        visor = new frmVisor(rutaImagen2);
-                    else if((JLabel) e.getSource() == lblImagen3)
-                        visor = new frmVisor(rutaImagen3);
-                    
-                    //visor.setUndecorated(true);
-                    //visor.setUndecorated(true);
-                    visor.setBounds(515, 200, 900, 600);
-                    visor.setVisible(true);
+            /*cant++;
+            JOptionPane.showMessageDialog(null, cant);*/
+            if(!visorAbierto){
+                if(e.getButton() == MouseEvent.BUTTON1){
+                    if(cambioValido((JLabel) e.getSource())){
+                        fchImagenes selectorImagen = new fchImagenes(vActualizarServicio);
+                        selectorImagen.setVisible(true);
+                    }
+                    else{
+                        if((JLabel) e.getSource() == lblImagen1)
+                            visor = new frmVisor(rutaImagen1, this.vActualizarServicio);
+                        else if((JLabel) e.getSource() == lblImagen2)
+                            visor = new frmVisor(rutaImagen2, this.vActualizarServicio);
+                        else if((JLabel) e.getSource() == lblImagen3)
+                            visor = new frmVisor(rutaImagen3, this.vActualizarServicio);
+                        visorAbierto = true;
+                        //visor.setUndecorated(true);
+                        //visor.setUndecorated(true);
+                        visor.setBounds(515, 200, 900, 600);
+                        visor.setVisible(true);
+                    }
                 }
             }
+            
+            //cant = 0;
             
         }
 
@@ -318,77 +337,80 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             //System.out.println(labelSeleccionado);
             //JOptionPane.showMessageDialog(null, e.getSource());
-            if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
+            if(lstCategorias.getSelectedIndex() > -1){
+                if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
-                if(rutaImagen2 == ""){
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    
-                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    rutaImagen1 = "";
+                    if(rutaImagen2 == ""){
+                        lblImagen2.setVisible(false);
+                        lblImagen2 = null;
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                        rutaImagen1 = "";
+                    }
+                    else if(rutaImagen2 != "" && rutaImagen3 == ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        lblImagen2.setVisible(false);
+                        lblImagen2 = null;
+
+                        setImagenLabel(rutaImagen2, "absoluta");
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+
+                        rutaImagen1 = rutaImagen2;
+                        rutaImagen2 = "";                   
+                    }
+                    else if(rutaImagen3 != ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        lblImagen2.setVisible(false);
+                        lblImagen2 = null;
+
+                        setImagenLabel(rutaImagen2, "absoluta");
+
+                        setImagenLabel(rutaImagen3, "absoluta");
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+
+                        rutaImagen1 = rutaImagen2;
+                        rutaImagen2 = rutaImagen3;
+                        rutaImagen3 = "";                    
+                    }                
                 }
-                else if(rutaImagen2 != "" && rutaImagen3 == ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    
-                    setImagenLabel(rutaImagen2, "absoluta");
-                                                          
-                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    
-                    rutaImagen1 = rutaImagen2;
-                    rutaImagen2 = "";                   
+                else if(e.getSource() == miEliminar2 && rutaImagen2 != ""){
+
+                    if(rutaImagen3 == ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                        rutaImagen2 = "";
+                    }
+
+                    else if(rutaImagen3 != ""){
+                        lblImagen3.setVisible(false);
+                        lblImagen3 = null;
+
+                        setImagenLabel(rutaImagen3, "absoluta");
+                        rutaImagen2 = rutaImagen3;
+                        rutaImagen3 = "";
+                    }
                 }
-                else if(rutaImagen3 != ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    
-                    setImagenLabel(rutaImagen2, "absoluta");
-                    
-                    setImagenLabel(rutaImagen3, "absoluta");
-                    
+                else if(e.getSource() == miEliminar3 && rutaImagen3 != ""){
                     setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    
-                    rutaImagen1 = rutaImagen2;
-                    rutaImagen2 = rutaImagen3;
-                    rutaImagen3 = "";                    
-                }                
-            }
-            else if(e.getSource() == miEliminar2 && rutaImagen2 != ""){
-                
-                if(rutaImagen3 == ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                    rutaImagen2 = "";
-                }
-                
-                else if(rutaImagen3 != ""){
-                    lblImagen3.setVisible(false);
-                    lblImagen3 = null;
-                    
-                    setImagenLabel(rutaImagen3, "absoluta");
-                    rutaImagen2 = rutaImagen3;
                     rutaImagen3 = "";
                 }
-            }
-            else if(e.getSource() == miEliminar3 && rutaImagen3 != ""){
-                setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                rutaImagen3 = "";
-            }
-            else if(e.getSource() == miEliminarCategoria){
-                
-                DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-                modelo.remove(lstCategorias.getSelectedIndex());
-                lstCategorias.setModel(modelo);
+                else if(e.getSource() == miEliminarCategoria){
+
+                    DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                    modelo.remove(lstCategorias.getSelectedIndex());
+                    lstCategorias.setModel(modelo);
+                }
             }
         }
+            
     }
     
     /**
@@ -522,6 +544,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         areaDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         areaDescripcion.setLineWrap(true);
         areaDescripcion.setRows(5);
+        areaDescripcion.setWrapStyleWord(true);
         jScrollPane1.setViewportView(areaDescripcion);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N

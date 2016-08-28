@@ -6,6 +6,7 @@
 package Logica;
 
 import Datos.DatosPromociones;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -68,5 +69,7 @@ public class ControladorPromociones implements IControladorPromociones{
     public int getCantPromociones(){
         return ListaPromociones.size();
     }
+    
+    
     
 }

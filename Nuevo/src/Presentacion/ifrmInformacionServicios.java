@@ -252,6 +252,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblDescripcion.setColumns(20);
         lblDescripcion.setLineWrap(true);
         lblDescripcion.setRows(5);
+        lblDescripcion.setWrapStyleWord(true);
         lblDescripcion.setBorder(null);
         jScrollPane3.setViewportView(lblDescripcion);
 

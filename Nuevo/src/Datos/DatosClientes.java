@@ -84,7 +84,7 @@ public class DatosClientes {
 
         Statement st = conn.createStatement();
 
-        ResultSet rs = st.executeQuery("select numero from reservas ");
+        ResultSet rs = st.executeQuery("select numero from reservas order by numero");
 
         while (rs.next()) {
             //System.out.println("a");

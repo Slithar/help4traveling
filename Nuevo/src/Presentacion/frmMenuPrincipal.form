@@ -161,8 +161,11 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="miDatosDePrueba">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Utilizar datos de prueba"/>
+                <Property name="text" type="java.lang.String" value="Cargar datos de prueba"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miDatosDePruebaActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mEliminarDatos">
               <Properties>
