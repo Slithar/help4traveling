@@ -246,7 +246,7 @@ public class VerInfoReserva extends javax.swing.JFrame {
    try{
        
        DataReserva dtcant =this.iccli.getReserva(selected);
-       this.jnickCliente.setText(dtcant.getCliente().getNickname());
+       this.jnickCliente.setText(dtcant.getCliente());
        this.jPrecio.setText(dtcant.getPrecio()+"");
        this.jFecha.setText(dtcant.getFecha().toString());
        this.jEstado.setText(dtcant.getEstado());

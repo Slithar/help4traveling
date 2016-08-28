@@ -12,33 +12,49 @@ import java.time.*;
  */
 public class Reserva {
     private int numero;
-
     private LocalDate fecha;
     private int precio;
-    private Cliente clientes;
-  //  private ArrayList<Reserva> Reserva; wtf una lista de reservas en la clase reserva. piré
+    private Cliente cliente;
     private ArrayList<cantidadReservasServicios> serviciosReserva;
-    private ArrayList<Promocion> reservaPromociones;
     private ArrayList<cantidadReservasPromociones> reservacantPromociones;
-    String  estado;
+    private Estado estado;
     
     public Reserva() {
+        this.numero = 0;
+        this.fecha = LocalDate.of(1990, 1, 1);
+        this.cliente=new Cliente();
+        this.estado=Estado.REGISTRADA;
+        this.serviciosReserva=new ArrayList();
+        this.reservacantPromociones=new ArrayList();
         
+               
     }
 
-    public Cliente getCliente() {
-        return clientes;
+    public Reserva(int numero, LocalDate fecha, int precio, Cliente cliente, ArrayList<cantidadReservasServicios> serviciosReserva, ArrayList<cantidadReservasPromociones> reservacantPromociones, Estado estado) {
+        this.numero = numero;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.cliente = cliente;
+        this.serviciosReserva = serviciosReserva;
+        this.reservacantPromociones = reservacantPromociones;
+        this.estado = estado;
     }
-    public String getEstado(){
+    
+    
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public Estado getEstado(){
         return estado;
         
     }
-    public void setEstado(String estado){
-        this.estado=estado;
+    public void setEstado(String estado){        
+        this.estado = Estado.obtenerEstado(estado);
     }
 
-    public void setCliente(Cliente clientes) {
-        this.clientes = clientes;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public ArrayList<cantidadReservasServicios> getServiciosReserva() {
@@ -49,14 +65,6 @@ public class Reserva {
         this.serviciosReserva = serviciosReserva;
     }
     
-    public ArrayList<Promocion> getReservaPromociones() {
-        return reservaPromociones;
-    }
-    
-
-    public void setReservaPromociones(ArrayList<Promocion> ReservaPromociones) {
-        this.reservaPromociones = ReservaPromociones;
-    }
     public ArrayList<cantidadReservasPromociones> getReservacantPromociones() {
         return reservacantPromociones;
     }
@@ -90,6 +98,5 @@ public class Reserva {
         this.precio = Precio;
     }
      
-    
     
 }

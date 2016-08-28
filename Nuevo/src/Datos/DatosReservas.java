@@ -5,11 +5,15 @@
  */
 package Datos;
 
+import Logica.Cliente;
+import Logica.Reserva;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -84,4 +88,41 @@ public class DatosReservas {
                 
     }
     
+    public void deleteReservas(int numReserva) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        PreparedStatement st = conn.prepareStatement("delete from reservas r, cantidadreservaspromociones p, cantidadreservasservicios s where r.nombre = p.numeroReserva and r.nombre = s.numeroReserva and r.nombre = ?");
+        st.setInt(1, numReserva);
+        st.executeUpdate();
+        conn.close();
+                
+        
+    }
+    
+    public ArrayList<Reserva> getAllReservas() throws SQLException, ClassNotFoundException{
+        ArrayList<Reserva> todasReservas = new ArrayList();
+        Reserva reserva = new Reserva();
+        
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("Select * from reservas order by numero");
+        if(rs.next()){
+            reserva.setNumero(rs.getInt("numero"));
+            reserva.setFecha(LocalDate.parse(rs.getString("fecha")));
+            reserva.setPrecio(rs.getInt("precio"));
+            reserva.setEstado(rs.getString("estado"));
+            Cliente cli = new Cliente();
+            cli.setNickname(rs.getString("nicknameCliente"));
+            reserva.setCliente(cli);
+            todasReservas.add(reserva);
+        }
+        conn.close();
+        return todasReservas;
+        
+    }
 }

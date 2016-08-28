@@ -257,7 +257,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblServicios);
 
-        jLabel1.setText("Seleccione Servicio o Promocion a asociar a la Resrva");
+        jLabel1.setText("Seleccione Servicio o Promocion a asociar a la Reserva");
 
         jLabel2.setText("Nombre: ");
 

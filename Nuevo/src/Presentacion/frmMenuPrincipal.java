@@ -227,6 +227,7 @@ private void initComponents() {
         mReservas = new javax.swing.JMenu();
         miNuevaReserva = new javax.swing.JMenuItem();
         miCancelarReserva = new javax.swing.JMenuItem();
+        miNuevoCancelar = new javax.swing.JMenuItem();
         miActualizarReserva = new javax.swing.JMenuItem();
         mConsultas = new javax.swing.JMenu();
         miConsClientes = new javax.swing.JMenuItem();
@@ -308,7 +309,20 @@ private void initComponents() {
         mReservas.add(miNuevaReserva);
 
         miCancelarReserva.setText("Cancelar reserva");
+        miCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCancelarReservaActionPerformed(evt);
+            }
+        });
         mReservas.add(miCancelarReserva);
+
+        miNuevoCancelar.setText("NuevoCancelar");
+        miNuevoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevoCancelarActionPerformed(evt);
+            }
+        });
+        mReservas.add(miNuevoCancelar);
 
         miActualizarReserva.setText("Actualizar reserva");
         miActualizarReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -323,6 +337,11 @@ private void initComponents() {
         mConsultas.setText("Consultas");
 
         miConsClientes.setText("Clientes");
+        miConsClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsClientesActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsClientes);
 
         miConsProveedores.setText("Proveedores");
@@ -436,6 +455,26 @@ private void initComponents() {
         //vNuevaReserva.setVisible(true);
         vAltaReserva.show();
     }//GEN-LAST:event_miNuevaReservaActionPerformed
+
+    private void miCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCancelarReservaActionPerformed
+        // TODO add your handling code here:
+        /*ifrmCancelarReserva vCancelarReserva;
+        vCancelarReserva = new ifrmCancelarReserva(iccli);
+        nuevoPanel.add(vCancelarReserva);
+        vCancelarReserva.setVisible(true);
+        vCancelarReserva.show();*/
+        this.dispose();
+        
+    }//GEN-LAST:event_miCancelarReservaActionPerformed
+
+    private void miConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miConsClientesActionPerformed
+
+    private void miNuevoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_miNuevoCancelarActionPerformed
     
         
     /**
@@ -498,6 +537,7 @@ private void initComponents() {
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
     private javax.swing.JMenuItem miNuevaReserva;
+    private javax.swing.JMenuItem miNuevoCancelar;
     private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
     private javax.swing.JMenuItem miRegProveedores;

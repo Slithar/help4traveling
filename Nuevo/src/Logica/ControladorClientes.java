@@ -101,10 +101,10 @@ public class ControladorClientes implements IControladorClientes {
         DatosClientes datCli = new DatosClientes();
      Reserva res= datCli.getReserva(numeroRes);
      dtAux.setNumero(res.getNumero());
-     dtAux.setCliente(res.getCliente());
+     dtAux.setCliente(res.getCliente().getNickname());
      dtAux.setPrecio(res.getPrecio());
      dtAux.setFecha(res.getFecha());
-     dtAux.setEstado(res.getEstado());
+     dtAux.setEstado(res.getEstado().toString());
      ArrayList<DatacantidadReservasServicios> todosDataServ = new ArrayList();
      ArrayList<DatacantidadReservasPromociones> todosDataPromo = new ArrayList();
     
@@ -170,7 +170,7 @@ public class ControladorClientes implements IControladorClientes {
         reserva.setEstado(estado);
         reserva.setFecha(Fecha);
         reserva.setPrecio(precio);
-        numRes = res.insertarReserva(reserva.getFecha().toString(), reserva.getPrecio(), reserva.getEstado(), reserva.getCliente().getNickname());
+        numRes = res.insertarReserva(reserva.getFecha().toString(), reserva.getPrecio(), reserva.getEstado().toString(), reserva.getCliente().getNickname());
         
         return numRes;
         
@@ -192,5 +192,24 @@ public class ControladorClientes implements IControladorClientes {
            }
         }
         
+    }
+
+    @Override
+    public ArrayList<DataReserva> getAllReservas() throws SQLException, ClassNotFoundException {
+        ArrayList<DataReserva> AlldataReservas = new ArrayList();
+        
+        ArrayList<Reserva> AllReservas = new ArrayList();
+        DatosReservas datosreservas = new DatosReservas();
+        AllReservas = datosreservas.getAllReservas();
+        for(int i = 0; i < AllReservas.size(); i++){
+            DataReserva dataReserva = new DataReserva();
+            dataReserva.setNumero(AllReservas.get(i).getNumero());
+            dataReserva.setFecha(AllReservas.get(i).getFecha());
+            dataReserva.setPrecio(AllReservas.get(i).getPrecio());
+            dataReserva.setEstado(AllReservas.get(i).getEstado().toString());
+            dataReserva.setCliente(AllReservas.get(i).getCliente().getNickname());
+            AlldataReservas.add(dataReserva);
+        }
+        return AlldataReservas;
     }
 }

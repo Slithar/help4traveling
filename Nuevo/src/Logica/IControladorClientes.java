@@ -27,4 +27,5 @@ public interface IControladorClientes {
     public abstract ArrayList getReservasServ(String numeroServ)throws SQLException, ClassNotFoundException;
     public abstract int  realizarReserva(LocalDate fecha, int precio, String estado, String cliente)throws SQLException, ClassNotFoundException;
     public abstract void datosAsociadosReserva(int numReserva, TableModel modelo)throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataReserva> getAllReservas() throws SQLException, ClassNotFoundException;
 }

@@ -316,7 +316,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Seleccione Servicio o Promocion a asociar a la Resrva"/>
+                <Property name="text" type="java.lang.String" value="Seleccione Servicio o Promocion a asociar a la Reserva"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
