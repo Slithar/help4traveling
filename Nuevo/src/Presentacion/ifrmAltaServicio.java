@@ -368,6 +368,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             //System.out.println(labelSeleccionado);
             //JOptionPane.showMessageDialog(null, e.getSource());
+            //if(lstCategorias.getSelectedIndex() > -1){
             
                 if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
@@ -439,8 +440,9 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         modelo.remove(lstCategorias.getSelectedIndex());
                         lstCategorias.setModel(modelo);
                     }
+                    
                 }
-            
+            //}
         }
             
         
@@ -713,11 +715,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34)
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(lblEmpresa1)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb3)

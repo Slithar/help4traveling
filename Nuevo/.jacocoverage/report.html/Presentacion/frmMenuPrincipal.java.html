@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>frmMenuPrincipal.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Presentacion</a> &gt; <span class="el_source">frmMenuPrincipal.java</span></div><h1>frmMenuPrincipal.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Presentacion;
+import Logica.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.sql.SQLException;
+import java.text.AttributedCharacterIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author usuario
+ */
+public class frmMenuPrincipal extends javax.swing.JFrame {
+   // private ifrmAltaUsuarios altaUsuarios = new ifrmAltaUsuarios();
+    //private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios();
+<span class="fc" id="L23">    Panel nuevoPanel = new Panel();</span>
+    private IControladorClientes iccli;
+    private IControladorProveedores icprov;
+    private IControladorCategorias iccat;
+    private IControladorPromociones icprom;
+    
+    private frmProgresoDatos vProgreso;
+    /**
+     * Creates new form frmMenuPrincipal
+     */
+<span class="fc" id="L33">    public frmMenuPrincipal(){</span>
+<span class="fc" id="L34">        initComponents();</span>
+        //add(altaUsuarios);
+        //aca el comentario de mi rama
+        //add(new Panel());
+        //hola otro comentario de master
+        
+<span class="fc" id="L40">        setContentPane(nuevoPanel);</span>
+<span class="fc" id="L41">        Fabrica fab = new Fabrica();</span>
+<span class="fc" id="L42">        iccat = fab.getIControladorCategorias();</span>
+<span class="fc" id="L43">        iccli = fab.getIControladorClientes();</span>
+<span class="fc" id="L44">        icprov = fab.getIControladorProveedores();</span>
+<span class="fc" id="L45">        icprom = fab.getIControladorPromociones();</span>
+        
+        
+        /*try{
+            iccat.actualizarCategorias();
+            icprov.setListaCategorias(iccat.getListaCategorias());
+            icprov.actualizarProveedores();
+            icprov.actualizarCiudades();
+            icprom.setListaProveedores(icprov.getListaProveedores());
+            icprom.actualizarPromociones();
+            iccli.setListaPromociones(icprom.getListaPromociones());
+            iccli.setListaProveedores(icprov.getListaProveedores());            
+            iccli.actualizarClientes();
+        }
+        catch(SQLException ex){
+            //JOptionPane.showMessageDialog(this, &quot;Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, &quot;Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, &quot;No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println(&quot;CATEGORÍAS: &quot; + iccat.getCantCategorias());
+        System.out.println(&quot;PROVEEDORES: &quot; + icprov.getCantProveedores());
+        System.out.println(&quot;CIUDADES: &quot; + icprov.getCantCiudades());
+        System.out.println(&quot;PROMOCIONES: &quot; + icprom.getCantPromociones());
+        System.out.println(&quot;CLIENTES: &quot; + iccli.getCantClientes());*/
+<span class="fc" id="L73">    }</span>
+    
+    public void setCursorFrame(Cursor c){
+<span class="nc" id="L76">        this.setCursor(c);</span>
+<span class="nc" id="L77">    }</span>
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="fc" id="L88">        jMenuItem2 = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L89">        jMenuItem3 = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L90">        mbBarra = new javax.swing.JMenuBar();</span>
+<span class="fc" id="L91">        mInicio = new javax.swing.JMenu();</span>
+<span class="fc" id="L92">        miSalir = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L93">        mRegistros = new javax.swing.JMenu();</span>
+<span class="fc" id="L94">        miRegClientes = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L95">        miRegProveedores = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L96">        miCategorias = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L97">        mRegServicios = new javax.swing.JMenu();</span>
+<span class="fc" id="L98">        miRegServiciosNuevo = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L99">        miRegServiciosActualizar = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L100">        miRegPromociones = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L101">        mReservas = new javax.swing.JMenu();</span>
+<span class="fc" id="L102">        miNuevaReserva = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L103">        miCancelarReserva = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L104">        miActualizarReserva = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L105">        mConsultas = new javax.swing.JMenu();</span>
+<span class="fc" id="L106">        miConsClientes = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L107">        miConsProveedores = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L108">        miConsServicios = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L109">        miConsPromociones = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L110">        miConsReservas = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L111">        mDatos = new javax.swing.JMenu();</span>
+<span class="fc" id="L112">        miDatosDePrueba = new javax.swing.JMenuItem();</span>
+<span class="fc" id="L113">        mEliminarDatos = new javax.swing.JMenuItem();</span>
+
+<span class="fc" id="L115">        jMenuItem2.setText(&quot;jMenuItem2&quot;);</span>
+
+<span class="fc" id="L117">        jMenuItem3.setText(&quot;jMenuItem3&quot;);</span>
+
+<span class="fc" id="L119">        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</span>
+
+<span class="fc" id="L121">        mInicio.setText(&quot;Inicio&quot;);</span>
+
+<span class="fc" id="L123">        miSalir.setText(&quot;Salir&quot;);</span>
+<span class="fc" id="L124">        miSalir.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L126">                miSalirActionPerformed(evt);</span>
+<span class="nc" id="L127">            }</span>
+        });
+<span class="fc" id="L129">        mInicio.add(miSalir);</span>
+
+<span class="fc" id="L131">        mbBarra.add(mInicio);</span>
+
+<span class="fc" id="L133">        mRegistros.setText(&quot;Registros&quot;);</span>
+
+<span class="fc" id="L135">        miRegClientes.setText(&quot;Clientes&quot;);</span>
+<span class="fc" id="L136">        miRegClientes.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L138">                miRegClientesActionPerformed(evt);</span>
+<span class="nc" id="L139">            }</span>
+        });
+<span class="fc" id="L141">        mRegistros.add(miRegClientes);</span>
+
+<span class="fc" id="L143">        miRegProveedores.setText(&quot;Proveedores&quot;);</span>
+<span class="fc" id="L144">        miRegProveedores.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L146">                miRegProveedoresActionPerformed(evt);</span>
+<span class="fc" id="L147">            }</span>
+        });
+<span class="fc" id="L149">        mRegistros.add(miRegProveedores);</span>
+
+<span class="fc" id="L151">        miCategorias.setText(&quot;Categorias&quot;);</span>
+<span class="fc" id="L152">        miCategorias.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L154">                miCategoriasActionPerformed(evt);</span>
+<span class="nc" id="L155">            }</span>
+        });
+<span class="fc" id="L157">        mRegistros.add(miCategorias);</span>
+
+<span class="fc" id="L159">        mRegServicios.setText(&quot;Servicios&quot;);</span>
+
+<span class="fc" id="L161">        miRegServiciosNuevo.setText(&quot;Nuevo&quot;);</span>
+<span class="fc" id="L162">        miRegServiciosNuevo.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L164">                miRegServiciosNuevoActionPerformed(evt);</span>
+<span class="nc" id="L165">            }</span>
+        });
+<span class="fc" id="L167">        mRegServicios.add(miRegServiciosNuevo);</span>
+
+<span class="fc" id="L169">        miRegServiciosActualizar.setText(&quot;Actualizar&quot;);</span>
+<span class="fc" id="L170">        miRegServiciosActualizar.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L172">                miRegServiciosActualizarActionPerformed(evt);</span>
+<span class="nc" id="L173">            }</span>
+        });
+<span class="fc" id="L175">        mRegServicios.add(miRegServiciosActualizar);</span>
+
+<span class="fc" id="L177">        mRegistros.add(mRegServicios);</span>
+
+<span class="fc" id="L179">        miRegPromociones.setText(&quot;Promociones&quot;);</span>
+<span class="fc" id="L180">        mRegistros.add(miRegPromociones);</span>
+
+<span class="fc" id="L182">        mbBarra.add(mRegistros);</span>
+
+<span class="fc" id="L184">        mReservas.setText(&quot;Reservas&quot;);</span>
+
+<span class="fc" id="L186">        miNuevaReserva.setText(&quot;Nueva reserva&quot;);</span>
+<span class="fc" id="L187">        mReservas.add(miNuevaReserva);</span>
+
+<span class="fc" id="L189">        miCancelarReserva.setText(&quot;Cancelar reserva&quot;);</span>
+<span class="fc" id="L190">        mReservas.add(miCancelarReserva);</span>
+
+<span class="fc" id="L192">        miActualizarReserva.setText(&quot;Actualizar reserva&quot;);</span>
+<span class="fc" id="L193">        miActualizarReserva.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L195">                miActualizarReservaActionPerformed(evt);</span>
+<span class="nc" id="L196">            }</span>
+        });
+<span class="fc" id="L198">        mReservas.add(miActualizarReserva);</span>
+
+<span class="fc" id="L200">        mbBarra.add(mReservas);</span>
+
+<span class="fc" id="L202">        mConsultas.setText(&quot;Consultas&quot;);</span>
+
+<span class="fc" id="L204">        miConsClientes.setText(&quot;Clientes&quot;);</span>
+<span class="fc" id="L205">        miConsClientes.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L207">                miConsClientesActionPerformed(evt);</span>
+<span class="nc" id="L208">            }</span>
+        });
+<span class="fc" id="L210">        mConsultas.add(miConsClientes);</span>
+
+<span class="fc" id="L212">        miConsProveedores.setText(&quot;Proveedores&quot;);</span>
+<span class="fc" id="L213">        mConsultas.add(miConsProveedores);</span>
+
+<span class="fc" id="L215">        miConsServicios.setText(&quot;Servicios&quot;);</span>
+<span class="fc" id="L216">        miConsServicios.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L218">                miConsServiciosActionPerformed(evt);</span>
+<span class="nc" id="L219">            }</span>
+        });
+<span class="fc" id="L221">        mConsultas.add(miConsServicios);</span>
+
+<span class="fc" id="L223">        miConsPromociones.setText(&quot;Promociones&quot;);</span>
+<span class="fc" id="L224">        mConsultas.add(miConsPromociones);</span>
+
+<span class="fc" id="L226">        miConsReservas.setText(&quot;Reservas&quot;);</span>
+<span class="fc" id="L227">        miConsReservas.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L229">                miConsReservasActionPerformed(evt);</span>
+<span class="nc" id="L230">            }</span>
+        });
+<span class="fc" id="L232">        mConsultas.add(miConsReservas);</span>
+
+<span class="fc" id="L234">        mbBarra.add(mConsultas);</span>
+
+<span class="fc" id="L236">        mDatos.setText(&quot;Datos del sistema&quot;);</span>
+
+<span class="fc" id="L238">        miDatosDePrueba.setText(&quot;Cargar datos de prueba&quot;);</span>
+<span class="fc" id="L239">        miDatosDePrueba.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L241">                miDatosDePruebaActionPerformed(evt);</span>
+<span class="nc" id="L242">            }</span>
+        });
+<span class="fc" id="L244">        mDatos.add(miDatosDePrueba);</span>
+
+<span class="fc" id="L246">        mEliminarDatos.setText(&quot;Eliminar datos&quot;);</span>
+<span class="fc" id="L247">        mEliminarDatos.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L249">                mEliminarDatosActionPerformed(evt);</span>
+<span class="nc" id="L250">            }</span>
+        });
+<span class="fc" id="L252">        mDatos.add(mEliminarDatos);</span>
+
+<span class="fc" id="L254">        mbBarra.add(mDatos);</span>
+
+<span class="fc" id="L256">        setJMenuBar(mbBarra);</span>
+
+<span class="fc" id="L258">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="fc" id="L259">        getContentPane().setLayout(layout);</span>
+<span class="fc" id="L260">        layout.setHorizontalGroup(</span>
+<span class="fc" id="L261">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L262">            .addGap(0, 400, Short.MAX_VALUE)</span>
+        );
+<span class="fc" id="L264">        layout.setVerticalGroup(</span>
+<span class="fc" id="L265">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L266">            .addGap(0, 337, Short.MAX_VALUE)</span>
+        );
+
+<span class="fc" id="L269">        pack();</span>
+<span class="fc" id="L270">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L274">        this.dispose();</span>
+<span class="nc" id="L275">    }//GEN-LAST:event_miSalirActionPerformed</span>
+
+    private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L279">    }//GEN-LAST:event_miActualizarReservaActionPerformed</span>
+
+    private void NuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaCatActionPerformed
+        // TODO add your handling code here:
+        /*Acá creo la instancia de agregar Categoría.
+        Tampoco anda acá.*/
+<span class="nc" id="L285">        nuevaCateFrame agregar = new nuevaCateFrame();</span>
+<span class="nc" id="L286">        add(agregar);</span>
+<span class="nc" id="L287">        agregar.setVisible(true);</span>
+<span class="nc" id="L288">    }//GEN-LAST:event_NuevaCatActionPerformed</span>
+
+    private void miRegClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegClientesActionPerformed
+        // TODO add your handling code here:
+        //System.out.println(&quot;click!&quot;);
+       // altaUsuarios.setVisible(true);
+<span class="nc" id="L294">       ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this.iccli, this.icprov);</span>
+<span class="nc" id="L295">       nuevoPanel.add(vAltaUsuarios);</span>
+<span class="nc" id="L296">       vAltaUsuarios.show();</span>
+        
+<span class="nc" id="L298">    }//GEN-LAST:event_miRegClientesActionPerformed</span>
+
+    private void miRegServiciosNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosNuevoActionPerformed
+        
+        //System.out.println(&quot;1&quot;);
+<span class="nc" id="L303">        ifrmAltaServicio vAltaServicio = new ifrmAltaServicio(icprov, iccat);</span>
+        //System.out.println(&quot;1&quot;);
+<span class="nc" id="L305">        nuevoPanel.add(vAltaServicio);</span>
+        //System.out.println(&quot;1&quot;);
+<span class="nc" id="L307">        vAltaServicio.show();</span>
+        //System.out.println(&quot;1&quot;);
+        
+<span class="nc" id="L310">    }//GEN-LAST:event_miRegServiciosNuevoActionPerformed</span>
+
+    private void miCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCategoriasActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L314">        nuevaCateFrame agregar = new nuevaCateFrame(this.iccat);</span>
+<span class="nc" id="L315">        add(agregar);</span>
+<span class="nc" id="L316">        agregar.setVisible(true);</span>
+<span class="nc" id="L317">    }//GEN-LAST:event_miCategoriasActionPerformed</span>
+
+    private void miRegServiciosActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosActualizarActionPerformed
+<span class="nc" id="L320">        ifrmActualizarServicio vActualizarServicio = new ifrmActualizarServicio(icprov, iccat);</span>
+<span class="nc" id="L321">        nuevoPanel.add(vActualizarServicio);</span>
+<span class="nc" id="L322">        vActualizarServicio.setVisible(true);</span>
+<span class="nc" id="L323">    }//GEN-LAST:event_miRegServiciosActualizarActionPerformed</span>
+
+    private void miConsServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsServiciosActionPerformed
+<span class="nc" id="L326">       ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat);</span>
+<span class="nc" id="L327">       nuevoPanel.add(vInformacionServicio);</span>
+<span class="nc" id="L328">       vInformacionServicio.setVisible(true);</span>
+<span class="nc" id="L329">    }//GEN-LAST:event_miConsServiciosActionPerformed</span>
+    private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
+        // TODO add your handling code here:
+        /*VerInfoReserva agregar = new VerInfoReserva(this.iccli);
+      agregar.setVisible(true);*/
+<span class="nc" id="L334">        ifrmVerInfoReserva agregar = new ifrmVerInfoReserva(this.iccli);</span>
+<span class="nc" id="L335">        nuevoPanel.add(agregar);</span>
+<span class="nc" id="L336">        agregar.setVisible(true);</span>
+        
+<span class="nc" id="L338">    }//GEN-LAST:event_miConsReservasActionPerformed</span>
+
+    private void miRegProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegProveedoresActionPerformed
+<span class="fc" id="L341">        ifrmAltaProveedores vProveedores = new ifrmAltaProveedores(icprov);</span>
+<span class="fc" id="L342">        nuevoPanel.add(vProveedores);</span>
+<span class="fc" id="L343">        vProveedores.setVisible(true);</span>
+<span class="fc" id="L344">    }//GEN-LAST:event_miRegProveedoresActionPerformed</span>
+
+    private void miConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsClientesActionPerformed
+<span class="nc" id="L347">        ifrmVerInfoClientes vVerInfoCliente = new ifrmVerInfoClientes(this.iccli);</span>
+<span class="nc" id="L348">        nuevoPanel.add(vVerInfoCliente);</span>
+<span class="nc" id="L349">        vVerInfoCliente.setVisible(true);</span>
+<span class="nc" id="L350">    }//GEN-LAST:event_miConsClientesActionPerformed</span>
+
+    private void miDatosDePruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDatosDePruebaActionPerformed
+        
+        
+<span class="nc" id="L355">        vProgreso = new frmProgresoDatos(&quot;Cargando datos de prueba&quot;);</span>
+<span class="nc" id="L356">        vProgreso.setVisible(true);</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        if(JOptionPane.showConfirmDialog(this, &quot;¿Está seguro/a de que desea cargar los datos de prueba?&quot;, &quot;CONFIRMACIÓN&quot;, JOptionPane.YES_NO_OPTION) == 0){</span>
+<span class="nc" id="L358">            this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));</span>
+            try{
+                
+                
+<span class="nc" id="L362">                this.icprov.eliminarImagenesUsuarios();</span>
+<span class="nc" id="L363">                this.icprov.eliminarImagenesServicios();</span>
+
+<span class="nc" id="L365">                this.iccat.deleteAllCategorias();</span>
+<span class="nc" id="L366">                this.icprov.deleteAllProveedores();</span>
+<span class="nc" id="L367">                this.icprom.deleteAllPromociones();</span>
+<span class="nc" id="L368">                this.iccli.deleteAllClientes();</span>
+
+<span class="nc" id="L370">                this.iccat.insertCategoriasDePrueba();</span>
+<span class="nc" id="L371">                this.icprov.insertCiudadesDePrueba();</span>
+<span class="nc" id="L372">                this.icprov.insertDatosProveedoresDePrueba();</span>
+<span class="nc" id="L373">                this.icprom.insertDatosPromocionesDePrueba();</span>
+<span class="nc" id="L374">                this.iccli.insertDatosClientesDePrueba();</span>
+                
+<span class="nc" id="L376">                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+                
+<span class="nc" id="L378">                JOptionPane.showMessageDialog(this, &quot;Se han cargado los datos de prueba de manera correcta&quot;, &quot;¡ÉXITO!&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+                
+<span class="nc" id="L380">                vProgreso.setVisible(false);</span>
+            }
+<span class="nc" id="L382">            catch(SQLException ex){</span>
+<span class="nc" id="L383">                JOptionPane.showMessageDialog(this, &quot;Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);</span>
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L385">                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+            }
+<span class="nc" id="L387">            catch(ClassNotFoundException ex){</span>
+<span class="nc" id="L388">                JOptionPane.showMessageDialog(this, &quot;No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L389">                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L390">            }</span>
+        }
+        
+        
+        
+        
+        //JOptionPane.showMessageDialog(this, &quot;Datos eliminados correctamente&quot;);
+        
+<span class="nc" id="L398">    }//GEN-LAST:event_miDatosDePruebaActionPerformed</span>
+
+    private void mEliminarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mEliminarDatosActionPerformed
+<span class="nc" id="L401">        vProgreso = new frmProgresoDatos(&quot;Eliminando datos del sistema&quot;);</span>
+<span class="nc" id="L402">        vProgreso.setVisible(true);</span>
+<span class="nc bnc" id="L403" title="All 2 branches missed.">        if(JOptionPane.showConfirmDialog(this, &quot;¿Está seguro/a de que desea eliminar todos los datos del sistema?&quot;, &quot;CONFIRMACIÓN&quot;, JOptionPane.YES_NO_OPTION) == 0){</span>
+            
+            try{
+<span class="nc" id="L406">                this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));</span>
+                
+<span class="nc" id="L408">                this.icprov.eliminarImagenesUsuarios();</span>
+<span class="nc" id="L409">                this.icprov.eliminarImagenesServicios();</span>
+
+<span class="nc" id="L411">                this.iccat.deleteAllCategorias();</span>
+<span class="nc" id="L412">                this.icprov.deleteAllProveedores();</span>
+<span class="nc" id="L413">                this.icprom.deleteAllPromociones();</span>
+<span class="nc" id="L414">                this.iccli.deleteAllClientes();</span>
+
+<span class="nc" id="L416">                this.iccat.insertCategoriasDePrueba();</span>
+<span class="nc" id="L417">                this.icprov.insertCiudadesDePrueba();</span>
+                
+<span class="nc" id="L419">                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L420">                JOptionPane.showMessageDialog(this, &quot;Se han eliminado los datos del sistema correcta&quot;, &quot;¡ÉXITO!&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L421">                vProgreso.setVisible(false);</span>
+            }
+<span class="nc" id="L423">            catch(SQLException ex){</span>
+<span class="nc" id="L424">                JOptionPane.showMessageDialog(this, &quot;Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);</span>
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L426">                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+            }
+<span class="nc" id="L428">            catch(ClassNotFoundException ex){</span>
+<span class="nc" id="L429">                JOptionPane.showMessageDialog(this, &quot;No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción&quot;, &quot;ERROR&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L430">                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L431">            }</span>
+        }
+<span class="nc" id="L433">    }//GEN-LAST:event_mEliminarDatosActionPerformed</span>
+    
+        
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L446" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L448">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L449">                    break;</span>
+                }
+            }
+<span class="nc" id="L452">        } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L453">            java.util.logging.Logger.getLogger(frmMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L454">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L455">            java.util.logging.Logger.getLogger(frmMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L456">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L457">            java.util.logging.Logger.getLogger(frmMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L458">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L459">            java.util.logging.Logger.getLogger(frmMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L460">        }</span>
+        //&lt;/editor-fold&gt;
+
+        /* Create and display the form */
+<span class="nc" id="L464">        java.awt.EventQueue.invokeLater(new Runnable() {</span>
+            public void run() {
+<span class="nc" id="L466">                new frmMenuPrincipal().setVisible(true);</span>
+<span class="nc" id="L467">            }</span>
+        });
+        
+        
+<span class="nc" id="L471">    }</span>
+    
+   
+    
+
+    
+    //public void paintCom
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenu mConsultas;
+    private javax.swing.JMenu mDatos;
+    private javax.swing.JMenuItem mEliminarDatos;
+    private javax.swing.JMenu mInicio;
+    private javax.swing.JMenu mRegServicios;
+    private javax.swing.JMenu mRegistros;
+    private javax.swing.JMenu mReservas;
+    private javax.swing.JMenuBar mbBarra;
+    private javax.swing.JMenuItem miActualizarReserva;
+    private javax.swing.JMenuItem miCancelarReserva;
+    private javax.swing.JMenuItem miCategorias;
+    private javax.swing.JMenuItem miConsClientes;
+    private javax.swing.JMenuItem miConsPromociones;
+    private javax.swing.JMenuItem miConsProveedores;
+    private javax.swing.JMenuItem miConsReservas;
+    private javax.swing.JMenuItem miConsServicios;
+    private javax.swing.JMenuItem miDatosDePrueba;
+    private javax.swing.JMenuItem miNuevaReserva;
+    private javax.swing.JMenuItem miRegClientes;
+    private javax.swing.JMenuItem miRegPromociones;
+    private javax.swing.JMenuItem miRegProveedores;
+    private javax.swing.JMenuItem miRegServiciosActualizar;
+    private javax.swing.JMenuItem miRegServiciosNuevo;
+    private javax.swing.JMenuItem miSalir;
+    // End of variables declaration//GEN-END:variables
+}
+
+class Panel extends JDesktopPane{
+    
+<span class="fc" id="L511">    public Panel(){</span>
+              
+<span class="fc" id="L513">    }</span>
+    
+    /*public Panel(ifrmAltaUsuarios vUsuarios){
+        add(vUsuarios);
+    }*/
+    
+    @Override
+    public void paintComponent(Graphics g){
+<span class="fc" id="L521">        Toolkit miPantalla = Toolkit.getDefaultToolkit();</span>
+<span class="fc" id="L522">        Dimension tamanio = getSize();</span>
+        
+<span class="fc" id="L524">        ImageIcon imagen = new ImageIcon(getClass().getResource(&quot;imagenes/aficheMenuPrincipal.png&quot;));</span>
+        
+<span class="fc" id="L526">        g.drawImage(imagen.getImage(), 0, 0, tamanio.width, tamanio.height, null);</span>
+        
+<span class="fc" id="L528">        setOpaque(false);</span>
+       
+<span class="fc" id="L530">        super.paintComponent(g);</span>
+<span class="fc" id="L531">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

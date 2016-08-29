@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorCategorias.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorCategorias.java</span></div><h1>ControladorCategorias.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+import java.util.*;
+import java.sql.*;
+import Datos.DatosCategorias;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+/**
+ *
+ * @author usuario
+ */
+public class ControladorCategorias implements IControladorCategorias{
+    
+    private DatosCategorias categorias;
+    
+    private HashMap&lt;String, Categoria&gt; ListaCategorias;
+    
+<span class="fc" id="L22">    public ControladorCategorias(){</span>
+        
+        
+<span class="fc" id="L25">    }</span>
+    
+    public void actualizarCategorias() throws SQLException, ClassNotFoundException{
+<span class="nc" id="L28">        categorias = new DatosCategorias();</span>
+<span class="nc" id="L29">        ListaCategorias = new HashMap&lt;String, Categoria&gt;();</span>
+<span class="nc" id="L30">        ArrayList&lt;Categoria&gt; categoriasResultado = categorias.selectAllCategorias();</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasResultado.size(); i++){</span>
+<span class="nc" id="L32">            ListaCategorias.put(categoriasResultado.get(i).getNombre(), categoriasResultado.get(i));</span>
+        }
+<span class="nc" id="L34">        Iterator it = ListaCategorias.entrySet().iterator();</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        while(it.hasNext()){</span>
+<span class="nc" id="L36">            Map.Entry cat = (Map.Entry) it.next();</span>
+<span class="nc" id="L37">            System.out.println(&quot;* &quot; + cat.getKey());</span>
+<span class="nc" id="L38">            ArrayList&lt;Categoria&gt; catHijas = categorias.selectCategoriasHijas(String.valueOf(cat.getKey()));</span>
+<span class="nc" id="L39">            Categoria c = (Categoria) cat.getValue();</span>
+<span class="nc" id="L40">            c.setCategoriasHijas(catHijas);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            for(int i = 0; i &lt; c.getCategoriasHijas().size(); i++){</span>
+<span class="nc" id="L42">                System.out.println(&quot;-- &quot; + c.getCategoriasHijas().get(i).getNombre());</span>
+            }
+<span class="nc" id="L44">        }</span>
+<span class="nc" id="L45">    }</span>
+    
+    public int getCantCategorias(){
+<span class="nc" id="L48">        return ListaCategorias.size();</span>
+    }
+    
+    @Override
+    public ArrayList&lt;DataCategoria&gt; getCategoriasPadres() throws SQLException, ClassNotFoundException{
+<span class="nc" id="L53">        categorias = new DatosCategorias();</span>
+        
+<span class="nc" id="L55">        ArrayList&lt;Categoria&gt; categoriasPadres = categorias.selectCategoriasPadres();</span>
+<span class="nc" id="L56">        ArrayList&lt;DataCategoria&gt; resultado = new ArrayList&lt;DataCategoria&gt;();</span>
+        
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasPadres.size(); i++){</span>
+<span class="nc" id="L59">            resultado.add(new DataCategoria(categoriasPadres.get(i).getNombre()));</span>
+        }
+        
+<span class="nc" id="L62">        return resultado;</span>
+        
+    }
+    
+    @Override
+    public ArrayList&lt;DataCategoria&gt; getCategoriasHijas(String c) throws SQLException, ClassNotFoundException{
+        
+<span class="nc" id="L69">        Categoria cat = new Categoria();</span>
+<span class="nc" id="L70">        cat.setNombre(c);</span>
+        
+<span class="nc" id="L72">        categorias = new DatosCategorias();</span>
+        
+<span class="nc" id="L74">        ArrayList&lt;Categoria&gt; categoriasPadres = categorias.selectCategoriasHijas(cat.getNombre());</span>
+<span class="nc" id="L75">        ArrayList&lt;DataCategoria&gt; resultado = new ArrayList&lt;DataCategoria&gt;();</span>
+        
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasPadres.size(); i++){</span>
+<span class="nc" id="L78">            resultado.add(new DataCategoria(categoriasPadres.get(i).getNombre()));</span>
+        }
+        
+<span class="nc" id="L81">        return resultado;</span>
+        
+    }    
+    @Override
+    public boolean agregarNuevaCategoriaPadre(String c) throws SQLException, ClassNotFoundException{
+        
+<span class="nc" id="L87">        Categoria cat = new Categoria(c, &quot;&quot;, new ArrayList());</span>
+        
+<span class="nc" id="L89">        categorias = new DatosCategorias();</span>
+<span class="nc" id="L90">        int rows = categorias.agregarCategoriaPadre(cat.getNombre());</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if(rows&gt;0){</span>
+<span class="nc" id="L92">            boolean resultado = true;</span>
+<span class="nc" id="L93">            return resultado;</span>
+        }else{
+<span class="nc" id="L95">            boolean resultado = false;</span>
+<span class="nc" id="L96">            return resultado;</span>
+        }
+    }
+    
+    @Override
+    public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
+       
+<span class="nc" id="L103">       Categoria catHija = new Categoria(c, &quot;&quot;, new ArrayList());</span>
+       
+<span class="nc" id="L105">       categorias = new DatosCategorias();</span>
+<span class="nc" id="L106">       ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());</span>
+<span class="nc" id="L107">       boolean existe = false;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">       if(!existeCate.isEmpty()){</span>
+<span class="nc" id="L109">           existe = true;</span>
+       }else{
+<span class="nc" id="L111">           existe= false;</span>
+       }
+<span class="nc bnc" id="L113" title="All 2 branches missed.">       if(existe==true){</span>
+<span class="nc" id="L114">            boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);</span>
+<span class="nc" id="L115">            return resultado;</span>
+       }else{
+<span class="nc" id="L117">           categorias.agregarCategoriaPadre(catHija.getNombre());</span>
+<span class="nc" id="L118">           boolean resultado = categorias.agregarNuevaCategoriaHija(catHija.getNombre(), padre);</span>
+<span class="nc" id="L119">           return resultado;</span>
+       }
+    }
+    
+    
+
+    public HashMap&lt;String, Categoria&gt; getListaCategorias() {
+<span class="nc" id="L126">        return ListaCategorias;</span>
+    }
+
+    public void setListaCategorias(HashMap&lt;String, Categoria&gt; ListaCategorias) {
+<span class="nc" id="L130">        this.ListaCategorias = ListaCategorias;</span>
+<span class="nc" id="L131">    }</span>
+    
+    public boolean existeCategoria(String c) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L134">        Categoria cat = new Categoria(c, &quot;&quot;, new ArrayList());</span>
+<span class="nc" id="L135">        categorias = new DatosCategorias();</span>
+        
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if(categorias.existeCategoria(cat.getNombre()).size() &gt; 0)</span>
+<span class="nc" id="L138">            return true;</span>
+        else
+<span class="nc" id="L140">            return false;</span>
+    }
+
+    @Override
+    public void deleteAllCategorias() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L145">        categorias = new DatosCategorias();</span>
+<span class="nc" id="L146">        categorias.deleteAllCategorias(&quot;delete from categoriasdeservicios where nombreCategoria &lt;&gt; \&quot;\&quot;;&quot; + </span>
+                        &quot;delete from categoriasrelacionadas where categoriaHija &lt;&gt; \&quot;\&quot;;\n&quot; +
+                        &quot;delete from categorias where nombre &lt;&gt; \&quot;\&quot;;&quot;);
+<span class="nc" id="L149">    }</span>
+
+    @Override
+    public void insertCategoriasDePrueba() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L153">        categorias = new DatosCategorias();</span>
+<span class="nc" id="L154">        categorias.insertCategoriasDePrueba(&quot;insert into categorias values('Vuelos');\n&quot; +</span>
+                        &quot;insert into categorias values('Alojamientos');\n&quot; +
+                        &quot;insert into categorias values('Automóviles');\n&quot; +
+                        &quot;insert into categorias values('Cruceros');\n&quot; +
+                        &quot;insert into categorias values('Empresas');\n&quot; +
+                        &quot;insert into categorias values('Iberia');\n&quot; +
+                        &quot;insert into categorias values('American Airlines');\n&quot; +
+                        &quot;insert into categorias values('Air France');\n&quot; +
+                        &quot;insert into categorias values('TAM');\n&quot; +
+                        &quot;insert into categorias values('Tipo vuelo');\n&quot; +
+                        &quot;insert into categorias values('LowCost');\n&quot; +
+                        &quot;insert into categorias values('Standard');\n&quot; +
+                        &quot;insert into categorias values('First class');\n&quot; +
+                        &quot;insert into categorias values('Tipo alojamiento');\n&quot; +
+                        &quot;insert into categorias values('Hotel');\n&quot; +
+                        &quot;insert into categorias values('Hostal');\n&quot; +
+                        &quot;insert into categorias values('Apartamento');\n&quot; +
+                        &quot;insert into categorias values('Casa');\n&quot; +
+                        &quot;insert into categorias values('Ubicación');\n&quot; +
+                        &quot;insert into categorias values('Playa');\n&quot; +
+                        &quot;insert into categorias values('Rural');\n&quot; +
+                        &quot;insert into categorias values('Montaña');\n&quot; +
+                        &quot;insert into categorias values('Habitaciones');\n&quot; +
+                        &quot;insert into categorias values('1 ambiente');\n&quot; +
+                        &quot;insert into categorias values('1 dormitorio');\n&quot; +
+                        &quot;insert into categorias values('2 dormitorios');\n&quot; +
+                        &quot;insert into categorias values('Tarifa');\n&quot; +
+                        &quot;insert into categorias values('Mini');\n&quot; +
+                        &quot;insert into categorias values('Económico');\n&quot; +
+                        &quot;insert into categorias values('Full');\n&quot; +
+                        &quot;insert into categorias values('Tipo vehículo');\n&quot; +
+                        &quot;insert into categorias values('Auto');\n&quot; +
+                        &quot;insert into categorias values('Camioneta');\n&quot; +
+                        &quot;insert into categorias values('Camión');\n&quot; +
+                        &quot;insert into categorias values('Moto');\n&quot; +
+                        &quot;insert into categorias values('Marca');\n&quot; +
+                        &quot;insert into categorias values('Chevrolet');\n&quot; +
+                        &quot;insert into categorias values('Peugeot');\n&quot; +
+                        &quot;insert into categorias values('Daihatsu');\n&quot; +
+                        &quot;insert into categorias values('Fiat');\n&quot; +
+                        &quot;insert into categorias values('Ford');\n&quot; +
+                        &quot;insert into categorias values('Mediterráneo');\n&quot; +
+                        &quot;insert into categorias values('Mar Negro');\n&quot; +
+                        &quot;insert into categorias values('Caribe');\n&quot; +
+                        &quot;insert into categorias values('Nilo');\n&quot; +
+                        &quot;insert into categorias values('Alaska');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Vuelos', 'Empresas'), ('Vuelos', 'Tipo vuelo');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Empresas', 'Iberia'), ('Empresas', 'American Airlines'), ('Empresas', 'Air France'), ('Empresas', 'TAM');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Tipo vuelo', 'LowCost'), ('Tipo vuelo', 'Standard'), ('Tipo vuelo', 'First Class');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Alojamientos', 'Tipo alojamiento'), ('Alojamientos', 'Ubicación'), ('Alojamientos', 'Habitaciones');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Tipo alojamiento', 'Hotel'), ('Tipo alojamiento', 'Hostal'), ('Tipo alojamiento', 'Apartamento'), ('Tipo alojamiento', 'Casa');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Ubicación', 'Playa'), ('Ubicación', 'Rural'), ('Ubicación', 'Montaña');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Habitaciones', '1 ambiente'), ('Habitaciones', '1 dormitorio'), ('Habitaciones', '2 dormitorios');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Automóviles', 'Tarifa'), ('Automóviles', 'Tipo vehículo'), ('Automóviles', 'Marca');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Tarifa', 'Mini'), ('Tarifa', 'Económico'), ('Tarifa', 'Standard'), ('Tarifa', 'Full');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Tipo vehículo', 'Auto'), ('Tipo vehículo', 'Camioneta'), ('Tipo vehículo', 'Camión'), ('Tipo vehículo', 'Moto');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Marca', 'Chevrolet'), ('Marca', 'Peugeot'), ('Marca', 'Daihatsu'), ('Marca', 'Fiat'), ('Marca', 'Ford');\n&quot; +
+                        &quot;insert into categoriasrelacionadas values('Cruceros', 'Mediterráneo'), ('Cruceros', 'Mar Negro'), ('Cruceros', 'Caribe'), ('Cruceros', 'Nilo'), ('Cruceros', 'Alaska');&quot;);
+<span class="nc" id="L212">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

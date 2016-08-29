@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Promocion.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Promocion.java</span></div><h1>Promocion.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+import java.util.*;
+/**
+ *
+ * @author Mauro
+ */
+public class Promocion {
+    private String nombre;
+    private int descuento;
+    private int precio;
+    private ArrayList&lt;Servicio&gt; Servicios;
+    private Proveedor proveedor;
+
+<span class="nc" id="L19">    public Promocion(String nombre, int descuento, int precio, ArrayList&lt;Servicio&gt; Servicios, Proveedor proveedor) {</span>
+<span class="nc" id="L20">        this.nombre = nombre;</span>
+<span class="nc" id="L21">        this.descuento = descuento;</span>
+<span class="nc" id="L22">        this.precio = precio;</span>
+<span class="nc" id="L23">        this.Servicios = Servicios;</span>
+<span class="nc" id="L24">        this.proveedor = proveedor;</span>
+<span class="nc" id="L25">    }</span>
+
+<span class="nc" id="L27">    public Promocion() {</span>
+        
+<span class="nc" id="L29">    }</span>
+
+    public String getNombre() {
+<span class="nc" id="L32">        return nombre;</span>
+    }
+
+    public void setNombre(String Nombre) {
+<span class="nc" id="L36">        this.nombre = Nombre;</span>
+<span class="nc" id="L37">    }</span>
+
+    public int getDescuento() {
+<span class="nc" id="L40">        return descuento;</span>
+    }
+
+    public void setDescuento(int Descuento) {
+<span class="nc" id="L44">        this.descuento = Descuento;</span>
+<span class="nc" id="L45">    }</span>
+
+    public int getPrecio() {
+<span class="nc" id="L48">        return precio;</span>
+    }
+
+    public void setPrecio(int Precio) {
+<span class="nc" id="L52">        this.precio = Precio;</span>
+<span class="nc" id="L53">    }</span>
+
+    public ArrayList&lt;Servicio&gt; getServicios() {
+<span class="nc" id="L56">        return Servicios;</span>
+    }
+
+    public void setServicios(ArrayList&lt;Servicio&gt; Servicios) {
+<span class="nc" id="L60">        this.Servicios = Servicios;</span>
+<span class="nc" id="L61">    }</span>
+    
+    public Proveedor getProveedor(){
+<span class="nc" id="L64">        return this.proveedor;</span>
+    }
+    
+    public void setProveedor(Proveedor proveedor){
+<span class="nc" id="L68">        this.proveedor = proveedor;</span>
+<span class="nc" id="L69">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

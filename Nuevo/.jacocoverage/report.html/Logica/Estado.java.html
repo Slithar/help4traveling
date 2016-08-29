@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Estado.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Estado.java</span></div><h1>Estado.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+
+/**
+ *
+ * @author usuario
+ */
+<span class="nc" id="L12">public enum Estado {</span>
+<span class="nc" id="L13">    REGISTRADA,</span>
+<span class="nc" id="L14">    CANCELADA,</span>
+<span class="nc" id="L15">    PAGADA,</span>
+<span class="nc" id="L16">    FACTURADA;</span>
+
+    static Estado obtenerEstado(String estado){
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        if(estado.toUpperCase().equals(&quot;REGISTRADA&quot;))</span>
+<span class="nc" id="L20">            return REGISTRADA;</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        else if(estado.toUpperCase().equals(&quot;CANCELADA&quot;))</span>
+<span class="nc" id="L22">            return CANCELADA;</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        else if(estado.toUpperCase().equals(&quot;PAGADA&quot;))</span>
+<span class="nc" id="L24">            return PAGADA;</span>
+        else 
+<span class="nc" id="L26">            return FACTURADA;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

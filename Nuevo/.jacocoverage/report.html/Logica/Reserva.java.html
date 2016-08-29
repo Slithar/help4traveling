@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Reserva.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Reserva.java</span></div><h1>Reserva.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+import java.util.*;
+import java.time.*;
+/**
+ *
+ * @author Mauro
+ */
+public class Reserva {
+    private int numero;
+    private LocalDate fecha;
+    private int precio;
+    private Cliente cliente;
+    private ArrayList&lt;cantidadReservasServicios&gt; serviciosReserva;
+    private ArrayList&lt;cantidadReservasPromociones&gt; reservacantPromociones;
+    private Estado estado;
+    
+<span class="nc" id="L22">    public Reserva() {</span>
+<span class="nc" id="L23">        this.numero = 0;</span>
+<span class="nc" id="L24">        this.fecha = LocalDate.of(1990, 1, 1);</span>
+<span class="nc" id="L25">        this.cliente=new Cliente();</span>
+<span class="nc" id="L26">        this.estado=Estado.REGISTRADA;</span>
+<span class="nc" id="L27">        this.serviciosReserva=new ArrayList();</span>
+<span class="nc" id="L28">        this.reservacantPromociones=new ArrayList();</span>
+        
+               
+<span class="nc" id="L31">    }</span>
+
+<span class="nc" id="L33">    public Reserva(int numero, LocalDate fecha, int precio, Cliente cliente, ArrayList&lt;cantidadReservasServicios&gt; serviciosReserva, ArrayList&lt;cantidadReservasPromociones&gt; reservacantPromociones, Estado estado) {</span>
+<span class="nc" id="L34">        this.numero = numero;</span>
+<span class="nc" id="L35">        this.fecha = fecha;</span>
+<span class="nc" id="L36">        this.precio = precio;</span>
+<span class="nc" id="L37">        this.cliente = cliente;</span>
+<span class="nc" id="L38">        this.serviciosReserva = serviciosReserva;</span>
+<span class="nc" id="L39">        this.reservacantPromociones = reservacantPromociones;</span>
+<span class="nc" id="L40">        this.estado = estado;</span>
+<span class="nc" id="L41">    }</span>
+    
+    
+
+    public Cliente getCliente() {
+<span class="nc" id="L46">        return cliente;</span>
+    }
+    public Estado getEstado(){
+<span class="nc" id="L49">        return estado;</span>
+        
+    }
+    public void setEstado(String estado){        
+<span class="nc" id="L53">        this.estado = Estado.obtenerEstado(estado);</span>
+<span class="nc" id="L54">    }</span>
+
+    public void setCliente(Cliente cliente) {
+<span class="nc" id="L57">        this.cliente = cliente;</span>
+<span class="nc" id="L58">    }</span>
+
+    public ArrayList&lt;cantidadReservasServicios&gt; getServiciosReserva() {
+<span class="nc" id="L61">        return serviciosReserva;</span>
+    }
+
+    public void setServiciosReserva(ArrayList&lt;cantidadReservasServicios&gt; serviciosReserva) {
+<span class="nc" id="L65">        this.serviciosReserva = serviciosReserva;</span>
+<span class="nc" id="L66">    }</span>
+    
+    public ArrayList&lt;cantidadReservasPromociones&gt; getReservacantPromociones() {
+<span class="nc" id="L69">        return reservacantPromociones;</span>
+    }
+    
+
+    public void setReservacantPromociones(ArrayList&lt;cantidadReservasPromociones&gt; ReservaPromociones) {
+<span class="nc" id="L74">        this.reservacantPromociones = ReservaPromociones;</span>
+<span class="nc" id="L75">    }</span>
+
+    public int getNumero() {
+<span class="nc" id="L78">        return numero;</span>
+    }
+
+    public void setNumero(int Numero) {
+<span class="nc" id="L82">        this.numero = Numero;</span>
+<span class="nc" id="L83">    }</span>
+
+    public LocalDate getFecha() {
+<span class="nc" id="L86">        return fecha;</span>
+    }
+
+    public void setFecha(LocalDate Fecha) {
+<span class="nc" id="L90">        this.fecha = Fecha;</span>
+<span class="nc" id="L91">    }</span>
+
+    public int getPrecio() {
+<span class="nc" id="L94">        return precio;</span>
+    }
+
+    public void setPrecio(int Precio) {
+<span class="nc" id="L98">        this.precio = Precio;</span>
+<span class="nc" id="L99">    }</span>
+     
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

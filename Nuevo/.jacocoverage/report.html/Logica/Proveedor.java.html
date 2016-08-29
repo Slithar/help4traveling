@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Proveedor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Proveedor.java</span></div><h1>Proveedor.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+import java.io.IOException;
+import java.util.*;
+import java.time.*;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Mauro
+ */
+public class Proveedor extends Usuario {
+    private ArrayList&lt;Imagen&gt; imagenesUsuario;
+    private HashMap&lt;String, Servicio&gt; servicios;
+    private String nombreEmpresa;
+    private String link;
+    
+    public Proveedor(){
+<span class="nc" id="L23">        super();</span>
+<span class="nc" id="L24">        nombreEmpresa = &quot;&quot;;</span>
+<span class="nc" id="L25">        link = &quot;&quot;;</span>
+<span class="nc" id="L26">        this.servicios = new HashMap&lt;String, Servicio&gt;();</span>
+<span class="nc" id="L27">    }</span>
+    
+    public Proveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, ArrayList&lt;String&gt; rutaProveedor, String nombreEmpresa, String link, HashMap&lt;String, Servicio&gt; servicios){
+<span class="nc" id="L30">        super(nickname, nombre, apellido, email, fechaNac);</span>
+        
+<span class="nc" id="L32">        this.imagenesUsuario = new ArrayList&lt;Imagen&gt;();</span>
+        
+<span class="nc" id="L34">        this.nombreEmpresa = nombreEmpresa;</span>
+<span class="nc" id="L35">        this.link = link;</span>
+        //JOptionPane.showMessageDialog(null, rutaProveedor.size());
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        for(int i = 0; i &lt; rutaProveedor.size(); i++){</span>
+            //JOptionPane.showMessageDialog(null, rutaProveedor.get(i));
+<span class="nc" id="L39">            this.imagenesUsuario.add(new Imagen(rutaProveedor.get(i), this));</span>
+        }
+<span class="nc" id="L41">        this.servicios = servicios;</span>
+<span class="nc" id="L42">    }</span>
+    
+    public String getNombreEmpresa(){
+<span class="nc" id="L45">        return this.nombreEmpresa;</span>
+    }
+    
+    public String getLink(){
+<span class="nc" id="L49">        return this.link;</span>
+    }
+    
+    public void setNombreEmpresa(String nombreEmpresa){
+<span class="nc" id="L53">        this.nombreEmpresa = nombreEmpresa;</span>
+<span class="nc" id="L54">    }</span>
+    
+    public void setLink(String link){
+<span class="nc" id="L57">        this.link = link;</span>
+<span class="nc" id="L58">    }</span>
+
+    public ArrayList&lt;Imagen&gt; getImagenesUsuario() {
+<span class="nc" id="L61">        return imagenesUsuario;</span>
+    }
+
+    public void setImagenesUsuario(ArrayList&lt;Imagen&gt; imagenesUsuario) {
+<span class="nc" id="L65">        this.imagenesUsuario = imagenesUsuario;</span>
+<span class="nc" id="L66">    }</span>
+    
+    public void setImagen(ArrayList&lt;String&gt; ruta){
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for(int i = 0; i &lt; ruta.size(); i++){</span>
+<span class="nc" id="L70">            this.imagenesUsuario.add(new Imagen(ruta.get(i), this));</span>
+        }
+        
+<span class="nc" id="L73">    }</span>
+    
+    public boolean copiarPerfil() throws IOException{
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenesUsuario.size(); i++){</span>
+<span class="nc" id="L77">            int num = i + 1;</span>
+<span class="nc" id="L78">            imagenesUsuario.get(i).copiarImagen(super.getNickname() + &quot;-&quot; + num);</span>
+        }
+        
+<span class="nc" id="L81">        return true;</span>
+        
+    }
+
+    public HashMap&lt;String, Servicio&gt; getServicios() {
+<span class="nc" id="L86">        return servicios;</span>
+    }
+
+    public void setServicios(HashMap&lt;String, Servicio&gt; servicios) {
+<span class="nc" id="L90">        this.servicios = servicios;</span>
+<span class="nc" id="L91">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

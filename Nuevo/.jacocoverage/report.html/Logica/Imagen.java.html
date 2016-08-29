@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Imagen.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Imagen.java</span></div><h1>Imagen.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+import java.io.*;
+import java.util.*;
+import java.nio.file.*;
+/**
+ *
+ * @author Mauro
+ */
+public class Imagen {
+    private String path;
+    private Usuario usuario;
+    
+<span class="nc" id="L18">    public Imagen(String path, Usuario usuario){</span>
+<span class="nc" id="L19">        this.path = path;</span>
+<span class="nc" id="L20">        this.usuario = usuario;</span>
+<span class="nc" id="L21">    }</span>
+
+    public String getPath() {
+<span class="nc" id="L24">        return path;</span>
+    }
+
+    public void setPath(String path) {
+<span class="nc" id="L28">        this.path = path;</span>
+<span class="nc" id="L29">    }</span>
+
+    /*public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }*/
+    
+    public Usuario getUsuario(){
+<span class="nc" id="L48">        return this.usuario;</span>
+    }
+    
+    public void setUsuario(Usuario usuario){
+<span class="nc" id="L52">        this.usuario = usuario;</span>
+<span class="nc" id="L53">    }</span>
+    
+    public void copiarImagen(String nombre) throws IOException{
+<span class="nc" id="L56">        Path desde = Paths.get(this.path);</span>
+<span class="nc" id="L57">        File fichero = new File(&quot;src/Logica/Perfiles/&quot; + nombre + &quot;.jpg&quot;);</span>
+<span class="nc" id="L58">        Path hasta = Paths.get(fichero.getAbsolutePath());</span>
+       
+<span class="nc" id="L60">        CopyOption[] opciones = new CopyOption[]{</span>
+          StandardCopyOption.REPLACE_EXISTING,
+          StandardCopyOption.COPY_ATTRIBUTES
+        };
+       
+<span class="nc" id="L65">        Files.copy(desde, hasta, opciones);</span>
+<span class="nc" id="L66">        this.path = &quot;src/Logica/perfiles/&quot; + nombre + &quot;.jpg&quot;;</span>
+        
+        
+<span class="nc" id="L69">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

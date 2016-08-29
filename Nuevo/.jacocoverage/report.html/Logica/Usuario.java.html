@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Usuario.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Usuario.java</span></div><h1>Usuario.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package Logica;
+import java.io.IOException;
+import java.io.*;
+import java.util.*;
+import java.time.*;
+
+/**
+ *
+ * @author Mauro
+ */
+public class Usuario {
+    private String nickname;
+    private String nombre;
+    private String apellido;
+    private String email;
+    private LocalDate fechaNac;
+    
+    
+        
+<span class="nc" id="L26">    public Usuario(){</span>
+<span class="nc" id="L27">        nickname = &quot;&quot;;</span>
+<span class="nc" id="L28">        nombre = &quot;&quot;;</span>
+<span class="nc" id="L29">        apellido = &quot;&quot;;</span>
+<span class="nc" id="L30">        email = &quot;&quot;;</span>
+<span class="nc" id="L31">        fechaNac = LocalDate.of(1900, 1, 1);       </span>
+<span class="nc" id="L32">    }</span>
+    
+<span class="nc" id="L34">    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac){</span>
+        
+<span class="nc" id="L36">        this.nickname = nickname;</span>
+<span class="nc" id="L37">        this.nombre = nombre;</span>
+<span class="nc" id="L38">        this.apellido = apellido;</span>
+<span class="nc" id="L39">        this.email = email;</span>
+<span class="nc" id="L40">        this.fechaNac = fechaNac;</span>
+             
+<span class="nc" id="L42">    }</span>
+
+    /*public Imagen getImagenUsuario() {
+        return imagenUsuario;
+    }
+
+    public void setImagenUsuario(Imagen imagenUsuario) {
+        this.imagenUsuario = imagenUsuario;
+    }*/
+
+    public String getNickname() {
+<span class="nc" id="L53">        return nickname;</span>
+    }
+
+    public void setNickname(String Nickname) {
+<span class="nc" id="L57">        this.nickname = Nickname;</span>
+<span class="nc" id="L58">    }</span>
+
+    public String getNombre() {
+<span class="nc" id="L61">        return nombre;</span>
+    }
+
+    public void setNombre(String Nombre) {
+<span class="nc" id="L65">        this.nombre = Nombre;</span>
+<span class="nc" id="L66">    }</span>
+
+    public String getApellido() {
+<span class="nc" id="L69">        return apellido;</span>
+    }
+
+    public void setApellido(String Apellido) {
+<span class="nc" id="L73">        this.apellido = Apellido;</span>
+<span class="nc" id="L74">    }</span>
+
+    public String getEmail() {
+<span class="nc" id="L77">        return email;</span>
+    }
+
+    public void setEmail(String Email) {
+<span class="nc" id="L81">        this.email = Email;</span>
+<span class="nc" id="L82">    }</span>
+
+    public LocalDate getFechaNac() {
+<span class="nc" id="L85">        return fechaNac;</span>
+    }
+
+    public void setFechaNac(LocalDate FechaNac) {
+<span class="nc" id="L89">        this.fechaNac = FechaNac;</span>
+<span class="nc" id="L90">    } </span>
+    
+    
+    
+    public boolean correoValido(){
+<span class="nc" id="L95">        int cantArrobas = 0;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for(int i = 0; i &lt; this.email.length(); i++){</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            if(this.email.charAt(i) == '@')</span>
+<span class="nc" id="L98">                cantArrobas++;</span>
+        }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if(cantArrobas == 1)</span>
+<span class="nc" id="L101">            return true;</span>
+        else
+<span class="nc" id="L103">            return false;</span>
+    }
+    
+    /*public boolean fechaValida(){
+        
+        if(fechaNac.getMonthValue() == 1 || fechaNac.getMonthValue() == 3 || fechaNac.getMonthValue() == 5 || fechaNac.getMonthValue() == 7 || fechaNac.getMonthValue() == 8 || fechaNac.getMonthValue() == 10 || fechaNac.getMonthValue() == 12){
+            return true;
+        }
+        else if(fechaNac.getMonthValue() == 4 || fechaNac.getMonthValue() == 6 || fechaNac.getMonthValue() == 9 || fechaNac.getMonthValue() == 11){
+            if(fechaNac.getDayOfMonth()== 31)
+                return false;
+            else
+                return true;
+        }
+        else{
+            if(fechaNac.getDayOfMonth() == 30 || fechaNac.getDayOfMonth() == 31)
+                return false;
+            else
+                return true;
+        }
+    }*/
+    
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

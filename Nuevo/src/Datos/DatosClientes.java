@@ -250,8 +250,8 @@ public class DatosClientes {
         return dtSer;
     }
 
-    public ArrayList verInfoCliente() throws SQLException, ClassNotFoundException {
-        ArrayList clientes = new ArrayList();
+    public ArrayList<Cliente> verInfoCliente() throws SQLException, ClassNotFoundException {
+        ArrayList<Cliente> clientes = new ArrayList();
         int indice = 0;
         Connection conn;
 
@@ -261,10 +261,41 @@ public class DatosClientes {
 
         Statement st = conn.createStatement();
 
-        ResultSet rs = st.executeQuery("select * from usuarios where clientes=" + 1);
+        ResultSet rs = st.executeQuery("select * from usuarios where cliente= true order by nickname");
         while (rs.next()) {
             //System.out.println("a");
-            clientes.add(indice, rs.getString("nickname"));
+            Cliente c = new Cliente();
+            c.setNickname(rs.getString("nickname"));
+            clientes.add(indice, c);
+            indice++;
+        }
+
+        rs.close();
+        //conexion.cerrar();
+        conn.close();
+        return clientes;
+    }
+    
+    public ArrayList<Cliente> verInfoClienteBusqueda(String nickname) throws SQLException, ClassNotFoundException {
+        ArrayList<Cliente> clientes = new ArrayList();
+        int indice = 0;
+        Connection conn;
+
+        ConexionBD conexion = new ConexionBD();
+
+        conn = conexion.conectar();
+
+        PreparedStatement pConsulta = conn.prepareCall("select * from usuarios where cliente= true and nickname like ? order by nickname");
+        
+        pConsulta.setString(1, "%" + nickname + "%");
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while (rs.next()) {
+            //System.out.println("a");
+            Cliente c = new Cliente();
+            c.setNickname(rs.getString("nickname"));
+            clientes.add(indice, c);
             indice++;
         }
 
@@ -411,6 +442,57 @@ public class DatosClientes {
         
         return reservas;
     }
+    
+    public Cliente seleccionarCliente(String nickname) throws SQLException, ClassNotFoundException{
+         ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select * from usuarios u left join imagenesusuarios i on u.nickname=i.nickname where u.cliente=true and u.nickname=?");
+        
+        pConsulta.setString(1,nickname);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        Cliente c = new Cliente();
+        HashMap<Integer,Reserva> reservas = new HashMap<Integer,Reserva>();
+                
+        while(rs.next()){
+            
+            String fecha = rs.getString("fechaNacimiento");
+            String[] datosFecha = fecha.split("-");
+            c=new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), rs.getString("ruta"), new HashMap());
+                        
+        }
+        
+        c.setReservasCliente(reservas);
+        
+        return c;
+        
+    }
+    public ArrayList<Reserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
+         ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select * from reservas where nicknameCliente=? order by numero");
+        
+        pConsulta.setString(1,nickname);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        ArrayList<Reserva> listRes=new ArrayList<Reserva>();
+        while(rs.next()){
+            Reserva r =new Reserva();
+            r.setNumero(rs.getInt("numero"));
+            listRes.add(r);
+        }
+        return listRes;
+    }
+    
     
     public void deleteAllClientes(String s) throws SQLException, ClassNotFoundException{
         ConexionBD conexion = new ConexionBD();
