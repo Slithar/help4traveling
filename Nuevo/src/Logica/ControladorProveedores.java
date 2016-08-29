@@ -564,7 +564,8 @@ public class ControladorProveedores implements IControladorProveedores{
         File[]imagenes = fichero.listFiles();
         
         for(int i = 0; i < imagenes.length; i++){
-            imagenes[i].delete();
+            if(!imagenes[i].getName().equalsIgnoreCase("perfil.png")) 
+                imagenes[i].delete();
         }
     }
     
@@ -574,6 +575,7 @@ public class ControladorProveedores implements IControladorProveedores{
         File[]imagenes = fichero.listFiles();
         
         for(int i = 0; i < imagenes.length; i++){
+            
             imagenes[i].delete();
         }
     }
