@@ -214,7 +214,7 @@ public class VerInfoReserva extends javax.swing.JFrame {
        this.jnickCliente.setText(dtcant.getCliente());
        this.jPrecio.setText(dtcant.getPrecio()+"");
        this.jFecha.setText(dtcant.getFecha().toString());
-       this.jEstado.setText(dtcant.getEstado());
+       this.jEstado.setText(dtcant.getEstado().toString());
        //JOptionPane.showMessageDialog(this, dtcant.getCliente());
         
        ArrayList <DataCantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);

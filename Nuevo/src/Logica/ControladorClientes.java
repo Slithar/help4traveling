@@ -164,7 +164,26 @@ public class ControladorClientes implements IControladorClientes {
         DatosClientes dataux = new DatosClientes();
         return dataux.verInfoReserva();
     }
-  
+    public ArrayList datosReserva ()throws SQLException, ClassNotFoundException {
+        DatosClientes dataux =new DatosClientes();
+        ArrayList<Reserva> reservas=dataux.datosReserva();
+        ArrayList<DataReserva> dtreservas=new ArrayList();
+        for(int i=0;i<reservas.size();i++){
+            DataReserva dtres= new DataReserva();
+            dtres.setNumero(reservas.get(i).getNumero());
+            dtres.setEstado(reservas.get(i).getEstado().toString());
+            dtreservas.add(dtres);
+        }
+        return dtreservas;
+    }
+     public void updateEstadoReserva(int numero,String estado) throws SQLException, ClassNotFoundException{
+         DatosClientes dataux =new DatosClientes();
+         Reserva res=new Reserva();
+         res.setNumero(numero);
+         res.setEstado(estado);
+         dataux.updateEstadoReserva(res.getNumero(),res.getEstado().toString());
+         
+     }
     public DataReserva getReserva(String numeroRes){
         DataReserva dtAux =new  DataReserva ();
         DatosClientes datCli = new DatosClientes();

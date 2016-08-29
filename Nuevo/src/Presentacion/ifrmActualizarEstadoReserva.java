@@ -39,35 +39,34 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
         initComponents();
          setTitle("Actualizar estado reserva");
         Dimension tamanioVentana = this.getSize();
-        setLocation((1400 - tamanioVentana.width)/2, (600 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (780 - tamanioVentana.height)/2);
         
         this.iccli = iccli;
         DefaultTableModel model=  new DefaultTableModel(null, columnas);
     
         try{
-            ArrayList<DataReserva> numRes= this.iccli.verInfoReserva(); 
+            ArrayList<DataReserva> numRes= this.iccli.datosReserva(); 
             //System.out.println(numRes.size());
-            
+            //comentario
         for(int i =0;i<numRes.size();i++){
-//            DataReserva resAux=new DataReserva();
-//            resAux.setNumero(numRes.get(i).getNumero());
-//            resAux.setEstado(numRes.get(i).getEstado());
-            Object[] fila = {numRes.get(i).getNumero(), numRes.get(i)};
+            DataReserva resAux=new DataReserva();
+            resAux.setNumero(numRes.get(i).getNumero());
+            resAux.setEstado(numRes.get(i).getEstado().toString());
+            Object[] fila = {resAux.getNumero(),resAux.getEstado()};
             model.addRow(fila);
             
         }
-         //uuh a ver
-         //viste que en el otro trae bien xD
-         //sisi, esta trayendo una fila x el nro y otra x el estado
-         //mauro, x en al otra aparecen esos ods atrbituos sueltos? los agregaste?
-         //no, se ve que se cambio algo de la otra función, esperame dejame ver una cosa
-         //vs cambiaste alguna funcion de la otra?,aca mira , dejame lleavrte
-         tablaRes.setModel(model);
+         
+        
         }catch(Exception e){}
         
-        initComponents();
+       setTitle("Actualizar reserva");
        tablaRes.setModel(model);
        tablaRes.setVisible(true);
+       panelEstado.setVisible(false);
+       cmbEstado.addItem("CANCELADA");
+       cmbEstado.addItem("FACTURADA");
+       cmbEstado.addItem("PAGADA");        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,13 +79,23 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        panelEstado = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        cmbEstado = new javax.swing.JComboBox<>();
+        btnModificar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lblNumero = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaRes = new javax.swing.JTable();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        setIconifiable(true);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Seleccione reserva:");
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Aceptar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +103,59 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Nuevo estado:");
+
+        cmbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Número de la reserva:");
+
+        lblNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNumero.setText("numero");
+
+        javax.swing.GroupLayout panelEstadoLayout = new javax.swing.GroupLayout(panelEstado);
+        panelEstado.setLayout(panelEstadoLayout);
+        panelEstadoLayout.setHorizontalGroup(
+            panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoLayout.createSequentialGroup()
+                .addGroup(panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEstadoLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblNumero)))
+                    .addGroup(panelEstadoLayout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        panelEstadoLayout.setVerticalGroup(
+            panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jLabel3)
+                .addGap(5, 5, 5)
+                .addComponent(lblNumero)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnModificar)
+                .addGap(60, 60, 60))
+        );
+
+        tablaRes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tablaRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -102,11 +164,10 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
                 {null, null}
             },
             new String [] {
-                "Numero", "Estado"
+                "Número", "Estado"
             }
         ));
         tablaRes.setAutoscrolls(false);
-        tablaRes.setCellSelectionEnabled(true);
         jScrollPane2.setViewportView(tablaRes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -116,55 +177,99 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel1))
+                        .addGap(53, 53, 53)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(419, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        // TODO add your handling code here:
-//        if(listRes.getSelectedIndex() == -1){
-//            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna reserva", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-//        }
-//        else{
-//            String selected =listRes.getSelectedValue();
-//            try {
-//                DataReserva dtcant =this.iccli.getReserva(selected);
-//                if(dtcant.getEstado()!="REGISTRADA"){
-//                    JOptionPane.showMessageDialog(this, "El tipo de reserva no es registrada", "Error", JOptionPane.WARNING_MESSAGE);
-//                }
-//            } catch (Exception e) {
-//                Logger.getLogger(ifrmActualizarEstadoReserva.class.getName()).log(Level.SEVERE, null, e);
-//            } 
-//        }
-//        
+       if(tablaRes.getSelectedRow() == -1){
+           JOptionPane.showMessageDialog(this, "No se ha seleccionado reserva", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+       }
+       else if(!esNumerico(String.valueOf(tablaRes.getValueAt(tablaRes.getSelectedRow(),0)))){
+           JOptionPane.showMessageDialog(this, "El valor de la columna correspondiente al número de la reserva seleccionada no es correcto", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+       }
+       else if(!String.valueOf(tablaRes.getValueAt(tablaRes.getSelectedRow(),1)).equals("REGISTRADA"))
+           JOptionPane.showMessageDialog(this, "El estado de la reserva seleccionada debe ser 'Registrada'", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+       else{
+           lblNumero.setText(String.valueOf(tablaRes.getValueAt(tablaRes.getSelectedRow(),0)));
+           panelEstado.setVisible(true);
+       }
+       
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            iccli.updateEstadoReserva(Integer.parseInt(lblNumero.getText()), (String) cmbEstado.getSelectedItem());
+            JOptionPane.showMessageDialog(this, "El estado de la reserva ha sido modificado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+            panelEstado.setVisible(false);
+                DefaultTableModel model=  new DefaultTableModel(null, columnas);
 
+            
+                ArrayList<DataReserva> numRes= this.iccli.datosReserva(); 
+                //System.out.println(numRes.size());
+
+            for(int i =0;i<numRes.size();i++){
+                DataReserva resAux=new DataReserva();
+                resAux.setNumero(numRes.get(i).getNumero());
+                resAux.setEstado(numRes.get(i).getEstado().toString());
+                Object[] fila = {resAux.getNumero(),resAux.getEstado()};
+                model.addRow(fila);
+
+            }
+            
+            tablaRes.setModel(model);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "El número de la reserva indicada es incorrecto", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    public boolean esNumerico(String txt){
+        try{
+            Integer.parseInt(txt);
+            return true;
+        }
+        catch(NumberFormatException ex){
+            return false;
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblNumero;
+    private javax.swing.JPanel panelEstado;
     private javax.swing.JTable tablaRes;
     // End of variables declaration//GEN-END:variables
 }

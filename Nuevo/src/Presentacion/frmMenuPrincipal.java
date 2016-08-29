@@ -275,7 +275,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miSalirActionPerformed
 
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
-        // TODO add your handling code here:
+        ifrmActualizarEstadoReserva  agregar = new ifrmActualizarEstadoReserva(this.iccli);
+        nuevoPanel.add(agregar);
+        agregar.setVisible(true);
     }//GEN-LAST:event_miActualizarReservaActionPerformed
 
     private void NuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaCatActionPerformed
