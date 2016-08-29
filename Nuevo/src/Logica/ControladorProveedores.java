@@ -558,6 +558,7 @@ public class ControladorProveedores implements IControladorProveedores{
         return resultadoServicio;
     }
     
+    @Override
     public void eliminarImagenesUsuarios(){
         File fichero = new File("src/Logica/Perfiles");
         File[]imagenes = fichero.listFiles();
@@ -567,6 +568,7 @@ public class ControladorProveedores implements IControladorProveedores{
         }
     }
     
+    @Override
     public void eliminarImagenesServicios(){
         File fichero = new File("src/Logica/ImagenesServicios");
         File[]imagenes = fichero.listFiles();
