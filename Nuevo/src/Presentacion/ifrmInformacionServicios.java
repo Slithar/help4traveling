@@ -52,6 +52,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         this.icprov = icprov;
         this.iccat = iccat;
         
+        
+        
         Dimension tamanioVentana = this.getSize();
         
         setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
@@ -252,6 +254,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblDescripcion.setColumns(20);
         lblDescripcion.setLineWrap(true);
         lblDescripcion.setRows(5);
+        lblDescripcion.setWrapStyleWord(true);
         lblDescripcion.setBorder(null);
         jScrollPane3.setViewportView(lblDescripcion);
 

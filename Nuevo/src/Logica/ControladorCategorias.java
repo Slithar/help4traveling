@@ -104,7 +104,7 @@ public class ControladorCategorias implements IControladorCategorias{
        
        categorias = new DatosCategorias();
        ArrayList existeCate = categorias.existeCategoria(catHija.getNombre());
-       boolean existe;
+       boolean existe = false;
        if(!existeCate.isEmpty()){
            existe = true;
        }else{
@@ -128,6 +128,87 @@ public class ControladorCategorias implements IControladorCategorias{
 
     public void setListaCategorias(HashMap<String, Categoria> ListaCategorias) {
         this.ListaCategorias = ListaCategorias;
+    }
+    
+    public boolean existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Categoria cat = new Categoria(c, "", new ArrayList());
+        categorias = new DatosCategorias();
+        
+        if(categorias.existeCategoria(cat.getNombre()).size() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public void deleteAllCategorias() throws SQLException, ClassNotFoundException {
+        categorias = new DatosCategorias();
+        categorias.deleteAllCategorias("delete from categoriasdeservicios where nombreCategoria <> \"\";" + 
+                        "delete from categoriasrelacionadas where categoriaHija <> \"\";\n" +
+                        "delete from categorias where nombre <> \"\";");
+    }
+
+    @Override
+    public void insertCategoriasDePrueba() throws SQLException, ClassNotFoundException {
+        categorias = new DatosCategorias();
+        categorias.insertCategoriasDePrueba("insert into categorias values('Vuelos');\n" +
+                        "insert into categorias values('Alojamientos');\n" +
+                        "insert into categorias values('Automóviles');\n" +
+                        "insert into categorias values('Cruceros');\n" +
+                        "insert into categorias values('Empresas');\n" +
+                        "insert into categorias values('Iberia');\n" +
+                        "insert into categorias values('American Airlines');\n" +
+                        "insert into categorias values('Air France');\n" +
+                        "insert into categorias values('TAM');\n" +
+                        "insert into categorias values('Tipo vuelo');\n" +
+                        "insert into categorias values('LowCost');\n" +
+                        "insert into categorias values('Standard');\n" +
+                        "insert into categorias values('First class');\n" +
+                        "insert into categorias values('Tipo alojamiento');\n" +
+                        "insert into categorias values('Hotel');\n" +
+                        "insert into categorias values('Hostal');\n" +
+                        "insert into categorias values('Apartamento');\n" +
+                        "insert into categorias values('Casa');\n" +
+                        "insert into categorias values('Ubicación');\n" +
+                        "insert into categorias values('Playa');\n" +
+                        "insert into categorias values('Rural');\n" +
+                        "insert into categorias values('Montaña');\n" +
+                        "insert into categorias values('Habitaciones');\n" +
+                        "insert into categorias values('1 ambiente');\n" +
+                        "insert into categorias values('1 dormitorio');\n" +
+                        "insert into categorias values('2 dormitorios');\n" +
+                        "insert into categorias values('Tarifa');\n" +
+                        "insert into categorias values('Mini');\n" +
+                        "insert into categorias values('Económico');\n" +
+                        "insert into categorias values('Full');\n" +
+                        "insert into categorias values('Tipo vehículo');\n" +
+                        "insert into categorias values('Auto');\n" +
+                        "insert into categorias values('Camioneta');\n" +
+                        "insert into categorias values('Camión');\n" +
+                        "insert into categorias values('Moto');\n" +
+                        "insert into categorias values('Marca');\n" +
+                        "insert into categorias values('Chevrolet');\n" +
+                        "insert into categorias values('Peugeot');\n" +
+                        "insert into categorias values('Daihatsu');\n" +
+                        "insert into categorias values('Fiat');\n" +
+                        "insert into categorias values('Ford');\n" +
+                        "insert into categorias values('Mediterráneo');\n" +
+                        "insert into categorias values('Mar Negro');\n" +
+                        "insert into categorias values('Caribe');\n" +
+                        "insert into categorias values('Nilo');\n" +
+                        "insert into categorias values('Alaska');\n" +
+                        "insert into categoriasrelacionadas values('Vuelos', 'Empresas'), ('Vuelos', 'Tipo vuelo');\n" +
+                        "insert into categoriasrelacionadas values('Empresas', 'Iberia'), ('Empresas', 'American Airlines'), ('Empresas', 'Air France'), ('Empresas', 'TAM');\n" +
+                        "insert into categoriasrelacionadas values('Tipo vuelo', 'LowCost'), ('Tipo vuelo', 'Standard'), ('Tipo vuelo', 'First Class');\n" +
+                        "insert into categoriasrelacionadas values('Alojamientos', 'Tipo alojamiento'), ('Alojamientos', 'Ubicación'), ('Alojamientos', 'Habitaciones');\n" +
+                        "insert into categoriasrelacionadas values('Tipo alojamiento', 'Hotel'), ('Tipo alojamiento', 'Hostal'), ('Tipo alojamiento', 'Apartamento'), ('Tipo alojamiento', 'Casa');\n" +
+                        "insert into categoriasrelacionadas values('Ubicación', 'Playa'), ('Ubicación', 'Rural'), ('Ubicación', 'Montaña');\n" +
+                        "insert into categoriasrelacionadas values('Habitaciones', '1 ambiente'), ('Habitaciones', '1 dormitorio'), ('Habitaciones', '2 dormitorios');\n" +
+                        "insert into categoriasrelacionadas values('Automóviles', 'Tarifa'), ('Automóviles', 'Tipo vehículo'), ('Automóviles', 'Marca');\n" +
+                        "insert into categoriasrelacionadas values('Tarifa', 'Mini'), ('Tarifa', 'Económico'), ('Tarifa', 'Standard'), ('Tarifa', 'Full');\n" +
+                        "insert into categoriasrelacionadas values('Tipo vehículo', 'Auto'), ('Tipo vehículo', 'Camioneta'), ('Tipo vehículo', 'Camión'), ('Tipo vehículo', 'Moto');\n" +
+                        "insert into categoriasrelacionadas values('Marca', 'Chevrolet'), ('Marca', 'Peugeot'), ('Marca', 'Daihatsu'), ('Marca', 'Fiat'), ('Marca', 'Ford');\n" +
+                        "insert into categoriasrelacionadas values('Cruceros', 'Mediterráneo'), ('Cruceros', 'Mar Negro'), ('Cruceros', 'Caribe'), ('Cruceros', 'Nilo'), ('Cruceros', 'Alaska');");
     }
     
 }

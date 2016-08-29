@@ -84,7 +84,7 @@ public class DatosClientes {
 
         Statement st = conn.createStatement();
 
-        ResultSet rs = st.executeQuery("select numero from reservas ");
+        ResultSet rs = st.executeQuery("select numero from reservas order by numero");
 
         while (rs.next()) {
             //System.out.println("a");
@@ -382,5 +382,44 @@ public class DatosClientes {
         conn.close();
         
         return reservas;
+    }
+    
+    public void deleteAllClientes(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
+        
+    }
+    
+    public void insertDatosClientesDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
     }
 }

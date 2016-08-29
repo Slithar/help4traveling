@@ -207,40 +207,41 @@ public class DatosProveedores {
     
     
     
-    /*public ArrayList<Servicio> selectServiciosPorProveedor(Proveedor p) throws SQLException, ClassNotFoundException{
-        
-        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
-        
+    public void deleteAllProveedores(String s) throws SQLException, ClassNotFoundException{
         ConexionBD conexion = new ConexionBD();
         
         Connection conn;
         
         conn = conexion.conectar();
         
-        //Statement st = conn.createStatement();
+        Statement st = conn.createStatement();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select * from servicios where nombreProveedor = ?");
+        String[] sql = s.split(";");
         
-        pConsulta.setString(1, p.getNombreEmpresa());
-                
-        ResultSet rs = pConsulta.executeQuery();
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }        
+        conn.close();
+    }
+    
+    public void insertDatosProveedoresDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
         
-        while(rs.next()){
-            Servicio s = new Servicio();
-            
-            s.setNombreServicio(rs.getString("nombre"));
-            s.setProveedorServicio(p);
-            s.setDescripcionServicio(rs.getString("descripcion"));
-            s.setPrecioServicio(rs.getInt("precio"));
-            servicios.add(s);
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
         }
         
-        rs.close();
         conn.close();
-        
-        return servicios;
-        
-    }*/
+               
+    }
     
     
     

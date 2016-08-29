@@ -6,6 +6,7 @@
 package Logica;
 
 import Datos.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -556,7 +557,124 @@ public class ControladorProveedores implements IControladorProveedores{
         
         return resultadoServicio;
     }
+    
+    @Override
+    public void eliminarImagenesUsuarios(){
+        File fichero = new File("src/Logica/Perfiles");
+        File[]imagenes = fichero.listFiles();
+        
+        for(int i = 0; i < imagenes.length; i++){
+            if(!imagenes[i].getName().equalsIgnoreCase("perfil.png")) 
+                imagenes[i].delete();
+        }
+    }
+    
+    @Override
+    public void eliminarImagenesServicios(){
+        File fichero = new File("src/Logica/ImagenesServicios");
+        File[]imagenes = fichero.listFiles();
+        
+        for(int i = 0; i < imagenes.length; i++){
+            if(!imagenes[i].getName().equalsIgnoreCase("perfil.png")) 
+                imagenes[i].delete();
+        }
+    }
 
+    @Override
+    public void deleteAllProveedores() throws SQLException, ClassNotFoundException {
+        DatosProveedores dp = new DatosProveedores();
+        dp.deleteAllProveedores("delete from imagenesservicios where ruta <> \"\"; \n" +
+                        "delete from serviciosdepromociones where nombreServicio <> \"\"; \n" +
+                        "delete from cantidadreservasservicios where nombreServicio <> \"\"; \n" +
+                        "delete from servicios where nombre <> \"\"; \n" +
+                        "delete from ciudades where nombre <> \"\"; \n" +
+                        "delete from paises where nombre <> \"\";");
+    }
+
+    @Override
+    public void insertCiudadesDePrueba() throws SQLException, ClassNotFoundException {
+        DatosCiudades dc = new DatosCiudades();
+        dc.insertCiudadesDePrueba("insert into paises values('Uruguay');\n" +
+                        "insert into paises values('Argentina');\n" +
+                        "insert into paises values('Colombia');\n" +
+                        "insert into paises values('Estados Unidos');\n" +
+                        "insert into paises values('España');\n" +
+                        "insert into paises values('Francia');\n" +
+                        "insert into paises values('Alemania');\n" +
+                        "insert into paises values('Suiza');\n" +
+                        "insert into paises values('Australia');\n" +
+                        "insert into paises values('Brasil');\n" +
+                        "insert into paises values('China');\n" +
+                        "\n" +
+                        "insert into ciudades values('Montevideo', 'Uruguay');\n" +
+                        "insert into ciudades values('Buenos Aires', 'Argentina');\n" +
+                        "insert into ciudades values('Bogotá', 'Colombia');\n" +
+                        "insert into ciudades values('Miami', 'Estados Unidos');\n" +
+                        "insert into ciudades values('Valencia', 'España');\n" +
+                        "insert into ciudades values('Madrid', 'España');\n" +
+                        "insert into ciudades values('París', 'Francia');\n" +
+                        "insert into ciudades values('Berlín', 'Alemania');\n" +
+                        "insert into ciudades values('Ginebra', 'Suiza');\n" +
+                        "insert into ciudades values('Sidney', 'Australia');\n" +
+                        "insert into ciudades values('Pekín', 'China');\n" +
+                        "insert into ciudades values('Cantón', 'China');\n" +
+                        "insert into ciudades values('Florianópolis', 'Brasil');\n" +
+                        "insert into ciudades values('Bariloche', 'Argentina');");
+    }
+
+    @Override
+    public void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException {
+        DatosProveedores dp = new DatosProveedores();
+        dp.insertDatosProveedoresDePrueba("insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false);\n" +
+                        "insert into usuarios values('moody', 'Alastor', 'Moody', 'eu.car@eucar.com', '1965-9-2', false);\n" +
+                        "insert into usuarios values('remus', 'Remus', 'Lupin', 'iberia@gmail.com', '1970-5-4', false);\n" +
+                        "insert into usuarios values('adippet', 'Armando', 'Dippet', 'tam@outlook.com', '1967-2-12', false);\n" +
+                        "insert into usuarios values('mHooch', 'Madam', 'Hooch', 'segHogar@gmail.com', '1963-8-5', false);\n" +
+                        "insert into usuarios values('oWood', 'Oliver', 'Wood', 'quidditch28@gmail.com', '1988-12-28', true);\n" +
+                        "insert into usuarios values('eWatson', 'Emma', 'Watson', 'e.watson@gmail.com', '1990-4-15', true);\n" +
+                        "insert into usuarios values('BruceS', 'Bruce', 'Sewell', 'bruce.sewell@gmail.com', '1978-12-3', true);\n" +
+                        "insert into usuarios values('JeffW', 'Jeff', 'Williams', 'jeff.williams@gmail.com', '1984-11-27', true);\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/tCook-1.jpg', 'tCook');\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/moody-1.jpg', 'moody');\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/remus-1.jpg', 'remus');\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/adippet-1.png', 'adippet');\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/mHooch-1.jpg', 'mHooch');\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/oWood.jpg', 'oWood');\n" +
+                        "insert into imagenesusuarios values('src/Logica/PerfilesDefault/eWatson.jpg', 'eWatson');\n" +
+                        "insert into proveedores values('AirFrance', 'http://www.airfrance.com/', 'tCook');\n" +
+                        "insert into proveedores values('EuropCar', 'http://www.europcar.com.uy/', 'moody');\n" +
+                        "insert into proveedores values('Iberia', 'http://www.iberia.com/uy/', 'remus');\n" +
+                        "insert into proveedores values('TAM', 'http://www.tam.com.br/', 'adippet');\n" +
+                        "insert into proveedores values('Segundo Hogar', 'http://www.segundohogar.com/', 'mHooch');\n" +
+                        "insert into servicios values('Euro-Vuelo-S', 'Iberia', 'Montevideo', 'Valencia', 'Vuelo con excelente atención y comodidad.', 1100);\n" +
+                        "insert into servicios values('Euro-Vuelo-LC', 'Iberia', 'Montevideo', 'Valencia', 'Vuelo con excelente atención y comodidad a un precio accesible.', 850);\n" +
+                        "insert into servicios values('Euro-Vuelo-FC', 'Iberia', 'Montevideo', 'Valencia', 'Vuelo de primera clase. Excelente atención, comodidad y servicio.', 1300);\n" +
+                        "insert into servicios values('Euro-Car-1', 'EuropCar', 'Madrid', 'Valencia', 'Euro-Car. Autos de buena calidad y comodidad. Versión Económica', 300);\n" +
+                        "insert into servicios values('Euro-Car-2', 'EuropCar', 'Madrid', 'Valencia', 'Euro-Car. Autos de buena calidad y comodidad. Versión Standard.', 300);\n" +
+                        "insert into servicios values('Euro-Car-3', 'EuropCar', 'Valencia', null, 'Euro-Car. Autos de buena calidad y comodidad. Una camioneta para toda la familia.', 300);\n" +
+                        "insert into servicios values('Casa para p4 BsAs', 'Segundo Hogar', 'Buenos Aires', null, 'Esta hermosa casa, se encuentra ubicada en el corazón de Buenos Aires y ofrece una capacidad para cuatro personas. La propiedad cuenta con un dormitorio con dos camas simples, que pueden transformarse en una matrimonial y dos baños completos, que incluyen toallas.', 80);\n" +
+                        "insert into servicios values('Floripa G. House', 'Segundo Hogar', 'Florianópolis', null, 'Estamos a sólo unos pasos de un supermercado, restaurantes, cajero automático, gasolinera, farmacia, gimnasio, etc. Lagoa da Conceição es 7 km de nuestra casa de huéspedes y tarda sólo 10-15 minutos en el transporte público. Allí se encuentra una buena vida nocturna con bares y música en vivo', 190);\n" +
+                        "insert into servicios values('Air-France-FC', 'AirFrance', 'París', 'Berlín', '¡Un vuelo de primera! Excelencia y experiencia en mejorar sus viajes.', 100);\n" +
+                        "insert into servicios values('TAM-FC', 'TAM', 'Florianópolis', 'Pekín', '¡Un vuelo de primera! Excelencia y experiencia.', 150);\n" +
+                        "insert into servicios values('Luxury south beach corner apartment', 'Segundo Hogar', 'Miami', null, 'Beautiful large 2 bedrooms 2 bathrooms apartment CORNER UNIT. Marble floor throughout, beautiful open kitchen, granite counter top, spacious dining room area and living room area. Spectacular views of Miami from all windows and balcony', 300);\n" +
+                        "insert into servicios values('Coche-Miami', 'Segundo Hogar', 'Miami', null, 'A useful car to travel around Miami', 360);\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-S-Iberia-1.jpg', 'Euro-Vuelo-S', 'Iberia');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-LC-Iberia-1.jpg', 'Euro-Vuelo-LC', 'Iberia');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-FC-Iberia-1.jpg', 'Euro-Vuelo-FC', 'Iberia');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-1-Europcar-1.png', 'Euro-Car-1', 'EuropCar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-2-Europcar-1.jpg', 'Euro-Car-2', 'EuropCar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-3-Europcar-1.jpg', 'Euro-Car-3', 'EuropCar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Casa para p4 BsAs-Segundo Hogar-1.jpg', 'Casa para p4 BsAs', 'Segundo Hogar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Casa para p4 BsAs-Segundo Hogar-2.jpg', 'Casa para p4 BsAs', 'Segundo Hogar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Floripa G. House-Segundo Hogar-1.jpg', 'Floripa G. House', 'Segundo Hogar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Floripa G. House-Segundo Hogar-2.jpg', 'Floripa G. House', 'Segundo Hogar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Floripa G. House-Segundo Hogar-3.jpg', 'Floripa G. House', 'Segundo Hogar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Air-France.FC-AirFrance-1.jpg', 'Air-France-FC', 'AirFrance');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/TAM-FC-TAM-1.jpg', 'TAM-FC', 'TAM');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Luxury south beach corner apartment-Segundo Hogar-1.jpg', 'Luxury south beach corner apartment', 'Segundo Hogar');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Coche-Miami-Segundo Hogar-1.png', 'Coche-Miami', 'Segundo Hogar');\n" +
+                        "INSERT INTO categoriasdeservicios VALUES ('Air-France-FC ','AirFrance','Air France','Vuelos > Empresas > Air France'),('Air-France-FC ','AirFrance','First Class','Vuelos > Tipo vuelo > First Class'),('Casa para p4 BsAs ','Segundo Hogar','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Casa para p4 BsAs ','Segundo Hogar','Casa','Alojamientos > Tipo alojamiento > Casa'),('Coche-Miami ','Segundo Hogar','Auto','Automóviles > Tipo vehículo > Auto'),('Coche-Miami ','Segundo Hogar','Chevrolet','Automóviles > Marca > Chevrolet'),('Coche-Miami ','Segundo Hogar','Económico','Automóviles > Tarifa > Económico'),('Euro-Car-1 ','EuropCar','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-1 ','EuropCar','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-1 ','EuropCar','Económico','Automóviles > Tarifa > Económico'),('Euro-Car-2 ','EuropCar','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-2 ','EuropCar','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-2 ','EuropCar','Standard','Automóviles > Tarifa > Standard'),('Euro-Car-3 ','EuropCar','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-3 ','EuropCar','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-3 ','EuropCar','Full','Automóviles > Tarifa > Full'),('Euro-Vuelo-FC ','Iberia','First Class','Vuelos > Tipo vuelo > First Class'),('Euro-Vuelo-FC ','Iberia','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-LC ','Iberia','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-LC ','Iberia','LowCost','Vuelos > Tipo vuelo > LowCost'),('Euro-Vuelo-S ','Iberia','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-S ','Iberia','Standard','Vuelos > Tipo vuelo > Standard'),('Floripa G. House ','Segundo Hogar','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Floripa G. House ','Segundo Hogar','Alojamientos','Alojamientos'),('Floripa G. House ','Segundo Hogar','Casa','Alojamientos > Tipo alojamiento > Casa'),('Luxury south beach corner apartment ','Segundo Hogar','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Luxury south beach corner apartment ','Segundo Hogar','Hotel','Alojamientos > Tipo alojamiento > Hotel'),('Luxury south beach corner apartment ','Segundo Hogar','Playa','Alojamientos > Ubicación > Playa'),('TAM-FC ','TAM','First Class','Vuelos > Tipo vuelo > First Class'),('TAM-FC ','TAM','TAM','Vuelos > Empresas > TAM');");
+    }
     
 
     

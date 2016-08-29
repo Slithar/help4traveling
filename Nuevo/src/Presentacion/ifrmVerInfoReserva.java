@@ -23,7 +23,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
     
     private IControladorClientes iccli;
     
-        private String[] columnas = {"Nombre", "Proveedor", "Cantidad", "Fecha inicio", "Fecha fin", "Tipo"};
+        private String[] columnas = {"Nombre", "Proveedor", "Cantidad", "Precio unitario", "Total línea","Fecha inicio", "Fecha fin", "Tipo"};
     private DefaultTableModel datosPromocionServ = new DefaultTableModel(null, columnas) {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
@@ -86,6 +86,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
         jEstado = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        jlabel3 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
@@ -162,27 +163,28 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
         jEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jEstado.setText("estado");
 
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Proveedor", "Cantidad", "Fecha Inicio", "Fecha Fin", "Tipo"
+                "Nombre", "Proveedor", "Cantidad", "Precio unitario", "Total línea", "Fecha Inicio", "Fecha Fin", "Tipo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -190,6 +192,9 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane3.setViewportView(jTable);
+
+        jlabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jlabel3.setText("Productos:");
 
         javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
         panelInfo.setLayout(panelInfoLayout);
@@ -201,24 +206,27 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                     .addComponent(jnickCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlabel2)
                     .addComponent(jPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                    .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlabel3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         panelInfoLayout.setVerticalGroup(
             panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoLayout.createSequentialGroup()
                 .addGap(69, 69, 69)
+                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(panelInfoLayout.createSequentialGroup()
-                        .addComponent(jlabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jnickCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
@@ -231,7 +239,8 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -242,7 +251,8 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addComponent(panelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,6 +276,9 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
         else{
             String selected =listRes.getSelectedValue();
             /*comentarioo*/
+            
+            //JOptionPane.showMessageDialog(this, selected);
+            
             try{
                 datosPromocionServ = new DefaultTableModel(null, columnas);
                 DataReserva dtcant =this.iccli.getReserva(selected);
@@ -281,7 +294,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 if(listProm.size()>0){
                     for(int i=0;i<listProm.size();i++){
                         DataCantidadReservasPromociones promAux=listProm.get(i);
-                        Object[] fila = {promAux.getPromocion(), promAux.getProveedor(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"PROMOCIÓN"};
+                        Object[] fila = {promAux.getPromocion(), promAux.getProveedor(), promAux.getCantidad(), promAux.getTotalLinea() / promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"PROMOCIÓN"};
 
                         datosPromocionServ.addRow(fila);
                     }
@@ -291,7 +304,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 if(listServ.size()>0){
                     for(int i=0;i<listServ.size();i++){
                         DataCantidadReservasServicios promAux=listServ.get(i);
-                        Object[] fila = {promAux.getServicio(), promAux.getProveedor(), promAux.getCantidad(),promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"SERVICIO"};
+                        Object[] fila = {promAux.getServicio(), promAux.getProveedor(), promAux.getCantidad(), promAux.getTotalLinea() / promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"SERVICIO"};
 
                         datosPromocionServ.addRow(fila);
                     }
@@ -317,6 +330,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable;
     private javax.swing.JLabel jlabel2;
+    private javax.swing.JLabel jlabel3;
     private javax.swing.JLabel jnickCliente;
     private javax.swing.JList<String> listRes;
     private javax.swing.JPanel panelBuscar;

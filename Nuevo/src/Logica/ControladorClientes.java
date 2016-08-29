@@ -205,7 +205,7 @@ public class ControladorClientes implements IControladorClientes {
         ArrayList<DataCantidadReservasPromociones> dataListProm = new ArrayList<DataCantidadReservasPromociones>();
         for(int i=0;i<listProm.size();i++){
             cantidadReservasPromociones promAux= (cantidadReservasPromociones) listProm.get(i);
-            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());
+            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());
             dataListProm.add(dataProm);
         }
         
@@ -222,7 +222,7 @@ public class ControladorClientes implements IControladorClientes {
           ArrayList<DataCantidadReservasServicios> dataListServ = new ArrayList<DataCantidadReservasServicios>();
            for(int i=0;i<listServ.size();i++){
          cantidadReservasServicios promServ = listServ.get(i);
-         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(),promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());
+         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(), promServ.getTotalLinea(), promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());
          dataListServ.add(promServi);
          
      }     
@@ -238,6 +238,53 @@ public class ControladorClientes implements IControladorClientes {
 
         return dataux.verInfoReserva();
     }
+    
+    public ArrayList<DataCliente> getClientes()throws SQLException, ClassNotFoundException{
+        ArrayList<DataCliente> listResult = new ArrayList ();
+        DatosClientes datCli = new DatosClientes();
+        DatosUsuarios datosU =new DatosUsuarios();
+        
+        ArrayList<Cliente> listClientes =datCli.selectAllObjetosClientes();
+        for(int i=0;i<listClientes.size();i++){
+            Imagen imagenPerf = datosU.selectImagenPerfil(listClientes.get(i));
+            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath()));
+        }
+        return listResult;
+    }
 
+    @Override
+    public void deleteAllClientes() throws SQLException, ClassNotFoundException {
+        DatosClientes dc = new DatosClientes();
+        dc.deleteAllClientes("delete from imagenesusuarios where ruta <> \"\";\n" +
+                        "delete from proveedores where nombreEmpresa <> \"\";\n" +
+                        "delete from reservas where numero > 0;\n" +
+                        "delete from usuarios where nickname <> \"\";\n" +
+                        "\n" +
+                        "ALTER TABLE reservas AUTO_INCREMENT=1;");
+    }
+
+    @Override
+    public void insertDatosClientesDePrueba() throws SQLException, ClassNotFoundException {
+        DatosClientes dc = new DatosClientes();
+        dc.insertDatosClientesDePrueba("insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 1100, 'FACTURADA', 'oWood');\n" +
+                        "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 3050, 'CANCELADA', 'eWatson');\n" +
+                        "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-3-5', 135, 'PAGADA', 'BruceS');\n" +
+                        "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-5-8', 600, 'PAGADA', 'JeffW');\n" +
+                        "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 200, 'REGISTRADA', 'oWood');\n" +
+                        "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 542, 'REGISTRADA', 'eWatson');\n" +
+                        "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 1700, 'REGISTRADA', 'BruceS');\n" +
+                        "insert into cantidadreservaspromociones values(3, 'Sudamérica-Casas', 'Segundo Hogar', 1, 135, '2016-3-5', '2016-4-2', 135);\n" +
+                        "insert into cantidadreservaspromociones values(6, 'Miami-Viaje', 'Segundo Hogar', 1, 462, '2016-8-7', '2016-8-14', 462);\n" +
+                        "insert into cantidadreservasservicios values(1, 'Euro-Vuelo-S', 'Iberia', 1, 1100, '2016-1-1', '2016-1-1', 1100);\n" +
+                        "insert into cantidadreservasservicios values(2, 'Euro-Vuelo-S', 'Iberia', 2, 2200, '2016-1-1', '2016-1-1', 1100);\n" +
+                        "insert into cantidadreservasservicios values(2, 'Euro-Vuelo-LC', 'Iberia', 1, 850, '2016-1-1', '2016-1-1', 850);\n" +
+                        "insert into cantidadreservasservicios values(4, 'Euro-Car-2', 'EuropCar', 1, 300, '2016-5-8', '2016-5-12', 300);\n" +
+                        "insert into cantidadreservasservicios values(4, 'Euro-Car-3', 'EuropCar', 1, 300, '2016-5-8', '2016-5-12', 300);\n" +
+                        "insert into cantidadreservasservicios values(5, 'Air-France-FC', 'AirFrance', 2, 200, '2016-8-7', '2016-8-10', 100);\n" +
+                        "insert into cantidadreservasservicios values(6, 'Casa para p4 BsAs', 'Segundo Hogar', 1, 80, '2016-8-14', '2016-8-21', 80);\n" +
+                        "insert into cantidadreservasservicios values(7, 'Euro-Vuelo-LC', 'Iberia', 2, 1700, '2016-8-7', '2016-8-7', 850);");
+    }
+    
+    
     
 }

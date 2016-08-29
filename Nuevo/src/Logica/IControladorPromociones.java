@@ -18,4 +18,6 @@ public interface IControladorPromociones {
     public abstract int getCantPromociones();
     public abstract HashMap<String, Promocion> getListaPromociones();
     public abstract void setListaPromociones(HashMap<String, Promocion> ListaPromociones);
+    public abstract void deleteAllPromociones() throws SQLException, ClassNotFoundException;
+    public abstract void insertDatosPromocionesDePrueba() throws SQLException, ClassNotFoundException;
 }

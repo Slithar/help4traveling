@@ -76,4 +76,44 @@ public class DatosPromociones {
         
     }
     
+    public void deleteAllPromociones(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();       
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
+        
+    }
+    
+    public void insertDatosPromocionesDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
+        
+    }
+    
 }

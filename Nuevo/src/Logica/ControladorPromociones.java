@@ -6,6 +6,7 @@
 package Logica;
 
 import Datos.DatosPromociones;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -68,5 +69,43 @@ public class ControladorPromociones implements IControladorPromociones{
     public int getCantPromociones(){
         return ListaPromociones.size();
     }
+
+    @Override
+    public void deleteAllPromociones() throws SQLException, ClassNotFoundException {
+        DatosPromociones dp = new DatosPromociones();
+        dp.deleteAllPromociones("delete from cantidadreservaspromociones where nombrePromocion <> \"\"; \n" +
+                        "delete from promociones where nombre <> \"\";");
+    }
+
+    @Override
+    public void insertDatosPromocionesDePrueba() throws SQLException, ClassNotFoundException {
+        DatosPromociones dp = new DatosPromociones();
+        dp.insertDatosPromocionesDePrueba("insert into promociones values('Euro-Cars-E-S', 30, 420, 'EuropCar');\n" +
+                        "insert into promociones values('Euro-Cars-E-F', 30, 420, 'EuropCar');\n" +
+                        "insert into promociones values('Euro-Cars-S-F', 30, 420, 'EuropCar');\n" +
+                        "insert into promociones values('Euro-Vuelos-S-LC', 40, 1170, 'Iberia');\n" +
+                        "insert into promociones values('Euro-Vuelos-S-FC', 40, 1440, 'Iberia');\n" +
+                        "insert into promociones values('Euro-Vuelos-LC-FC', 40, 1290, 'Iberia');\n" +
+                        "insert into promociones values('Sudamérica-Casas', 50, 135, 'Segundo Hogar');\n" +
+                        "insert into promociones values('Miami-Viaje', 30, 426, 'Segundo Hogar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-1', 'EuropCar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-2', 'EuropCar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-1', 'EuropCar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-3', 'EuropCar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-2', 'EuropCar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-3', 'EuropCar');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-S', 'Iberia');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-LC', 'Iberia');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-S', 'Iberia');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-FC', 'Iberia');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-LC', 'Iberia');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-FC', 'Iberia');\n" +
+                        "insert into serviciosdepromociones values('Sudamérica-Casas', 'Casa para p4 BsAs', 'Segundo Hogar');\n" +
+                        "insert into serviciosdepromociones values('Sudamérica-Casas', 'Floripa G. House', 'Segundo Hogar');\n" +
+                        "insert into serviciosdepromociones values('Miami-Viaje', 'Luxury south beach corner apartment', 'Segundo Hogar');\n" +
+                        "insert into serviciosdepromociones values('Miami-Viaje', 'Coche-Miami', 'Segundo Hogar');");
+    }
+    
+    
     
 }

@@ -43,4 +43,23 @@ public class DatosCiudades {
         return ciudades;
     }
     
+    public void insertCiudadesDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+
+        conn.close();
+        
+    }
+    
 }

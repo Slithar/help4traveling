@@ -16,6 +16,7 @@ import javax.swing.*;
 public class frmVisor extends javax.swing.JFrame {
     
     private String ruta = "";
+    private ifrmActualizarServicio ifrm = null;
     /**
      * Creates new form frmVisor
      */
@@ -24,6 +25,27 @@ public class frmVisor extends javax.swing.JFrame {
     }
     
     public frmVisor(String ruta){
+        //System.out.println("constructor");
+        initComponents();
+        this.ruta = ruta;
+        
+        setTitle("Visualizador de imágenes");
+        
+        
+        //this.setUndecorated(true);
+        
+        //System.out.println(ruta);
+        
+        PanelVisor panel = new PanelVisor();
+        
+        //System.out.println("hi");
+        
+        setContentPane(panel);
+        
+        //System.out.println("nuevo hola");
+    }
+    
+    public frmVisor(String ruta, ifrmActualizarServicio ifrm){
         //System.out.println("constructor");
         initComponents();
         this.ruta = ruta;
@@ -39,6 +61,7 @@ public class frmVisor extends javax.swing.JFrame {
         //System.out.println("hi");
         
         setContentPane(panel);
+        this.ifrm = ifrm;
         
         //System.out.println("nuevo hola");
     }
@@ -56,6 +79,11 @@ public class frmVisor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setName(""); // NOI18N
 
@@ -83,6 +111,11 @@ public class frmVisor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if(this.ifrm != null)
+            this.ifrm.setVisorAbierto(false);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -112,11 +145,11 @@ public class frmVisor extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frmVisor().setVisible(true);
             }
-        });
+        });*/
     }
     
     private class PanelVisor extends JPanel{
@@ -153,6 +186,10 @@ public class frmVisor extends javax.swing.JFrame {
         }
         
     }
+    
+    //private class OyenteVentana implements windowsListener{
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

@@ -12,6 +12,7 @@ import java.time.*;
  */
 public class DataCantidadReservasPromociones {
     private int cantidad;
+    private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int reserva;
@@ -21,16 +22,18 @@ public class DataCantidadReservasPromociones {
     public DataCantidadReservasPromociones() {
     }
 
-    public DataCantidadReservasPromociones(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String promocion, String proveedor) {
+    public DataCantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, int reserva, String promocion, String proveedor) {
         this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.reserva = reserva;
         this.promocion = promocion;
         this.proveedor = proveedor;
     }
-      public DataCantidadReservasPromociones(int cantidad, LocalDate fechaInicio, LocalDate fechaFin, String promocion, String proveedor) {
+      public DataCantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, String promocion, String proveedor) {
         this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.promocion = promocion;
@@ -83,6 +86,14 @@ public class DataCantidadReservasPromociones {
 
     public void setProveedor(String proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public int getTotalLinea() {
+        return totalLinea;
+    }
+
+    public void setTotalLinea(int totalLinea) {
+        this.totalLinea = totalLinea;
     }
     
     

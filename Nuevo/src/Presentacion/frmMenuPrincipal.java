@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +25,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
     private IControladorPromociones icprom;
+    
+    private frmProgresoDatos vProgreso;
     /**
      * Creates new form frmMenuPrincipal
      */
@@ -68,6 +72,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         System.out.println("CLIENTES: " + iccli.getCantClientes());*/
     }
     
+    public void setCursorFrame(Cursor c){
+        this.setCursor(c);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +86,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         mbBarra = new javax.swing.JMenuBar();
         mInicio = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
@@ -99,8 +108,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miConsServicios = new javax.swing.JMenuItem();
         miConsPromociones = new javax.swing.JMenuItem();
         miConsReservas = new javax.swing.JMenuItem();
+        mDatos = new javax.swing.JMenu();
+        miDatosDePrueba = new javax.swing.JMenuItem();
+        mEliminarDatos = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,6 +202,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.setText("Consultas");
 
         miConsClientes.setText("Clientes");
+        miConsClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsClientesActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsClientes);
 
         miConsProveedores.setText("Proveedores");
@@ -213,6 +232,26 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsReservas);
 
         mbBarra.add(mConsultas);
+
+        mDatos.setText("Datos del sistema");
+
+        miDatosDePrueba.setText("Cargar datos de prueba");
+        miDatosDePrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDatosDePruebaActionPerformed(evt);
+            }
+        });
+        mDatos.add(miDatosDePrueba);
+
+        mEliminarDatos.setText("Eliminar datos");
+        mEliminarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mEliminarDatosActionPerformed(evt);
+            }
+        });
+        mDatos.add(mEliminarDatos);
+
+        mbBarra.add(mDatos);
 
         setJMenuBar(mbBarra);
 
@@ -303,6 +342,95 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         nuevoPanel.add(vProveedores);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_miRegProveedoresActionPerformed
+
+    private void miConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsClientesActionPerformed
+        ifrmVerInfoClientes vVerInfoCliente = new ifrmVerInfoClientes(this.iccli);
+        nuevoPanel.add(vVerInfoCliente);
+        vVerInfoCliente.setVisible(true);
+    }//GEN-LAST:event_miConsClientesActionPerformed
+
+    private void miDatosDePruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDatosDePruebaActionPerformed
+        
+        
+        vProgreso = new frmProgresoDatos("Cargando datos de prueba");
+        vProgreso.setVisible(true);
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro/a de que desea cargar los datos de prueba?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0){
+            this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));
+            try{
+                
+                
+                this.icprov.eliminarImagenesUsuarios();
+                this.icprov.eliminarImagenesServicios();
+
+                this.iccat.deleteAllCategorias();
+                this.icprov.deleteAllProveedores();
+                this.icprom.deleteAllPromociones();
+                this.iccli.deleteAllClientes();
+
+                this.iccat.insertCategoriasDePrueba();
+                this.icprov.insertCiudadesDePrueba();
+                this.icprov.insertDatosProveedoresDePrueba();
+                this.icprom.insertDatosPromocionesDePrueba();
+                this.iccli.insertDatosClientesDePrueba();
+                
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+                
+                JOptionPane.showMessageDialog(this, "Se han cargado los datos de prueba de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                
+                vProgreso.setVisible(false);
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+        
+        
+        
+        
+        //JOptionPane.showMessageDialog(this, "Datos eliminados correctamente");
+        
+    }//GEN-LAST:event_miDatosDePruebaActionPerformed
+
+    private void mEliminarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mEliminarDatosActionPerformed
+        vProgreso = new frmProgresoDatos("Eliminando datos del sistema");
+        vProgreso.setVisible(true);
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro/a de que desea eliminar todos los datos del sistema?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0){
+            
+            try{
+                this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));
+                
+                this.icprov.eliminarImagenesUsuarios();
+                this.icprov.eliminarImagenesServicios();
+
+                this.iccat.deleteAllCategorias();
+                this.icprov.deleteAllProveedores();
+                this.icprom.deleteAllPromociones();
+                this.iccli.deleteAllClientes();
+
+                this.iccat.insertCategoriasDePrueba();
+                this.icprov.insertCiudadesDePrueba();
+                
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+                JOptionPane.showMessageDialog(this, "Se han eliminado los datos del sistema correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                vProgreso.setVisible(false);
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+    }//GEN-LAST:event_mEliminarDatosActionPerformed
     
         
     /**
@@ -350,7 +478,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu mConsultas;
+    private javax.swing.JMenu mDatos;
+    private javax.swing.JMenuItem mEliminarDatos;
     private javax.swing.JMenu mInicio;
     private javax.swing.JMenu mRegServicios;
     private javax.swing.JMenu mRegistros;
@@ -364,6 +495,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsProveedores;
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
+    private javax.swing.JMenuItem miDatosDePrueba;
     private javax.swing.JMenuItem miNuevaReserva;
     private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
