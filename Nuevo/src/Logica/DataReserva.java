@@ -19,7 +19,7 @@ public class DataReserva {
     private String cliente;
     private ArrayList<DataCantidadReservasServicios> serviciosReserva;
     private ArrayList<DataCantidadReservasPromociones> reservaPromociones;    
-    private String  estado;
+    private Estado estado;
     public DataReserva() {
     }
 
@@ -79,12 +79,12 @@ public class DataReserva {
     public void setReservaPromociones(ArrayList<DataCantidadReservasPromociones> reservaPromociones) {
         this.reservaPromociones = reservaPromociones;
     }
-        public String getEstado(){
+         public Estado getEstado(){
         return estado;
         
     }
-    public void setEstado(String estado){
-        this.estado=estado;
+    public void setEstado(String estado){        
+        this.estado = Estado.obtenerEstado(estado);
     }
     
 }

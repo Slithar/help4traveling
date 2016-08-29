@@ -99,7 +99,35 @@ public class DatosClientes {
         return reservas;
 
     }
+    public ArrayList datosReserva ()throws SQLException, ClassNotFoundException {
+        ArrayList<Reserva> reservas = new ArrayList();
+         Connection conn;
+         int indice = 0;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("select numero,estado from reservas ");
+        while (rs.next()) {
+            Reserva res= new Reserva();
+            res.setNumero(rs.getInt("numero"));
+            res.setEstado(rs.getString("estado"));
+            reservas.add(res);
+            indice++;
+        }
 
+        rs.close();
+      conn.close();
+        return reservas;
+    }
+    public void updateEstadoReserva(int numero,String estado) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareStatement("update reservas set estado=? where numero=? " );
+        pConsulta.setString(1, estado);
+        pConsulta.setInt(2, numero);
+        pConsulta.executeUpdate();
+    }
     public Reserva getReserva(String numeroRes) {
         Reserva dtaux = new Reserva();
         ArrayList<cantidadReservasPromociones> listProm = new ArrayList();
