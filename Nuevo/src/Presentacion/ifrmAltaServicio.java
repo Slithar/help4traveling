@@ -368,7 +368,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             //System.out.println(labelSeleccionado);
             //JOptionPane.showMessageDialog(null, e.getSource());
-            if(lstCategorias.getSelectedIndex() > -1){
+            
                 if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
                     if(rutaImagen2 == ""){
@@ -434,12 +434,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     rutaImagen3 = "";
                 }
                 else if(e.getSource() == miEliminarCategoria){
-
-                    DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-                    modelo.remove(lstCategorias.getSelectedIndex());
-                    lstCategorias.setModel(modelo);
+                    if(lstCategorias.getSelectedIndex() > -1){
+                        DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                        modelo.remove(lstCategorias.getSelectedIndex());
+                        lstCategorias.setModel(modelo);
+                    }
                 }
-            }
+            
         }
             
         
@@ -716,7 +717,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(lblEmpresa1)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb3)
@@ -733,7 +734,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSitioWeb2)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
