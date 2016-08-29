@@ -39,7 +39,7 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
         initComponents();
          setTitle("Actualizar estado reserva");
         Dimension tamanioVentana = this.getSize();
-        setLocation((1400 - tamanioVentana.width)/2, (780 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (745 - tamanioVentana.height)/2);
         
         this.iccli = iccli;
         DefaultTableModel model=  new DefaultTableModel(null, columnas);
