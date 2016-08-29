@@ -29,5 +29,7 @@ public interface IControladorClientes {
     public abstract HashMap<String, Promocion> getListaPromociones();
     public abstract void setListaPromociones(HashMap<String, Promocion> ListaPromociones);
     public abstract ArrayList<DataCliente> getClientes()throws SQLException, ClassNotFoundException;
+    public abstract void deleteAllClientes() throws SQLException, ClassNotFoundException;
+    public abstract void insertDatosClientesDePrueba() throws SQLException, ClassNotFoundException;
     
 }

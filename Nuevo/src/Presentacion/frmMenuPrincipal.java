@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +25,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
     private IControladorPromociones icprom;
+    
+    private frmProgresoDatos vProgreso;
     /**
      * Creates new form frmMenuPrincipal
      */
@@ -66,6 +70,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         System.out.println("CIUDADES: " + icprov.getCantCiudades());
         System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
         System.out.println("CLIENTES: " + iccli.getCantClientes());*/
+    }
+    
+    public void setCursorFrame(Cursor c){
+        this.setCursor(c);
     }
     
     /**
@@ -236,6 +244,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mDatos.add(miDatosDePrueba);
 
         mEliminarDatos.setText("Eliminar datos");
+        mEliminarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mEliminarDatosActionPerformed(evt);
+            }
+        });
         mDatos.add(mEliminarDatos);
 
         mbBarra.add(mDatos);
@@ -337,11 +350,87 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miConsClientesActionPerformed
 
     private void miDatosDePruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDatosDePruebaActionPerformed
-        this.icprov.eliminarImagenesUsuarios();;
-        this.icprov.eliminarImagenesServicios();
         
-        JOptionPane.showMessageDialog(this, "Datos eliminados correctamente");
+        
+        vProgreso = new frmProgresoDatos("Cargando datos de prueba");
+        vProgreso.setVisible(true);
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro/a de que desea cargar los datos de prueba?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0){
+            this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));
+            try{
+                
+                
+                this.icprov.eliminarImagenesUsuarios();
+                this.icprov.eliminarImagenesServicios();
+
+                this.iccat.deleteAllCategorias();
+                this.icprov.deleteAllProveedores();
+                this.icprom.deleteAllPromociones();
+                this.iccli.deleteAllClientes();
+
+                this.iccat.insertCategoriasDePrueba();
+                this.icprov.insertCiudadesDePrueba();
+                this.icprov.insertDatosProveedoresDePrueba();
+                this.icprom.insertDatosPromocionesDePrueba();
+                this.iccli.insertDatosClientesDePrueba();
+                
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+                
+                JOptionPane.showMessageDialog(this, "Se han cargado los datos de prueba de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                
+                vProgreso.setVisible(false);
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+        
+        
+        
+        
+        //JOptionPane.showMessageDialog(this, "Datos eliminados correctamente");
+        
     }//GEN-LAST:event_miDatosDePruebaActionPerformed
+
+    private void mEliminarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mEliminarDatosActionPerformed
+        vProgreso = new frmProgresoDatos("Eliminando datos del sistema");
+        vProgreso.setVisible(true);
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro/a de que desea eliminar todos los datos del sistema?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0){
+            
+            try{
+                this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));
+                
+                this.icprov.eliminarImagenesUsuarios();
+                this.icprov.eliminarImagenesServicios();
+
+                this.iccat.deleteAllCategorias();
+                this.icprov.deleteAllProveedores();
+                this.icprom.deleteAllPromociones();
+                this.iccli.deleteAllClientes();
+
+                this.iccat.insertCategoriasDePrueba();
+                this.icprov.insertCiudadesDePrueba();
+                
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+                JOptionPane.showMessageDialog(this, "Se han eliminado los datos del sistema correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                vProgreso.setVisible(false);
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+    }//GEN-LAST:event_mEliminarDatosActionPerformed
     
         
     /**

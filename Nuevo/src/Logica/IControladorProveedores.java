@@ -43,4 +43,7 @@ public interface IControladorProveedores {
     public abstract void setListaProveedores(HashMap<String, Proveedor> ListaProveedores);
     public abstract void eliminarImagenesUsuarios();    
     public abstract void eliminarImagenesServicios();
+    public abstract void deleteAllProveedores() throws SQLException, ClassNotFoundException;
+    public abstract void insertCiudadesDePrueba() throws SQLException, ClassNotFoundException;
+    public abstract void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException;
 }

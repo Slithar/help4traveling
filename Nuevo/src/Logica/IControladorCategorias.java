@@ -22,4 +22,6 @@ public interface IControladorCategorias {
     public abstract HashMap<String, Categoria> getListaCategorias();
     public abstract void setListaCategorias(HashMap<String, Categoria> ListaCategorias);
     public abstract boolean existeCategoria(String c) throws SQLException, ClassNotFoundException;
+    public abstract void deleteAllCategorias() throws SQLException, ClassNotFoundException;
+    public abstract void insertCategoriasDePrueba() throws SQLException, ClassNotFoundException;
 }

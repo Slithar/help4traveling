@@ -31,6 +31,7 @@ public class frmVisor extends javax.swing.JFrame {
         
         setTitle("Visualizador de imágenes");
         
+        
         //this.setUndecorated(true);
         
         //System.out.println(ruta);

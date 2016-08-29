@@ -8,6 +8,7 @@ import java.util.*;
 import java.sql.*;
 import Logica.Categoria;
 import Logica.Servicio;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -184,6 +185,48 @@ public class DatosCategorias {
         conn.close();
         
         return categorias;
+        
+    }
+    
+    public void deleteAllCategorias(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+                
+        /*st.executeUpdate("delete from categoriasdeservicios where nombreCategoria <> \"\";"
+                        + "delete from categoriasrelacionadas where categoriaHija <> \"\";\n" +
+                        "delete from categorias where nombre <> \"\";");*/
+        
+        conn.close();
+        
+    }
+    
+    public void insertCategoriasDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+             
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
         
     }
 
