@@ -7,7 +7,12 @@ package Presentacion;
 import Logica.*;
 import java.awt.*;
 import java.io.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.table.*;
 
 /**
  *
@@ -20,6 +25,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
      */
     
     private IControladorClientes iccli;
+    private String[] columnas = {"Nombre", "Proveedor", "Cantidad", "Precio unitario", "Total línea","Fecha inicio", "Fecha fin", "Tipo"};
+    private DefaultTableModel datosPromocionServ = new DefaultTableModel(null, columnas);
     
     public ifrmVerInfoClientes(IControladorClientes iccli) {
         initComponents();
@@ -38,6 +45,29 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         
         lblImagenPerfil.setSize(200, 200); 
         setImagenPerfil("src/Logica/perfiles/perfil.png");
+        
+        panelDatos.setVisible(false);
+        panelDatosReservas.setVisible(false);
+        
+        try{
+            DefaultListModel modelo = new DefaultListModel();
+            ArrayList<DataCliente> listDtCli =new ArrayList();
+            listDtCli=iccli.verInfoCliente();
+            //JOptionPane.showMessageDialog(this, listDtCli.size());
+            for(int i=0;i<listDtCli.size(); i++){
+               modelo.addElement(listDtCli.get(i).getNickname());
+            }
+            
+            lstClientes.setModel(modelo);
+        }
+        catch(SQLException ex){
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
     
     public ifrmVerInfoClientes() {
@@ -66,7 +96,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         panelClientes = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstClientes = new javax.swing.JList<>();
         btnBuscarCliente = new javax.swing.JButton();
         panelBusqueda = new javax.swing.JPanel();
         txtBusqueda = new javax.swing.JTextField();
@@ -94,7 +124,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         jEstado = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaProductos = new javax.swing.JTable();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
@@ -105,8 +135,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Seleccione cliente:");
 
-        jList1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        lstClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(lstClientes);
 
         btnBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBuscarCliente.setText("Aceptar");
@@ -211,6 +241,11 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
 
         btnAceptarReserva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAceptarReserva.setText("Aceptar");
+        btnAceptarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarReservaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelComboBoxLayout = new javax.swing.GroupLayout(panelComboBox);
         panelComboBox.setLayout(panelComboBoxLayout);
@@ -257,8 +292,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Productos:");
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProductos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -277,7 +312,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tablaProductos);
 
         javax.swing.GroupLayout panelDatosReservasLayout = new javax.swing.GroupLayout(panelDatosReservas);
         panelDatosReservas.setLayout(panelDatosReservasLayout);
@@ -403,21 +438,63 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        // TODO add your handling code here:
+        if(lstClientes.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "No se seleccionado ningún cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            try {
+                DataCliente dtCli=iccli.seleccionarCliente(lstClientes.getSelectedValue());
+                txtNombre.setText(dtCli.getNombre());
+                txtApellido.setText(dtCli.getApellido());
+                txtCorreo.setText(dtCli.getEmail());
+                txtFechaNacimiento.setText(String.valueOf(dtCli.getFechaNac().getDayOfMonth()) + "/"+String.valueOf(dtCli.getFechaNac().getMonthValue())+"/"+String.valueOf(dtCli.getFechaNac().getYear()) );
+                if(dtCli.getRutaImagen()==null){
+                    setImagenPerfil("src/logica/perfiles/perfil.png");
+                }
+                else {
+                    setImagenPerfil(dtCli.getRutaImagen());
+                }
+                panelDatosReservas.setVisible(false);
+                if(iccli.reservasCliente(lstClientes.getSelectedValue()).size()==0){
+                    cmbReservasCliente.addItem("No corresponde");
+                    btnAceptarReserva.setVisible(false);
+                    
+                }
+                else{
+                    ArrayList<DataReserva> listDtRes =iccli.reservasCliente(lstClientes.getSelectedValue());
+                    cmbReservasCliente.removeAllItems();
+                    for(int i=0;i<listDtRes.size();i++){
+                        cmbReservasCliente.addItem(String.valueOf(listDtRes.get(i).getNumero()));
+                    }
+                    btnAceptarReserva.setVisible(true);
+                    refrescarReservas();
+                    panelDatosReservas.setVisible(true);
+                    
+                }
+                panelDatos.setVisible(true);
+            } catch(SQLException ex){
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
-        /*DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
-
+        
+        
         try{
-            ArrayList<DataServicio> datosServicios = icprov.getServiciosPorBusqueda(txtBusqueda.getText());
-
-            for(int i = 0; i < datosServicios.size(); i++){
-                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+            DefaultListModel modelo = new DefaultListModel();
+            ArrayList<DataCliente> listDtCli =new ArrayList();
+            listDtCli=iccli.verInfoClienteBusqueda(txtBusqueda.getText());
+            //JOptionPane.showMessageDialog(this, listDtCli.size());
+            for(int i=0;i<listDtCli.size(); i++){
+               modelo.addElement(listDtCli.get(i).getNickname());
             }
-
-            tbServicios.setModel(modelo);
+            
+            lstClientes.setModel(modelo);
         }
         catch(SQLException ex){
             //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -425,7 +502,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }*/
+        }
+        
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
     private void lblImagenPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenPerfilMouseClicked
@@ -436,6 +514,51 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
+    private void btnAceptarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarReservaActionPerformed
+        refrescarReservas();
+            
+    }//GEN-LAST:event_btnAceptarReservaActionPerformed
+    
+    public void refrescarReservas(){
+        String selected =String.valueOf(cmbReservasCliente.getSelectedItem());
+            /*comentarioo*/
+            
+            //JOptionPane.showMessageDialog(this, selected);
+            
+            try{
+                datosPromocionServ = new DefaultTableModel(null, columnas);
+                DataReserva dtcant =this.iccli.getReserva(selected);
+                //this.jnickCliente.setText(dtcant.getCliente());
+                this.jPrecio.setText("U$S " + dtcant.getPrecio());
+                //this.jFecha.setText(dtcant.getFecha().toString());
+                this.jFecha.setText(dtcant.getFecha().getDayOfMonth() + "/" + dtcant.getFecha().getMonthValue() + "/" + dtcant.getFecha().getYear());
+                this.jEstado.setText(dtcant.getEstado());
+                //JOptionPane.showMessageDialog(this, dtcant.getCliente());
+
+                ArrayList <DataCantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);
+                ArrayList<DataCantidadReservasServicios>listServ=this.iccli.getReservasServ(selected);
+                if(listProm.size()>0){
+                    for(int i=0;i<listProm.size();i++){
+                        DataCantidadReservasPromociones promAux=listProm.get(i);
+                        Object[] fila = {promAux.getPromocion(), promAux.getProveedor(), promAux.getCantidad(), promAux.getTotalLinea() / promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"PROMOCIÓN"};
+
+                        datosPromocionServ.addRow(fila);
+                    }
+                    tablaProductos.setModel(datosPromocionServ);
+                }
+
+                if(listServ.size()>0){
+                    for(int i=0;i<listServ.size();i++){
+                        DataCantidadReservasServicios promAux=listServ.get(i);
+                        Object[] fila = {promAux.getServicio(), promAux.getProveedor(), promAux.getCantidad(), promAux.getTotalLinea() / promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio().getDayOfMonth() + "/" + promAux.getFechaInicio().getMonthValue() + "/" + promAux.getFechaInicio().getYear(),promAux.getFechaFin().getDayOfMonth() + "/" + promAux.getFechaFin().getMonthValue()+ "/" + promAux.getFechaFin().getYear(),"SERVICIO"};
+
+                        datosPromocionServ.addRow(fila);
+                    }
+                    tablaProductos.setModel(datosPromocionServ);
+                }
+                panelDatosReservas.setVisible(true);
+            }catch(Exception e){}
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarReserva;
@@ -448,17 +571,16 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JLabel jPrecio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlabel2;
     private javax.swing.JLabel jlabel3;
     private javax.swing.JLabel jlabel4;
     private javax.swing.JLabel jlabel5;
     private javax.swing.JLabel jlabel6;
     private javax.swing.JLabel lblImagenPerfil;
+    private javax.swing.JList<String> lstClientes;
     private javax.swing.JPanel panelBusqueda;
     private javax.swing.JPanel panelClientes;
     private javax.swing.JPanel panelComboBox;
@@ -466,6 +588,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelDatosReservas;
     private javax.swing.JPanel panelReservas;
     private javax.swing.JPanel panelVerInfoClientes;
+    private javax.swing.JTable tablaProductos;
     private javax.swing.JLabel txtApellido;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JLabel txtCorreo;

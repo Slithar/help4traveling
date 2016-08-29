@@ -229,16 +229,75 @@ public class ControladorClientes implements IControladorClientes {
            return dataListServ;
       }
       
-    public ArrayList verInfoCliente()throws SQLException, ClassNotFoundException {
-        DataCliente clientes = new DataCliente();
+    public ArrayList<DataCliente> verInfoCliente()throws SQLException, ClassNotFoundException {
+        
         DatosClientes dataux = new DatosClientes();
-        ArrayList<String> nickCli = new ArrayList();
-        ResultSet rs = null;
+        ArrayList<Cliente> listCli =dataux.verInfoCliente();
+        ArrayList<DataCliente> nickCli = new ArrayList();
+        for(int i=0;i<listCli.size();i++){
+            DataCliente clientes = new DataCliente();
+            clientes.setNickname(listCli.get(i).getNickname());
+            nickCli.add(clientes);
+        }
       
 
-        return dataux.verInfoReserva();
+        return nickCli;
     }
     
+    public ArrayList<DataCliente> verInfoClienteBusqueda(String nickname) throws SQLException, ClassNotFoundException{
+        DatosClientes dataux = new DatosClientes();
+        Cliente c = new Cliente();
+        c.setNickname(nickname);
+        ArrayList<Cliente> listCli =dataux.verInfoClienteBusqueda(c.getNickname());
+        ArrayList<DataCliente> nickCli = new ArrayList();
+        for(int i=0;i<listCli.size();i++){
+            DataCliente clientes = new DataCliente();
+            clientes.setNickname(listCli.get(i).getNickname());
+            nickCli.add(clientes);
+        }
+      
+
+        return nickCli;
+    }
+    
+    public DataCliente seleccionarCliente(String nickname) throws SQLException, ClassNotFoundException {
+        DatosClientes dataux = new DatosClientes();
+        Cliente c = new Cliente();
+        DataCliente dtc = new DataCliente();
+        c.setNickname(nickname);
+        Cliente cli=dataux.seleccionarCliente(c.getNickname());
+        dtc.setNickname(cli.getNickname());
+        dtc.setNombre(cli.getNombre());
+        dtc.setApellido(cli.getApellido());
+        dtc.setEmail(cli.getEmail());
+        dtc.setFechaNac(cli.getFechaNac());
+        dtc.setRutaImagen(cli.getImagenUsuario().getPath());
+        /*HashMap<Integer,DataReserva> listRes=new HashMap<Integer,DataReserva>();
+        Iterator it = cli.getReservasCliente().entrySet().iterator();
+        
+        while(it.hasNext()){
+            Map.Entry res = (Map.Entry) it.next();
+            //Cliente cliente = (Cliente) c.getValue();
+            DataReserva r = new DataReserva();
+            r.setNumero((Integer) res.getKey());
+            listRes.put(r.getNumero(), r);
+        }
+        dtc.setReservas(listRes);*/
+        return dtc;
+    }
+    public ArrayList<DataReserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
+        DatosClientes dataux= new DatosClientes();
+        Cliente c= new Cliente ();
+        c.setNickname(nickname);
+        ArrayList<Reserva> datosRes =dataux.reservasCliente(c.getNickname());
+         ArrayList<DataReserva> dtRes =new ArrayList<DataReserva>();
+        for(int i =0;i<datosRes.size();i++){
+            DataReserva dtReserva =new DataReserva();
+            dtReserva.setNumero(datosRes.get(i).getNumero());
+           dtRes.add(dtReserva);
+        }
+        return dtRes;
+    }
     public ArrayList<DataCliente> getClientes()throws SQLException, ClassNotFoundException{
         ArrayList<DataCliente> listResult = new ArrayList ();
         DatosClientes datCli = new DatosClientes();
@@ -247,7 +306,7 @@ public class ControladorClientes implements IControladorClientes {
         ArrayList<Cliente> listClientes =datCli.selectAllObjetosClientes();
         for(int i=0;i<listClientes.size();i++){
             Imagen imagenPerf = datosU.selectImagenPerfil(listClientes.get(i));
-            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath()));
+            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath(), new HashMap()));
         }
         return listResult;
     }

@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import Logica.*;
+import java.sql.SQLException;
 
 /**
  *
@@ -34,6 +36,14 @@ public class TesteoProveedores {
     
     @After
     public void tearDown() {
+    }
+    
+    @org.junit.Test 
+    public void testExisteNickname() throws SQLException, ClassNotFoundException {
+        IControladorProveedores icprov = new ControladorProveedores();
+        boolean resultado = icprov.existeNickname("nickname");
+        assertEquals(false, resultado);
+        
     }
 
     // TODO add test methods here.

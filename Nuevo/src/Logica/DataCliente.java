@@ -6,6 +6,7 @@
 package Logica;
 
 import java.time.*;
+import java.util.*;
 
 /**
  *
@@ -19,18 +20,20 @@ public class DataCliente {
     private String email;
     private LocalDate fechaNac;
     private String rutaImagen;
+    private HashMap<Integer, DataReserva> reservas;
 
     public DataCliente() {
         
     }
 
-    public DataCliente(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaImagen) {
+    public DataCliente(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaImagen, HashMap reservas) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNac = fechaNac;
         this.rutaImagen = rutaImagen;
+        this.reservas = reservas;
     }
 
     public String getApellido() {
@@ -39,6 +42,14 @@ public class DataCliente {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNickname() {
@@ -72,6 +83,15 @@ public class DataCliente {
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
+
+    public HashMap<Integer, DataReserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(HashMap<Integer, DataReserva> reservas) {
+        this.reservas = reservas;
+    }
+    
     
      
     

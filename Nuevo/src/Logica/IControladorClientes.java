@@ -31,5 +31,16 @@ public interface IControladorClientes {
     public abstract ArrayList<DataCliente> getClientes()throws SQLException, ClassNotFoundException;
     public abstract void deleteAllClientes() throws SQLException, ClassNotFoundException;
     public abstract void insertDatosClientesDePrueba() throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataCliente> verInfoCliente() throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataCliente> verInfoClienteBusqueda(String nickname) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataReserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException;
+    /**
+     *
+     * @param nickname
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public abstract DataCliente seleccionarCliente(String nickname) throws SQLException, ClassNotFoundException;
     
 }
