@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorClientes.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorClientes.java</span></div><h1>ControladorClientes.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+
+import Datos.*;
+import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.*;
+
+/**
+ *
+ * @author usuario
+ */
+public class ControladorClientes implements IControladorClientes {
+    
+    private HashMap&lt;String, Cliente&gt; ListaClientes;
+<span class="fc" id="L21">    private HashMap&lt;String, Proveedor&gt; ListaProveedores = new HashMap&lt;String, Proveedor&gt;();</span>
+<span class="fc" id="L22">    private HashMap&lt;String, Promocion&gt; ListaPromociones = new HashMap&lt;String, Promocion&gt;();</span>
+    
+<span class="fc" id="L24">    public ControladorClientes() {</span>
+
+<span class="fc" id="L26">    }</span>
+
+    public HashMap&lt;String, Proveedor&gt; getListaProveedores() {
+<span class="nc" id="L29">        return ListaProveedores;</span>
+    }
+
+    public void setListaProveedores(HashMap&lt;String, Proveedor&gt; ListaProveedores) {
+<span class="nc" id="L33">        this.ListaProveedores = ListaProveedores;</span>
+<span class="nc" id="L34">    }</span>
+
+    public HashMap&lt;String, Promocion&gt; getListaPromociones() {
+<span class="nc" id="L37">        return ListaPromociones;</span>
+    }
+
+    public void setListaPromociones(HashMap&lt;String, Promocion&gt; ListaPromociones) {
+<span class="nc" id="L41">        this.ListaPromociones = ListaPromociones;</span>
+<span class="nc" id="L42">    }</span>
+    
+    
+    
+    @Override
+    public void actualizarClientes() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L48">        ListaClientes = new HashMap&lt;String, Cliente&gt;();</span>
+<span class="nc" id="L49">        DatosClientes clientes = new DatosClientes();</span>
+<span class="nc" id="L50">        DatosUsuarios usuarios = new DatosUsuarios();</span>
+<span class="nc" id="L51">        ArrayList&lt;Cliente&gt; cli = clientes.selectAllObjetosClientes();</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for(int i = 0; i &lt; cli.size(); i++){</span>
+<span class="nc" id="L53">            System.out.println(&quot;CLIENTE: &quot; + cli.get(i).getNickname());</span>
+<span class="nc" id="L54">            cli.get(i).setImagenUsuario(usuarios.selectImagenPerfil(cli.get(i)));</span>
+<span class="nc" id="L55">            HashMap&lt;Integer, Reserva&gt; reservas = new HashMap&lt;Integer, Reserva&gt;();</span>
+<span class="nc" id="L56">            ArrayList&lt;Reserva&gt; resultadoReservas = clientes.selectReservasCliente(cli.get(i));</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            for(int j = 0; j &lt; resultadoReservas.size(); j++){</span>
+<span class="nc" id="L58">                System.out.println(&quot; --&quot; + resultadoReservas.get(j).getNumero());</span>
+<span class="nc" id="L59">                reservas.put(resultadoReservas.get(j).getNumero(), resultadoReservas.get(j));</span>
+            }
+<span class="nc" id="L61">            cli.get(i).setReservasCliente(reservas);</span>
+            //System.out.println(&quot;***** &quot; + cli.get(i).getNickname() + &quot; *****&quot;);
+<span class="nc" id="L63">            ListaClientes.put(cli.get(i).getNickname(), cli.get(i));</span>
+            //cli.get(i).setReservasCliente();
+        }
+        
+        //ACÁ VOY A ASOCIAR CADA RESERVA DE CLIENTE A CANTIDAD_RESERVA_PROMOCIONES O CANTIDAD_RESERVA_SERVICIOS
+        
+<span class="nc" id="L69">        Iterator it = ListaClientes.entrySet().iterator();</span>
+        
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        while(it.hasNext()){</span>
+<span class="nc" id="L72">            Map.Entry c = (Map.Entry) it.next();</span>
+<span class="nc" id="L73">            Cliente cliente = (Cliente) c.getValue();</span>
+            
+<span class="nc" id="L75">            Iterator itReserva = cliente.getReservasCliente().entrySet().iterator();</span>
+            
+<span class="nc" id="L77">            System.out.println(&quot;CLIENTE: &quot;+ cliente.getNickname());</span>
+            
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            while(itReserva.hasNext()){</span>
+<span class="nc" id="L80">                Map.Entry re = (Map.Entry) itReserva.next();</span>
+<span class="nc" id="L81">                Reserva r = (Reserva) re.getValue();</span>
+<span class="nc" id="L82">                System.out.println(&quot; - RESERVA: &quot; + r.getNumero());</span>
+<span class="nc" id="L83">                ArrayList&lt;cantidadReservasPromociones&gt; crp = clientes.selectPromocionesReserva(r.getNumero());</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                if(crp.size() &gt; 0){</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                    for(int i = 0; i &lt; crp.size(); i++){</span>
+<span class="nc" id="L86">                        crp.get(i).setProveedor((Proveedor) ListaProveedores.get(crp.get(i).getNombreProveedor()));</span>
+<span class="nc" id="L87">                        System.out.println(&quot;  ** PROVEEDOR PROMOCIÓN: &quot; + crp.get(i).getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L88">                        crp.get(i).setPromocion((Promocion) ListaPromociones.get(crp.get(i).getNombrePromocion()));</span>
+<span class="nc" id="L89">                        System.out.println(&quot;  ** PROMOCION: &quot; + crp.get(i).getPromocion().getNombre());</span>
+                    }
+<span class="nc" id="L91">                    r.setReservacantPromociones(crp);</span>
+                }
+                
+                
+<span class="nc" id="L95">                ArrayList&lt;cantidadReservasServicios&gt; crs = clientes.selectServiciosReserva(r.getNumero());</span>
+                
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                if(crs.size() &gt; 0){</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    for(int i = 0; i &lt; crs.size(); i++){</span>
+                        
+<span class="nc" id="L100">                        crs.get(i).setProveedor((Proveedor) ListaProveedores.get(crs.get(i).getNombreProveedor()));</span>
+<span class="nc" id="L101">                        System.out.println(&quot;  ** PROVEEDOR SERVICIO: &quot; + crs.get(i).getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L102">                        HashMap&lt;String, Servicio&gt; servs = crs.get(i).getProveedor().getServicios();</span>
+<span class="nc" id="L103">                        crs.get(i).setServicio(servs.get(crs.get(i).getNombreServicio()));</span>
+<span class="nc" id="L104">                        System.out.println(&quot;  ** SERVICIO: &quot; + crs.get(i).getServicio().getNombreServicio());</span>
+                    }
+
+<span class="nc" id="L107">                    r.setServiciosReserva(crs);</span>
+                }
+                
+<span class="nc" id="L110">            }</span>
+<span class="nc" id="L111">        }</span>
+<span class="nc" id="L112">    }</span>
+
+    @Override
+    public int getCantClientes() {
+<span class="nc" id="L116">        return ListaClientes.size();</span>
+    }
+
+    @Override
+    public boolean correoValido(String correo) {
+<span class="nc" id="L121">        Cliente c = new Cliente();</span>
+<span class="nc" id="L122">        c.setEmail(correo);</span>
+<span class="nc" id="L123">        return c.correoValido();</span>
+    }
+
+    @Override
+    public boolean copiarPerfil(String nickname, String rutaImagen) throws IOException {
+<span class="nc" id="L128">        Cliente c = new Cliente();</span>
+<span class="nc" id="L129">        c.setNickname(nickname);</span>
+<span class="nc" id="L130">        c.setImagen(rutaImagen);</span>
+
+        try {
+<span class="nc" id="L133">            c.copiarPerfil();</span>
+<span class="nc" id="L134">            return true;</span>
+<span class="nc" id="L135">        } catch (IOException ex) {</span>
+<span class="nc" id="L136">            return false;</span>
+        }
+
+    }
+
+    @Override
+    public boolean existeNickname(String c) throws SQLException, ClassNotFoundException {
+
+<span class="nc" id="L144">        DatosUsuarios cliente = new DatosUsuarios();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (cliente.selectCountUsuarios(c) == 0) {</span>
+<span class="nc" id="L146">            return false;</span>
+        } else {
+<span class="nc" id="L148">            return true;</span>
+        }
+    }
+
+    @Override
+    public void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L154">        DatosClientes cliente = new DatosClientes();</span>
+<span class="nc" id="L155">        Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap&lt;Integer, Reserva&gt;());</span>
+<span class="nc" id="L156">        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (rutaImagen != &quot;perfiles/perfil.PNG&quot;) {</span>
+<span class="nc" id="L158">            cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());</span>
+        }
+<span class="nc" id="L160">    }</span>
+
+    public ArrayList verInfoReserva() throws SQLException, ClassNotFoundException {
+        //solo obtiene los numeros de la reserva
+<span class="nc" id="L164">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L165">        return dataux.verInfoReserva();</span>
+    }
+  
+    public DataReserva getReserva(String numeroRes){
+<span class="nc" id="L169">        DataReserva dtAux =new  DataReserva ();</span>
+<span class="nc" id="L170">        DatosClientes datCli = new DatosClientes();</span>
+<span class="nc" id="L171">        ArrayList &lt;DataCantidadReservasPromociones&gt; listProm= new ArrayList();</span>
+<span class="nc" id="L172">        ArrayList &lt;DataCantidadReservasServicios&gt; listServ= new ArrayList();</span>
+<span class="nc" id="L173">        Reserva res= datCli.getReserva(numeroRes);</span>
+<span class="nc" id="L174">     dtAux.setNumero(res.getNumero());</span>
+<span class="nc" id="L175">     dtAux.setCliente(res.getCliente().getNickname());</span>
+<span class="nc" id="L176">     dtAux.setPrecio(res.getPrecio());</span>
+<span class="nc" id="L177">     dtAux.setFecha(res.getFecha());</span>
+<span class="nc" id="L178">     dtAux.setEstado(String.valueOf(res.getEstado()));</span>
+     /*if(res.getReservacantPromociones().size() &gt; 0){
+         for(int i=0;i&lt;res.getReservacantPromociones().size();i++){
+            cantidadReservasPromociones promAux= res.getReservacantPromociones().get(i);
+            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());
+            listProm.add(dataProm);
+
+
+         }
+         for(int i=0;i&lt;res.getServiciosReserva().size();i++){
+             cantidadReservasServicios promServ =res.getServiciosReserva().get(i);
+             DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(),promServ.getFechaInicio(),promServ.getFechaFin(),0,promServ.getNombreS(),promServ.getProveedor().getNombreEmpresa());
+             listServ.add(promServi);
+
+         }
+     }*/
+          
+<span class="nc" id="L195">     return dtAux;</span>
+    //return new DataReserva();
+        
+    }
+    @Override
+      public ArrayList getReservasPromo(String numeroProm){
+<span class="nc" id="L201">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L202">        ArrayList&lt;cantidadReservasPromociones&gt; listProm = new ArrayList();</span>
+<span class="nc" id="L203">        listProm = dataux.getReservasPromo(numeroProm);</span>
+        
+<span class="nc" id="L205">        ArrayList&lt;DataCantidadReservasPromociones&gt; dataListProm = new ArrayList&lt;DataCantidadReservasPromociones&gt;();</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        for(int i=0;i&lt;listProm.size();i++){</span>
+<span class="nc" id="L207">            cantidadReservasPromociones promAux= (cantidadReservasPromociones) listProm.get(i);</span>
+<span class="nc" id="L208">            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L209">            dataListProm.add(dataProm);</span>
+        }
+        
+<span class="nc" id="L212">        return dataListProm;</span>
+        //return new ArrayList();
+      }
+      
+    @Override
+       public ArrayList getReservasServ(String numeroServ){
+<span class="nc" id="L218">          DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L219">          ArrayList &lt;cantidadReservasServicios&gt; listServ= new ArrayList();</span>
+<span class="nc" id="L220">          listServ = dataux.getServiciosPromo(numeroServ);</span>
+          
+<span class="nc" id="L222">          ArrayList&lt;DataCantidadReservasServicios&gt; dataListServ = new ArrayList&lt;DataCantidadReservasServicios&gt;();</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">           for(int i=0;i&lt;listServ.size();i++){</span>
+<span class="nc" id="L224">         cantidadReservasServicios promServ = listServ.get(i);</span>
+<span class="nc" id="L225">         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(), promServ.getTotalLinea(), promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L226">         dataListServ.add(promServi);</span>
+         
+     }     
+<span class="nc" id="L229">           return dataListServ;</span>
+      }
+      
+    public ArrayList verInfoCliente()throws SQLException, ClassNotFoundException {
+<span class="nc" id="L233">        DataCliente clientes = new DataCliente();</span>
+<span class="nc" id="L234">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L235">        ArrayList&lt;String&gt; nickCli = new ArrayList();</span>
+<span class="nc" id="L236">        ResultSet rs = null;</span>
+      
+
+<span class="nc" id="L239">        return dataux.verInfoReserva();</span>
+    }
+    
+    public ArrayList&lt;DataCliente&gt; getClientes()throws SQLException, ClassNotFoundException{
+<span class="nc" id="L243">        ArrayList&lt;DataCliente&gt; listResult = new ArrayList ();</span>
+<span class="nc" id="L244">        DatosClientes datCli = new DatosClientes();</span>
+<span class="nc" id="L245">        DatosUsuarios datosU =new DatosUsuarios();</span>
+        
+<span class="nc" id="L247">        ArrayList&lt;Cliente&gt; listClientes =datCli.selectAllObjetosClientes();</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        for(int i=0;i&lt;listClientes.size();i++){</span>
+<span class="nc" id="L249">            Imagen imagenPerf = datosU.selectImagenPerfil(listClientes.get(i));</span>
+<span class="nc" id="L250">            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath()));</span>
+        }
+<span class="nc" id="L252">        return listResult;</span>
+    }
+
+    @Override
+    public void deleteAllClientes() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L257">        DatosClientes dc = new DatosClientes();</span>
+<span class="nc" id="L258">        dc.deleteAllClientes(&quot;delete from imagenesusuarios where ruta &lt;&gt; \&quot;\&quot;;\n&quot; +</span>
+                        &quot;delete from proveedores where nombreEmpresa &lt;&gt; \&quot;\&quot;;\n&quot; +
+                        &quot;delete from reservas where numero &gt; 0;\n&quot; +
+                        &quot;delete from usuarios where nickname &lt;&gt; \&quot;\&quot;;\n&quot; +
+                        &quot;\n&quot; +
+                        &quot;ALTER TABLE reservas AUTO_INCREMENT=1;&quot;);
+<span class="nc" id="L264">    }</span>
+
+    @Override
+    public void insertDatosClientesDePrueba() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L268">        DatosClientes dc = new DatosClientes();</span>
+<span class="nc" id="L269">        dc.insertDatosClientesDePrueba(&quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 1100, 'FACTURADA', 'oWood');\n&quot; +</span>
+                        &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 3050, 'CANCELADA', 'eWatson');\n&quot; +
+                        &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-3-5', 135, 'PAGADA', 'BruceS');\n&quot; +
+                        &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-5-8', 600, 'PAGADA', 'JeffW');\n&quot; +
+                        &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 200, 'REGISTRADA', 'oWood');\n&quot; +
+                        &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 542, 'REGISTRADA', 'eWatson');\n&quot; +
+                        &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 1700, 'REGISTRADA', 'BruceS');\n&quot; +
+                        &quot;insert into cantidadreservaspromociones values(3, 'Sudamérica-Casas', 'Segundo Hogar', 1, 135, '2016-3-5', '2016-4-2', 135);\n&quot; +
+                        &quot;insert into cantidadreservaspromociones values(6, 'Miami-Viaje', 'Segundo Hogar', 1, 462, '2016-8-7', '2016-8-14', 462);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(1, 'Euro-Vuelo-S', 'Iberia', 1, 1100, '2016-1-1', '2016-1-1', 1100);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(2, 'Euro-Vuelo-S', 'Iberia', 2, 2200, '2016-1-1', '2016-1-1', 1100);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(2, 'Euro-Vuelo-LC', 'Iberia', 1, 850, '2016-1-1', '2016-1-1', 850);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(4, 'Euro-Car-2', 'EuropCar', 1, 300, '2016-5-8', '2016-5-12', 300);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(4, 'Euro-Car-3', 'EuropCar', 1, 300, '2016-5-8', '2016-5-12', 300);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(5, 'Air-France-FC', 'AirFrance', 2, 200, '2016-8-7', '2016-8-10', 100);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(6, 'Casa para p4 BsAs', 'Segundo Hogar', 1, 80, '2016-8-14', '2016-8-21', 80);\n&quot; +
+                        &quot;insert into cantidadreservasservicios values(7, 'Euro-Vuelo-LC', 'Iberia', 2, 1700, '2016-8-7', '2016-8-7', 850);&quot;);
+<span class="nc" id="L286">    }</span>
+    
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

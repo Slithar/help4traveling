@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosCategorias.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosCategorias.java</span></div><h1>DatosCategorias.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Datos;
+import java.util.*;
+import java.sql.*;
+import Logica.Categoria;
+import Logica.Servicio;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author usuario
+ */
+public class DatosCategorias {
+    
+    //private ConexionBD conexion;
+    
+<span class="nc" id="L21">    public DatosCategorias(){</span>
+        //conexion = new ConexionBD();
+<span class="nc" id="L23">    }</span>
+    
+    public ArrayList selectCategoriasPadres() throws SQLException, ClassNotFoundException{
+        //int indice = 0;
+        
+<span class="nc" id="L28">        ArrayList&lt;Categoria&gt; resultado = new ArrayList();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L32">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L34">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L36">        Statement st = conn.createStatement();</span>
+        
+<span class="nc" id="L38">        ResultSet rs = st.executeQuery(&quot;select nombre from categorias where nombre not in(select categoriaHija from categoriasrelacionadas)&quot;);</span>
+        
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L41">            Categoria c = new Categoria(rs.getString(&quot;nombre&quot;), &quot;&quot;, new ArrayList());</span>
+<span class="nc" id="L42">            resultado.add(c);</span>
+            //indice++;
+<span class="nc" id="L44">        }</span>
+        
+<span class="nc" id="L46">        rs.close();</span>
+        //conexion.cerrar();
+<span class="nc" id="L48">        conn.close();</span>
+        
+<span class="nc" id="L50">        return resultado;</span>
+    }
+    
+    public ArrayList&lt;Categoria&gt; selectCategoriasHijas(String categoria) throws SQLException, ClassNotFoundException{
+        //int indice = 0;
+        
+<span class="nc" id="L56">        ArrayList&lt;Categoria&gt; resultado = new ArrayList();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L60">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L62">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L64">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select categoriaHija from categoriasrelacionadas where categoriaPadre = ?&quot;);</span>
+        
+<span class="nc" id="L66">        pConsulta.setString(1, categoria);</span>
+        
+<span class="nc" id="L68">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L71">            Categoria c = new Categoria(rs.getString(&quot;categoriaHija&quot;), &quot;&quot;, new ArrayList());</span>
+<span class="nc" id="L72">            resultado.add(c);</span>
+            //indice++;
+<span class="nc" id="L74">        }</span>
+        
+<span class="nc" id="L76">        rs.close();</span>
+        //conexion.cerrar();
+<span class="nc" id="L78">        conn.close();</span>
+        
+<span class="nc" id="L80">        return resultado;</span>
+    }
+
+
+    
+    public int agregarCategoriaPadre(String nombre) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L88">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L90">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L92">        PreparedStatement pConsulta = conn.prepareStatement(&quot;INSERT INTO categorias VALUES(?)&quot;);</span>
+        
+<span class="nc" id="L94">        pConsulta.setString(1, nombre);</span>
+        
+<span class="nc" id="L96">        int rows = pConsulta.executeUpdate();</span>
+        
+        //conexion.cerrar();
+        
+<span class="nc" id="L100">        conn.close();</span>
+
+<span class="nc" id="L102">        return rows;</span>
+    }
+    public boolean agregarNuevaCategoriaHija(String c, String padre) throws SQLException,ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L107">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L109">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L111">        PreparedStatement pConsulta = conn.prepareStatement(&quot;INSERT INTO categoriasrelacionadas VALUES (?,?)&quot;); </span>
+        
+<span class="nc" id="L113">        pConsulta.setString(1,padre);</span>
+        
+<span class="nc" id="L115">        pConsulta.setString(2, c);</span>
+        
+<span class="nc" id="L117">        int rows = pConsulta.executeUpdate();</span>
+        
+        
+        boolean resultado;
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if(rows&gt;0){</span>
+<span class="nc" id="L122">            resultado = true;</span>
+        }else{
+<span class="nc" id="L124">            resultado = false;</span>
+        }
+        
+        //conexion.cerrar();
+        
+<span class="nc" id="L129">        conn.close();</span>
+        
+<span class="nc" id="L131">        return resultado;</span>
+        
+        
+    }
+    public ArrayList existeCategoria(String c) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L138">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L140">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L142">        PreparedStatement pConsulta = conn.prepareStatement(&quot;SELECT * FROM categorias WHERE nombre=?&quot;); </span>
+        
+<span class="nc" id="L144">        pConsulta.setString(1,c);</span>
+        
+        
+<span class="nc" id="L147">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L149">        ArrayList cates = new ArrayList();</span>
+        
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L152">            Categoria categoria = new Categoria(rs.getString(&quot;nombre&quot;), &quot;&quot;, new ArrayList());</span>
+<span class="nc" id="L153">            cates.add(categoria);</span>
+            //indice 
+<span class="nc" id="L155">        }</span>
+            
+<span class="nc" id="L157">        rs.close();</span>
+        
+        //conexion.cerrar();
+        
+<span class="nc" id="L161">        conn.close();// He hecho un cambio para pablo</span>
+        
+<span class="nc" id="L163">        return cates;</span>
+    }
+    
+    public ArrayList&lt;Categoria&gt; selectAllCategorias() throws SQLException, ClassNotFoundException{
+        
+<span class="nc" id="L168">        ArrayList&lt;Categoria&gt; categorias = new ArrayList&lt;Categoria&gt;();</span>
+        
+<span class="nc" id="L170">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L174">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L176">        Statement st = conn.createStatement();</span>
+        
+<span class="nc" id="L178">        ResultSet rs = st.executeQuery(&quot;select * from categorias order by nombre&quot;);</span>
+        
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L181">            categorias.add(new Categoria(rs.getString(&quot;nombre&quot;), &quot;&quot;, new ArrayList()));</span>
+        }
+        
+<span class="nc" id="L184">        rs.close();</span>
+<span class="nc" id="L185">        conn.close();</span>
+        
+<span class="nc" id="L187">        return categorias;</span>
+        
+    }
+    
+    public void deleteAllCategorias(String s) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L192">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L196">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L198">        Statement st = conn.createStatement();</span>
+        
+<span class="nc" id="L200">        String[] sql = s.split(&quot;;&quot;);</span>
+        
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
+<span class="nc" id="L203">            st.executeUpdate(sql[i]);</span>
+        }
+                
+        /*st.executeUpdate(&quot;delete from categoriasdeservicios where nombreCategoria &lt;&gt; \&quot;\&quot;;&quot;
+                        + &quot;delete from categoriasrelacionadas where categoriaHija &lt;&gt; \&quot;\&quot;;\n&quot; +
+                        &quot;delete from categorias where nombre &lt;&gt; \&quot;\&quot;;&quot;);*/
+        
+<span class="nc" id="L210">        conn.close();</span>
+        
+<span class="nc" id="L212">    }</span>
+    
+    public void insertCategoriasDePrueba(String s) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L215">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L219">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L221">        Statement st = conn.createStatement();</span>
+             
+<span class="nc" id="L223">        String[] sql = s.split(&quot;;&quot;);</span>
+        
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
+<span class="nc" id="L226">            st.executeUpdate(sql[i]);</span>
+        }
+        
+<span class="nc" id="L229">        conn.close();</span>
+        
+<span class="nc" id="L231">    }</span>
+
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

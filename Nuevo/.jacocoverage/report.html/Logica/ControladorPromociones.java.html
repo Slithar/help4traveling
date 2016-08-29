@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorPromociones.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorPromociones.java</span></div><h1>ControladorPromociones.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+
+import Datos.DatosPromociones;
+import java.io.File;
+import java.sql.SQLException;
+import java.util.*;
+
+/**
+ *
+ * @author usuario
+ */
+public class ControladorPromociones implements IControladorPromociones{
+    
+<span class="fc" id="L19">    private HashMap&lt;String, Proveedor&gt; ListaProveedores = new HashMap&lt;String, Proveedor&gt;();</span>
+    private HashMap&lt;String, Promocion&gt; ListaPromociones;
+    
+<span class="fc" id="L22">    public ControladorPromociones(){</span>
+        
+<span class="fc" id="L24">    }</span>
+
+    public HashMap&lt;String, Proveedor&gt; getListaProveedores() {
+<span class="nc" id="L27">        return ListaProveedores;</span>
+    }
+
+    public void setListaProveedores(HashMap&lt;String, Proveedor&gt; ListaProveedores) {
+<span class="nc" id="L31">        this.ListaProveedores = ListaProveedores;</span>
+<span class="nc" id="L32">    }</span>
+
+    public HashMap&lt;String, Promocion&gt; getListaPromociones() {
+<span class="nc" id="L35">        return ListaPromociones;</span>
+    }
+
+    public void setListaPromociones(HashMap&lt;String, Promocion&gt; ListaPromociones) {
+<span class="nc" id="L39">        this.ListaPromociones = ListaPromociones;</span>
+<span class="nc" id="L40">    }</span>
+    
+    public void actualizarPromociones() throws SQLException, ClassNotFoundException{
+<span class="nc" id="L43">        DatosPromociones promociones = new DatosPromociones();</span>
+<span class="nc" id="L44">        ListaPromociones = new HashMap&lt;String, Promocion&gt;();</span>
+<span class="nc" id="L45">        ArrayList&lt;Promocion&gt; proms = promociones.selectAllPromociones();</span>
+        
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        for(int i = 0; i &lt; proms.size(); i++){</span>
+<span class="nc" id="L48">            Promocion p = (Promocion) proms.get(i);</span>
+<span class="nc" id="L49">            System.out.println(&quot;PROMOCION: &quot; + p.getNombre());</span>
+<span class="nc" id="L50">            ArrayList&lt;Servicio&gt; servs = promociones.selectServiciosPromocion(p.getNombre());</span>
+<span class="nc" id="L51">            ArrayList&lt;Servicio&gt; serviciosDePromocion = new ArrayList&lt;Servicio&gt;();</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            for(int j = 0; j &lt; servs.size(); j++){</span>
+                //System.out.println(&quot; --&quot; + ListaProveedores.size());
+<span class="nc" id="L54">                Proveedor prov = (Proveedor) ListaProveedores.get(servs.get(j).getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L55">                Servicio s = (Servicio) prov.getServicios().get(servs.get(j).getNombreServicio());</span>
+                
+                //System.out.println(&quot; --&quot; + s.getNombreServicio());
+<span class="nc" id="L58">                serviciosDePromocion.add(s);</span>
+            }
+<span class="nc" id="L60">            p.setServicios(serviciosDePromocion);</span>
+            
+<span class="nc" id="L62">            Proveedor proveedor = ListaProveedores.get(p.getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L63">            p.setProveedor(proveedor);</span>
+            
+<span class="nc" id="L65">            ListaPromociones.put(p.getNombre(), p);</span>
+        }
+<span class="nc" id="L67">    }</span>
+    
+    public int getCantPromociones(){
+<span class="nc" id="L70">        return ListaPromociones.size();</span>
+    }
+
+    @Override
+    public void deleteAllPromociones() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L75">        DatosPromociones dp = new DatosPromociones();</span>
+<span class="nc" id="L76">        dp.deleteAllPromociones(&quot;delete from cantidadreservaspromociones where nombrePromocion &lt;&gt; \&quot;\&quot;; \n&quot; +</span>
+                        &quot;delete from promociones where nombre &lt;&gt; \&quot;\&quot;;&quot;);
+<span class="nc" id="L78">    }</span>
+
+    @Override
+    public void insertDatosPromocionesDePrueba() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L82">        DatosPromociones dp = new DatosPromociones();</span>
+<span class="nc" id="L83">        dp.insertDatosPromocionesDePrueba(&quot;insert into promociones values('Euro-Cars-E-S', 30, 420, 'EuropCar');\n&quot; +</span>
+                        &quot;insert into promociones values('Euro-Cars-E-F', 30, 420, 'EuropCar');\n&quot; +
+                        &quot;insert into promociones values('Euro-Cars-S-F', 30, 420, 'EuropCar');\n&quot; +
+                        &quot;insert into promociones values('Euro-Vuelos-S-LC', 40, 1170, 'Iberia');\n&quot; +
+                        &quot;insert into promociones values('Euro-Vuelos-S-FC', 40, 1440, 'Iberia');\n&quot; +
+                        &quot;insert into promociones values('Euro-Vuelos-LC-FC', 40, 1290, 'Iberia');\n&quot; +
+                        &quot;insert into promociones values('Sudamérica-Casas', 50, 135, 'Segundo Hogar');\n&quot; +
+                        &quot;insert into promociones values('Miami-Viaje', 30, 426, 'Segundo Hogar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-1', 'EuropCar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-2', 'EuropCar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-1', 'EuropCar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-3', 'EuropCar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-2', 'EuropCar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-3', 'EuropCar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-S', 'Iberia');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-LC', 'Iberia');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-S', 'Iberia');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-FC', 'Iberia');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-LC', 'Iberia');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-FC', 'Iberia');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Sudamérica-Casas', 'Casa para p4 BsAs', 'Segundo Hogar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Sudamérica-Casas', 'Floripa G. House', 'Segundo Hogar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Miami-Viaje', 'Luxury south beach corner apartment', 'Segundo Hogar');\n&quot; +
+                        &quot;insert into serviciosdepromociones values('Miami-Viaje', 'Coche-Miami', 'Segundo Hogar');&quot;);
+<span class="nc" id="L107">    }</span>
+    
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

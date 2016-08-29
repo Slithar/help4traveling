@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Servicio.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">Servicio.java</span></div><h1>Servicio.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+import java.util.*;
+/**
+ *
+ * @author Mauro
+ */
+public class Servicio {
+    private String nombreServicio;
+    private String descripcionServicio;
+    private int precioServicio;
+    private Proveedor proveedorServicio;
+    private ArrayList&lt;ImagenServicio&gt; imagenesServicio;
+    private ArrayList&lt;Categoria&gt; categoriasServicio;
+    private Ciudad origen;
+    private Ciudad destino;
+
+<span class="nc" id="L22">    public Servicio() {</span>
+<span class="nc" id="L23">        nombreServicio = &quot;&quot;;</span>
+<span class="nc" id="L24">        descripcionServicio = &quot;&quot;;</span>
+<span class="nc" id="L25">        precioServicio = 0;</span>
+<span class="nc" id="L26">        proveedorServicio = new Proveedor();</span>
+<span class="nc" id="L27">        imagenesServicio = new ArrayList&lt;ImagenServicio&gt;();</span>
+<span class="nc" id="L28">        categoriasServicio = new ArrayList&lt;Categoria&gt;();</span>
+<span class="nc" id="L29">        origen = new Ciudad();</span>
+<span class="nc" id="L30">        destino = new Ciudad();</span>
+<span class="nc" id="L31">    }</span>
+    
+<span class="nc" id="L33">    public Servicio(String nombreServicio, String descripcionServicio, int precioServicio, Proveedor proveedorServicio, ArrayList&lt;ImagenServicio&gt; imagenesServicio, ArrayList&lt;Categoria&gt; categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){</span>
+<span class="nc" id="L34">        this.nombreServicio = nombreServicio;</span>
+<span class="nc" id="L35">        this.descripcionServicio = descripcionServicio;</span>
+<span class="nc" id="L36">        this.precioServicio = precioServicio;</span>
+<span class="nc" id="L37">        this.proveedorServicio = proveedorServicio;</span>
+<span class="nc" id="L38">        this.imagenesServicio = imagenesServicio;</span>
+<span class="nc" id="L39">        this.categoriasServicio = categoriasServicio;</span>
+<span class="nc" id="L40">        this.origen = origen;</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if(tieneDestino)</span>
+<span class="nc" id="L42">            this.destino = destino;</span>
+        else
+<span class="nc" id="L44">            this.destino = new Ciudad();</span>
+        
+        //System.out.println(this.destino.getNombre());                
+<span class="nc" id="L47">    }</span>
+
+    /*public Servicio() {
+        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.
+    }*/
+    
+    public ArrayList&lt;Categoria&gt; getCategoriasServicio() {
+<span class="nc" id="L54">        return categoriasServicio;</span>
+    }
+
+    public void setCategoriasServicio(ArrayList&lt;Categoria&gt; CategoriasServicio) {
+<span class="nc" id="L58">        this.categoriasServicio = CategoriasServicio;</span>
+<span class="nc" id="L59">    }</span>
+
+    public Ciudad getOrigen() {
+<span class="nc" id="L62">        return origen;</span>
+    }
+
+    public void setOrigen(Ciudad Origen) {
+<span class="nc" id="L66">        this.origen = Origen;</span>
+<span class="nc" id="L67">    }</span>
+
+    public Ciudad getDestino() {
+<span class="nc" id="L70">        return destino;</span>
+    }
+
+    public void setDestino(Ciudad Destino) {
+<span class="nc" id="L74">        this.destino = Destino;</span>
+<span class="nc" id="L75">    }</span>
+    
+    public String getNombreServicio() {
+<span class="nc" id="L78">        return nombreServicio;</span>
+    }
+
+    public void setNombreServicio(String NombreServicio) {
+<span class="nc" id="L82">        this.nombreServicio = NombreServicio;</span>
+<span class="nc" id="L83">    }</span>
+
+    public String getDescripcionServicio() {
+<span class="nc" id="L86">        return descripcionServicio;</span>
+    }
+
+    public void setDescripcionServicio(String DescripcionServicio) {
+<span class="nc" id="L90">        this.descripcionServicio = DescripcionServicio;</span>
+<span class="nc" id="L91">    }</span>
+
+    public int getPrecioServicio() {
+<span class="nc" id="L94">        return precioServicio;</span>
+    }
+
+    public void setPrecioServicio(int PrecioServicio) {
+<span class="nc" id="L98">        this.precioServicio = PrecioServicio;</span>
+<span class="nc" id="L99">    }</span>
+
+    public Proveedor getProveedorServicio() {
+<span class="nc" id="L102">        return proveedorServicio;</span>
+    }
+
+    public void setProveedorServicio(Proveedor ProveedorServicio) {
+<span class="nc" id="L106">        this.proveedorServicio = ProveedorServicio;</span>
+<span class="nc" id="L107">    }</span>
+
+    public ArrayList&lt;ImagenServicio&gt; getImagenesServicio() {
+<span class="nc" id="L110">        return imagenesServicio;</span>
+    }
+
+    public void setImagenesServicio(ArrayList&lt;ImagenServicio&gt; ImagenesServicio) {
+<span class="nc" id="L114">        this.imagenesServicio = ImagenesServicio;</span>
+<span class="nc" id="L115">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

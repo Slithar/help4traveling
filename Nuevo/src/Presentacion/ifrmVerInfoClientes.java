@@ -37,7 +37,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         setLocation((1400 - tamanioVentana.width)/2, (825 - tamanioVentana.height)/2);
         
         lblImagenPerfil.setSize(200, 200); 
-        setImagenPerfil("src/Logica/Perfiles/perfil.png");
+        setImagenPerfil("src/Logica/perfiles/perfil.png");
     }
     
     public ifrmVerInfoClientes() {

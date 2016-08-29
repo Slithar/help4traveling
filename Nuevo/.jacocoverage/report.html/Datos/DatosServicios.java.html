@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosServicios.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosServicios.java</span></div><h1>DatosServicios.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Datos;
+
+import java.sql.*;
+import javax.swing.*;
+import java.util.*;
+import Logica.Servicio;
+import Logica.Proveedor;
+import Logica.Ciudad;
+import Logica.Pais;
+import Logica.Categoria;
+import Logica.ImagenServicio;
+
+
+/**
+ *
+ * @author usuario
+ */
+public class DatosServicios {
+    
+    //private ConexionBD conexion;
+    
+<span class="nc" id="L27">    public DatosServicios(){</span>
+        //conexion = new ConexionBD();
+<span class="nc" id="L29">    }</span>
+    
+    public int selectCountNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L34">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L36">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L38">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select count(*) cantidad from servicios where nombre = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L40">        pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L41">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L43">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L45">        int resultado = 0;</span>
+        
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L48">            resultado = rs.getInt(&quot;cantidad&quot;);</span>
+        }
+        
+        
+<span class="nc" id="L52">        rs.close();</span>
+        //conexion.cerrar();
+<span class="nc" id="L54">        conn.close();</span>
+        
+<span class="nc" id="L56">        return resultado;</span>
+    }
+    
+    public void insertar(String nombre, String nombreProveedor, String ciudadOrigen, String ciudadDestino, String descripcion, int precio, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L62">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L64">        conn = conexion.conectar();</span>
+        
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if(tieneDestino){</span>
+<span class="nc" id="L67">            PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into servicios values (?, ?, ?, ?, ?, ?)&quot;);</span>
+            
+<span class="nc" id="L69">            pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L70">            pConsulta.setString(2, nombreProveedor);</span>
+<span class="nc" id="L71">            pConsulta.setString(3, ciudadOrigen);</span>
+<span class="nc" id="L72">            pConsulta.setString(4, ciudadDestino);</span>
+<span class="nc" id="L73">            pConsulta.setString(5, descripcion);</span>
+<span class="nc" id="L74">            pConsulta.setInt(6, precio);</span>
+            
+<span class="nc" id="L76">            pConsulta.executeUpdate();</span>
+<span class="nc" id="L77">        }</span>
+        else{
+<span class="nc" id="L79">            PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into servicios values (?, ?, ?, null, ?, ?)&quot;);</span>
+            
+<span class="nc" id="L81">            pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L82">            pConsulta.setString(2, nombreProveedor);</span>
+<span class="nc" id="L83">            pConsulta.setString(3, ciudadOrigen);</span>
+<span class="nc" id="L84">            pConsulta.setString(4, descripcion);</span>
+<span class="nc" id="L85">            pConsulta.setInt(5, precio);</span>
+            
+<span class="nc" id="L87">            pConsulta.executeUpdate();</span>
+        }
+        
+        //conexion.cerrar();
+<span class="nc" id="L91">        conn.close();</span>
+<span class="nc" id="L92">    }</span>
+    
+    public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria, String rutaCategoria) throws SQLException, ClassNotFoundException{
+        
+        //JOptionPane.showMessageDialog(null, nombreCategoria);
+        
+        Connection conn;
+        
+<span class="nc" id="L100">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L102">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L104">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into categoriasdeservicios values(?, ?, ?, ?)&quot;);</span>
+<span class="nc" id="L105">        pConsulta.setString(1, nombreServicio);</span>
+<span class="nc" id="L106">        pConsulta.setString(2, nombreProveedor);</span>
+<span class="nc" id="L107">        pConsulta.setString(3, nombreCategoria);</span>
+<span class="nc" id="L108">        pConsulta.setString(4, rutaCategoria);</span>
+        
+<span class="nc" id="L110">        pConsulta.executeUpdate();</span>
+        
+        //conexion.cerrar();
+<span class="nc" id="L113">        conn.close();</span>
+<span class="nc" id="L114">    }</span>
+    
+    public void agregarImagen(String ruta, String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L119">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L121">        conn = conexion.conectar();</span>
+<span class="nc" id="L122">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into imagenesservicios values(?, ?, ?)&quot;);</span>
+<span class="nc" id="L123">        pConsulta.setString(1, ruta);</span>
+<span class="nc" id="L124">        pConsulta.setString(2, nombreServicio);</span>
+<span class="nc" id="L125">        pConsulta.setString(3, nombreProveedor);</span>
+        
+<span class="nc" id="L127">        pConsulta.executeUpdate();</span>
+        
+        //conexion.cerrar();
+<span class="nc" id="L130">        conn.close();</span>
+<span class="nc" id="L131">    }</span>
+    
+    public ArrayList&lt;Servicio&gt; selectNombreServicios() throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L136">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L138">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L140">        Statement st = conn.createStatement();</span>
+        
+<span class="nc" id="L142">        ResultSet rs = st.executeQuery(&quot;select nombre, nombreProveedor from servicios order by nombre&quot;);</span>
+        
+<span class="nc" id="L144">        ArrayList&lt;Servicio&gt; resultado = new ArrayList&lt;Servicio&gt;();</span>
+        
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L147">            Servicio s = new Servicio();</span>
+<span class="nc" id="L148">            s.setNombreServicio(rs.getString(&quot;nombre&quot;));</span>
+<span class="nc" id="L149">            Proveedor p = new Proveedor();</span>
+<span class="nc" id="L150">            p.setNombreEmpresa(rs.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc" id="L151">            s.setProveedorServicio(p);</span>
+            
+<span class="nc" id="L153">            resultado.add(s);</span>
+<span class="nc" id="L154">        }</span>
+        
+<span class="nc" id="L156">        rs.close();</span>
+        
+<span class="nc" id="L158">        conn.close();</span>
+        
+<span class="nc" id="L160">        return resultado;</span>
+    }
+    
+    public Servicio selectServicioPorNombre(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L166">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L168">        conn = conexion.conectar();</span>
+        
+        /*Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery(&quot;select nombre from servicios order by nombre&quot;);
+        
+        ArrayList&lt;Servicio&gt; resultado = new ArrayList&lt;Servicio&gt;();*/
+        
+<span class="nc" id="L176">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select nombreProveedor, descripcion, precio from servicios where nombre = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L178">        pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L179">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L181">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L183">        Servicio s = new Servicio();</span>
+        
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        while(rs.next()){</span>
+            
+<span class="nc" id="L187">            Proveedor p = new Proveedor();</span>
+<span class="nc" id="L188">            p.setNombreEmpresa(rs.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc" id="L189">            s.setProveedorServicio(p);</span>
+<span class="nc" id="L190">            s.setDescripcionServicio(rs.getString(&quot;descripcion&quot;));</span>
+<span class="nc" id="L191">            s.setPrecioServicio(rs.getInt(&quot;precio&quot;));</span>
+<span class="nc" id="L192">        }</span>
+        
+<span class="nc" id="L194">        rs.close();</span>
+<span class="nc" id="L195">        conn.close();</span>
+        
+<span class="nc" id="L197">        return s;</span>
+    }
+    
+    public Ciudad getCiudadOrigen(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L203">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L205">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L207">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select s.ciudadOrigen, c.nombrePais from servicios s, ciudades c where s.ciudadOrigen = c.nombre and s.nombre = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L209">        pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L210">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L212">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L214">        Ciudad c = new Ciudad();</span>
+        
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L217">            c.setNombre(rs.getString(&quot;ciudadOrigen&quot;));</span>
+<span class="nc" id="L218">            c.setPais(new Pais(rs.getString(&quot;nombrePais&quot;)));</span>
+        }
+        
+<span class="nc" id="L221">        rs.close();</span>
+        
+<span class="nc" id="L223">        conn.close();</span>
+        
+<span class="nc" id="L225">        return c;</span>
+    }
+    
+    public Ciudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L231">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L233">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L235">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select s.ciudadDestino, c.nombrePais from servicios s, ciudades c where s.ciudadDestino = c.nombre and s.nombre = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L237">        pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L238">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L240">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L242">        Ciudad c = new Ciudad();</span>
+        
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L245">            c.setNombre(rs.getString(&quot;ciudadDestino&quot;));</span>
+<span class="nc" id="L246">            c.setPais(new Pais(rs.getString(&quot;nombrePais&quot;)));</span>
+        }
+        
+<span class="nc" id="L249">        rs.close();</span>
+        
+<span class="nc" id="L251">        conn.close();</span>
+        
+<span class="nc" id="L253">        return c;</span>
+        
+    }
+    
+    public ArrayList&lt;Categoria&gt; getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L260">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L262">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L264">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select nombreCategoria, rutaCategoria from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L266">        pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L267">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L269">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+        //Categoria c = new Ciudad();
+        
+<span class="nc" id="L273">        ArrayList&lt;Categoria&gt; categorias = new ArrayList&lt;Categoria&gt;();</span>
+        
+<span class="nc bnc" id="L275" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L276">            categorias.add(new Categoria(rs.getString(&quot;nombreCategoria&quot;), rs.getString(&quot;rutaCategoria&quot;), new ArrayList()));</span>
+            //c.setPais(new Pais(rs.getString(&quot;nombrePais&quot;)));
+        }
+        
+<span class="nc" id="L280">        rs.close();</span>
+        
+<span class="nc" id="L282">        conn.close();</span>
+        
+<span class="nc" id="L284">        return categorias;        </span>
+    }
+    
+    public ArrayList&lt;ImagenServicio&gt; getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L290">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L292">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L294">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select ruta from imagenesservicios where nombreServicio = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L296">        pConsulta.setString(1, nombre);</span>
+<span class="nc" id="L297">        pConsulta.setString(2, nombreProveedor);</span>
+        
+        //System.out.println(&quot;entree acá&quot;);
+        
+<span class="nc" id="L301">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+        //Categoria c = new Ciudad();
+        
+<span class="nc" id="L305">        ArrayList&lt;ImagenServicio&gt; imagenes = new ArrayList&lt;ImagenServicio&gt;();</span>
+        
+<span class="nc bnc" id="L307" title="All 2 branches missed.">        if(rs != null){</span>
+            //System.out.println(&quot;entree&quot;);
+<span class="nc bnc" id="L309" title="All 2 branches missed.">            while(rs.next()){</span>
+<span class="nc" id="L310">                imagenes.add(new ImagenServicio(rs.getString(&quot;ruta&quot;), new Servicio()));</span>
+                //System.out.println(&quot;agreguee&quot;);
+                //c.setPais(new Pais(rs.getString(&quot;nombrePais&quot;)));
+            }
+        }
+        
+        
+<span class="nc" id="L317">        rs.close();</span>
+        
+<span class="nc" id="L319">        conn.close();</span>
+        
+<span class="nc" id="L321">        return imagenes;</span>
+        
+    }
+    
+    public void eliminarImagenes(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L328">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L330">        conn = conexion.conectar();</span>
+<span class="nc" id="L331">        PreparedStatement pConsulta = conn.prepareStatement(&quot;delete from imagenesservicios where nombreServicio = ? and nombreProveedor = ?&quot;);</span>
+<span class="nc" id="L332">        pConsulta.setString(1, nombreServicio);</span>
+<span class="nc" id="L333">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L335">        pConsulta.executeUpdate();</span>
+        
+        //conexion.cerrar();
+<span class="nc" id="L338">        conn.close();</span>
+<span class="nc" id="L339">    }</span>
+    
+    public void eliminarCategorias(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L344">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L346">        conn = conexion.conectar();</span>
+<span class="nc" id="L347">        PreparedStatement pConsulta = conn.prepareStatement(&quot;delete from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?&quot;);</span>
+<span class="nc" id="L348">        pConsulta.setString(1, nombreServicio);</span>
+<span class="nc" id="L349">        pConsulta.setString(2, nombreProveedor);</span>
+        
+<span class="nc" id="L351">        pConsulta.executeUpdate();</span>
+        
+        //conexion.cerrar();
+<span class="nc" id="L354">        conn.close();</span>
+<span class="nc" id="L355">    }</span>
+    
+    public void modificarServicio(String nombre, String nombreProveedor, String ciudadOrigen, String ciudadDestino, String descripcion, int precio, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+        
+        Connection conn;
+        
+<span class="nc" id="L361">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L363">        conn = conexion.conectar();</span>
+        
+        //pConsulta;
+        //JOptionPane.showMessageDialog(null, descripcion + &quot; - &quot; + precio + &quot; - &quot; + ciudadOrigen + &quot; - &quot; + nombre + &quot; - &quot; + nombreProveedor);
+        
+<span class="nc bnc" id="L368" title="All 2 branches missed.">        if(tieneDestino){</span>
+<span class="nc" id="L369">            PreparedStatement pConsulta = conn.prepareStatement(&quot;update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = ? where nombre = ? and nombreProveedor = ?&quot;);</span>
+            //System.out.println(&quot;1: &quot; + ciudadDestino);
+<span class="nc" id="L371">            pConsulta.setString(1, descripcion);</span>
+<span class="nc" id="L372">            pConsulta.setInt(2, precio);</span>
+<span class="nc" id="L373">            pConsulta.setString(3, ciudadOrigen);</span>
+<span class="nc" id="L374">            pConsulta.setString(4, ciudadDestino);</span>
+<span class="nc" id="L375">            pConsulta.setString(5, nombre);</span>
+<span class="nc" id="L376">            pConsulta.setString(6, nombreProveedor);</span>
+            
+<span class="nc" id="L378">            pConsulta.executeUpdate();</span>
+            
+<span class="nc" id="L380">        }</span>
+        else{
+<span class="nc" id="L382">            PreparedStatement pConsulta = conn.prepareStatement(&quot;update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = null where nombre = ? and nombreProveedor = ?&quot;);</span>
+            //System.out.println(&quot;1&quot;);
+<span class="nc" id="L384">            pConsulta.setString(1, descripcion);</span>
+<span class="nc" id="L385">            pConsulta.setInt(2, precio);</span>
+<span class="nc" id="L386">            pConsulta.setString(3, ciudadOrigen);</span>
+<span class="nc" id="L387">            pConsulta.setString(4, nombre);</span>
+<span class="nc" id="L388">            pConsulta.setString(5, nombreProveedor);</span>
+            
+<span class="nc" id="L390">            pConsulta.executeUpdate();</span>
+        }
+        
+        
+        
+<span class="nc" id="L395">        conn.close();</span>
+        
+<span class="nc" id="L397">    }</span>
+    
+    public ArrayList&lt;Servicio&gt; getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L400">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L404">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L406">        ArrayList&lt;Servicio&gt; servicios = new ArrayList&lt;Servicio&gt;();</span>
+        
+<span class="nc" id="L408">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select nombre, nombreProveedor from servicios where nombre like ?&quot;);</span>
+        
+<span class="nc" id="L410">        pConsulta.setString(1, &quot;%&quot; + nombre + &quot;%&quot;);</span>
+        
+<span class="nc" id="L412">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc bnc" id="L414" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L415">            Servicio s = new Servicio();</span>
+<span class="nc" id="L416">            s.setNombreServicio(rs.getString(&quot;nombre&quot;));</span>
+<span class="nc" id="L417">            Proveedor p = new Proveedor();</span>
+<span class="nc" id="L418">            p.setNombreEmpresa(rs.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc" id="L419">            s.setProveedorServicio(p);</span>
+            
+<span class="nc" id="L421">            servicios.add(s);</span>
+<span class="nc" id="L422">        }</span>
+        
+<span class="nc" id="L424">        rs.close();</span>
+<span class="nc" id="L425">        conn.close();</span>
+        
+<span class="nc" id="L427">        return servicios;</span>
+    }
+    
+    public ArrayList&lt;ImagenServicio&gt; getImagenesServicios(Servicio s) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L431">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L435">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L437">        ArrayList&lt;ImagenServicio&gt; imagenes = new ArrayList&lt;ImagenServicio&gt;();</span>
+        
+<span class="nc" id="L439">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select * from imagenesservicios where nombreServicio = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L441">        pConsulta.setString(1, s.getNombreServicio());</span>
+<span class="nc" id="L442">        pConsulta.setString(2, s.getProveedorServicio().getNombreEmpresa());</span>
+        
+<span class="nc" id="L444">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc bnc" id="L446" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L447">            imagenes.add(new ImagenServicio(rs.getString(&quot;ruta&quot;), s));</span>
+        }
+        
+<span class="nc" id="L450">        rs.close();</span>
+<span class="nc" id="L451">        conn.close();</span>
+        
+<span class="nc" id="L453">        return imagenes;</span>
+    }
+    
+    public ArrayList&lt;Categoria&gt; selectCategoriasDeServicio(Servicio s) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L457">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L461">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L463">        ArrayList&lt;Categoria&gt; categorias = new ArrayList&lt;Categoria&gt;();</span>
+        
+<span class="nc" id="L465">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select * from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?&quot;);</span>
+        
+<span class="nc" id="L467">        pConsulta.setString(1, s.getNombreServicio());</span>
+<span class="nc" id="L468">        pConsulta.setString(2, s.getProveedorServicio().getNombreEmpresa());</span>
+        
+<span class="nc" id="L470">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc bnc" id="L472" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L473">            categorias.add(new Categoria(rs.getString(&quot;nombreCategoria&quot;), &quot;&quot;, new ArrayList()));</span>
+        }
+        
+<span class="nc" id="L476">        rs.close();</span>
+<span class="nc" id="L477">        conn.close();</span>
+        
+<span class="nc" id="L479">        return categorias;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
