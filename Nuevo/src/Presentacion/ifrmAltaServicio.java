@@ -368,7 +368,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             //System.out.println(labelSeleccionado);
             //JOptionPane.showMessageDialog(null, e.getSource());
-            if(lstCategorias.getSelectedIndex() > -1){
+            //if(lstCategorias.getSelectedIndex() > -1){
                 if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
                     if(rutaImagen2 == ""){
@@ -434,12 +434,14 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     rutaImagen3 = "";
                 }
                 else if(e.getSource() == miEliminarCategoria){
-
-                    DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-                    modelo.remove(lstCategorias.getSelectedIndex());
-                    lstCategorias.setModel(modelo);
+                    if(lstCategorias.getSelectedIndex() > -1){
+                        DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
+                        modelo.remove(lstCategorias.getSelectedIndex());
+                        lstCategorias.setModel(modelo);
+                    }
+                    
                 }
-            }
+            //}
         }
             
         
