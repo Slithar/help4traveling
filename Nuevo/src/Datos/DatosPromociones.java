@@ -76,4 +76,51 @@ public class DatosPromociones {
         
     }
     
+    public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Descuento) throws SQLException, ClassNotFoundException{
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("INSERT INTO promociones VALUES (?,?,?)");
+        
+        pConsulta.setString(1,NombrePromocion );
+        
+        pConsulta.setInt(2, Descuento);
+        
+        pConsulta.setInt(3,PrecioPromocion);
+        
+        int a = 0;
+        
+        a = pConsulta.executeUpdate();
+        
+        conn.close();
+        
+        return a;
+    }
+    public int agregarServiciosPromocion (String NombrePromo, String NombreServ, String NombreProve) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("INSERT INTO serviciosdepromociones VALUES (?,?,?)");
+        
+        pConsulta.setString(1,NombrePromo);
+        
+        pConsulta.setString(2, NombreServ);
+        
+        pConsulta.setString(3,NombreProve);
+        
+        int a = 0;
+        
+        a = pConsulta.executeUpdate();
+        
+        conn.close();
+        
+        return a;
+    }
 }

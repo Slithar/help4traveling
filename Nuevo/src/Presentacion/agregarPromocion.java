@@ -26,6 +26,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     private IControladorPromociones icpromo;
     private IControladorProveedores icprov;
     private ArrayList<Integer> precioTotal = new ArrayList();
+    private int vueltas = 0;
     private int descuento = 0;
     private int precio = 0;
     public agregarPromocion(IControladorPromociones icopromo, IControladorProveedores icprov) {
@@ -87,11 +88,19 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     }
     
     public void precioPromo(){
+        
         descuento = (Integer)this.spnDescuento.getValue();
         
         precio = icpromo.calcularPrecio(precioTotal, descuento);
         
         this.txtPrecioPromo.setText(String.valueOf(precio));
+    }
+    public void clearCamps(){
+        this.txtNombrePromo.setText("");
+        this.txtPrecioPromo.setText("0");
+        modelo2.removeAllElements();
+        this.spnDescuento.setValue(0);
+        fillLista();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -363,6 +372,8 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     private void agregarPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarPromoActionPerformed
         // TODO add your handling code here:
         boolean errores = false;
+        int resultadoPromocion = 0;
+        int resultadoServiciosPromocion = 0;
         if(this.txtNombrePromo.getText().isEmpty() && errores == false){
             JOptionPane.showMessageDialog(null, "El nombre de la promocion no puede ser vacío.", "ALERTA", JOptionPane.WARNING_MESSAGE);
             errores = true;
@@ -371,8 +382,20 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Una promocion debe contener al menos un servicio.", "ALERTA", JOptionPane.WARNING_MESSAGE);
             errores = true;
         }
-        if(errores == false){
-            
+        if(errores == false){            
+            try {
+                resultadoPromocion = this.icpromo.agregarPromocion(this.precio, this.txtNombrePromo.getText(), this.descuento);
+                for(vueltas = 0; vueltas < this.listaServiciosElegidos.getModel().getSize(); vueltas ++){
+                    String servicio = this.icpromo.getNombreServicio(this.listaServiciosElegidos.getModel().getElementAt(vueltas));
+                    resultadoServiciosPromocion = this.icpromo.agregarServiciosPromocion(this.txtNombrePromo.getText(),servicio,this.dbProveedores.getSelectedItem().toString());   
+                }
+                if(resultadoPromocion == 1 && resultadoServiciosPromocion == this.listaServiciosElegidos.getModel().getSize()-1){
+                    JOptionPane.showMessageDialog(null, "La promoción se ha agregado correctamente.", "EXITO", JOptionPane.INFORMATION_MESSAGE);
+                }
+                clearCamps();
+            } catch (SQLException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error con la base de datos. Por favor intente denuevo mas tarde.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_agregarPromoActionPerformed
 

@@ -20,4 +20,7 @@ public interface IControladorPromociones {
     public abstract void setListaPromociones(HashMap<String, Promocion> ListaPromociones);
     public abstract int getPrecio(String string);
     public abstract int calcularPrecio(ArrayList<Integer> precios, int Descuento);
+    public abstract String getNombreServicio(String cadenaACortar);
+    public abstract int agregarPromocion(int PrecioPromocion,String NombrePromocion, int Descuento) throws SQLException, ClassNotFoundException;
+    public abstract int agregarServiciosPromocion(String NombrePromo, String NombreServ, String NombreProv) throws SQLException, ClassNotFoundException;
 }
