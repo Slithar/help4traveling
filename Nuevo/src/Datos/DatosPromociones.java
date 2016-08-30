@@ -165,4 +165,25 @@ public class DatosPromociones {
         
         return a;
     }
+    
+    public Promocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException {
+        Promocion promo = new Promocion();
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        PreparedStatement st = conn.prepareStatement("select * from promociones where nombre = ? and nombreProveedor = ?");
+        st.setString(1, nombrePromo);
+        st.setString(2, nombreProveedor);
+        ResultSet rs = st.executeQuery();
+        if(rs.next()){
+            Proveedor nombreProv = new Proveedor();
+            nombreProv.setNombre(rs.getString("nombreProveedor"));
+            promo.setProveedor(nombreProv);
+            promo.setNombre(rs.getString("nombre"));
+            promo.setDescuento(rs.getInt("descuento"));
+            promo.setPrecio(rs.getInt("precio"));
+        }
+        return promo;
+    }
 }

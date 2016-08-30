@@ -189,9 +189,19 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mReservas.setText("Reservas");
 
         miNuevaReserva.setText("Nueva reserva");
+        miNuevaReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevaReservaActionPerformed(evt);
+            }
+        });
         mReservas.add(miNuevaReserva);
 
         miCancelarReserva.setText("Cancelar reserva");
+        miCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCancelarReservaActionPerformed(evt);
+            }
+        });
         mReservas.add(miCancelarReserva);
 
         miActualizarReserva.setText("Actualizar reserva");
@@ -275,8 +285,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+        if(JOptionPane.showConfirmDialog(this, "¿Esta seguro/a de que desea salir del sistema?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0)
+            this.dispose();
     }//GEN-LAST:event_miSalirActionPerformed
 
     private void miActualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarReservaActionPerformed
@@ -396,6 +406,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
+        else{
+            vProgreso.setVisible(false);
+            this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
         
         
         
@@ -437,6 +451,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
+        else{
+            vProgreso.setVisible(false);
+            this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
     }//GEN-LAST:event_mEliminarDatosActionPerformed
     private void miRegPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegPromocionesActionPerformed
         // TODO add your handling code here:
@@ -444,6 +462,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         add(promo);
         promo.setVisible(true);
     }//GEN-LAST:event_miRegPromocionesActionPerformed
+
+    private void miNuevaReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevaReservaActionPerformed
+        ifrmAltaReservas vAltaReservas = new ifrmAltaReservas(icprov, iccli, icprom);
+        nuevoPanel.add(vAltaReservas);
+        vAltaReservas.setVisible(true);
+    }//GEN-LAST:event_miNuevaReservaActionPerformed
+
+    private void miCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCancelarReservaActionPerformed
+        ifrmCancelarReserva vCancelarReserva = new ifrmCancelarReserva(iccli);
+        nuevoPanel.add(vCancelarReserva);
+        vCancelarReserva.setVisible(true);
+    }//GEN-LAST:event_miCancelarReservaActionPerformed
     
         
     /**
