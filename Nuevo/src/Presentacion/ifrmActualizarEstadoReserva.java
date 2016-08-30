@@ -108,6 +108,7 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
 
         cmbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
+        btnModificar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
