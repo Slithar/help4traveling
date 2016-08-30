@@ -26,7 +26,7 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
      * Creates new form ifrmCancelarReserva
      */
     private IControladorClientes iccli;
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo;
         
     
     public ifrmCancelarReserva() {
@@ -36,12 +36,15 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
     public ifrmCancelarReserva(IControladorClientes iccli){
         
         initComponents();
-        modelo.setColumnIdentifiers(new Object[] {"Numero" ,"Fecha" ,"Precio" ,"Estado" , "Nickname Cliente"});
         
         
-        setTitle("CancelarReserva");
+        
+        
+        setTitle("Cancelar reserva");
         //Dimension tamanioVentana = this.getSize();
         //setLocation((1400 - tamanioVentana.width)/2, (700 - tamanioVentana.height)/2);
+        Dimension tamanioVentana = this.getSize();
+        setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
         PanelDatos.setVisible(true);
         
         this.iccli = iccli;
@@ -67,23 +70,33 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setClosable(true);
+        setIconifiable(true);
+
         tblReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblReservas);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Reservas");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("Seleccione reserva a cancelar:");
 
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,7 +104,8 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEliminar.setText("Eliminar Reserva");
+        btnEliminar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -102,33 +116,32 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
         PanelDatos.setLayout(PanelDatosLayout);
         PanelDatosLayout.setHorizontalGroup(
             PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosLayout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
             .addGroup(PanelDatosLayout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(PanelDatosLayout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
-                .addGap(119, 119, 119))
+                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(127, 127, 127)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         PanelDatosLayout.setVerticalGroup(
             PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDatosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnCancelar))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,8 +150,8 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(PanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,16 +166,17 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if(tblReservas.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(this, "No se pudo completar la accion, no ha seleccionado ninguna reserva", "ERROR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se pudo completar la accion, no ha seleccionado ninguna reserva", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar la reserva N°"+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +" ?", "Alerta!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar la reserva N° "+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +" ?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
             if(resp == 0){
                 try {
                     iccli.deleteReserva(Integer.parseInt(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0).toString()));
-                    JOptionPane.showMessageDialog(this, "La accion fue completada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "La reserva ha sido cancelada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                    //tblReservas.clearSelection();
                     cargar();
-                    tblReservas.clearSelection();
+                    
                 }
                 catch(SQLException ex){
                     JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -194,9 +208,11 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
     private void cargar() {
         ArrayList<DataReserva> reservas = new ArrayList();
                 try {
+                    modelo = new DefaultTableModel();
+                    modelo.setColumnIdentifiers(new Object[] {"Numero" ,"Fecha" ,"Precio" ,"Estado" , "Nickname cliente"});
                     reservas = iccli.getAllReservas();
                     for(int i = 0; i < reservas.size(); i++){
-                        modelo.addRow(new Object[] {reservas.get(i).getNumero(), reservas.get(i).getFecha().toString(), reservas.get(i).getPrecio(), reservas.get(i).getEstado(), reservas.get(i).getCliente()});
+                        modelo.addRow(new Object[] {reservas.get(i).getNumero(), reservas.get(i).getFecha().getDayOfMonth() + "/" + reservas.get(i).getFecha().getMonthValue() + "/" + reservas.get(i).getFecha().getYear(), reservas.get(i).getPrecio(), reservas.get(i).getEstado(), reservas.get(i).getCliente()});
                     }
                     tblReservas.setModel(modelo);
                 }   

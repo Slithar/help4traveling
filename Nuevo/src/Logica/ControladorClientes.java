@@ -352,17 +352,43 @@ public class ControladorClientes implements IControladorClientes {
     }
     @Override
     public void datosAsociadosReserva(int numReserva, TableModel modelo)throws SQLException, ClassNotFoundException{
-        System.out.println(numReserva + "dentro");
+        //System.out.println(numReserva + "dentro");
         DatosReservas res = new DatosReservas();
      //Tipo", "Nombre","proveedor" ,  "Cantidad", "Precio Unitario","Total", "Inicio", "Fin"
 
         for(int i = 0; i< modelo.getRowCount(); i++){
-            if(modelo.getValueAt(i, 0) == "Servicio"){
-                
-                    res.insertarServicioReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
+            if(modelo.getValueAt(i, 0) == "SERVICIO"){
+                    
+                    Servicio s = new Servicio();
+                    s.setNombreServicio(modelo.getValueAt(i, 1).toString());
+                    Proveedor p = new Proveedor();
+                    p.setNombreEmpresa(modelo.getValueAt(i, 2).toString());
+                    String fechaInicio = modelo.getValueAt(i, 6).toString();
+                    String[] datosFI = fechaInicio.split("/");
+                    LocalDate fInicio = LocalDate.of(Integer.parseInt(datosFI[2]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[0]));
+                    String fechaFin = modelo.getValueAt(i, 7).toString();
+                    String[] datosFF = fechaFin.split("/");
+                    LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[0]));
+                    cantidadReservasServicios crs = new cantidadReservasServicios(Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), fInicio, fFin, p, s);
+                    int precioUnitario = crs.getTotalLinea() / crs.getCantidad();
+                    res.insertarServicioReserva(numReserva, crs.getServicio().getNombreServicio(), crs.getProveedor().getNombreEmpresa(), crs.getCantidad(), crs.getTotalLinea(), crs.getFechaInicio().toString(), crs.getFechaFin().toString(), precioUnitario);
+                    //res.insertarServicioReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), , , , modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
             }
-            else{
-                   res.insertarPromocionReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
+            else{   
+                    Promocion prom = new Promocion();
+                    prom.setNombre(modelo.getValueAt(i, 1).toString());
+                    Proveedor p = new Proveedor();
+                    p.setNombreEmpresa(modelo.getValueAt(i, 2).toString());
+                    String fechaInicio = modelo.getValueAt(i, 6).toString();
+                    String[] datosFI = fechaInicio.split("/");
+                    LocalDate fInicio = LocalDate.of(Integer.parseInt(datosFI[2]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[0]));
+                    String fechaFin = modelo.getValueAt(i, 7).toString();
+                    String[] datosFF = fechaFin.split("/");
+                    LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[0]));
+                    cantidadReservasPromociones crp = new cantidadReservasPromociones(Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), fInicio, fFin, prom, p);
+                    int precioUnitario = crp.getTotalLinea() / crp.getCantidad();
+                    res.insertarPromocionReserva(numReserva, crp.getPromocion().getNombre(), crp.getProveedor().getNombreEmpresa(), crp.getCantidad(), crp.getTotalLinea(), crp.getFechaInicio().toString(), crp.getFechaFin().toString(), precioUnitario);
+                   //res.insertarPromocionReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
            }
         }
         
