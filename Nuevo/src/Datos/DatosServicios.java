@@ -478,5 +478,29 @@ public class DatosServicios {
         
         return categorias;
     }
-    
+    public ArrayList<Servicio> getServiciosProveedor(String NombreProveedor)throws SQLException, ClassNotFoundException{
+        ArrayList<Servicio> servicios = new ArrayList();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select nombre,precio from servicios where nombreProveedor = ?");
+        
+        pConsulta.setString(1, NombreProveedor);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            Servicio servicio = new Servicio();
+            servicio.setNombreServicio(rs.getString(1));
+            servicio.setPrecioServicio(rs.getInt(2));
+            servicios.add(servicio);
+        }
+        rs.close();
+        conn.close();
+        return servicios;
+    }
 }

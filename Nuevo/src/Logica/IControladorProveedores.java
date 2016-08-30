@@ -46,4 +46,8 @@ public interface IControladorProveedores {
     public abstract void deleteAllProveedores() throws SQLException, ClassNotFoundException;
     public abstract void insertCiudadesDePrueba() throws SQLException, ClassNotFoundException;
     public abstract void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException;
+    
+    
+    public abstract ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException;
+    
 }

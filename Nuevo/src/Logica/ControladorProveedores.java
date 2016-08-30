@@ -575,7 +575,7 @@ public class ControladorProveedores implements IControladorProveedores{
         File[]imagenes = fichero.listFiles();
         
         for(int i = 0; i < imagenes.length; i++){
-            if(!imagenes[i].getName().equalsIgnoreCase("perfil.png")) 
+            if(!imagenes[i].getName().equalsIgnoreCase("agregarImagenServicio.png")) 
                 imagenes[i].delete();
         }
     }
@@ -676,7 +676,24 @@ public class ControladorProveedores implements IControladorProveedores{
                         "INSERT INTO categoriasdeservicios VALUES ('Air-France-FC ','AirFrance','Air France','Vuelos > Empresas > Air France'),('Air-France-FC ','AirFrance','First Class','Vuelos > Tipo vuelo > First Class'),('Casa para p4 BsAs ','Segundo Hogar','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Casa para p4 BsAs ','Segundo Hogar','Casa','Alojamientos > Tipo alojamiento > Casa'),('Coche-Miami ','Segundo Hogar','Auto','Automóviles > Tipo vehículo > Auto'),('Coche-Miami ','Segundo Hogar','Chevrolet','Automóviles > Marca > Chevrolet'),('Coche-Miami ','Segundo Hogar','Económico','Automóviles > Tarifa > Económico'),('Euro-Car-1 ','EuropCar','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-1 ','EuropCar','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-1 ','EuropCar','Económico','Automóviles > Tarifa > Económico'),('Euro-Car-2 ','EuropCar','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-2 ','EuropCar','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-2 ','EuropCar','Standard','Automóviles > Tarifa > Standard'),('Euro-Car-3 ','EuropCar','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-3 ','EuropCar','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-3 ','EuropCar','Full','Automóviles > Tarifa > Full'),('Euro-Vuelo-FC ','Iberia','First Class','Vuelos > Tipo vuelo > First Class'),('Euro-Vuelo-FC ','Iberia','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-LC ','Iberia','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-LC ','Iberia','LowCost','Vuelos > Tipo vuelo > LowCost'),('Euro-Vuelo-S ','Iberia','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-S ','Iberia','Standard','Vuelos > Tipo vuelo > Standard'),('Floripa G. House ','Segundo Hogar','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Floripa G. House ','Segundo Hogar','Alojamientos','Alojamientos'),('Floripa G. House ','Segundo Hogar','Casa','Alojamientos > Tipo alojamiento > Casa'),('Luxury south beach corner apartment ','Segundo Hogar','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Luxury south beach corner apartment ','Segundo Hogar','Hotel','Alojamientos > Tipo alojamiento > Hotel'),('Luxury south beach corner apartment ','Segundo Hogar','Playa','Alojamientos > Ubicación > Playa'),('TAM-FC ','TAM','First Class','Vuelos > Tipo vuelo > First Class'),('TAM-FC ','TAM','TAM','Vuelos > Empresas > TAM');");
     }
     
-
+@Override
+public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException{
+    ArrayList<DataServicio> servicios = new ArrayList();
+    DatosServicios dServicios = new DatosServicios();
+    ArrayList<Servicio> servProve = new ArrayList();
+    Proveedor proveedor = new Proveedor();
+    proveedor.setNombreEmpresa(NombreProveedor);
+    servProve = dServicios.getServiciosProveedor(proveedor.getNombreEmpresa());
+    int tamanio = servProve.size();
+    int inicio = 0;
+    for (inicio = 0;inicio<tamanio;inicio++){
+        DataServicio serv = new DataServicio();
+        serv.setNombreServicio(servProve.get(inicio).getNombreServicio());
+        serv.setPrecioServicio(servProve.get(inicio).getPrecioServicio());
+        servicios.add(serv);
+    }
+    return servicios;
+}
     
     
 }

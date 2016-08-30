@@ -23,22 +23,27 @@ public class ControladorPromociones implements IControladorPromociones{
         
     }
 
+    @Override
     public HashMap<String, Proveedor> getListaProveedores() {
         return ListaProveedores;
     }
 
+    @Override
     public void setListaProveedores(HashMap<String, Proveedor> ListaProveedores) {
         this.ListaProveedores = ListaProveedores;
     }
 
+    @Override
     public HashMap<String, Promocion> getListaPromociones() {
         return ListaPromociones;
     }
 
+    @Override
     public void setListaPromociones(HashMap<String, Promocion> ListaPromociones) {
         this.ListaPromociones = ListaPromociones;
     }
     
+    @Override
     public void actualizarPromociones() throws SQLException, ClassNotFoundException{
         DatosPromociones promociones = new DatosPromociones();
         ListaPromociones = new HashMap<String, Promocion>();
@@ -66,6 +71,7 @@ public class ControladorPromociones implements IControladorPromociones{
         }
     }
     
+    @Override
     public int getCantPromociones(){
         return ListaPromociones.size();
     }
@@ -108,4 +114,86 @@ public class ControladorPromociones implements IControladorPromociones{
     
     
     
+@Override
+public int getPrecio(String cadena){
+    String [] partes = new String[2];
+    partes = cadena.split("/");
+    int precio = 0;
+    precio = Integer.parseInt(partes[1].trim());
+    return precio;
+}
+@Override
+public int calcularPrecio(ArrayList<Integer> precios, int Descuento){
+    int tamanio = 0;
+    int inicio = 0;
+    int precioTotal=0;
+    tamanio = precios.size();
+    for(inicio = 0; inicio<tamanio;inicio++){
+        precioTotal+=precios.get(inicio);
+    }
+    if(Descuento != 0)
+        precioTotal = precioTotal - (precioTotal * Descuento) / 100;
+    return precioTotal;
+}
+@Override
+public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Descuento, String nombreProveedor) throws SQLException, ClassNotFoundException{
+    
+    DatosPromociones dPromo = new DatosPromociones();
+    
+    Promocion promo = new Promocion();
+    Proveedor p = new Proveedor();
+    
+    promo.setNombre(NombrePromocion);
+    
+    promo.setPrecio(PrecioPromocion);
+    
+    promo.setDescuento(Descuento);
+    
+    p.setNombreEmpresa(nombreProveedor);
+    promo.setProveedor(p);
+    
+    int a = 0;
+    
+    a = dPromo.agregarPromocion(promo.getPrecio(),promo.getNombre(),promo.getDescuento(), promo.getProveedor().getNombreEmpresa());
+    
+    return a;
+}
+@Override
+public int agregarServiciosPromocion(String NombrePromo, String NombreServ, String NombreProv) throws SQLException, ClassNotFoundException{
+    Promocion promo = new Promocion();
+    
+    Servicio serv = new Servicio();
+    
+    Proveedor prov = new Proveedor();
+    
+    int resultado = 0;
+    
+    DatosPromociones dPromo = new DatosPromociones();
+    
+    promo.setNombre(NombrePromo);
+    
+    serv.setNombreServicio(NombreServ);
+    
+    prov.setNombreEmpresa(NombreProv);
+    
+    resultado = dPromo.agregarServiciosPromocion(promo.getNombre(),serv.getNombreServicio(), prov.getNombreEmpresa());
+    
+    return resultado;
+}
+
+@Override
+public String getNombreServicio(String cadena){
+    
+    String [] partes = new String[2];
+    
+    partes = cadena.split("/");
+    
+    String nombre;
+    
+    nombre = String.valueOf(partes[0].trim());
+    
+    return nombre;
+    
+}
+
 }
