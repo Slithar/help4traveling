@@ -76,7 +76,7 @@ public class DatosPromociones {
         
     }
     
-    public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Descuento) throws SQLException, ClassNotFoundException{
+    public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Descuento, String nombreProveedor) throws SQLException, ClassNotFoundException{
         
         ConexionBD conexion = new ConexionBD();
         
@@ -84,13 +84,15 @@ public class DatosPromociones {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareCall("INSERT INTO promociones VALUES (?,?,?)");
+        PreparedStatement pConsulta = conn.prepareCall("INSERT INTO promociones VALUES (?,?,?,?)");
         
         pConsulta.setString(1,NombrePromocion );
         
         pConsulta.setInt(2, Descuento);
         
         pConsulta.setInt(3,PrecioPromocion);
+        
+        pConsulta.setString(4,nombreProveedor);
         
         int a = 0;
         

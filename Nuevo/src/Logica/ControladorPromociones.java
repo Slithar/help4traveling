@@ -78,9 +78,9 @@ public class ControladorPromociones implements IControladorPromociones{
 @Override
 public int getPrecio(String cadena){
     String [] partes = new String[2];
-    partes = cadena.split("-");
+    partes = cadena.split("/");
     int precio = 0;
-    precio = Integer.parseInt(partes[1]);
+    precio = Integer.parseInt(partes[1].trim());
     return precio;
 }
 @Override
@@ -97,11 +97,12 @@ public int calcularPrecio(ArrayList<Integer> precios, int Descuento){
     return precioTotal;
 }
 @Override
-public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Descuento) throws SQLException, ClassNotFoundException{
+public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Descuento, String nombreProveedor) throws SQLException, ClassNotFoundException{
     
     DatosPromociones dPromo = new DatosPromociones();
     
     Promocion promo = new Promocion();
+    Proveedor p = new Proveedor();
     
     promo.setNombre(NombrePromocion);
     
@@ -109,9 +110,12 @@ public int agregarPromocion(int PrecioPromocion, String NombrePromocion, int Des
     
     promo.setDescuento(Descuento);
     
+    p.setNombreEmpresa(nombreProveedor);
+    promo.setProveedor(p);
+    
     int a = 0;
     
-    a = dPromo.agregarPromocion(promo.getPrecio(),promo.getNombre(),promo.getDescuento());
+    a = dPromo.agregarPromocion(promo.getPrecio(),promo.getNombre(),promo.getDescuento(), promo.getProveedor().getNombreEmpresa());
     
     return a;
 }
@@ -143,11 +147,11 @@ public String getNombreServicio(String cadena){
     
     String [] partes = new String[2];
     
-    partes = cadena.split("-");
+    partes = cadena.split("/");
     
     String nombre;
     
-    nombre = String.valueOf(partes[0]);
+    nombre = String.valueOf(partes[0].trim());
     
     return nombre;
     
