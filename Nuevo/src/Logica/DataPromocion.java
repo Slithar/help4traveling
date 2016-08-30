@@ -15,14 +15,16 @@ public class DataPromocion {
     private String nombre;
     private int descuento;
     private int precio;
+    private String proveedor;
 
     public DataPromocion() {
     }
 
-    public DataPromocion(String nombre, int descuento, int precio) {
+    public DataPromocion(String nombre, int descuento, int precio, String proveedor) {
         this.nombre = nombre;
         this.descuento = descuento;
         this.precio = precio;
+        this.proveedor = proveedor;
     }
 
     public String getNombre() {
@@ -47,6 +49,14 @@ public class DataPromocion {
 
     public void setPrecio(int precio) {
         this.precio = precio;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
     }
     
     

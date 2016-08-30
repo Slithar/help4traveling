@@ -11,18 +11,15 @@ import java.util.*;
  */
 public class Ciudad {
     private String nombre;
-    private ArrayList<Servicio> servicios;
     private Pais pais;
     
     public Ciudad(){
         this.nombre = "No";
-        this.servicios = new ArrayList<Servicio>();
         this.pais = new Pais();
     }
 
     public Ciudad(String nombre, ArrayList servicios, Pais pais){
         this.nombre = nombre;
-        this.servicios = servicios;
         this.pais = pais;
     }
 
@@ -45,13 +42,5 @@ public class Ciudad {
 
     public void setNombre(String Nombre) {
         this.nombre = Nombre;
-    }
-
-    public ArrayList<Servicio> getServicios() {
-        return servicios;
-    }
-
-    public void setServicios(ArrayList<Servicio> Servicio) {
-        this.servicios = Servicio;
     }
 }

@@ -421,6 +421,9 @@ public class DatosServicios {
             servicios.add(s);
         }
         
+        rs.close();
+        conn.close();
+        
         return servicios;
     }
 
@@ -451,6 +454,58 @@ public class DatosServicios {
         }
         
         return resultado;
+    }
+    
+    public ArrayList<ImagenServicio> getImagenesServicios(Servicio s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select * from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, s.getNombreServicio());
+        pConsulta.setString(2, s.getProveedorServicio().getNombreEmpresa());
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            imagenes.add(new ImagenServicio(rs.getString("ruta"), s));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return imagenes;
+    }
+    
+    public ArrayList<Categoria> selectCategoriasDeServicio(Servicio s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        
+        PreparedStatement pConsulta = conn.prepareStatement("select * from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        
+        pConsulta.setString(1, s.getNombreServicio());
+        pConsulta.setString(2, s.getProveedorServicio().getNombreEmpresa());
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            categorias.add(new Categoria(rs.getString("nombreCategoria"), "", new ArrayList()));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return categorias;
     }
     
 }

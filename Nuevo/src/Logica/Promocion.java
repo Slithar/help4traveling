@@ -14,18 +14,21 @@ public class Promocion {
     private int descuento;
     private int precio;
     private ArrayList<Servicio> Servicios;
-    private ArrayList<Reserva> Reservas;
+    private Proveedor proveedor;
 
-    public Promocion(String nombre, int descuento, int precio, ArrayList<Servicio> Servicios, ArrayList<Reserva> Reservas) {
+    public Promocion(String nombre, int descuento, int precio, ArrayList<Servicio> Servicios, Proveedor proveedor) {
         this.nombre = nombre;
         this.descuento = descuento;
         this.precio = precio;
         this.Servicios = Servicios;
-        this.Reservas = Reservas;
+        this.proveedor = proveedor;
     }
 
     public Promocion() {
+        
     }
+
+    
 
     public String getNombre() {
         return nombre;
@@ -58,12 +61,12 @@ public class Promocion {
     public void setServicios(ArrayList<Servicio> Servicios) {
         this.Servicios = Servicios;
     }
-
-    public ArrayList<Reserva> getReservas() {
-        return Reservas;
+    
+    public Proveedor getProveedor(){
+        return this.proveedor;
     }
-
-    public void setReservas(ArrayList<Reserva> Reservas) {
-        this.Reservas = Reservas;
+    
+    public void setProveedor(Proveedor proveedor){
+        this.proveedor = proveedor;
     }
 }

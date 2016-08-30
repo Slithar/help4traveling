@@ -35,8 +35,12 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         
         this.iccat = iccat;
         
-        this.setTitle("Agregar nueva Categoría");
+        this.setTitle("Registro de categoría");
         this.setLocation(400, 130);
+        txtNombreCat.requestFocus();
+        cmbTipo.addItem("Categoría padre");
+        cmbTipo.addItem("Categoría hija");
+        newCategoriaTree.setEnabled(false);
         try{
             llenarArbol("", null);
         }catch(SQLException ex){
@@ -65,27 +69,49 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         lblNombrePadre = new javax.swing.JLabel();
         btnAgregarCat = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lblNombreCat1 = new javax.swing.JLabel();
+        cmbTipo = new javax.swing.JComboBox<>();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        setIconifiable(true);
 
-        lblNombreCat.setText("Nombre de la Categoría");
+        treePane.setBackground(new java.awt.Color(240, 240, 240));
 
+        txtNombreCat.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        lblNombreCat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNombreCat.setText("Nombre de la categoría:");
+
+        newCategoriaTree.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(newCategoriaTree);
 
-        lblNombrePadre.setText("Seleccione el padre de la Categoría");
+        lblNombrePadre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNombrePadre.setText("Categoría padre:");
 
-        btnAgregarCat.setText("Agregar");
+        btnAgregarCat.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnAgregarCat.setText("Aceptar");
         btnAgregarCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarCatActionPerformed(evt);
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        lblNombreCat1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNombreCat1.setText("Tipo:");
+
+        cmbTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cmbTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTipoItemStateChanged(evt);
             }
         });
 
@@ -95,45 +121,56 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
         treePane.setLayer(lblNombrePadre, javax.swing.JLayeredPane.DEFAULT_LAYER);
         treePane.setLayer(btnAgregarCat, javax.swing.JLayeredPane.DEFAULT_LAYER);
         treePane.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        treePane.setLayer(lblNombreCat1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        treePane.setLayer(cmbTipo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout treePaneLayout = new javax.swing.GroupLayout(treePane);
         treePane.setLayout(treePaneLayout);
         treePaneLayout.setHorizontalGroup(
             treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(treePaneLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, treePaneLayout.createSequentialGroup()
                 .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNombreCat)
-                        .addComponent(lblNombreCat, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                     .addGroup(treePaneLayout.createSequentialGroup()
-                        .addComponent(btnAgregarCat)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar)))
-                .addGap(30, 30, 30)
-                .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombrePadre))
-                .addContainerGap(53, Short.MAX_VALUE))
+                        .addGap(19, 19, 19)
+                        .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNombreCat, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreCat1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreCat)
+                            .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(treePaneLayout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(btnAgregarCat, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombrePadre)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
         );
         treePaneLayout.setVerticalGroup(
             treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(treePaneLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreCat)
-                    .addComponent(lblNombrePadre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(treePaneLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(lblNombreCat))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, treePaneLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblNombrePadre)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(treePaneLayout.createSequentialGroup()
                         .addComponent(txtNombreCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(94, 94, 94)
-                        .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAgregarCat)
-                            .addComponent(btnCancelar))
-                        .addGap(0, 127, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(34, 34, 34)
+                        .addComponent(lblNombreCat1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGroup(treePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarCat)
+                    .addComponent(btnCancelar))
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,61 +195,104 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
     private void btnAgregarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCatActionPerformed
         // TODO add your handling code here:
         //ControladorCategorias CC = new ControladorCategorias();
-        String elegido="";
-        boolean resultado=false;
-        TreePath[] paths = newCategoriaTree.getSelectionPaths();
-        if(paths != null){
-            for (TreePath path : paths) {
-                   Object P = path.getLastPathComponent();
-                   elegido = P.toString();
-            }
-           String catAgregar = txtNombreCat.getText();
-            
-            try {
-                resultado = iccat.agregarNuevaCategoriaHija(catAgregar, elegido);
-                System.out.println("Primer try");
-                txtNombreCat.setText(null);
+        if(txtNombreCat.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de la nueva categoría", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtNombreCat.requestFocus();
+        }
+        else{   
+            try{
+                if(iccat.existeCategoria(txtNombreCat.getText())){
+                    JOptionPane.showMessageDialog(this, "La categoría ingresada ya existe", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    txtNombreCat.requestFocus();
+                }
+                else{
+                    
+                    String elegido="";
+                    boolean resultado=false;
+                    TreePath[] paths = newCategoriaTree.getSelectionPaths();
+                    if(cmbTipo.getSelectedIndex() == 1 && paths == null){
+                        JOptionPane.showMessageDialog(this, "No se ha seleccionado la categoría padre", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    }
+                    else{
+                        if(paths != null){
+                            for (TreePath path : paths) {
+                                   Object P = path.getLastPathComponent();
+                                   elegido = P.toString();
+                            }
+                           String catAgregar = txtNombreCat.getText();
+
+                            //try {
+                                resultado = iccat.agregarNuevaCategoriaHija(catAgregar, elegido);
+                                //System.out.println("Primer try");
+                                txtNombreCat.setText(null);
+                            /*} catch (SQLException ex) {
+                                txtNombreCat.setText(null);
+                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+                                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }*/
+                            if(resultado == true){
+                                   JOptionPane.showMessageDialog(this, "La nueva categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                                //try {
+                                    this.llenarArbol("", null);
+                                    //System.out.println("Segundo try");
+                                    txtNombreCat.setText(null);
+                                /*} catch (SQLException ex) {
+                                    txtNombreCat.setText(null);
+                                    JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la acción solicitada","ERROR",JOptionPane.ERROR_MESSAGE);
+                                    //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+                                    //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (ClassNotFoundException ex) {
+                                    Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                }*/
+                            }
+                        }
+                        else{
+                            String catAgregar = txtNombreCat.getText();
+                            //try {
+                               resultado = iccat.agregarNuevaCategoriaPadre(catAgregar);
+                               if(resultado == true){
+                                   JOptionPane.showMessageDialog(this, "La categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                                   this.llenarArbol("", null);
+                                   txtNombreCat.setText(null);
+                               }
+                            /*} catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la accion solicitada.","ERROR",JOptionPane.ERROR_MESSAGE);
+                                txtNombreCat.setText(null);
+                                //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+                                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }*/
+
+                        }
+                        cmbTipo.setSelectedIndex(0);
+                    }
+                    
+                }
             } catch (SQLException ex) {
                 txtNombreCat.setText(null);
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if(resultado == true){
-                   JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
-                try {
-                    this.llenarArbol("", null);
-                    System.out.println("Segundo try");
-                    txtNombreCat.setText(null);
-                } catch (SQLException ex) {
-                    txtNombreCat.setText(null);
-                    JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la acción solicitada","ERROR",JOptionPane.ERROR_MESSAGE);
-                    //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            } 
+        }
+        
+    }//GEN-LAST:event_btnAgregarCatActionPerformed
+
+    private void cmbTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTipoItemStateChanged
+        if(cmbTipo.getSelectedIndex() == 0){
+            newCategoriaTree.setEnabled(false);
+            newCategoriaTree.clearSelection();
         }
         else{
-            String catAgregar = txtNombreCat.getText();
-            try {
-               resultado = iccat.agregarNuevaCategoriaPadre(catAgregar);
-               if(resultado == true){
-                   JOptionPane.showMessageDialog(this, "Se ha agregado con exito la categoria.");
-                   this.llenarArbol("", null);
-                   txtNombreCat.setText(null);
-               }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la accion solicitada.","ERROR",JOptionPane.ERROR_MESSAGE);
-                txtNombreCat.setText(null);
-                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            newCategoriaTree.setEnabled(true);
         }
-    }//GEN-LAST:event_btnAgregarCatActionPerformed
+    }//GEN-LAST:event_cmbTipoItemStateChanged
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
         //ControladorCategorias categoriasHandler = new ControladorCategorias();
@@ -241,8 +321,10 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCat;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNombreCat;
+    private javax.swing.JLabel lblNombreCat1;
     private javax.swing.JLabel lblNombrePadre;
     private javax.swing.JTree newCategoriaTree;
     private javax.swing.JDesktopPane treePane;

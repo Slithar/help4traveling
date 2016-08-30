@@ -15,8 +15,6 @@ public class Servicio {
     private int precioServicio;
     private Proveedor proveedorServicio;
     private ArrayList<ImagenServicio> imagenesServicio;
-    private ArrayList<Reserva> reservasServicio;
-    private ArrayList<Promocion> promocionesServicio;
     private ArrayList<Categoria> categoriasServicio;
     private Ciudad origen;
     private Ciudad destino;
@@ -27,21 +25,17 @@ public class Servicio {
         precioServicio = 0;
         proveedorServicio = new Proveedor();
         imagenesServicio = new ArrayList<ImagenServicio>();
-        reservasServicio = new ArrayList<Reserva>();
-        promocionesServicio = new ArrayList<Promocion>();
         categoriasServicio = new ArrayList<Categoria>();
         origen = new Ciudad();
         destino = new Ciudad();
     }
     
-    public Servicio(String nombreServicio, String descripcionServicio, int precioServicio, Proveedor proveedorServicio, ArrayList<ImagenServicio> imagenesServicio, ArrayList<Reserva> reservasServicio, ArrayList<Promocion> promocionesServicio, ArrayList<Categoria> categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){
+    public Servicio(String nombreServicio, String descripcionServicio, int precioServicio, Proveedor proveedorServicio, ArrayList<ImagenServicio> imagenesServicio, ArrayList<Categoria> categoriasServicio, Ciudad origen, Ciudad destino, boolean tieneDestino){
         this.nombreServicio = nombreServicio;
         this.descripcionServicio = descripcionServicio;
         this.precioServicio = precioServicio;
         this.proveedorServicio = proveedorServicio;
         this.imagenesServicio = imagenesServicio;
-        this.reservasServicio = reservasServicio;
-        this.promocionesServicio = promocionesServicio;
         this.categoriasServicio = categoriasServicio;
         this.origen = origen;
         if(tieneDestino)
@@ -63,15 +57,6 @@ public class Servicio {
     public void setCategoriasServicio(ArrayList<Categoria> CategoriasServicio) {
         this.categoriasServicio = CategoriasServicio;
     }
-
-    public ArrayList<Promocion> getPromocionesServicio() {
-        return promocionesServicio;
-    }
-
-    public void setPromocionesServicio(ArrayList<Promocion> PromocionesServicio) {
-        this.promocionesServicio = PromocionesServicio;
-    }
-
 
     public Ciudad getOrigen() {
         return origen;
@@ -127,14 +112,6 @@ public class Servicio {
 
     public void setImagenesServicio(ArrayList<ImagenServicio> ImagenesServicio) {
         this.imagenesServicio = ImagenesServicio;
-    }
-
-    public ArrayList<Reserva> getReservaServicio() {
-        return reservasServicio;
-    }
-
-    public void setReservaServicio(ArrayList<Reserva> ReservaServicio) {
-        this.reservasServicio = ReservaServicio;
     }
     
 }

@@ -9,6 +9,7 @@ import Logica.DataReserva;
 import Logica.IControladorClientes;
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,8 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
      * Creates new form ifrmCancelarReserva
      */
     private IControladorClientes iccli;
+    private DefaultTableModel modelo = new DefaultTableModel();
+        
     
     public ifrmCancelarReserva() {
         initComponents();
@@ -33,6 +36,7 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
     public ifrmCancelarReserva(IControladorClientes iccli){
         
         initComponents();
+        modelo.setColumnIdentifiers(new Object[] {"Numero" ,"Fecha" ,"Precio" ,"Estado" , "Nickname Cliente"});
         
         
         setTitle("CancelarReserva");
@@ -42,24 +46,8 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
         
         this.iccli = iccli;
 
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[] {"Numero" ,"Fecha" ,"Precio" ,"Estado" , "Nickname Cliente"});
         
-        ArrayList<DataReserva> reservas = new ArrayList();
-        try {
-            reservas = iccli.getAllReservas();
-            for(int i = 0; i < reservas.size(); i++){
-                modelo.addRow(new Object[] {reservas.get(i).getNumero(), reservas.get(i).getFecha().toString(), reservas.get(i).getPrecio(), reservas.get(i).getEstado(), reservas.get(i).getCliente()});
-            }
-            tblReservas.setModel(modelo);
-        }   
-        
-        catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(ClassNotFoundException ex){
-            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        cargar();
         
     }
     
@@ -97,6 +85,11 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
         jLabel1.setText("Reservas");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar Reserva");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +152,34 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        if(tblReservas.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(this, "No se pudo completar la accion, no ha seleccionado ninguna reserva", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar la reserva N°"+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +" ?", "Alerta!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(resp == 0){
+                try {
+                    iccli.deleteReserva(Integer.parseInt(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0).toString()));
+                    JOptionPane.showMessageDialog(this, "La accion fue completada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                    cargar();
+                    tblReservas.clearSelection();
+                }
+                catch(SQLException ex){
+                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                catch(ClassNotFoundException ex){
+                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }       
+            }
+        }
+
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -170,4 +190,22 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblReservas;
     // End of variables declaration//GEN-END:variables
+
+    private void cargar() {
+        ArrayList<DataReserva> reservas = new ArrayList();
+                try {
+                    reservas = iccli.getAllReservas();
+                    for(int i = 0; i < reservas.size(); i++){
+                        modelo.addRow(new Object[] {reservas.get(i).getNumero(), reservas.get(i).getFecha().toString(), reservas.get(i).getPrecio(), reservas.get(i).getEstado(), reservas.get(i).getCliente()});
+                    }
+                    tblReservas.setModel(modelo);
+                }   
+
+                catch(SQLException ex){
+                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                catch(ClassNotFoundException ex){
+                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }    
+    }
 }

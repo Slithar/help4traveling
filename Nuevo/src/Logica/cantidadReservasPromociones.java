@@ -12,16 +12,38 @@ import java.time.*;
  * @author chaos
  */
 public class cantidadReservasPromociones {
-     private int cantidad;
-     private int totalLinea;
+    private int cantidad;
+    private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    String nombrePromocion;
-   
+    private String nombrePromocion;   
     private Promocion promocion;
+    private Proveedor proveedor;
+    private String nombreProveedor;
 
     public cantidadReservasPromociones() {
+        
     }
+    public cantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, Promocion promocion, Proveedor proveedor) {
+        this.cantidad = cantidad;
+        this.totalLinea = totalLinea;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.promocion = promocion;
+        this.proveedor = proveedor;
+    }
+    
+    public String getNombrePromocion(){
+        return this.nombrePromocion;
+    }
+    
+    public void setNombrePromocion(String nombrePromocion){
+        this.nombrePromocion = nombrePromocion;
+    }
+
+    /*public cantidadReservasPromociones(int aInt, int aInt0, LocalDate of, LocalDate of0, Promocion promocion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
 
     public cantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, String nombrePromocion, Promocion promocion) {
         this.cantidad = cantidad;
@@ -33,10 +55,12 @@ public class cantidadReservasPromociones {
     }
     
     public String getNombreP(){
-        return nombrePromocion;
+        return promocion.getNombre();
     }
     public void setnombreP(String nombre){
-        this.nombrePromocion=nombre;
+        Promocion p = new Promocion();
+        p.setNombre(nombre);
+        this.promocion = p;
     }
     
     public int getTotalL(){
@@ -79,6 +103,28 @@ public class cantidadReservasPromociones {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
-    
-    
+
+    public int getTotalLinea() {
+        return totalLinea;
+    }
+
+    public void setTotalLinea(int totalLinea) {
+        this.totalLinea = totalLinea;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }    
 }

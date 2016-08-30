@@ -12,16 +12,18 @@ import java.util.*;
 public class Categoria {
     private String nombre;
     private String rutaCategoria;
-    private ArrayList<Servicio> servicios;
+    private ArrayList<Categoria> categoriasHijas;
 
     public Categoria(){
-        
+        this.nombre = "";
+        this.rutaCategoria = "";
+        this.categoriasHijas = new ArrayList<Categoria>();
     }
     
-    public Categoria(String nombre, String rutaCategoria, ArrayList servicios){
+    public Categoria(String nombre, String rutaCategoria, ArrayList<Categoria> categoriasHijas){
         this.nombre = nombre;
         this.rutaCategoria = rutaCategoria;
-        this.servicios = servicios;
+        this.categoriasHijas = categoriasHijas;
     }
     
     public String getNombre() {
@@ -40,11 +42,13 @@ public class Categoria {
         this.rutaCategoria = rutaCategoria;
     }
 
-    public ArrayList<Servicio> getServicios() {
-        return servicios;
+    public ArrayList<Categoria> getCategoriasHijas() {
+        return categoriasHijas;
     }
 
-    public void setServicios(ArrayList<Servicio> Servicios) {
-        this.servicios = Servicios;
+    public void setCategoriasHijas(ArrayList<Categoria> categoriasHijas) {
+        this.categoriasHijas = categoriasHijas;
     }
+
+    
 }

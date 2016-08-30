@@ -4,81 +4,137 @@
  * and open the template in the editor.
  */
 package Datos;
-import Logica.DataPromocion;
-import Logica.Promocion;
-import Logica.Proveedor;
-import Logica.Servicio;
+import java.util.*;
 import java.sql.*;
-import java.util.ArrayList;
+import Logica.Promocion;
+import Logica.Servicio;
+import Logica.Proveedor;
 
-        
+
 /**
  *
- * @author ezequiel
+ * @author usuario
  */
 public class DatosPromociones {
-    public ArrayList<Promocion> selectAllPromociones() throws SQLException, ClassNotFoundException{
-        ArrayList<Promocion> resultado = new ArrayList();
-
-        //DataPromocion promo = new DataPromocion();
-        Connection conn;
-        ConexionBD conexion = new ConexionBD();
-        
-        conn = conexion.conectar();
-        Statement st = conn.createStatement();
-        
-        ResultSet rs = st.executeQuery("select nombre, nombreProveedor, precio from promociones, serviciosdepromociones where promociones.nombre = serviciosdepromociones.nombrePromocion order by promociones.nombre");
-        while(rs.next()){
-            Promocion promo = new Promocion();//creo objeto promocion
-            promo.setNombre(rs.getString("nombre"));//seteo el nombre de la promocion
-            promo.setPrecio(rs.getInt("precio"));//seteo el preciode la promocion
-            Proveedor prov = new Proveedor();//nuevo objeto proveedor
-            prov.setNombreEmpresa(rs.getString("nombreProveedor"));//seteo el nombre del objeto proveedor
-            ArrayList<Servicio> servicios = new ArrayList();//nueva lista de Servicios
-            Servicio serv = new Servicio();//nuevo objeto servicio
-            serv.setProveedorServicio(prov);//linkeo el objeto proveedor con un servicio 
-            servicios.add(serv);//agregoese servicio a la lista
-            promo.setServicios(servicios);//agrego la lista de servicios a la promo
-            resultado.add(promo);
-            
-        }
-        return resultado;
-    }
-    //                      ____________________________________________
     
-    public ArrayList<Promocion> getDatosPromociones() throws SQLException, ClassNotFoundException{
-        ArrayList<Promocion> resultado = new ArrayList();
+    public ArrayList<Promocion> selectAllPromociones() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+        
+        ConexionBD conexion = new ConexionBD();
         
         Connection conn;
-        ConexionBD conexion = new ConexionBD();
+        
         conn = conexion.conectar();
+        
         Statement st = conn.createStatement();
         
         ResultSet rs = st.executeQuery("select * from promociones");
+        
         while(rs.next()){
-            Promocion promo = new Promocion();
-            promo.setNombre(rs.getString("nombre"));
-            promo.setDescuento(rs.getInt("descuento"));
-            promo.setPrecio(rs.getInt("precio"));
-            resultado.add(promo);
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            promociones.add(new Promocion(rs.getString("nombre"), rs.getInt("descuento"), rs.getInt("precio"), new ArrayList(), p));
         }
-        return resultado;
+        
+        rs.close();
+        conn.close();
+        
+        return promociones;
+        
     }
     
-    public Promocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
-        Promocion resultado =new Promocion();
+    public ArrayList<Servicio> selectServiciosPromocion(String nombre) throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select * from serviciosdepromociones where nombrePromocion = ?");
+        
+        pConsulta.setString(1, nombre);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            Servicio s = new Servicio();
+            s.setNombreServicio(rs.getString("nombreServicio"));
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            s.setProveedorServicio(p);
+            servicios.add(s);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return servicios;
+        
+    }
+    
+    public void deleteAllPromociones(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();       
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
+        
+    }
+    
+    public void insertDatosPromocionesDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
+        
+    }
+
+    public Promocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException {
+        Promocion promo = new Promocion();
         Connection conn;
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
-        PreparedStatement st = conn.prepareStatement("select * from promociones where nombre = ? && nombreproveedor = ?");
+        
+        PreparedStatement st = conn.prepareStatement("select * from promociones where nombre = ? and nombreProveedor = ?");
         st.setString(1, nombrePromo);
         st.setString(2, nombreProveedor);
         ResultSet rs = st.executeQuery();
         if(rs.next()){
-            resultado.setNombre(rs.getString("nombre"));
-            resultado.setDescuento(rs.getInt("descuento"));
-            resultado.setPrecio(rs.getInt("precio"));
+            Proveedor nombreProv = new Proveedor();
+            nombreProv.setNombre(rs.getString("nombreProveedor"));
+            promo.setProveedor(nombreProv);
+            promo.setNombre(rs.getString("nombre"));
+            promo.setDescuento(rs.getInt("descuento"));
+            promo.setPrecio(rs.getInt("precio"));
         }
-        return resultado;
+        return promo;
     }
+    
 }

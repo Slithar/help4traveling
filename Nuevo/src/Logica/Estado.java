@@ -7,7 +7,7 @@ package Logica;
 
 /**
  *
- * @author ezequiel
+ * @author usuario
  */
 public enum Estado {
     REGISTRADA,

@@ -12,42 +12,46 @@ import java.time.LocalDate;
  * @author chaos
  */
 public class cantidadReservasServicios {
-    Reserva reserva;
-    Proveedor proveedor;
-    String nombre;
-     private int cantidad;
-     private int totalLinea;
+    //private Reserva reserva;
+    private Proveedor proveedor;
+    private Servicio servicio;
+    private String nombreProveedor;
+    private String nombreServicio;
+    private int cantidad;
+    private int totalLinea;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
-    public cantidadReservasServicios() {
+    public cantidadReservasServicios(){
+        
     }
-
-    public cantidadReservasServicios(Reserva reserva, Proveedor proveedor, String nombre, int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin) {
-        this.reserva = reserva;
+    
+    public cantidadReservasServicios(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, Proveedor proveedor, Servicio servicio) {
         this.proveedor = proveedor;
-        this.nombre = nombre;
+        this.servicio = servicio;
         this.cantidad = cantidad;
         this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
-
     
-    public Reserva getReserva() {
-        return reserva;
+    public Servicio getServicio() {
+        return servicio;
     }
 
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
     }
-
+    
     public String getNombreS() {
-        return nombre;
+        return servicio.getNombreServicio();
     }
 
     public void setNombreS(String nombre) {
-        this.nombre=nombre;
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        //this.nombre=nombre;
+        this.servicio = s;
     }
 
     public Proveedor getProveedor() {
@@ -89,5 +93,22 @@ public class cantidadReservasServicios {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
+    
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }
+
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
+    }
+
     
 }

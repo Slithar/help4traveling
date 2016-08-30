@@ -7,8 +7,12 @@ package Presentacion;
 import Logica.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.ImageObserver;
+import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,10 +26,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
     private IControladorPromociones icprom;
+    
+    private frmProgresoDatos vProgreso;
     /**
      * Creates new form frmMenuPrincipal
      */
-    public frmMenuPrincipal() {
+    public frmMenuPrincipal(){
         initComponents();
         //add(altaUsuarios);
         //aca el comentario de mi rama
@@ -34,10 +40,41 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
         setContentPane(nuevoPanel);
         Fabrica fab = new Fabrica();
+        iccat = fab.getIControladorCategorias();
         iccli = fab.getIControladorClientes();
         icprov = fab.getIControladorProveedores();
-        iccat = fab.getIControladorCategorias();
         icprom = fab.getIControladorPromociones();
+        
+        
+        /*try{
+            iccat.actualizarCategorias();
+            icprov.setListaCategorias(iccat.getListaCategorias());
+            icprov.actualizarProveedores();
+            icprov.actualizarCiudades();
+            icprom.setListaProveedores(icprov.getListaProveedores());
+            icprom.actualizarPromociones();
+            iccli.setListaPromociones(icprom.getListaPromociones());
+            iccli.setListaProveedores(icprov.getListaProveedores());            
+            iccli.actualizarClientes();
+        }
+        catch(SQLException ex){
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
+        System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
+        System.out.println("CIUDADES: " + icprov.getCantCiudades());
+        System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
+        System.out.println("CLIENTES: " + iccli.getCantClientes());*/
+    }
+    
+    public void setCursorFrame(Cursor c){
+        this.setCursor(c);
     }
  
     
@@ -45,6 +82,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 private void initComponents() {
 
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         mbBarra = new javax.swing.JMenuBar();
         mInicio = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
@@ -66,8 +104,13 @@ private void initComponents() {
         miConsServicios = new javax.swing.JMenuItem();
         miConsPromociones = new javax.swing.JMenuItem();
         miConsReservas = new javax.swing.JMenuItem();
+        mDatos = new javax.swing.JMenu();
+        miDatosDePrueba = new javax.swing.JMenuItem();
+        mEliminarDatos = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +137,11 @@ private void initComponents() {
         mRegistros.add(miRegClientes);
 
         miRegProveedores.setText("Proveedores");
+        miRegProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegProveedoresActionPerformed(evt);
+            }
+        });
         mRegistros.add(miRegProveedores);
 
         miCategorias.setText("Categorias");
@@ -140,189 +188,12 @@ private void initComponents() {
         mReservas.add(miNuevaReserva);
 
         miCancelarReserva.setText("Cancelar reserva");
-        mReservas.add(miCancelarReserva);
-
-        miActualizarReserva.setText("Actualizar reserva");
-        miActualizarReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miActualizarReservaActionPerformed(evt);
-            }
-        });
-        mReservas.add(miActualizarReserva);
-
-        mbBarra.add(mReservas);
-
-        mConsultas.setText("Consultas");
-
-        miConsClientes.setText("Clientes");
-        mConsultas.add(miConsClientes);
-
-        miConsProveedores.setText("Proveedores");
-        mConsultas.add(miConsProveedores);
-
-        miConsServicios.setText("Servicios");
-        miConsServicios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miConsServiciosActionPerformed(evt);
-            }
-        });
-        mConsultas.add(miConsServicios);
-
-        miConsPromociones.setText("Promociones");
-        mConsultas.add(miConsPromociones);
-
-        miConsReservas.setText("Reservas");
-        miConsReservas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miConsReservasActionPerformed(evt);
-            }
-        });
-        mConsultas.add(miConsReservas);
-
-        mbBarra.add(mConsultas);
-
-        setJMenuBar(mbBarra);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>                        
-    
-    
-    
-    
-    
-    
-    /*
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     
-    @SuppressWarnings("unchecked")
-    
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jMenuItem2 = new javax.swing.JMenuItem();
-        mbBarra = new javax.swing.JMenuBar();
-        mInicio = new javax.swing.JMenu();
-        miSalir = new javax.swing.JMenuItem();
-        mRegistros = new javax.swing.JMenu();
-        miRegClientes = new javax.swing.JMenuItem();
-        miRegProveedores = new javax.swing.JMenuItem();
-        miCategorias = new javax.swing.JMenuItem();
-        mRegServicios = new javax.swing.JMenu();
-        miRegServiciosNuevo = new javax.swing.JMenuItem();
-        miRegServiciosActualizar = new javax.swing.JMenuItem();
-        miRegPromociones = new javax.swing.JMenuItem();
-        mReservas = new javax.swing.JMenu();
-        miNuevaReserva = new javax.swing.JMenuItem();
-        miCancelarReserva = new javax.swing.JMenuItem();
-        miNuevoCancelar = new javax.swing.JMenuItem();
-        miActualizarReserva = new javax.swing.JMenuItem();
-        mConsultas = new javax.swing.JMenu();
-        miConsClientes = new javax.swing.JMenuItem();
-        miConsProveedores = new javax.swing.JMenuItem();
-        miConsServicios = new javax.swing.JMenuItem();
-        miConsPromociones = new javax.swing.JMenuItem();
-        miConsReservas = new javax.swing.JMenuItem();
-
-        jMenuItem2.setText("jMenuItem2");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        mInicio.setText("Inicio");
-
-        miSalir.setText("Salir");
-        miSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSalirActionPerformed(evt);
-            }
-        });
-        mInicio.add(miSalir);
-
-        mbBarra.add(mInicio);
-
-        mRegistros.setText("Registros");
-
-        miRegClientes.setText("Clientes");
-        miRegClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRegClientesActionPerformed(evt);
-            }
-        });
-        mRegistros.add(miRegClientes);
-
-        miRegProveedores.setText("Proveedores");
-        mRegistros.add(miRegProveedores);
-
-        miCategorias.setText("Categorias");
-        miCategorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miCategoriasActionPerformed(evt);
-            }
-        });
-        mRegistros.add(miCategorias);
-
-        mRegServicios.setText("Servicios");
-
-        miRegServiciosNuevo.setText("Nuevo");
-        miRegServiciosNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRegServiciosNuevoActionPerformed(evt);
-            }
-        });
-        mRegServicios.add(miRegServiciosNuevo);
-
-        miRegServiciosActualizar.setText("Actualizar");
-        miRegServiciosActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRegServiciosActualizarActionPerformed(evt);
-            }
-        });
-        mRegServicios.add(miRegServiciosActualizar);
-
-        mRegistros.add(mRegServicios);
-
-        miRegPromociones.setText("Promociones");
-        mRegistros.add(miRegPromociones);
-
-        mbBarra.add(mRegistros);
-
-        mReservas.setText("Reservas");
-
-        miNuevaReserva.setText("Nueva reserva");
-        miNuevaReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miNuevaReservaActionPerformed(evt);
-            }
-        });
-        mReservas.add(miNuevaReserva);
-
-        miCancelarReserva.setText("Cancelar reserva");
-        miCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        miCancelarReserva.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
                 miCancelarReservaActionPerformed(evt);
             }
         });
         mReservas.add(miCancelarReserva);
-
-        miNuevoCancelar.setText("NuevoCancelar");
-        miNuevoCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miNuevoCancelarActionPerformed(evt);
-            }
-        });
-        mReservas.add(miNuevoCancelar);
 
         miActualizarReserva.setText("Actualizar reserva");
         miActualizarReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -367,6 +238,230 @@ private void initComponents() {
         mConsultas.add(miConsReservas);
 
         mbBarra.add(mConsultas);
+
+        mDatos.setText("Datos del sistema");
+
+        miDatosDePrueba.setText("Cargar datos de prueba");
+        miDatosDePrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDatosDePruebaActionPerformed(evt);
+            }
+        });
+        mDatos.add(miDatosDePrueba);
+
+        mEliminarDatos.setText("Eliminar datos");
+        mEliminarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mEliminarDatosActionPerformed(evt);
+            }
+        });
+        mDatos.add(mEliminarDatos);
+
+        mbBarra.add(mDatos);
+
+        setJMenuBar(mbBarra);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 337, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+    
+    
+    
+    
+    
+    
+    /*
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     
+    @SuppressWarnings("unchecked")
+    
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        mbBarra = new javax.swing.JMenuBar();
+        mInicio = new javax.swing.JMenu();
+        miSalir = new javax.swing.JMenuItem();
+        mRegistros = new javax.swing.JMenu();
+        miRegClientes = new javax.swing.JMenuItem();
+        miRegProveedores = new javax.swing.JMenuItem();
+        miCategorias = new javax.swing.JMenuItem();
+        mRegServicios = new javax.swing.JMenu();
+        miRegServiciosNuevo = new javax.swing.JMenuItem();
+        miRegServiciosActualizar = new javax.swing.JMenuItem();
+        miRegPromociones = new javax.swing.JMenuItem();
+        mReservas = new javax.swing.JMenu();
+        miNuevaReserva = new javax.swing.JMenuItem();
+        miCancelarReserva = new javax.swing.JMenuItem();
+        miActualizarReserva = new javax.swing.JMenuItem();
+        mConsultas = new javax.swing.JMenu();
+        miConsClientes = new javax.swing.JMenuItem();
+        miConsProveedores = new javax.swing.JMenuItem();
+        miConsServicios = new javax.swing.JMenuItem();
+        miConsPromociones = new javax.swing.JMenuItem();
+        miConsReservas = new javax.swing.JMenuItem();
+        mDatos = new javax.swing.JMenu();
+        miDatosDePrueba = new javax.swing.JMenuItem();
+        mEliminarDatos = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        mInicio.setText("Inicio");
+
+        miSalir.setText("Salir");
+        miSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSalirActionPerformed(evt);
+            }
+        });
+        mInicio.add(miSalir);
+
+        mbBarra.add(mInicio);
+
+        mRegistros.setText("Registros");
+
+        miRegClientes.setText("Clientes");
+        miRegClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegClientesActionPerformed(evt);
+            }
+        });
+        mRegistros.add(miRegClientes);
+
+        miRegProveedores.setText("Proveedores");
+        miRegProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegProveedoresActionPerformed(evt);
+            }
+        });
+        mRegistros.add(miRegProveedores);
+
+        miCategorias.setText("Categorias");
+        miCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCategoriasActionPerformed(evt);
+            }
+        });
+        mRegistros.add(miCategorias);
+
+        mRegServicios.setText("Servicios");
+
+        miRegServiciosNuevo.setText("Nuevo");
+        miRegServiciosNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegServiciosNuevoActionPerformed(evt);
+            }
+        });
+        mRegServicios.add(miRegServiciosNuevo);
+
+        miRegServiciosActualizar.setText("Actualizar");
+        miRegServiciosActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegServiciosActualizarActionPerformed(evt);
+            }
+        });
+        mRegServicios.add(miRegServiciosActualizar);
+
+        mRegistros.add(mRegServicios);
+
+        miRegPromociones.setText("Promociones");
+        mRegistros.add(miRegPromociones);
+
+        mbBarra.add(mRegistros);
+
+        mReservas.setText("Reservas");
+
+        miNuevaReserva.setText("Nueva reserva");
+        miNuevaReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevaReservaActionPerformed(evt);
+            }
+        });
+        mReservas.add(miNuevaReserva);
+
+        miCancelarReserva.setText("Cancelar reserva");
+        mReservas.add(miCancelarReserva);
+
+        miActualizarReserva.setText("Actualizar reserva");
+        miActualizarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miActualizarReservaActionPerformed(evt);
+            }
+        });
+        mReservas.add(miActualizarReserva);
+
+        mbBarra.add(mReservas);
+
+        mConsultas.setText("Consultas");
+
+        miConsClientes.setText("Clientes");
+        miConsClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsClientesActionPerformed(evt);
+            }
+        });
+        mConsultas.add(miConsClientes);
+
+        miConsProveedores.setText("Proveedores");
+        mConsultas.add(miConsProveedores);
+
+        miConsServicios.setText("Servicios");
+        miConsServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsServiciosActionPerformed(evt);
+            }
+        });
+        mConsultas.add(miConsServicios);
+
+        miConsPromociones.setText("Promociones");
+        mConsultas.add(miConsPromociones);
+
+        miConsReservas.setText("Reservas");
+        miConsReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsReservasActionPerformed(evt);
+            }
+        });
+        mConsultas.add(miConsReservas);
+
+        mbBarra.add(mConsultas);
+
+        mDatos.setText("Datos del sistema");
+
+        miDatosDePrueba.setText("Cargar datos de prueba");
+        miDatosDePrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDatosDePruebaActionPerformed(evt);
+            }
+        });
+        mDatos.add(miDatosDePrueba);
+
+        mEliminarDatos.setText("Eliminar datos");
+        mEliminarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mEliminarDatosActionPerformed(evt);
+            }
+        });
+        mDatos.add(mEliminarDatos);
+
+        mbBarra.add(mDatos);
 
         setJMenuBar(mbBarra);
 
@@ -456,25 +551,107 @@ private void initComponents() {
         vAltaReserva.show();
     }//GEN-LAST:event_miNuevaReservaActionPerformed
 
-    private void miCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCancelarReservaActionPerformed
-        // TODO add your handling code here:
-        /*ifrmCancelarReserva vCancelarReserva;
+    private void miCancelarReservaActionPerformed(ActionEvent evt) {
+        ifrmCancelarReserva vCancelarReserva;
         vCancelarReserva = new ifrmCancelarReserva(iccli);
         nuevoPanel.add(vCancelarReserva);
-        vCancelarReserva.setVisible(true);
-        vCancelarReserva.show();*/
-        this.dispose();
-        
-    }//GEN-LAST:event_miCancelarReservaActionPerformed
+        vCancelarReserva.show();
+    }
+
+    private void miRegProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegProveedoresActionPerformed
+        ifrmAltaProveedores vProveedores = new ifrmAltaProveedores(icprov);
+        nuevoPanel.add(vProveedores);
+        vProveedores.setVisible(true);
+    }//GEN-LAST:event_miRegProveedoresActionPerformed
 
     private void miConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsClientesActionPerformed
-        // TODO add your handling code here:
+        ifrmVerInfoClientes vVerInfoCliente = new ifrmVerInfoClientes(this.iccli);
+        nuevoPanel.add(vVerInfoCliente);
+        vVerInfoCliente.setVisible(true);
     }//GEN-LAST:event_miConsClientesActionPerformed
 
-    private void miNuevoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoCancelarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_miNuevoCancelarActionPerformed
+    private void miDatosDePruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDatosDePruebaActionPerformed
+        
+        
+        vProgreso = new frmProgresoDatos("Cargando datos de prueba");
+        vProgreso.setVisible(true);
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro/a de que desea cargar los datos de prueba?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0){
+            this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));
+            try{
+                
+                
+                this.icprov.eliminarImagenesUsuarios();
+                this.icprov.eliminarImagenesServicios();
+
+                this.iccat.deleteAllCategorias();
+                this.icprov.deleteAllProveedores();
+                this.icprom.deleteAllPromociones();
+                this.iccli.deleteAllClientes();
+
+                this.iccat.insertCategoriasDePrueba();
+                this.icprov.insertCiudadesDePrueba();
+                this.icprov.insertDatosProveedoresDePrueba();
+                this.icprom.insertDatosPromocionesDePrueba();
+                this.iccli.insertDatosClientesDePrueba();
+                
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+                
+                JOptionPane.showMessageDialog(this, "Se han cargado los datos de prueba de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                
+                vProgreso.setVisible(false);
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+        
+        
+        
+        
+        //JOptionPane.showMessageDialog(this, "Datos eliminados correctamente");
+        
+    }//GEN-LAST:event_miDatosDePruebaActionPerformed
+
+    private void mEliminarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mEliminarDatosActionPerformed
+        vProgreso = new frmProgresoDatos("Eliminando datos del sistema");
+        vProgreso.setVisible(true);
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro/a de que desea eliminar todos los datos del sistema?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION) == 0){
+            
+            try{
+                this.setCursorFrame(new Cursor(Cursor.WAIT_CURSOR));
+                
+                this.icprov.eliminarImagenesUsuarios();
+                this.icprov.eliminarImagenesServicios();
+
+                this.iccat.deleteAllCategorias();
+                this.icprov.deleteAllProveedores();
+                this.icprom.deleteAllPromociones();
+                this.iccli.deleteAllClientes();
+
+                this.iccat.insertCategoriasDePrueba();
+                this.icprov.insertCiudadesDePrueba();
+                
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+                JOptionPane.showMessageDialog(this, "Se han eliminado los datos del sistema correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                vProgreso.setVisible(false);
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+    }//GEN-LAST:event_mEliminarDatosActionPerformed
     
         
     /**
@@ -522,7 +699,10 @@ private void initComponents() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu mConsultas;
+    private javax.swing.JMenu mDatos;
+    private javax.swing.JMenuItem mEliminarDatos;
     private javax.swing.JMenu mInicio;
     private javax.swing.JMenu mRegServicios;
     private javax.swing.JMenu mRegistros;
@@ -536,8 +716,8 @@ private void initComponents() {
     private javax.swing.JMenuItem miConsProveedores;
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
+    private javax.swing.JMenuItem miDatosDePrueba;
     private javax.swing.JMenuItem miNuevaReserva;
-    private javax.swing.JMenuItem miNuevoCancelar;
     private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
     private javax.swing.JMenuItem miRegProveedores;

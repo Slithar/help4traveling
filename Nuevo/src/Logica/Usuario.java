@@ -20,7 +20,7 @@ public class Usuario {
     private String apellido;
     private String email;
     private LocalDate fechaNac;
-    private Imagen imagenUsuario;
+    
     
         
     public Usuario(){
@@ -28,29 +28,26 @@ public class Usuario {
         nombre = "";
         apellido = "";
         email = "";
-        fechaNac = LocalDate.of(1900, 1, 1);
-        imagenUsuario = new Imagen("../Logica/perfiles/perfil.PNG", this);
-        
+        fechaNac = LocalDate.of(1900, 1, 1);       
     }
     
-    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaImagen){
+    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac){
         
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNac = fechaNac;
-        Imagen imagenUsuario = new Imagen(rutaImagen, this);
-        this.imagenUsuario = imagenUsuario;        
+             
     }
 
-    public Imagen getImagenUsuario() {
+    /*public Imagen getImagenUsuario() {
         return imagenUsuario;
     }
 
     public void setImagenUsuario(Imagen imagenUsuario) {
         this.imagenUsuario = imagenUsuario;
-    }
+    }*/
 
     public String getNickname() {
         return nickname;
@@ -92,9 +89,7 @@ public class Usuario {
         this.fechaNac = FechaNac;
     } 
     
-    public void setImagen(String ruta){
-        this.imagenUsuario = new Imagen(ruta, this);
-    }
+    
     
     public boolean correoValido(){
         int cantArrobas = 0;
@@ -127,10 +122,6 @@ public class Usuario {
         }
     }*/
     
-    public boolean copiarPerfil() throws IOException{
-        imagenUsuario.copiarImagen(this.nickname);
-        return true;
-        
-    }
+    
     
 }

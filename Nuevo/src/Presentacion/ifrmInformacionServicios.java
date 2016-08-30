@@ -52,6 +52,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         this.icprov = icprov;
         this.iccat = iccat;
         
+        
+        
         Dimension tamanioVentana = this.getSize();
         
         setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
@@ -136,7 +138,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
-        setTitle("Ver información de servicio");
+        setIconifiable(true);
+        setTitle("Ver información de servicios");
 
         tbServicios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tbServicios.setModel(new javax.swing.table.DefaultTableModel(
@@ -251,6 +254,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblDescripcion.setColumns(20);
         lblDescripcion.setLineWrap(true);
         lblDescripcion.setRows(5);
+        lblDescripcion.setWrapStyleWord(true);
         lblDescripcion.setBorder(null);
         jScrollPane3.setViewportView(lblDescripcion);
 

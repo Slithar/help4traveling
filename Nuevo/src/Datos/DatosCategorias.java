@@ -8,6 +8,7 @@ import java.util.*;
 import java.sql.*;
 import Logica.Categoria;
 import Logica.Servicio;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,7 +50,7 @@ public class DatosCategorias {
         return resultado;
     }
     
-    public ArrayList selectCategoriasHijas(String categoria) throws SQLException, ClassNotFoundException{
+    public ArrayList<Categoria> selectCategoriasHijas(String categoria) throws SQLException, ClassNotFoundException{
         //int indice = 0;
         
         ArrayList<Categoria> resultado = new ArrayList();
@@ -88,7 +89,7 @@ public class DatosCategorias {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES("+"?"+")");
+        PreparedStatement pConsulta = conn.prepareStatement("INSERT INTO categorias VALUES(?)");
         
         pConsulta.setString(1, nombre);
         
@@ -148,7 +149,7 @@ public class DatosCategorias {
         ArrayList cates = new ArrayList();
         
         while(rs.next()){
-            Categoria categoria = new Categoria(rs.getString("categoriaHija"), "", new ArrayList());
+            Categoria categoria = new Categoria(rs.getString("nombre"), "", new ArrayList());
             cates.add(categoria);
             //indice 
         }
@@ -160,6 +161,73 @@ public class DatosCategorias {
         conn.close();// He hecho un cambio para pablo
         
         return cates;
+    }
+    
+    public ArrayList<Categoria> selectAllCategorias() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from categorias order by nombre");
+        
+        while(rs.next()){
+            categorias.add(new Categoria(rs.getString("nombre"), "", new ArrayList()));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return categorias;
+        
+    }
+    
+    public void deleteAllCategorias(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+                
+        /*st.executeUpdate("delete from categoriasdeservicios where nombreCategoria <> \"\";"
+                        + "delete from categoriasrelacionadas where categoriaHija <> \"\";\n" +
+                        "delete from categorias where nombre <> \"\";");*/
+        
+        conn.close();
+        
+    }
+    
+    public void insertCategoriasDePrueba(String s) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+             
+        String[] sql = s.split(";");
+        
+        for(int i = 0; i < sql.length; i++){
+            st.executeUpdate(sql[i]);
+        }
+        
+        conn.close();
+        
     }
 
     

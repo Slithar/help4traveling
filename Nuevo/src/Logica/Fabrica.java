@@ -11,6 +11,8 @@ package Logica;
  */
 public class Fabrica {
     
+    
+    
     public Fabrica(){
         
     }

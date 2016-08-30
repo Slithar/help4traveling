@@ -48,12 +48,12 @@ public class DatosReservas {
         return numRes;
     }
     
-    public void insertarServicioReserva(int numRes, String nombreServicio, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin ) throws SQLException, ClassNotFoundException{
+    public void insertarServicioReserva(int numRes, String nombreServicio, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin, int precioUnit ) throws SQLException, ClassNotFoundException{
        Connection conn;
        ConexionBD conexion = new ConexionBD();
        conn = conexion.conectar();
        
-       PreparedStatement st = conn.prepareStatement("insert into cantidadreservasservicios values (?, ?, ?, ?, ?, ?, ?)");
+       PreparedStatement st = conn.prepareStatement("insert into cantidadreservasservicios values (?, ?, ?, ?, ?, ?, ?, ?)");
        
        st.setInt(1, numRes);
        st.setString(2, nombreServicio);
@@ -62,18 +62,19 @@ public class DatosReservas {
        st.setInt(5, totalLinea);
        st.setString(6, fechaInicio);
        st.setString(7, fechaFin);
+       st.setInt(8, precioUnit);
        
        st.executeUpdate();
        conn.close();
        
     }
     
-    public void insertarPromocionReserva(int numRes, String nombrePromocion, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin) throws SQLException, ClassNotFoundException{
+    public void insertarPromocionReserva(int numRes, String nombrePromocion, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin, int precioUnit) throws SQLException, ClassNotFoundException{
         Connection conn;
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
         
-        PreparedStatement st = conn.prepareStatement("insert into cantidadreservaspromociones values(?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement st = conn.prepareStatement("insert into cantidadreservaspromociones values(?, ?, ?, ?, ?, ?, ?, ?)");
         st.setInt(1, numRes);
         st.setString(2, nombrePromocion);
         st.setString(3, nombreProveedor);
@@ -81,6 +82,7 @@ public class DatosReservas {
         st.setInt(5, totalLinea);
         st.setString(6, fechaInicio);
         st.setString(7, fechaFin);
+        st.setInt(8, precioUnit);
         
         st.executeUpdate();
         conn.close();
@@ -93,25 +95,48 @@ public class DatosReservas {
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
         
-        PreparedStatement st = conn.prepareStatement("delete from reservas r, cantidadreservaspromociones p, cantidadreservasservicios s where r.nombre = p.numeroReserva and r.nombre = s.numeroReserva and r.nombre = ?");
-        st.setInt(1, numReserva);
+            PreparedStatement st = conn.prepareStatement("delete from reservas where reservas.numero = ?");
+            st.setInt(1, numReserva);
         st.executeUpdate();
         conn.close();
                 
         
     }
     
+    public void deleteCantResServ(int numRes) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        PreparedStatement st = conn.prepareStatement("delete from cantidadreservasservicios where cantidadreservasservicios.numeroReserva = ? ");
+        st.setInt(1, numRes);
+        
+        st.executeUpdate();
+        conn.close();
+    }
+    public void deleteCantResPromo(int numRes) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+        
+        PreparedStatement st = conn.prepareStatement("delete from cantidadreservaspromociones where cantidadreservaspromociones.numeroReserva = ? ");
+        st.setInt(1, numRes);
+        
+        st.executeUpdate();
+        conn.close();
+    }
     public ArrayList<Reserva> getAllReservas() throws SQLException, ClassNotFoundException{
         ArrayList<Reserva> todasReservas = new ArrayList();
-        Reserva reserva = new Reserva();
+        
         
         Connection conn;
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
         
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("Select * from reservas order by numero");
-        if(rs.next()){
+        ResultSet rs = st.executeQuery("Select * from reservas ");
+        while(rs.next()){
+            Reserva reserva = new Reserva();
             reserva.setNumero(rs.getInt("numero"));
             reserva.setFecha(LocalDate.parse(rs.getString("fecha")));
             reserva.setPrecio(rs.getInt("precio"));

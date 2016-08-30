@@ -17,18 +17,17 @@ public class DataReserva {
     private LocalDate fecha;
     private int precio;
     private String cliente;
-    private ArrayList<DatacantidadReservasServicios> serviciosReserva;
-    private ArrayList<DatacantidadReservasPromociones> reservaPromociones;    
+    private ArrayList<DataCantidadReservasServicios> serviciosReserva;
+    private ArrayList<DataCantidadReservasPromociones> reservaPromociones;    
     private String  estado;
-    
     public DataReserva() {
     }
 
-    public DataReserva(int numero, LocalDate fecha, int precio, String clientess, ArrayList<DatacantidadReservasServicios> serviciosReserva, ArrayList<DatacantidadReservasPromociones> reservaPromociones) {
+    public DataReserva(int numero, LocalDate fecha, int precio, String cliente, ArrayList<DataCantidadReservasServicios> serviciosReserva, ArrayList<DataCantidadReservasPromociones> reservaPromociones) {
         this.numero = numero;
         this.fecha = fecha;
         this.precio = precio;
-        this.cliente = clientess;
+        this.cliente = cliente;
         this.serviciosReserva = serviciosReserva;
         this.reservaPromociones = reservaPromociones;
     }
@@ -61,23 +60,23 @@ public class DataReserva {
         return cliente;
     }
 
-    public void setCliente(String clientes) {
-        this.cliente = clientes;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
-    public ArrayList<DatacantidadReservasServicios> getServiciosReserva() {
+    public ArrayList<DataCantidadReservasServicios> getServiciosReserva() {
         return serviciosReserva;
     }
 
-    public void setServiciosReserva(ArrayList<DatacantidadReservasServicios> serviciosReserva) {
+    public void setServiciosReserva(ArrayList<DataCantidadReservasServicios> serviciosReserva) {
         this.serviciosReserva = serviciosReserva;
     }
 
-    public ArrayList<DatacantidadReservasPromociones> getReservaPromociones() {
+    public ArrayList<DataCantidadReservasPromociones> getReservaPromociones() {
         return reservaPromociones;
     }
 
-    public void setReservaPromociones(ArrayList<DatacantidadReservasPromociones> reservaPromociones) {
+    public void setReservaPromociones(ArrayList<DataCantidadReservasPromociones> reservaPromociones) {
         this.reservaPromociones = reservaPromociones;
     }
         public String getEstado(){
