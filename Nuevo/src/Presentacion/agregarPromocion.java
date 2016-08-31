@@ -109,13 +109,18 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     
     public void precioPromo(){
         
-        descuento = (Integer)this.spnDescuento.getValue();
+        //JOptionPane.showMessageDialog(this, precioTotal);
+        
+        descuento = (Integer) this.spnDescuento.getValue();
         
         precio = icpromo.calcularPrecio(precioTotal, descuento);
         
         this.txtPrecioPromo.setText(String.valueOf(precio));
     }
     public void clearCamps(){
+        precio = 0;
+        precioTotal = new ArrayList();
+        
         dbProveedores.setSelectedIndex(0);
         filldb();
         fillLista();
@@ -443,9 +448,9 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
                     String servicio = this.icpromo.getNombreServicio(this.listaServiciosElegidos.getModel().getElementAt(vueltas));
                     resultadoServiciosPromocion = this.icpromo.agregarServiciosPromocion(this.txtNombrePromo.getText(),servicio,this.dbProveedores.getSelectedItem().toString());   
                 }
-                if(resultadoPromocion == 1 && resultadoServiciosPromocion == this.listaServiciosElegidos.getModel().getSize()-1){
+                /*if(resultadoPromocion == 1 && resultadoServiciosPromocion == this.listaServiciosElegidos.getModel().getSize()-1){
                     JOptionPane.showMessageDialog(null, "La promoción ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                }
+                }*/
                 JOptionPane.showMessageDialog(this, "La promoción ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                 clearCamps();
             } catch (SQLException | ClassNotFoundException ex) {
