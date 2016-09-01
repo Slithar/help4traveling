@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class frmMenuPrincipal extends javax.swing.JFrame {
    // private ifrmAltaUsuarios altaUsuarios = new ifrmAltaUsuarios();
     //private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios();
-    Panel nuevoPanel = new Panel();
+    public static Panel nuevoPanel = new Panel();
     private IControladorClientes iccli;
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
