@@ -424,24 +424,15 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                        txtCorreo.requestFocus();
                     }
                     else{
-                        /*try{
-                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG"){
-                                imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
-                                this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
-                            }
-                            else
-                                imagenCorrecta = true;
-                        }
-                        catch(IOException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                            lblImagenPerfil.requestFocus();
-                        }*//*
-                        if(imagenCorrecta){*/
 
                         try{
                             if(iccli.existeNickname(txtNickname.getText())){
                                 JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                 txtNickname.requestFocus();
+                            }                            
+                            else if(iccli.existeCorreo(txtCorreo.getText())){
+                                JOptionPane.showMessageDialog(this, "El correo electrónico ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                                txtCorreo.requestFocus();
                             }
                             else{
                                 if(this.rutaImagen != "../Logica/perfiles/perfil.PNG"){

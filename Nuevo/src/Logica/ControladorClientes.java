@@ -116,7 +116,17 @@ public class ControladorClientes implements IControladorClientes {
     public int getCantClientes() {
         return ListaClientes.size();
     }
-
+    
+    public boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException{
+        DatosUsuarios usuarios = new DatosUsuarios();
+        Usuario u = new Cliente();
+        u.setEmail(correo);
+        if(usuarios.cantidadEmail(u.getEmail()) == 0)
+            return false;
+        else 
+            return true;
+    }
+    
     @Override
     public boolean correoValido(String correo) {
         Cliente c = new Cliente();

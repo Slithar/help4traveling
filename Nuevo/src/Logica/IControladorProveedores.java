@@ -16,6 +16,7 @@ import java.time.*;
 public interface IControladorProveedores {
     
     public abstract boolean existeNickname(String nickname) throws SQLException, ClassNotFoundException;
+    public abstract boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException;
     public abstract boolean correoValido(String correo);
     public abstract boolean copiarPerfil(String nickname, ArrayList<String> rutaImagen) throws IOException;
     public abstract boolean existeNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException;

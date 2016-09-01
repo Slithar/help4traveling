@@ -102,7 +102,18 @@ public class ControladorProveedores implements IControladorProveedores{
             
         }
     }
-
+    
+    @Override
+    public boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException{
+        DatosUsuarios usuarios = new DatosUsuarios();
+        Usuario u = new Proveedor();
+        u.setEmail(correo);
+        if(usuarios.cantidadEmail(u.getEmail()) == 0)
+            return false;
+        else 
+            return true;
+    }
+    
     @Override
     public int getCantProveedores() {
         return ListaProveedores.size();
