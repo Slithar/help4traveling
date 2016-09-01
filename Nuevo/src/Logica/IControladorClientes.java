@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -39,13 +39,7 @@ public interface IControladorClientes {
     public abstract ArrayList<DataReserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException;
     public abstract void deleteReserva(int numReserva) throws SQLException, ClassNotFoundException;
     
-    /**
-     *
-     * @param nickname
-     * @return
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     */
+    
     public abstract DataCliente seleccionarCliente(String nickname) throws SQLException, ClassNotFoundException;
     
     /*public abstract void setListaPromociones(HashMap<String, Promocion> ListaPromociones);

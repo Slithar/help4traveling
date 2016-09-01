@@ -444,30 +444,6 @@ public class ControladorProveedores implements IControladorProveedores{
         return categoriasDelServicio;
     }
     
-    @Override
-    public ArrayList<DataImagen> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
-        Servicio s = new Servicio();
-        Proveedor p = new Proveedor();
-        p.setNombreEmpresa(nombreProveedor);
-        s.setNombreServicio(nombre);
-        s.setProveedorServicio(p);
-        
-        DatosServicios ds = new DatosServicios();
-        
-        ArrayList<ImagenServicio> resultadoImagenes = ds.getImagenes(nombre, nombreProveedor);
-        
-        ArrayList<DataImagen> imagenesDelServicio = new ArrayList<DataImagen>();
-        
-        //System.out.println(resultadoImagenes.size());
-        
-        if(resultadoImagenes.size() > 0){
-            for(int i = 0; i < resultadoImagenes.size(); i++){
-                imagenesDelServicio.add(new DataImagen(resultadoImagenes.get(i).getPath(), ""));
-            }
-        }
-        
-        return imagenesDelServicio;
-    }
     
     @Override
     public void modificarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList reservas, ArrayList promociones, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
@@ -694,6 +670,132 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
     }
     return servicios;
 }
+    @Override
     
+    public ArrayList<DataProveedor> getInfoProveedores() throws SQLException, ClassNotFoundException {
+        DatosProveedores proveedores = new DatosProveedores();
+        ArrayList<Proveedor> arrayProveedores = proveedores.selectAllObjetosProveedores();
+        ArrayList<DataProveedor> resultado = new ArrayList();
+        for(int i = 0; i < arrayProveedores.size(); i++){
+            DataProveedor dp = new DataProveedor();
+            dp.setNombre(arrayProveedores.get(i).getNombre());
+            dp.setApellido(arrayProveedores.get(i).getApellido());
+            dp.setNickname(arrayProveedores.get(i).getNickname());
+            dp.setEmail(arrayProveedores.get(i).getEmail());
+            dp.setFechaNac(arrayProveedores.get(i).getFechaNac());
+            dp.setNombreEmpresa(arrayProveedores.get(i).getNombreEmpresa());
+            dp.setLink(arrayProveedores.get(i).getLink());
+            //set imagenes???
+            resultado.add(dp);
+        }
+        return resultado;
+    }
     
+    @Override
+    public ArrayList<DataProveedor> verInfoProveedorBusqueda(String nickname) throws SQLException, ClassNotFoundException{
+        Proveedor p = new Proveedor();
+        p.setNickname(nickname);
+        DatosProveedores dataux = new DatosProveedores();
+        
+        ArrayList<Proveedor> Prov =dataux.verInfoProveedorBusqueda(p.getNickname());
+        ArrayList<DataProveedor> InfoProveedores = new ArrayList();
+        for(int i = 0; i<Prov.size(); i++){
+            DataProveedor dtProv = new DataProveedor();
+            dtProv.setNickname(Prov.get(i).getNickname());
+            InfoProveedores.add(dtProv);
+        }
+        /*
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList<Servicio> servicios = ds.getServiciosPorBusqueda(s.getNombreServicio());
+        ArrayList<DataServicio> resultadoServicio = new ArrayList<DataServicio>();
+        
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio serv = new DataServicio();
+            serv.setNombreServicio(servicios.get(i).getNombreServicio());
+            serv.setNombreProveedor(servicios.get(i).getProveedorServicio().getNombreEmpresa());
+            resultadoServicio.add(serv);
+        }
+        
+        return resultadoServicio;
+    }
+        }*/
+
+        return InfoProveedores;
+    }
+    @Override
+    public ArrayList<DataImagen> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNombreEmpresa(nombreProveedor);
+        s.setNombreServicio(nombre);
+        s.setProveedorServicio(p);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList<ImagenServicio> resultadoImagenes = ds.getImagenes(nombre, nombreProveedor);
+        
+        ArrayList<DataImagen> imagenesDelServicio = new ArrayList<DataImagen>();
+        
+        //System.out.println(resultadoImagenes.size());
+        
+        if(resultadoImagenes.size() > 0){
+            for(int i = 0; i < resultadoImagenes.size(); i++){
+                imagenesDelServicio.add(new DataImagen(resultadoImagenes.get(i).getPath(), ""));
+            }
+        }
+        
+        return imagenesDelServicio;
+    }
+
+    @Override
+    public ArrayList<DataImagen> getImagenesProv(String nickname) throws SQLException, ClassNotFoundException {
+        //Servicio s = new Servicio();
+        Proveedor p = new Proveedor();
+        p.setNickname(nickname);
+        
+        DatosProveedores ds = new DatosProveedores();
+        
+        ArrayList<Imagen> resultadoImagenes = ds.getImagenesProv( p.getNickname());
+        
+        ArrayList<DataImagen> imagenesDelProveedor = new ArrayList<DataImagen>();
+        
+        //System.out.println(resultadoImagenes.size());
+        
+        if(resultadoImagenes.size() > 0){
+            for(int i = 0; i < resultadoImagenes.size(); i++){
+                imagenesDelProveedor.add(new DataImagen(resultadoImagenes.get(i).getPath(), ""));
+            }
+        }
+        
+        return imagenesDelProveedor;
+    }
+
+    @Override
+    public DataProveedor verInfoProveedor(String nickname) throws SQLException, ClassNotFoundException {
+        DatosProveedores dataux = new DatosProveedores();
+        Proveedor p = new Proveedor();
+        p.setNickname(nickname);
+        Proveedor Prov =dataux.seleccionarProveedor(p.getNickname());
+        ArrayList<DataProveedor> InfoProveedores = new ArrayList();
+        //DataProveedor proveedores = new DataProveedor();
+        //proveedores.setNickname(Prov.getNickname());
+            //nickProv.add(proveedores);
+        //DataProveedor dtProv = new DataProveedor();
+            //if(!Prov.isEmpty()){
+            ArrayList<String> rutaImagenes = new ArrayList();
+            for(int j = 0; j < Prov.getImagenesUsuario().size(); j++){
+                rutaImagenes.add(Prov.getImagenesUsuario().get(j).getPath());
+            }
+            DataProveedor dtProv = new DataProveedor(Prov.getNickname(),Prov.getNombre(),Prov.getApellido(),Prov.getEmail(),Prov.getFechaNac(),rutaImagenes,Prov.getNombreEmpresa(),Prov.getLink());
+            //InfoProveedores.add(dtProv);
+        
+
+        return dtProv;
+    }    
+
 }
+

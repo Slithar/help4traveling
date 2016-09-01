@@ -6,6 +6,7 @@
 package Logica;
 
 import java.time.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,14 +19,14 @@ public class DataProveedor {
     private String apellido;
     private String email;
     private LocalDate fechaNac;
-    private String rutaImagen;
+    private ArrayList<String> rutaImagen;
     private String nombreEmpresa;
     private String link;
 
     public DataProveedor() {
     }
 
-    public DataProveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaImagen, String nombreEmpresa, String link) {
+    public DataProveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, ArrayList<String> rutaImagen, String nombreEmpresa, String link) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -76,11 +77,11 @@ public class DataProveedor {
         this.fechaNac = fechaNac;
     }
 
-    public String getRutaImagen() {
+    public ArrayList<String> getRutaImagen() {
         return rutaImagen;
     }
 
-    public void setRutaImagen(String rutaImagen) {
+    public void setRutaImagen(ArrayList<String> rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
 

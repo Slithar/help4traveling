@@ -472,6 +472,7 @@ public class DatosClientes {
         return c;
         
     }
+    
     public ArrayList<Reserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
          ConexionBD conexion = new ConexionBD();
         
