@@ -97,6 +97,22 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     this.tbServicios.selectAll();
     this.txtBusqueda.setText(servicio);
     this.txtBusqueda.setEditable(false);
+    DefaultTableModel modelo2 = new DefaultTableModel(); 
+    modelo2.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+    modelo2.addRow(new Object[]{servicio, "prov"});
+    int a = 0;
+    boolean control = true;
+    while(a<modelo.getRowCount() && control==true){
+        if(modelo.getValueAt(a, 0).equals(modelo2.getValueAt(0, 0))){
+            modelo2.setRowCount(0);
+            modelo2.addRow(new Object[]{modelo.getValueAt(a, 0),modelo.getValueAt(a, 1)});
+            modelo.setRowCount(0);
+            modelo.addRow(new Object[]{modelo2.getValueAt(0, 0),modelo2.getValueAt(0, 1)});
+            control = false;
+        }
+        a++;
+    }
+    this.tbServicios.selectAll();
     this.btnAceptar.doClick();
 //     KeyEvent keyEvent = new KeyEvent("");
 //    this.txtBusqueda.dispatchEvent(keyEvent);
