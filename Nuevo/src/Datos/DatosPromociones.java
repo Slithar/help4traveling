@@ -178,12 +178,14 @@ public class DatosPromociones {
         ResultSet rs = st.executeQuery();
         if(rs.next()){
             Proveedor nombreProv = new Proveedor();
-            nombreProv.setNombre(rs.getString("nombreProveedor"));
+            nombreProv.setNombreEmpresa(rs.getString("nombreProveedor"));
             promo.setProveedor(nombreProv);
             promo.setNombre(rs.getString("nombre"));
             promo.setDescuento(rs.getInt("descuento"));
             promo.setPrecio(rs.getInt("precio"));
         }
+        conn.close();
+        rs.close();
         return promo;
     }
 }

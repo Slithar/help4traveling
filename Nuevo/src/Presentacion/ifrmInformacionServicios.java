@@ -46,6 +46,63 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         initComponents();
     }
     
+    public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat,String servicio) {
+    initComponents();
+
+    this.icprov = icprov;
+    this.iccat = iccat;
+
+
+
+    Dimension tamanioVentana = this.getSize();
+
+    setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
+
+    panelDatos.setVisible(false);
+
+    lstCategorias.setBackground(UIManager.getColor("Label.background"));
+    lblDescripcion.setBackground(UIManager.getColor("Label.background"));
+
+
+    panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
+    tbServicios.requestFocus();
+
+    lblImagen1.addMouseListener(new OyenteLabel());
+    lblImagen1.setSize(143, 143);
+    panelImagenes.add(lblImagen1);
+    lblImagen1.setLocation(0, 0);
+    lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
+    lblImagen1.setVisible(true);
+
+    /*DefaultTableModel modelo = new DefaultTableModel();*/
+    modeloTabla modelo = new modeloTabla();
+    modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+
+    try{
+        ArrayList<DataServicio> datosServicios = icprov.getServicios();
+
+        for(int i = 0; i < datosServicios.size(); i++){
+            modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+        }
+
+        tbServicios.setModel(modelo);
+    }
+    catch(SQLException ex){
+        JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+    catch(ClassNotFoundException ex){
+        JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+    this.tbServicios.selectAll();
+    this.txtBusqueda.setText(servicio);
+    this.txtBusqueda.setEditable(false);
+    this.btnAceptar.doClick();
+//     KeyEvent keyEvent = new KeyEvent("");
+//    this.txtBusqueda.dispatchEvent(keyEvent);
+
+}
+        
     public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
         
@@ -179,6 +236,11 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             }
         });
 
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaActionPerformed(evt);
+            }
+        });
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyTyped(evt);
@@ -644,6 +706,10 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     private void tbServiciosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyPressed
         //JOptionPane.showMessageDialog(this, "No");
     }//GEN-LAST:event_tbServiciosKeyPressed
+
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

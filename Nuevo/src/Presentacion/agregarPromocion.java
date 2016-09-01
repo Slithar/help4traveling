@@ -414,6 +414,8 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         
         this.txtPrecioPromo.setText("0");
         
+        this.precioTotal.clear();
+        
         fillLista();
     }//GEN-LAST:event_dbProveedoresActionPerformed
 

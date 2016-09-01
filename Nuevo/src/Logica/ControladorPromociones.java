@@ -207,6 +207,7 @@ public String getNombreServicio(String cadena){
             promo.setNombre(todaslaspromociones.get(i).getNombre());
             promo.setDescuento(todaslaspromociones.get(i).getDescuento());
             promo.setPrecio(todaslaspromociones.get(i).getPrecio());
+            promo.setProveedor(todaslaspromociones.get(i).getProveedor().getNombreEmpresa());
             resultado.add(promo);
         }
         return resultado;
@@ -236,12 +237,10 @@ public String getNombreServicio(String cadena){
         DatosPromociones promociones = new DatosPromociones();
         Promocion promo = new Promocion();
         promo = promociones.getDataPromocion(nombrePromo, nombreProveedor);
-        
-        
+   
         promocion.setNombre(promo.getNombre());
         promocion.setDescuento(promo.getDescuento());
         promocion.setPrecio(promo.getPrecio());
-        
         return promocion;
     }
 
