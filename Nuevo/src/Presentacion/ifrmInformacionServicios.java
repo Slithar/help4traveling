@@ -74,6 +74,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         lblImagen1.setVisible(true);
         
+        lblDescripcion.setEditable(false);
+        
         /*DefaultTableModel modelo = new DefaultTableModel();*/
         modeloTabla modelo = new modeloTabla();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});

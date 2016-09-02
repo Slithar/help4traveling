@@ -9,8 +9,12 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
@@ -35,12 +39,12 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     
     private frmVisor visor;
     
-    private ArrayList<LabelImagen> perfiles;
+    private ArrayList<LabelImagen> perfiles = new ArrayList<LabelImagen>();
     
     private String rutaImagen = "";
     
-    private String PROVEEDOR = ""; 
-    private String SERVICIO = "";
+    private String proveedor = ""; 
+    private String servicio = "";
     Panel nuevoPanel = new Panel();
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
@@ -75,8 +79,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         
         lblImagenPerfil.setSize(200, 200); 
         lblImagenPerfil.setVisible(true);
-        //setImagenPerfil("src/Logica/perfiles/perfil.png");
-        
+        setImagenPerfil("src/Logica/perfiles/perfil.png", "defecto");
+        jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
         
         try{
             DefaultListModel modelo = new DefaultListModel();
@@ -99,14 +103,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         
     }
     
-    /*public void setImagenPerfil(String ruta){
-        File fichero = new File(ruta);
-        String rutaAbsoluta = fichero.getAbsolutePath();
-        
-        ImageIcon imagen = new ImageIcon(rutaAbsoluta);
-        ImageIcon imagenDimensionada = new ImageIcon(imagen.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
-        lblImagenPerfil.setIcon(imagenDimensionada);
-    }*/
     public void setImagenPerfil(String ruta, String tipo){
         if(tipo.equals("defecto")){
             ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
@@ -274,6 +270,12 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
 
         txtSitioWeb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtSitioWeb.setText("sitioWeb");
+        txtSitioWeb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtSitioWeb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSitioWebMouseClicked(evt);
+            }
+        });
 
         jlabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlabel8.setText("Imágenes de Proveedor:");
@@ -285,11 +287,11 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         panelImagenes.setLayout(panelImagenesLayout);
         panelImagenesLayout.setHorizontalGroup(
             panelImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
         );
         panelImagenesLayout.setVerticalGroup(
             panelImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 107, Short.MAX_VALUE)
+            .addGap(0, 124, Short.MAX_VALUE)
         );
 
         jScrollPane3.setViewportView(panelImagenes);
@@ -333,7 +335,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                                 .addComponent(cmbServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jlabel2)
@@ -345,7 +346,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                                     .addComponent(jlabel5)
                                     .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(29, 29, 29))))
         );
         panelDatosLayout.setVerticalGroup(
@@ -384,7 +386,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                     .addComponent(lblImagenes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
+                .addGap(37, 37, 37)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cmbServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -420,15 +422,15 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         }
         else{
             try {
+                
                 limpiar();
                 DataProveedor dtProv = icprov.verInfoProveedor(lstProv.getSelectedValue());
-                //DataCliente dtCli=iccli.seleccionarCliente(lstProv.getSelectedValue());
                 txtNombre.setText(dtProv.getNombre());
                 txtApellido.setText(dtProv.getApellido());
                 txtCorreo.setText(dtProv.getEmail());
                 txtFechaNacimiento.setText(String.valueOf(dtProv.getFechaNac().getDayOfMonth()) + "/"+String.valueOf(dtProv.getFechaNac().getMonthValue())+"/"+String.valueOf(dtProv.getFechaNac().getYear()) );
                 txtNombreEmpresa.setText(dtProv.getNombreEmpresa());
-                txtSitioWeb.setText(dtProv.getLink());
+                txtSitioWeb.setText("<html><a href = '" + dtProv.getLink() + "'>" + dtProv.getLink() + "</a><html>");
                 
                 ArrayList<DataServicio> servicios = new ArrayList();
                 servicios = icprov.getServiciosProveedor(dtProv.getNombreEmpresa());
@@ -436,89 +438,45 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                     cmbServicios.addItem(servicios.get(i).getNombreServicio());
                 }
                 
-                ArrayList<DataImagen> imagenesProv = icprov.getImagenesProv(dtProv.getNickname());
+                ArrayList<String> imagenesProv = dtProv.getRutaImagen();
                 
-                /////////////////
-             /*   if(imagenesProv.size()>0){
-                    for(int i = 0; i<imagenesProv.size(); i++){
-                        LabelImagen lblImagen1 = new LabelImagen();
-                        lblImagen1.setSize(100, 100);
-                        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                        lblImagen1.addMouseListener(new OyenteLabel());
-                        LabelImagen imagen = new LabelImagen(imagenesProv.get(i).getPath());
-                        imagen.setSize(100, 100);
-                        perfiles.add(imagen);
-                    }
-                }
-                */
-                
-                /////////////////
-                    if(imagenesProv.size() == 0){
-
-                        lblImagenes.setVisible(true);
-                    }
-                    else{
-                        for(int i = 0; i < imagenesProv.size(); i++){
-                            File ficheroImagen = new File(imagenesProv.get(i).getPath());
-                            String rutaAbsoluta = ficheroImagen.getAbsolutePath();
-
-                            setImagenLabel(rutaAbsoluta, "absoluta");
-                        }
-                        lblImagenes.setVisible(false);
-                    }
-                //Cargo imagenes
-/*                ArrayList<DataImagen> imagenesProv = icprov.getImagenesProv(dtProv.getNickname());
-
-                if(imagenesProv.size()==0){
-                    lblImagenes.setVisible(true);
+                if(imagenesProv.size() == 0){
+                    setImagenPerfil("src/Logica/perfiles/perfil.png", "defecto");
+                    //lblImagenes.setVisible(true);
                 }
                 else{
                     for(int i = 0; i < imagenesProv.size(); i++){
-                        LabelImagen lblImagen1 = new LabelImagen();
-                        lblImagen1.setSize(100, 100);
-                        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                        lblImagen1.addMouseListener(new OyenteLabel());
-                        LabelImagen imagen = new LabelImagen(imagenesProv.get(i).getPath());
-                        imagen.setSize(100, 100);
-                        
-                        perfiles.add(imagen);
-                        if(perfiles.get(0) == imagen){
-                            setImagenPerfil(imagenesProv.get(i).getPath(), "absoluta");
-                            panelImagenes.add(lblImagen1);
-                        }
-            
-                        lblImagen1.setVisible(false);
-                        refrescarPerfiles();
+                        File ficheroImagen = new File(imagenesProv.get(i));
+                        String rutaAbsoluta = ficheroImagen.getAbsolutePath();
+                            
+                        perfiles.add(new LabelImagen(rutaAbsoluta));
+                                                       
                     }
-                    lblImagenes.setVisible(false);
                 }
-           */
-                panelDatos.setVisible(true);
-
-                /*
-                if(dtProv.getRutaImagen()==null){
-                    setImagenPerfil("src/logica/perfiles/perfil.png");
+                int cant = 0;
+                for(int i = 0; i < perfiles.size(); i++){
+                    if(i == 0){
+                        setImagenPerfil(perfiles.get(i).getRutaImagen(), "absoluta");
+                    }
+                    panelImagenes.add(perfiles.get(i));
+                    //JOptionPane.showMessageDialog(this, perfiles.get(i).getRutaImagen());
+                    ImageIcon icono = new ImageIcon(perfiles.get(i).getRutaImagen());
+                    ImageIcon iconoDimensionado = new ImageIcon(icono.getImage().getScaledInstance(124, 124, Image.SCALE_DEFAULT));
+                    perfiles.get(i).setIcon(iconoDimensionado);
+                    perfiles.get(i).setLocation(i * 140, 0);
+                    cant = i;
                 }
-                else {
-                    setImagenPerfil(dtProv.getRutaImagen());
-                }
-                panelDatosReservas.setVisible(false);
-                if(iccli.reservasCliente(lstClientes.getSelectedValue()).size()==0){
-                    cmbReservasCliente.addItem("No corresponde");
-                    btnAceptarReserva.setVisible(false);
-
+                    
+                int largo = cant + 1;
+                panelImagenes.setPreferredSize(new Dimension(largo * 140, 124));
+                    
+                if(cant > 3){
+                    jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
                 }
                 else{
-                    ArrayList<DataReserva> listDtRes =iccli.reservasCliente(lstClientes.getSelectedValue());
-                    cmbReservasCliente.removeAllItems();
-                    for(int i=0;i<listDtRes.size();i++){
-                        cmbReservasCliente.addItem(String.valueOf(listDtRes.get(i).getNumero()));
-                    }
-                    btnAceptarReserva.setVisible(true);
-                    refrescarReservas();
-                    panelDatosReservas.setVisible(true);
-
-                }*/
+                    jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+                }
+                
                 panelDatos.setVisible(true);
             } catch(SQLException ex){
                 //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -563,9 +521,9 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
         // TODO add your handling code here:
         
-        SERVICIO = (String) cmbServicios.getSelectedItem();
-        PROVEEDOR = txtNombreEmpresa.getText();
-        ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat, SERVICIO, PROVEEDOR);
+        servicio = (String) cmbServicios.getSelectedItem();
+        proveedor = txtNombreEmpresa.getText();
+        ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat, servicio, proveedor);
         frmMenuPrincipal.nuevoPanel.add(vInformacionServicio);
         
         vInformacionServicio.setVisible(true);
@@ -573,8 +531,31 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnBuscarServicioActionPerformed
 
+    private void txtSitioWebMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSitioWebMouseClicked
+        if(evt.getButton() == MouseEvent.BUTTON1){
+            Desktop dsk = Desktop.getDesktop();
+            try {
+                dsk.browse(new URI(txtSitioWeb.getText()));
+            } catch (IOException |  URISyntaxException ex) {
+                JOptionPane.showMessageDialog(this, "Problema para redirigirse a la URL", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_txtSitioWebMouseClicked
+
     private void limpiar() {
             cmbServicios.removeAllItems();
+            
+            if(perfiles.size() > 0){
+                Container parent = perfiles.get(0).getParent();
+                //int i = 0;
+                while(perfiles.size() > 0){
+                    perfiles.remove(0);
+                }
+                parent.removeAll();
+                parent.repaint();
+
+            }
+            perfiles.clear();
            /* lblImagen1 = new JLabel();
             lblImagen2 = new JLabel();
             lblImagen3 = new JLabel();
@@ -586,7 +567,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     private class LabelImagen extends JLabel{
         private String rutaImagen = "";
         public LabelImagen(String rutaImagen){
-            this.setSize(100, 100);
+            this.setSize(124, 124);
             this.rutaImagen = rutaImagen;
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             this.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
@@ -717,10 +698,9 @@ private class OyenteLabel implements MouseListener{
         }
         
     }
-    public void refrescarPerfiles(){
+    /*public void refrescarPerfiles(){
         int i = 0;
-        for( i = 0; i < perfiles.size(); i++){
-            //JOptionPane.showMessageDialog(this, perfiles.get(i).getRutaImagen());            
+        for( i = 0; i < perfiles.size(); i++){     
             ImageIcon imagenPerfil = new ImageIcon(perfiles.get(i).getRutaImagen());
             ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(perfiles.get(i).getWidth(), perfiles.get(i).getHeight(), Image.SCALE_DEFAULT));
             perfiles.get(i).setIcon(imagenDimensionadaPerfil);       
@@ -737,7 +717,7 @@ private class OyenteLabel implements MouseListener{
         else{
             jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
         }       
-    }
+    }*/
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

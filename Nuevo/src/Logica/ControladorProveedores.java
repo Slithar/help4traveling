@@ -777,6 +777,7 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
     @Override
     public DataProveedor verInfoProveedor(String nickname) throws SQLException, ClassNotFoundException {
         DatosProveedores dataux = new DatosProveedores();
+        DatosUsuarios datausu = new DatosUsuarios();
         Proveedor p = new Proveedor();
         p.setNickname(nickname);
         Proveedor Prov =dataux.seleccionarProveedor(p.getNickname());
@@ -786,10 +787,12 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
             //nickProv.add(proveedores);
         //DataProveedor dtProv = new DataProveedor();
             //if(!Prov.isEmpty()){
+            ArrayList<Imagen> imagenesProveedor = datausu.selectImagenesPerfil(p);
             ArrayList<String> rutaImagenes = new ArrayList();
-            for(int j = 0; j < Prov.getImagenesUsuario().size(); j++){
-                rutaImagenes.add(Prov.getImagenesUsuario().get(j).getPath());
+            for(int i = 0; i < imagenesProveedor.size(); i++){
+                rutaImagenes.add(imagenesProveedor.get(i).getPath());
             }
+            
             DataProveedor dtProv = new DataProveedor(Prov.getNickname(),Prov.getNombre(),Prov.getApellido(),Prov.getEmail(),Prov.getFechaNac(),rutaImagenes,Prov.getNombreEmpresa(),Prov.getLink());
             //InfoProveedores.add(dtProv);
         

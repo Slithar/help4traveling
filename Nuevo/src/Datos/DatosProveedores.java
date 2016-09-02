@@ -279,7 +279,7 @@ public class DatosProveedores {
    
   
       public Proveedor seleccionarProveedor(String nickname) throws SQLException, ClassNotFoundException{
-         ConexionBD conexion = new ConexionBD();
+        ConexionBD conexion = new ConexionBD();
         
         Connection conn;
         
