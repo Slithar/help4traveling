@@ -89,4 +89,17 @@ public class Proveedor extends Usuario {
     public void setServicios(HashMap<String, Servicio> servicios) {
         this.servicios = servicios;
     }
+    
+    public boolean sitioWebValido(){
+        int i = 0;
+        
+        while(i < this.link.length()){
+            if(this.link.charAt(i) == '.')
+                return true;
+            
+            i++;
+        }
+        
+        return false;
+    }
 }

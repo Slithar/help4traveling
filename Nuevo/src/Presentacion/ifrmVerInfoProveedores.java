@@ -45,7 +45,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     
     private String proveedor = ""; 
     private String servicio = "";
-    Panel nuevoPanel = new Panel();
+    private Panel nuevoPanel = new Panel();
+    private String sitioWeb = "";
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
     
@@ -436,7 +437,11 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 txtCorreo.setText(dtProv.getEmail());
                 txtFechaNacimiento.setText(String.valueOf(dtProv.getFechaNac().getDayOfMonth()) + "/"+String.valueOf(dtProv.getFechaNac().getMonthValue())+"/"+String.valueOf(dtProv.getFechaNac().getYear()) );
                 txtNombreEmpresa.setText(dtProv.getNombreEmpresa());
-                txtSitioWeb.setText("<html><a href = '" + dtProv.getLink() + "'>" + dtProv.getLink() + "</a><html>");
+                txtSitioWeb.setText("");
+                sitioWeb = dtProv.getLink();
+                txtSitioWeb.setText("<html><a href = \"" + sitioWeb + "\">" + sitioWeb + "</a></html>");
+                //txtSitioWeb.setText("<html><a href=\"www.google.com.uy\">hola</a></html>");
+                //txtSitioWeb = new JLabelLink(dtProv.getLink(), dtProv.getLink());
                 
                 ArrayList<DataServicio> servicios = new ArrayList();
                 servicios = icprov.getServiciosProveedor(dtProv.getNombreEmpresa());
@@ -546,11 +551,12 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
 
     private void txtSitioWebMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSitioWebMouseClicked
         if(evt.getButton() == MouseEvent.BUTTON1){
-            Desktop dsk = Desktop.getDesktop();
+            
             try {
-                dsk.browse(new URI(txtSitioWeb.getText()));
+                Desktop.getDesktop().browse(new URI(sitioWeb));
             } catch (IOException |  URISyntaxException ex) {
                 JOptionPane.showMessageDialog(this, "Problema para redirigirse a la URL", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                
             }
         }
     }//GEN-LAST:event_txtSitioWebMouseClicked

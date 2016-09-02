@@ -18,6 +18,7 @@ public interface IControladorProveedores {
     public abstract boolean existeNickname(String nickname) throws SQLException, ClassNotFoundException;
     public abstract boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException;
     public abstract boolean correoValido(String correo);
+    public abstract boolean sitiWebValido(String sitioWeb);
     public abstract boolean copiarPerfil(String nickname, ArrayList<String> rutaImagen) throws IOException;
     public abstract boolean existeNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException;
     public abstract void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios) throws SQLException, ClassNotFoundException;

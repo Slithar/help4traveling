@@ -63,6 +63,9 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
         filldb();
         fillLista();
+        if(modelo.getSize() > 0){
+            listaServicios.setSelectedIndex(0);
+        }
     }
     
     
@@ -150,6 +153,10 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
                 modelo.addElement(listaServiciosElegidos.getSelectedValue());
 
                 modelo2.removeElement(listaServiciosElegidos.getSelectedValue());
+                
+                if(modelo.getSize() > 0){
+                    listaServicios.setSelectedIndex(0);
+                }
             }
         }
         
@@ -417,6 +424,10 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         this.precioTotal.clear();
         
         fillLista();
+        
+        if(modelo.getSize() > 0){
+            listaServicios.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_dbProveedoresActionPerformed
 
     private void spnDescuentoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnDescuentoStateChanged
@@ -481,20 +492,27 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             lstCategorias.setModel(modelo);
 
         }*/
-        if(this.listaServicios.getSelectedValue()==null){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un servicio de la lsita de servicios", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        if(evt.getButton() == MouseEvent.BUTTON1){
+            if(this.listaServicios.getSelectedValue()==null){
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un servicio de la lsita de servicios", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                precio = icpromo.getPrecio(listaServicios.getSelectedValue());
+
+                precioTotal.add(precio);
+
+                precioPromo();
+
+                modelo2.addElement(listaServicios.getSelectedValue());
+
+                modelo.removeElement(listaServicios.getSelectedValue());
+                
+                if(modelo.getSize() > 0){
+                    listaServicios.setSelectedIndex(0);
+                }
+            }
         }
-        else{
-            precio = icpromo.getPrecio(listaServicios.getSelectedValue());
-
-            precioTotal.add(precio);
-
-            precioPromo();
-
-            modelo2.addElement(listaServicios.getSelectedValue());
-
-            modelo.removeElement(listaServicios.getSelectedValue());
-        }
+        
     }//GEN-LAST:event_lblSeleccionarServicioMouseClicked
 
 

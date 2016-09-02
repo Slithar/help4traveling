@@ -157,6 +157,12 @@ public class ControladorProveedores implements IControladorProveedores{
         return p.correoValido();
     }
     
+    public boolean sitiWebValido(String sitioWeb) {
+        Proveedor p = new Proveedor();
+        p.setLink(sitioWeb);
+        return p.sitioWebValido();
+    }
+    
     @Override
     public boolean existeNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
         Proveedor p = new Proveedor();        
