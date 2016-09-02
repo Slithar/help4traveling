@@ -70,6 +70,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         
         this.icprov = icprov;
         
+        /*comentario*/
+        
         /*lblImagen1.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
         lblImagen1.setSize(105, 105);
         panelImagenes.add(lblImagen1);
