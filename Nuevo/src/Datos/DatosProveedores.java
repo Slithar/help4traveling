@@ -285,7 +285,7 @@ public class DatosProveedores {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareCall("select u.*, i.ruta, p.nombreEmpresa, p.link from usuarios u , imagenesusuarios i , proveedores p WHERE u.nickname=i.nickname AND p.nickname=u.nickname AND u.cliente=false and u.nickname=?");
+        PreparedStatement pConsulta = conn.prepareCall("select u.*, p.nombreEmpresa, p.link from usuarios u , imagenesusuarios i , proveedores p WHERE p.nickname=u.nickname AND u.cliente=false and u.nickname=?");
         
         pConsulta.setString(1,nickname);
         

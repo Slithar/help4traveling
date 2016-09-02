@@ -117,7 +117,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
             lblImagen1.addMouseListener(new OyenteLabel());
             LabelImagen imagen = new LabelImagen(ruta);
-            imagen.setSize(100, 100);
+            //imagen.setSize(100, 100);
             
             JPopupMenu jpmEliminar = new JPopupMenu();
             MenuItemPopup pm = new MenuItemPopup(lblImagen1, "Eliminar");

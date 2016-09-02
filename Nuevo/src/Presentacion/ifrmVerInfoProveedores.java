@@ -29,13 +29,13 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
      * Creates new form ifrmVerInfoProveedores
      * 
      */
-    private JLabel lblImagen1 = new JLabel();
+    /*private JLabel lblImagen1 = new JLabel();
     private JLabel lblImagen2;
     private JLabel lblImagen3;
     
     private String rutaImagen1 = "";
     private String rutaImagen2 = "";
-    private String rutaImagen3 = "";
+    private String rutaImagen3 = "";*/
     
     private frmVisor visor;
     
@@ -66,20 +66,23 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         panelDatos.setVisible(false);
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
         
+        setTitle("Ver información de proveedores");
         
         this.icprov = icprov;
         
-        lblImagen1.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
+        /*lblImagen1.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
         lblImagen1.setSize(105, 105);
         panelImagenes.add(lblImagen1);
         lblImagen1.setLocation(0, 0);
         lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
-        lblImagen1.setVisible(true);
+        lblImagen1.setVisible(true);*/
         
         
         lblImagenPerfil.setSize(200, 200); 
         lblImagenPerfil.setVisible(true);
-        setImagenPerfil("src/Logica/perfiles/perfil.png", "defecto");
+        //setImagenPerfil("src/Logica/perfiles/perfil.png", "defecto");
+        File directorio = new File("src/Logica/perfiles/perfil.png");
+        setImagenPerfil(directorio.getAbsolutePath(), "absoluta");
         jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
         
         try{
@@ -332,8 +335,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(cmbServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, Short.MAX_VALUE)
                                 .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -417,14 +420,15 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         if(lstProv.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No se seleccionado ningún Proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se seleccionado ningún proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             lstProv.requestFocus();
         }
         else{
-            try {
-                
+            try {                
                 limpiar();
+                //JOptionPane.showMessageDialog(this, lstProv.getSelectedValue());
                 DataProveedor dtProv = icprov.verInfoProveedor(lstProv.getSelectedValue());
+                //JOptionPane.showMessageDialog(this, dtProv.getNombre());
                 txtNombre.setText(dtProv.getNombre());
                 txtApellido.setText(dtProv.getApellido());
                 txtCorreo.setText(dtProv.getEmail());
@@ -434,48 +438,55 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 
                 ArrayList<DataServicio> servicios = new ArrayList();
                 servicios = icprov.getServiciosProveedor(dtProv.getNombreEmpresa());
-                for(int i = 0; i < servicios.size(); i++){
-                    cmbServicios.addItem(servicios.get(i).getNombreServicio());
+                if(servicios.size() == 0){
+                    cmbServicios.addItem("No corresponde");
+                    btnBuscarServicio.setVisible(false);
+                } 
+                else{
+                    for(int i = 0; i < servicios.size(); i++){
+                        cmbServicios.addItem(servicios.get(i).getNombreServicio());
+                    }
+                    btnBuscarServicio.setVisible(true);
                 }
+                
                 
                 ArrayList<String> imagenesProv = dtProv.getRutaImagen();
                 
                 if(imagenesProv.size() == 0){
-                    setImagenPerfil("src/Logica/perfiles/perfil.png", "defecto");
+                    File directorio = new File("src/Logica/perfiles/perfil.png");
+                    setImagenPerfil(directorio.getAbsolutePath(), "absoluta");
                     //lblImagenes.setVisible(true);
                 }
                 else{
-                    for(int i = 0; i < imagenesProv.size(); i++){
-                        File ficheroImagen = new File(imagenesProv.get(i));
-                        String rutaAbsoluta = ficheroImagen.getAbsolutePath();
-                            
-                        perfiles.add(new LabelImagen(rutaAbsoluta));
-                                                       
+                    for(int i = 0; i < imagenesProv.size(); i++){                        
+                        perfiles.add(new LabelImagen(imagenesProv.get(i)));                                                      
+                    }
+                    int cant = 0;
+                    for(int i = 0; i < perfiles.size(); i++){
+                        if(i == 0){
+                            setImagenPerfil(perfiles.get(i).getRutaImagen(), "absoluta");
+                        }
+                        ImageIcon icono = new ImageIcon(perfiles.get(i).getRutaImagen());
+                        ImageIcon iconoDimensionado = new ImageIcon(icono.getImage().getScaledInstance(124, 124, Image.SCALE_DEFAULT));
+                        panelImagenes.add((LabelImagen) perfiles.get(i));
+                        perfiles.get(i).setIcon(iconoDimensionado);
+                        perfiles.get(i).setLocation(i * 150, 0);
+                        perfiles.get(i).addMouseListener(new OyenteLabel());
+                        
+                        cant = i;
+                    }
+
+                    int largo = cant + 1;
+                    panelImagenes.setPreferredSize(new Dimension(largo * 147, 124));
+
+                    if(cant > 3){
+                        jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+                    }
+                    else{
+                        jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
                     }
                 }
-                int cant = 0;
-                for(int i = 0; i < perfiles.size(); i++){
-                    if(i == 0){
-                        setImagenPerfil(perfiles.get(i).getRutaImagen(), "absoluta");
-                    }
-                    panelImagenes.add(perfiles.get(i));
-                    //JOptionPane.showMessageDialog(this, perfiles.get(i).getRutaImagen());
-                    ImageIcon icono = new ImageIcon(perfiles.get(i).getRutaImagen());
-                    ImageIcon iconoDimensionado = new ImageIcon(icono.getImage().getScaledInstance(124, 124, Image.SCALE_DEFAULT));
-                    perfiles.get(i).setIcon(iconoDimensionado);
-                    perfiles.get(i).setLocation(i * 140, 0);
-                    cant = i;
-                }
-                    
-                int largo = cant + 1;
-                panelImagenes.setPreferredSize(new Dimension(largo * 140, 124));
-                    
-                if(cant > 3){
-                    jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-                }
-                else{
-                    jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
-                }
+                
                 
                 panelDatos.setVisible(true);
             } catch(SQLException ex){
@@ -547,7 +558,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             
             if(perfiles.size() > 0){
                 Container parent = perfiles.get(0).getParent();
-                //int i = 0;
                 while(perfiles.size() > 0){
                     perfiles.remove(0);
                 }
@@ -570,7 +580,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             this.setSize(124, 124);
             this.rutaImagen = rutaImagen;
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            this.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
+            //this.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
             
             /**** ACÁ ME QUEDE *****/
             
@@ -597,19 +607,19 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
 
     public void setImagenLabel(String ruta, String tipo){
         //System.out.println("entre");
-        JLabel lblImagen = labelActual();
+        //JLabel lblImagen = labelActual();
         if(tipo.equals("defecto")){
             //System.out.println("hola");
             ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
-            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
-            lblImagen.setIcon(imagenDimensionada);
+            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
+            lblImagenPerfil.setIcon(imagenDimensionada);
         }
         else{
             ImageIcon imagenPerfil = new ImageIcon(ruta);
-            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
-            lblImagen.setIcon(imagenDimensionada);
+            ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
+            lblImagenPerfil.setIcon(imagenDimensionada);
             
-            if(lblImagen == lblImagen1){
+            /*if(lblImagen == lblImagen1){
                 //System.out.println("2");
                 rutaImagen1 = ruta;
                 lblImagen2 = new JLabel();
@@ -637,11 +647,11 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             }
             else{
                 rutaImagen3 = ruta;
-            }
+            }*/
         }       
     }
     
-    public JLabel labelActual(){
+    /*public JLabel labelActual(){
         
         if(lblImagen2 == null){
             return lblImagen1;
@@ -650,9 +660,9 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             return lblImagen2;
         else
             return lblImagen3;
-    }
+    }*/
        
-private class OyenteLabel implements MouseListener{
+    private class OyenteLabel implements MouseListener{
 
         /*@Override
         public void mouseClicked(MouseEvent e) {
@@ -666,15 +676,23 @@ private class OyenteLabel implements MouseListener{
             public void mouseClicked(MouseEvent e) {
                 //JOptionPane.showMessageDialog(null, "entre");
                 if(e.getButton() == MouseEvent.BUTTON1){
-                    if((JLabel) e.getSource() == lblImagen1)
-                        visor = new frmVisor(rutaImagen1);
-                    else if((JLabel) e.getSource() == lblImagen2)
-                        visor = new frmVisor(rutaImagen2);
-                    else if((JLabel) e.getSource() == lblImagen3)
-                        visor = new frmVisor(rutaImagen3);
+                    /*if((JLabel) e.getSource() == perfiles.get(0))
+                        JOptionPane.showMessageDialog(null, "anduvo!!");*/
+                    //JOptionPane.showMessageDialog(null, e.getSource());
+                    //LabelImagen imagen = (LabelImagen) e.getSource();
+                    /*boolean ok = false;
+                    while(!ok){
+                        try{*/
+                            JLabel img = (JLabel) e.getSource();
+                            LabelImagen imagen = (LabelImagen) img;
+                            setImagenPerfil(imagen.getRutaImagen(), "absoluta");
+                            //ok = true;
+                        /*}
+                        catch(ClassCastException ex){
+                            ok = false;
+                        }
+                    }*/
                     
-                    visor.setBounds(515, 200, 900, 600);
-                    visor.setVisible(true);
             }
         }
         @Override
@@ -698,26 +716,6 @@ private class OyenteLabel implements MouseListener{
         }
         
     }
-    /*public void refrescarPerfiles(){
-        int i = 0;
-        for( i = 0; i < perfiles.size(); i++){     
-            ImageIcon imagenPerfil = new ImageIcon(perfiles.get(i).getRutaImagen());
-            ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(perfiles.get(i).getWidth(), perfiles.get(i).getHeight(), Image.SCALE_DEFAULT));
-            perfiles.get(i).setIcon(imagenDimensionadaPerfil);       
-
-            panelImagenes.add(perfiles.get(i));
-            perfiles.get(i).setLocation(i * 135, 0);
-        }      
-        
-        panelImagenes.setPreferredSize(new Dimension(i * 135, 100));
-
-        if(i > 3){            
-            jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-        }
-        else{
-            jScrollPane3.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
-        }       
-    }*/
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
