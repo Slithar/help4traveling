@@ -53,7 +53,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         limpiar();
         
         this.iccli = iccli;
-        this.icprov = icprov;        
+        this.icprov = icprov;
     }
     
     public void setImagenPerfil(String ruta, String tipo){

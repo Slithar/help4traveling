@@ -42,6 +42,11 @@ public class frmVisor extends javax.swing.JFrame {
         
         setContentPane(panel);
         
+        Toolkit pc = Toolkit.getDefaultToolkit();
+        Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
+        
+        this.setIconImage(icono);
+        
         //System.out.println("nuevo hola");
     }
     
@@ -62,6 +67,11 @@ public class frmVisor extends javax.swing.JFrame {
         
         setContentPane(panel);
         this.ifrm = ifrm;
+        
+        Toolkit pc = Toolkit.getDefaultToolkit();
+        Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
+        
+        this.setIconImage(icono);
         
         //System.out.println("nuevo hola");
     }

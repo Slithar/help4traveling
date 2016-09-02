@@ -44,6 +44,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         icprov = fab.getIControladorProveedores();
         icprom = fab.getIControladorPromociones();
         
+        Toolkit pc = Toolkit.getDefaultToolkit();
+        Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
+        
+        this.setIconImage(icono);
+        
         
         /*try{
             iccat.actualizarCategorias();
