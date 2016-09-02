@@ -73,6 +73,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblImagen1.setLocation(0, 0);
         lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         lblImagen1.setVisible(true);
+        lblDescripcion.setEditable(false);
         
         lblDescripcion.setEditable(false);
         

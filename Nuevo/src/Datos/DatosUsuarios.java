@@ -122,4 +122,30 @@ public class DatosUsuarios {
         return imagen;
         
     }
+    
+    public int cantidadEmail(String email) throws SQLException, ClassNotFoundException{
+        
+        int cant = 0;
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select count(*) cantidad from usuarios where email = ?");
+        
+        pConsulta.setString(1, email);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            cant = rs.getInt("cantidad");
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return cant;
+    }
 }

@@ -686,6 +686,10 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         txtNickname.requestFocus();
                     }
+                    else if(icprov.existeCorreo(txtCorreo.getText())){
+                        JOptionPane.showMessageDialog(this, "El correo electrónico ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                        txtCorreo.requestFocus();
+                    }
                     else{
                         if(icprov.existeNombreEmpresa(txtNombreEmpresa.getText())){
                             JOptionPane.showMessageDialog(this, "El nombre de empresa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
