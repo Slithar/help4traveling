@@ -742,7 +742,7 @@ public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCate
         panelBusqueda.setVisible(false);
         //btnAceptar.setVisible(false);
         panelBotonAceptar.setVisible(false);
-        
+        /*comentario*/
         /*try{
             ArrayList<DataServicio> datosServicios = icprov.getServicios();
             
