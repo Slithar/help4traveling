@@ -40,7 +40,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         initComponents();
         
         this.icprov = icprov;
-        
+       
         setTitle("Registro de proveedores");
         
         //this.setSize(780, 570);
@@ -117,7 +117,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
             lblImagen1.addMouseListener(new OyenteLabel());
             LabelImagen imagen = new LabelImagen(ruta);
-            imagen.setSize(100, 100);
+            //imagen.setSize(100, 100);
             
             JPopupMenu jpmEliminar = new JPopupMenu();
             MenuItemPopup pm = new MenuItemPopup(lblImagen1, "Eliminar");
@@ -535,7 +535,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                             .addComponent(txtCorreo))))
                 .addGap(91, 91, 91)
                 .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -596,7 +596,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
