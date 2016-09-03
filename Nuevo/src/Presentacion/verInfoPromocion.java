@@ -192,7 +192,7 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
         ArrayList<DataServicio> servicios = new ArrayList();
         try {
             promo = this.icpromo.getDataPromocion(NombrePromo, NombreProv);
-            servicios = this.icpromo.getServiciosPorPromocion(NombrePromo);
+            servicios = this.icpromo.getServiciosPromocion(NombrePromo, NombreProv);
             for(i=0;i<servicios.size();i++){
                 modelo.addElement(servicios.get(i).getNombreServicio());
             }

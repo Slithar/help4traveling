@@ -243,5 +243,25 @@ public String getNombreServicio(String cadena){
         promocion.setPrecio(promo.getPrecio());
         return promocion;
     }
+@Override
+public ArrayList<DataServicio> getServiciosPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        ArrayList<DataServicio> DTservs = new ArrayList();
+        ArrayList<Servicio> servs = new ArrayList();
+        Promocion promo = new Promocion();
+        Proveedor prov = new Proveedor();
+        promo.setNombre(nombrePromo);
+        prov.setNombreEmpresa(nombreProveedor);
+        promo.setProveedor(prov);
+        DatosPromociones dPromo = new DatosPromociones();
+        servs = dPromo.selectAllServiciosPromocion(nombrePromo, nombreProveedor);
+        int a = 0;
+        for(a=0;a<servs.size();a++){
+            DataServicio dservicio = new DataServicio();
+            dservicio.setNombreServicio(servs.get(a).getNombreServicio());
+            dservicio.setNombreProveedor(servs.get(a).getProveedorServicio().getNombreEmpresa());
+            DTservs.add(dservicio);
+        }
+        return DTservs;
 
+}
 }
