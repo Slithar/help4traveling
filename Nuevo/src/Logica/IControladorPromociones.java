@@ -25,7 +25,7 @@ public interface IControladorPromociones {
     public abstract String getNombreServicio(String cadenaACortar);
     public abstract int agregarPromocion(int PrecioPromocion,String NombrePromocion, int Descuento, String nombreProveedor) throws SQLException, ClassNotFoundException;
     public abstract int agregarServiciosPromocion(String NombrePromo, String NombreServ, String NombreProv) throws SQLException, ClassNotFoundException;
-    
+    public abstract ArrayList<DataServicio> getServiciosPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException;
     /*public abstract HashMap<String, Proveedor> getListaProveedores();
     public abstract void setListaProveedores(HashMap<String, Proveedor> ListaProveedores);
     public abstract void actualizarPromociones() throws SQLException, ClassNotFoundException;    
@@ -37,4 +37,6 @@ public interface IControladorPromociones {
     public abstract ArrayList<DataPromocion> getPromociones() throws SQLException, ClassNotFoundException;
     //public abstract ArrayList<DataServicio> getServiciosPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException;
     public abstract DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException;
+  //  public abstract getDatosPromocion(String nombrePromocion);
+    
 }

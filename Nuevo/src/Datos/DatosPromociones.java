@@ -76,6 +76,39 @@ public class DatosPromociones {
         
     }
     
+        public ArrayList<Servicio> selectAllServiciosPromocion(String nombre, String prov) throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select * from serviciosdepromociones where nombrePromocion = ? AND nombreProveedor = ?");
+        
+        pConsulta.setString(1, nombre);
+        pConsulta.setString(2, prov);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            Servicio s = new Servicio();
+            s.setNombreServicio(rs.getString("nombreServicio"));
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            s.setProveedorServicio(p);
+            servicios.add(s);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return servicios;
+        
+    }
+    
     public void deleteAllPromociones(String s) throws SQLException, ClassNotFoundException{
         ConexionBD conexion = new ConexionBD();
         
@@ -178,12 +211,14 @@ public class DatosPromociones {
         ResultSet rs = st.executeQuery();
         if(rs.next()){
             Proveedor nombreProv = new Proveedor();
-            nombreProv.setNombre(rs.getString("nombreProveedor"));
+            nombreProv.setNombreEmpresa(rs.getString("nombreProveedor"));
             promo.setProveedor(nombreProv);
             promo.setNombre(rs.getString("nombre"));
             promo.setDescuento(rs.getInt("descuento"));
             promo.setPrecio(rs.getInt("precio"));
         }
+        conn.close();
+        rs.close();
         return promo;
     }
 }

@@ -246,6 +246,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsServicios);
 
         miConsPromociones.setText("Promociones");
+        miConsPromociones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsPromocionesActionPerformed(evt);
+            }
+        });
         mConsultas.add(miConsPromociones);
 
         miConsReservas.setText("Reservas");
@@ -485,6 +490,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         vCancelarReserva.setVisible(true);
     }//GEN-LAST:event_miCancelarReservaActionPerformed
 
+    private void miConsPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsPromocionesActionPerformed
+        // TODO add your handling code here:
+        verInfoPromocion promo = new verInfoPromocion(this.icprom, this.icprov,this.iccat);
+        add(promo);
+        promo.setVisible(true);
+    }//GEN-LAST:event_miConsPromocionesActionPerformed
     private void miConsProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsProveedoresActionPerformed
         ifrmVerInfoProveedores vVerInfoProveedores = new ifrmVerInfoProveedores(this.icprov);
         nuevoPanel.add(vVerInfoProveedores);

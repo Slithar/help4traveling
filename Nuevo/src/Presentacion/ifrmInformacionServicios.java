@@ -46,6 +46,79 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         initComponents();
     }
     
+    public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat,String servicio) {
+    initComponents();
+
+    this.icprov = icprov;
+    this.iccat = iccat;
+
+
+
+    Dimension tamanioVentana = this.getSize();
+
+    setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
+
+    panelDatos.setVisible(false);
+
+    lstCategorias.setBackground(UIManager.getColor("Label.background"));
+    lblDescripcion.setBackground(UIManager.getColor("Label.background"));
+
+
+    panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
+    tbServicios.requestFocus();
+
+    lblImagen1.addMouseListener(new OyenteLabel());
+    lblImagen1.setSize(143, 143);
+    panelImagenes.add(lblImagen1);
+    lblImagen1.setLocation(0, 0);
+    lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
+    lblImagen1.setVisible(true);
+
+    /*DefaultTableModel modelo = new DefaultTableModel();*/
+    modeloTabla modelo = new modeloTabla();
+    modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+
+    try{
+        ArrayList<DataServicio> datosServicios = icprov.getServicios();
+
+        for(int i = 0; i < datosServicios.size(); i++){
+            modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+        }
+
+        tbServicios.setModel(modelo);
+    }
+    catch(SQLException ex){
+        JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+    catch(ClassNotFoundException ex){
+        JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+    this.tbServicios.selectAll();
+    this.txtBusqueda.setText(servicio);
+    this.txtBusqueda.setEditable(false);
+    DefaultTableModel modelo2 = new DefaultTableModel(); 
+    modelo2.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+    modelo2.addRow(new Object[]{servicio, "prov"});
+    int a = 0;
+    boolean control = true;
+    while(a<modelo.getRowCount() && control==true){
+        if(modelo.getValueAt(a, 0).equals(modelo2.getValueAt(0, 0))){
+            modelo2.setRowCount(0);
+            modelo2.addRow(new Object[]{modelo.getValueAt(a, 0),modelo.getValueAt(a, 1)});
+            modelo.setRowCount(0);
+            modelo.addRow(new Object[]{modelo2.getValueAt(0, 0),modelo2.getValueAt(0, 1)});
+            control = false;
+        }
+        a++;
+    }
+    this.tbServicios.selectAll();
+    this.btnAceptar.doClick();
+//     KeyEvent keyEvent = new KeyEvent("");
+//    this.txtBusqueda.dispatchEvent(keyEvent);
+
+}
+        
     public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
         
@@ -342,6 +415,11 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Seleccione el servicio:");
 
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaActionPerformed(evt);
+            }
+        });
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyTyped(evt);
@@ -377,17 +455,17 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         panelBotonAceptar.setLayout(panelBotonAceptarLayout);
         panelBotonAceptarLayout.setHorizontalGroup(
             panelBotonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBotonAceptarLayout.createSequentialGroup()
-                .addGap(83, 83, 83)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonAceptarLayout.createSequentialGroup()
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(82, 82, 82))
         );
         panelBotonAceptarLayout.setVerticalGroup(
             panelBotonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonAceptarLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(38, 38, 38)
                 .addComponent(btnAceptar)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelTablaLayout = new javax.swing.GroupLayout(panelTabla);
@@ -397,13 +475,14 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             .addGroup(panelTablaLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTablaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                    .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelBotonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 27, Short.MAX_VALUE)
+                .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelBotonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                        .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         panelTablaLayout.setVerticalGroup(
@@ -415,7 +494,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62)
                 .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(28, 28, 28)
                 .addComponent(panelBotonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -821,6 +900,10 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         }
     }
     
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+        eventoBusqueda(txtBusqueda.getText());
+    }//GEN-LAST:event_txtBusquedaKeyTyped
+    
     private void tbServiciosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyTyped
         
     }//GEN-LAST:event_tbServiciosKeyTyped
@@ -829,9 +912,9 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         //JOptionPane.showMessageDialog(this, "No");
     }//GEN-LAST:event_tbServiciosKeyPressed
 
-    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
-        eventoBusqueda(txtBusqueda.getText());
-    }//GEN-LAST:event_txtBusquedaKeyTyped
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        
+    }//GEN-LAST:event_txtBusquedaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -94,7 +94,7 @@ public class ControladorPromociones implements IControladorPromociones{
                         "insert into promociones values('Euro-Vuelos-S-FC', 40, 1440, 'Iberia');\n" +
                         "insert into promociones values('Euro-Vuelos-LC-FC', 40, 1290, 'Iberia');\n" +
                         "insert into promociones values('Sudamérica-Casas', 50, 135, 'Segundo Hogar');\n" +
-                        "insert into promociones values('Miami-Viaje', 30, 426, 'Segundo Hogar');\n" +
+                        "insert into promociones values('Miami-Viaje', 30, 462, 'Segundo Hogar');\n" +
                         "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-1', 'EuropCar');\n" +
                         "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-2', 'EuropCar');\n" +
                         "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-1', 'EuropCar');\n" +
@@ -207,6 +207,7 @@ public String getNombreServicio(String cadena){
             promo.setNombre(todaslaspromociones.get(i).getNombre());
             promo.setDescuento(todaslaspromociones.get(i).getDescuento());
             promo.setPrecio(todaslaspromociones.get(i).getPrecio());
+            promo.setProveedor(todaslaspromociones.get(i).getProveedor().getNombreEmpresa());
             resultado.add(promo);
         }
         return resultado;
@@ -236,13 +237,31 @@ public String getNombreServicio(String cadena){
         DatosPromociones promociones = new DatosPromociones();
         Promocion promo = new Promocion();
         promo = promociones.getDataPromocion(nombrePromo, nombreProveedor);
-        
-        
+   
         promocion.setNombre(promo.getNombre());
         promocion.setDescuento(promo.getDescuento());
         promocion.setPrecio(promo.getPrecio());
-        
         return promocion;
     }
+@Override
+public ArrayList<DataServicio> getServiciosPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
+        ArrayList<DataServicio> DTservs = new ArrayList();
+        ArrayList<Servicio> servs = new ArrayList();
+        Promocion promo = new Promocion();
+        Proveedor prov = new Proveedor();
+        promo.setNombre(nombrePromo);
+        prov.setNombreEmpresa(nombreProveedor);
+        promo.setProveedor(prov);
+        DatosPromociones dPromo = new DatosPromociones();
+        servs = dPromo.selectAllServiciosPromocion(nombrePromo, nombreProveedor);
+        int a = 0;
+        for(a=0;a<servs.size();a++){
+            DataServicio dservicio = new DataServicio();
+            dservicio.setNombreServicio(servs.get(a).getNombreServicio());
+            dservicio.setNombreProveedor(servs.get(a).getProveedorServicio().getNombreEmpresa());
+            DTservs.add(dservicio);
+        }
+        return DTservs;
 
+}
 }

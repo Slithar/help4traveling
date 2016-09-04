@@ -582,7 +582,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             try {   
                 numRes  = iccli.realizarReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), "REGISTRADA", cmbUsuarios.getSelectedItem().toString());
                 iccli.datosAsociadosReserva(numRes, tblAsociaciones.getModel());
-                JOptionPane.showMessageDialog(this, "La reserva ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "La operación ha finalizado de manera correcta.\nNúmero de la reserva: " + iccli.getNumeroReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), cmbUsuarios.getSelectedItem().toString()), "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
             }
             catch (SQLException ex) {
                 //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -703,7 +703,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                JOptionPane.showMessageDialog(this, "La fecha de Inicio debe ser anterior o igual a la fecha de fin", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }
             else for(int i = 0; i < tblAsociaciones.getRowCount(); i++){
-                if( tblAsociaciones.getValueAt(i,1 ).toString().equals(lblServicio.getText())){
+                if( tblAsociaciones.getValueAt(i,1 ).toString().equals(lblServicio.getText()) && tblAsociaciones.getValueAt(i, 2).toString().equals(lblProveedor.getText())){
                     ok = false;
                     JOptionPane.showMessageDialog(this, "El producto ingresado ya se encuentra asociado a la reserva", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                     break;
