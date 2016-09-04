@@ -150,4 +150,31 @@ public class DatosReservas {
         return todasReservas;
         
     }
+    
+    public int getNumeroReserva(String fecha, int precio, String nickname) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select max(numero) numero from reservas where fecha = ? and precio = ? and nicknameCliente = ? and estado = 'REGISTRADA'");
+        
+        pConsulta.setString(1, fecha);
+        pConsulta.setInt(2, precio);
+        pConsulta.setString(3, nickname);
+        
+        ResultSet rs = pConsulta.executeQuery();
+        
+        int numeroConsulta = 0;
+        
+        while(rs.next()){
+            numeroConsulta = rs.getInt("numero");
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return numeroConsulta;
+    }
 }

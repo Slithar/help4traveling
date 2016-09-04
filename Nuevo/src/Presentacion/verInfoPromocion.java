@@ -10,11 +10,11 @@ import Logica.DataServicio;
 import Logica.IControladorCategorias;
 import Logica.IControladorPromociones;
 import Logica.IControladorProveedores;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
+import java.awt.*;
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
+import javax.swing.*;
 
 /**
  *
@@ -32,20 +32,26 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
     private DefaultListModel modelo = new DefaultListModel();
     public verInfoPromocion(IControladorPromociones icpromo,IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
-        this.txtDescuento.setEditable(false);
-        this.txtPrecioPromo.setEditable(false);
-        this.listaServicios.setModel(modelo);
+        
+        setTitle("Ver información de promociones");
+        
+        Dimension tamanioVentana = this.getSize();
+
+        setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
+        
         this.icpromo=icpromo;
         this.iccat = iccat;
         this.icprov = icprov;
         ArrayList<DataPromocion> dPromo = new ArrayList();
+        panelInfoPromocion.setVisible(false);
         try {
             dPromo = icpromo.getPromociones();
             for (vueltas = 0; vueltas < dPromo.size(); vueltas ++){
-                String DB = "aaaa";
-                DB = dPromo.get(vueltas).getNombre() + "-" + dPromo.get(vueltas).getProveedor();  
-                this.dbPromociones.addItem(DB);                
+                String DB = "";
+                DB = dPromo.get(vueltas).getNombre() + " / " + dPromo.get(vueltas).getProveedor();  
+                this.modelo.addElement(DB);               
             }
+            lstPromociones.setModel(modelo);
 
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(verInfoPromocion.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,23 +69,37 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
 
         panelPromocion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        dbPromociones = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstPromociones = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
         panelInfoPromocion = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtPrecioPromo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtDescuento = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaServicios = new javax.swing.JList<>();
-        btnVerInfoServicio = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JLabel();
+        txtProveedor = new javax.swing.JLabel();
+        txtDescuento = new javax.swing.JLabel();
+        txtPrecioPromo = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        dbServicios = new javax.swing.JComboBox<>();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
+        setIconifiable(true);
 
-        jLabel1.setText("Seleccione el nombre de la Promoción de la cual desea ver información.");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Seleccione promoción:");
 
-        dbPromociones.addActionListener(new java.awt.event.ActionListener() {
+        lstPromociones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane2.setViewportView(lstPromociones);
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dbPromocionesActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -87,136 +107,182 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
         panelPromocion.setLayout(panelPromocionLayout);
         panelPromocionLayout.setHorizontalGroup(
             panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPromocionLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1)
-                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPromocionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(dbPromociones, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39))
+            .addGroup(panelPromocionLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPromocionLayout.setVerticalGroup(
             panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPromocionLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(44, 44, 44)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(dbPromociones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(43, 43, 43))
         );
 
-        jLabel3.setText("Precio de la promoción.");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Precio:");
 
-        jLabel4.setText("Descuento de la promoción.");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Descuento:");
 
-        jScrollPane1.setViewportView(listaServicios);
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setText("Nombre:");
 
-        btnVerInfoServicio.setText("Ver Informacion de servicio");
-        btnVerInfoServicio.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setText("Proveedor:");
+
+        txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombre.setText("nombre");
+
+        txtProveedor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtProveedor.setText("proveedor");
+
+        txtDescuento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDescuento.setText("100");
+
+        txtPrecioPromo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPrecioPromo.setText("100");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setText("Servicios:");
+
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerInfoServicioActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
+
+        dbServicios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout panelInfoPromocionLayout = new javax.swing.GroupLayout(panelInfoPromocion);
         panelInfoPromocion.setLayout(panelInfoPromocionLayout);
         panelInfoPromocionLayout.setHorizontalGroup(
             panelInfoPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoPromocionLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(38, 38, 38)
                 .addGroup(panelInfoPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPromocionLayout.createSequentialGroup()
-                        .addGroup(panelInfoPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(txtPrecioPromo)
-                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPromocionLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnVerInfoServicio)
-                        .addContainerGap())))
+                    .addComponent(txtDescuento)
+                    .addComponent(jLabel6)
+                    .addComponent(txtProveedor)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel8)
+                    .addComponent(txtPrecioPromo)
+                    .addComponent(txtNombre)
+                    .addComponent(jLabel5)
+                    .addGroup(panelInfoPromocionLayout.createSequentialGroup()
+                        .addComponent(dbServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         panelInfoPromocionLayout.setVerticalGroup(
             panelInfoPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoPromocionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelInfoPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInfoPromocionLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPrecioPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16)
-                .addComponent(btnVerInfoServicio)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(78, 78, 78)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombre)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtProveedor)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDescuento)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPrecioPromo)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(dbServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPromocion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelInfoPromocion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelPromocion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelInfoPromocion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelPromocion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelInfoPromocion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void dbPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbPromocionesActionPerformed
-        // TODO add your handling code here:
-        String promocion = "";
-        promocion = this.dbPromociones.getItemAt(this.dbPromociones.getSelectedIndex());
-        modelo.clear();
-        String NombrePromo = "";
-        String NombreProv = "";
-        
-        int i = 0;
-        NombrePromo = getNombrePromo(promocion);
-        NombreProv = getNombreProv(promocion);
-        DataPromocion promo = new DataPromocion();
-        ArrayList<DataServicio> servicios = new ArrayList();
-        try {
-            promo = this.icpromo.getDataPromocion(NombrePromo, NombreProv);
-            servicios = this.icpromo.getServiciosPromocion(NombrePromo, NombreProv);
-            for(i=0;i<servicios.size();i++){
-                modelo.addElement(servicios.get(i).getNombreServicio());
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(lstPromociones.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado promoción", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            String promocion = "";
+            promocion = this.lstPromociones.getSelectedValue();
+            //modelo.clear();
+            String NombrePromo = "";
+            String NombreProv = "";
+
+            //int i = 0;
+            NombrePromo = getNombrePromo(promocion);
+            NombreProv = getNombreProv(promocion);
+            DataPromocion promo = new DataPromocion();
+            ArrayList<DataServicio> servicios = new ArrayList<DataServicio>();
+            try {
+                promo = this.icpromo.getDataPromocion(NombrePromo, NombreProv);
+                servicios = this.icpromo.getServiciosPromocion(NombrePromo, NombreProv);
+                //System.out.println(servicios.size());
+                for(int i=0;i<servicios.size();i++){
+                    dbServicios.addItem(servicios.get(i).getNombreServicio());
+                    //System.out.println(servicios.get(i).getNombreServicio());
+                }
+                this.txtNombre.setText(NombrePromo);
+                this.txtProveedor.setText(NombreProv);
+                this.txtDescuento.setText(String.valueOf(promo.getDescuento()) + "%");
+                this.txtPrecioPromo.setText("U$S " + String.valueOf(promo.getPrecio()));
+                panelInfoPromocion.setVisible(true);
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(verInfoPromocion.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.txtDescuento.setText(String.valueOf(promo.getDescuento()));
-            this.txtPrecioPromo.setText(String.valueOf(promo.getPrecio()));
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(verInfoPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_dbPromocionesActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnVerInfoServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerInfoServicioActionPerformed
-        // TODO add your handling code here:
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String servicio = "";
-        servicio = this.listaServicios.getSelectedValue();
-        ifrmInformacionServicios info = new ifrmInformacionServicios(this.icprov,this.iccat,servicio);
+        servicio = this.dbServicios.getSelectedItem().toString();
+        ifrmInformacionServicios info = new ifrmInformacionServicios(this.icprov,this.iccat,servicio, txtProveedor.getText());
         getParent().add(info);
         info.setVisible(true);
-    }//GEN-LAST:event_btnVerInfoServicioActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
     public String getNombrePromo(String cadena){
     
         String [] partes = new String[2];
 
-        partes = cadena.split("-");
+        partes = cadena.split("/");
 
         String nombre;
 
@@ -224,11 +290,11 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
 
         return nombre;
     }
-        public String getNombreProv(String cadena){
+    public String getNombreProv(String cadena){
     
         String [] partes = new String[2];
 
-        partes = cadena.split("-");
+        partes = cadena.split("/");
 
         String nombre;
 
@@ -238,16 +304,22 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnVerInfoServicio;
-    private javax.swing.JComboBox<String> dbPromociones;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JComboBox<String> dbServicios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listaServicios;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> lstPromociones;
     private javax.swing.JPanel panelInfoPromocion;
     private javax.swing.JPanel panelPromocion;
-    private javax.swing.JTextField txtDescuento;
-    private javax.swing.JTextField txtPrecioPromo;
+    private javax.swing.JLabel txtDescuento;
+    private javax.swing.JLabel txtNombre;
+    private javax.swing.JLabel txtPrecioPromo;
+    private javax.swing.JLabel txtProveedor;
     // End of variables declaration//GEN-END:variables
 }

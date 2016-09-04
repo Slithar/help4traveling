@@ -35,7 +35,7 @@ public interface IControladorPromociones {
     public abstract void deleteAllPromociones() throws SQLException, ClassNotFoundException;
     public abstract void insertDatosPromocionesDePrueba() throws SQLException, ClassNotFoundException;*/
     public abstract ArrayList<DataPromocion> getPromociones() throws SQLException, ClassNotFoundException;
-    public abstract ArrayList<DataServicio> getServiciosPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException;
+    //public abstract ArrayList<DataServicio> getServiciosPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException;
     public abstract DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException;
   //  public abstract getDatosPromocion(String nombrePromocion);
     

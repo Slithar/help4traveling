@@ -94,7 +94,7 @@ public class ControladorPromociones implements IControladorPromociones{
                         "insert into promociones values('Euro-Vuelos-S-FC', 40, 1440, 'Iberia');\n" +
                         "insert into promociones values('Euro-Vuelos-LC-FC', 40, 1290, 'Iberia');\n" +
                         "insert into promociones values('Sudamérica-Casas', 50, 135, 'Segundo Hogar');\n" +
-                        "insert into promociones values('Miami-Viaje', 30, 426, 'Segundo Hogar');\n" +
+                        "insert into promociones values('Miami-Viaje', 30, 462, 'Segundo Hogar');\n" +
                         "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-1', 'EuropCar');\n" +
                         "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-2', 'EuropCar');\n" +
                         "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-1', 'EuropCar');\n" +
@@ -213,7 +213,7 @@ public String getNombreServicio(String cadena){
         return resultado;
     }
     
-    @Override
+    /*@Override
     public ArrayList<DataServicio> getServiciosPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException{
         ArrayList<DataServicio> resultado = new ArrayList();
         DatosServicios servicio = new DatosServicios();
@@ -230,7 +230,7 @@ public String getNombreServicio(String cadena){
             resultado.add(serv);
         }
        return resultado; 
-    }
+    }*/
     @Override
     public DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
         DataPromocion promocion = new DataPromocion();

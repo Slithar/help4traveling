@@ -191,6 +191,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setToolTipText("");
 
+        dbProveedores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dbProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dbProveedoresActionPerformed(evt);
@@ -394,7 +395,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
                         .addComponent(seleccionarProveedorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(agregarPromocionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 95, Short.MAX_VALUE))
+                        .addGap(0, 96, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(panelServicios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))

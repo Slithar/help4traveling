@@ -455,6 +455,13 @@ public class ControladorClientes implements IControladorClientes {
         datosreservas.deleteReservas(numReserva);
     }
     
+    public int getNumeroReserva(LocalDate fecha, int precio, String nickname) throws SQLException, ClassNotFoundException{
+        DatosReservas dr = new DatosReservas();
+        Cliente c = new Cliente();
+        c.setNickname(nickname);
+        Reserva r = new Reserva(0, fecha, precio, c, new ArrayList(), new ArrayList(), Estado.REGISTRADA);
+        return dr.getNumeroReserva(r.getFecha().toString(), r.getPrecio(), r.getCliente().getNickname());
+    }
     
     
     
