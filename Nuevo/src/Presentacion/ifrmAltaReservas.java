@@ -111,8 +111,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
             for(int i = 0; i < DatasPromociones.size(); i++){
                 
-                    String proveedor = icprom.getServiciosPorPromocion(DatasPromociones.get(i).getNombre()).get(0).getNombreProveedor();
-                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), proveedor ,DatasPromociones.get(i).getPrecio() });
+                    //String proveedor = icprom.getServiciosPorPromocion(DatasPromociones.get(i).getNombre()).get(0).getNombreProveedor();
+                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor() ,DatasPromociones.get(i).getPrecio() });
             }
         }
         catch(SQLException ex){
@@ -623,8 +623,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
                 for(int i = 0; i < DatasPromociones.size(); i++){
 
-                        String proveedor = icprom.getServiciosPorPromocion(DatasPromociones.get(i).getNombre()).get(0).getNombreProveedor();
-                        modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), proveedor ,DatasPromociones.get(i).getPrecio() });
+                        //String proveedor = icprom.getServiciosPorPromocion(DatasPromociones.get(i).getNombre()).get(0).getNombreProveedor();
+                        modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor(),DatasPromociones.get(i).getPrecio() });
                 }
             }
             catch(SQLException ex){

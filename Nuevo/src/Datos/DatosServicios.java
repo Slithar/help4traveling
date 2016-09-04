@@ -505,7 +505,7 @@ public class DatosServicios {
         return servicios;
     }
     
-    public ArrayList<Servicio> getServicioPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException {
+    /*public ArrayList<Servicio> getServicioPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException {
         Connection conn;
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
@@ -532,7 +532,7 @@ public class DatosServicios {
         }
         
         return resultado;
-    }
+    }*/
     
     
 }

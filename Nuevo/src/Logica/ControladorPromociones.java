@@ -212,7 +212,7 @@ public String getNombreServicio(String cadena){
         return resultado;
     }
     
-    @Override
+    /*@Override
     public ArrayList<DataServicio> getServiciosPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException{
         ArrayList<DataServicio> resultado = new ArrayList();
         DatosServicios servicio = new DatosServicios();
@@ -229,7 +229,7 @@ public String getNombreServicio(String cadena){
             resultado.add(serv);
         }
        return resultado; 
-    }
+    }*/
     @Override
     public DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
         DataPromocion promocion = new DataPromocion();

@@ -100,6 +100,173 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         
     }
+    
+    public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat, String NombreDelServicio, String ProveedorDelServicio) {
+        initComponents();
+        
+        this.icprov = icprov;
+        this.iccat = iccat;
+        
+        
+        
+        Dimension tamanioVentana = this.getSize();
+        
+        setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
+        
+        panelDatos.setVisible(false);
+        
+        lstCategorias.setBackground(UIManager.getColor("Label.background"));
+        lblDescripcion.setBackground(UIManager.getColor("Label.background"));
+        
+        
+        panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
+        tbServicios.requestFocus();
+        
+        lblImagen1.addMouseListener(new ifrmInformacionServicios.OyenteLabel());
+        lblImagen1.setSize(143, 143);
+        panelImagenes.add(lblImagen1);
+        lblImagen1.setLocation(0, 0);
+        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
+        lblImagen1.setVisible(true);
+        lblDescripcion.setEditable(false);
+        
+        
+        
+        /*DefaultTableModel modelo = new DefaultTableModel();*/
+        modeloTabla modelo = new modeloTabla();
+        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+        
+        eventoBusqueda(NombreDelServicio);
+        panelBusqueda.setVisible(false);
+        //btnAceptar.setVisible(false);
+        panelBotonAceptar.setVisible(false);
+        /*comentario*/
+        /*try{
+            ArrayList<DataServicio> datosServicios = icprov.getServicios();
+            
+            for(int i = 0; i < datosServicios.size(); i++){
+                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+            }
+            
+            tbServicios.setModel(modelo);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }*/
+        
+        //panelTabla.setVisible(false);
+        panelDatos.setVisible(true);
+        
+        if(lblImagen3 != null){
+                lblImagen3.setVisible(false);
+                lblImagen3 = null;
+                rutaImagen3 = "";
+
+                if(lblImagen2 != null){
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    rutaImagen2 = "";
+                }   
+            }
+            else if(lblImagen2 != null){
+                lblImagen2.setVisible(false);
+                lblImagen2 = null;
+                rutaImagen2 = "";
+            }               
+
+            rutaImagen1 = "";
+            
+            lblNombre.setText(NombreDelServicio);
+            lblProveedor.setText(ProveedorDelServicio);
+
+            try {
+                
+                DataServicio datosServicio = icprov.getDatosServicio(NombreDelServicio, ProveedorDelServicio);
+                if(datosServicio.getDescripcionServicio() != ""){
+                    lblDescripcion.setText(datosServicio.getDescripcionServicio());
+                    lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
+                    //lblOrigen.
+
+                    DataCiudad ciudad = icprov.getCiudadOrigen(NombreDelServicio, ProveedorDelServicio);
+                    lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
+
+                    ciudad = icprov.getCiudadDestino(NombreDelServicio, ProveedorDelServicio);
+                    if(ciudad.getNombre().equals("No"))
+                        lblDestino.setText("No corresponde");
+                    else
+                        lblDestino.setText(ciudad.getNombre() + ", " + ciudad.getPais());
+
+                    ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias(NombreDelServicio, ProveedorDelServicio);
+
+                    DefaultListModel modeloLista = new DefaultListModel();
+
+                    for(int i = 0; i < categoriasDelServicio.size(); i++){
+                        modeloLista.addElement(categoriasDelServicio.get(i).getRutaCategoria());
+                    }
+
+                    lstCategorias.setModel(modeloLista);
+
+                    ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes(NombreDelServicio, ProveedorDelServicio);
+
+                    //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
+
+                    if(imagenesDelServicio.size() == 0){
+
+                        lblImagenes.setVisible(true);
+                    }
+                    else{
+                        for(int i = 0; i < imagenesDelServicio.size(); i++){
+                            File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
+                            String rutaAbsoluta = ficheroImagen.getAbsolutePath();
+
+                            setImagenLabel(rutaAbsoluta, "absoluta");
+                        }
+                        lblImagenes.setVisible(false);
+                    }
+
+
+                    panelDatos.setVisible(true);
+                }
+                else{
+                    panelDatos.setVisible(false);
+                    if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
+                        txtBusqueda.setText("");                        
+                        //modeloTabla modelo = new modeloTabla();
+                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+
+                        try{
+                            ArrayList<DataServicio> datosServicios = icprov.getServicios();
+
+                            for(int i = 0; i < datosServicios.size(); i++){
+                                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+                            }
+
+                            tbServicios.setModel(modelo);
+                        }
+                        catch(SQLException ex){
+                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch(ClassNotFoundException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+                
+
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -698,178 +865,4 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     private javax.swing.JTable tbServicios;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
-
-
-
-//nuevo controlador
-
-public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat, String NombreDelServicio, String ProveedorDelServicio) {
-        initComponents();
-        
-        this.icprov = icprov;
-        this.iccat = iccat;
-        
-        
-        
-        Dimension tamanioVentana = this.getSize();
-        
-        setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
-        
-        panelDatos.setVisible(false);
-        
-        lstCategorias.setBackground(UIManager.getColor("Label.background"));
-        lblDescripcion.setBackground(UIManager.getColor("Label.background"));
-        
-        
-        panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
-        tbServicios.requestFocus();
-        
-        lblImagen1.addMouseListener(new ifrmInformacionServicios.OyenteLabel());
-        lblImagen1.setSize(143, 143);
-        panelImagenes.add(lblImagen1);
-        lblImagen1.setLocation(0, 0);
-        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
-        lblImagen1.setVisible(true);
-        lblDescripcion.setEditable(false);
-        
-        
-        
-        /*DefaultTableModel modelo = new DefaultTableModel();*/
-        modeloTabla modelo = new modeloTabla();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
-        
-        eventoBusqueda(NombreDelServicio);
-        panelBusqueda.setVisible(false);
-        //btnAceptar.setVisible(false);
-        panelBotonAceptar.setVisible(false);
-        /*comentario*/
-        /*try{
-            ArrayList<DataServicio> datosServicios = icprov.getServicios();
-            
-            for(int i = 0; i < datosServicios.size(); i++){
-                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
-            }
-            
-            tbServicios.setModel(modelo);
-        }
-        catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(ClassNotFoundException ex){
-            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }*/
-        
-        //panelTabla.setVisible(false);
-        panelDatos.setVisible(true);
-        
-        if(lblImagen3 != null){
-                lblImagen3.setVisible(false);
-                lblImagen3 = null;
-                rutaImagen3 = "";
-
-                if(lblImagen2 != null){
-                    lblImagen2.setVisible(false);
-                    lblImagen2 = null;
-                    rutaImagen2 = "";
-                }   
-            }
-            else if(lblImagen2 != null){
-                lblImagen2.setVisible(false);
-                lblImagen2 = null;
-                rutaImagen2 = "";
-            }               
-
-            rutaImagen1 = "";
-            
-            lblNombre.setText(NombreDelServicio);
-            lblProveedor.setText(ProveedorDelServicio);
-
-            try {
-                
-                DataServicio datosServicio = icprov.getDatosServicio(NombreDelServicio, ProveedorDelServicio);
-                if(datosServicio.getDescripcionServicio() != ""){
-                    lblDescripcion.setText(datosServicio.getDescripcionServicio());
-                    lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
-                    //lblOrigen.
-
-                    DataCiudad ciudad = icprov.getCiudadOrigen(NombreDelServicio, ProveedorDelServicio);
-                    lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
-
-                    ciudad = icprov.getCiudadDestino(NombreDelServicio, ProveedorDelServicio);
-                    if(ciudad.getNombre().equals("No"))
-                        lblDestino.setText("No corresponde");
-                    else
-                        lblDestino.setText(ciudad.getNombre() + ", " + ciudad.getPais());
-
-                    ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias(NombreDelServicio, ProveedorDelServicio);
-
-                    DefaultListModel modeloLista = new DefaultListModel();
-
-                    for(int i = 0; i < categoriasDelServicio.size(); i++){
-                        modeloLista.addElement(categoriasDelServicio.get(i).getRutaCategoria());
-                    }
-
-                    lstCategorias.setModel(modeloLista);
-
-                    ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes(NombreDelServicio, ProveedorDelServicio);
-
-                    //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
-
-                    if(imagenesDelServicio.size() == 0){
-
-                        lblImagenes.setVisible(true);
-                    }
-                    else{
-                        for(int i = 0; i < imagenesDelServicio.size(); i++){
-                            File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
-                            String rutaAbsoluta = ficheroImagen.getAbsolutePath();
-
-                            setImagenLabel(rutaAbsoluta, "absoluta");
-                        }
-                        lblImagenes.setVisible(false);
-                    }
-
-
-                    panelDatos.setVisible(true);
-                }
-                else{
-                    panelDatos.setVisible(false);
-                    if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
-                        txtBusqueda.setText("");                        
-                        //modeloTabla modelo = new modeloTabla();
-                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
-
-                        try{
-                            ArrayList<DataServicio> datosServicios = icprov.getServicios();
-
-                            for(int i = 0; i < datosServicios.size(); i++){
-                                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
-                            }
-
-                            tbServicios.setModel(modelo);
-                        }
-                        catch(SQLException ex){
-                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        catch(ClassNotFoundException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                }
-                
-
-            }
-            catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-            catch(ClassNotFoundException ex){
-                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-            
-            
-        
-    }
 }
