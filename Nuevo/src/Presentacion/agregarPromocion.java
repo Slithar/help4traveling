@@ -454,6 +454,10 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Una promocion debe contener al menos un servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             errores = true;
         }
+        else if(Integer.parseInt(this.txtPrecioPromo.getText()) < 0){
+            JOptionPane.showMessageDialog(null, "El precio de la promoción no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            errores = true;
+        }
         if(errores == false){            
             try {
                 //JOptionPane.showMessageDialog(this, this.precio);

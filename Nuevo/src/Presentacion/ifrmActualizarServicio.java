@@ -799,7 +799,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                         
                         int precio = Integer.parseInt(txtPrecio.getText());
                         
-                        icprov.modificarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        icprov.modificarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         //icprov.agregarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         panelDatos.setVisible(false);
                         panelBotones.setVisible(false);

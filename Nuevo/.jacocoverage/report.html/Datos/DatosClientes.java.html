@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosClientes.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosClientes.java</span></div><h1>DatosClientes.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosClientes.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling_Promo_&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosClientes.java</span></div><h1>DatosClientes.java</h1><pre class="source lang-java linenums">/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -99,33 +99,61 @@ public class DatosClientes {
 <span class="nc" id="L99">        return reservas;</span>
 
     }
+    public ArrayList datosReserva ()throws SQLException, ClassNotFoundException {
+<span class="nc" id="L103">        ArrayList&lt;Reserva&gt; reservas = new ArrayList();</span>
+         Connection conn;
+<span class="nc" id="L105">         int indice = 0;</span>
+<span class="nc" id="L106">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L107">        conn = conexion.conectar();</span>
+<span class="nc" id="L108">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L109">        ResultSet rs = st.executeQuery(&quot;select numero,estado from reservas &quot;);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        while (rs.next()) {</span>
+<span class="nc" id="L111">            Reserva res= new Reserva();</span>
+<span class="nc" id="L112">            res.setNumero(rs.getInt(&quot;numero&quot;));</span>
+<span class="nc" id="L113">            res.setEstado(rs.getString(&quot;estado&quot;));</span>
+<span class="nc" id="L114">            reservas.add(res);</span>
+<span class="nc" id="L115">            indice++;</span>
+<span class="nc" id="L116">        }</span>
 
+<span class="nc" id="L118">        rs.close();</span>
+<span class="nc" id="L119">      conn.close();</span>
+<span class="nc" id="L120">        return reservas;</span>
+    }
+    public void updateEstadoReserva(int numero,String estado) throws SQLException, ClassNotFoundException{
+        Connection conn;
+<span class="nc" id="L124">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L125">        conn = conexion.conectar();</span>
+<span class="nc" id="L126">        PreparedStatement pConsulta = conn.prepareStatement(&quot;update reservas set estado=? where numero=? &quot; );</span>
+<span class="nc" id="L127">        pConsulta.setString(1, estado);</span>
+<span class="nc" id="L128">        pConsulta.setInt(2, numero);</span>
+<span class="nc" id="L129">        pConsulta.executeUpdate();</span>
+<span class="nc" id="L130">    }</span>
     public Reserva getReserva(String numeroRes) {
-<span class="nc" id="L104">        Reserva dtaux = new Reserva();</span>
-<span class="nc" id="L105">        ArrayList&lt;cantidadReservasPromociones&gt; listProm = new ArrayList();</span>
-<span class="nc" id="L106">        ArrayList&lt;cantidadReservasServicios&gt; listServ = new ArrayList();</span>
+<span class="nc" id="L132">        Reserva dtaux = new Reserva();</span>
+<span class="nc" id="L133">        ArrayList&lt;cantidadReservasPromociones&gt; listProm = new ArrayList();</span>
+<span class="nc" id="L134">        ArrayList&lt;cantidadReservasServicios&gt; listServ = new ArrayList();</span>
         Connection conn;
 
-<span class="nc" id="L109">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L137">        ConexionBD conexion = new ConexionBD();</span>
         try {
-<span class="nc" id="L111">            conn = conexion.conectar();</span>
+<span class="nc" id="L139">            conn = conexion.conectar();</span>
 
-<span class="nc" id="L113">            Statement st = conn.createStatement();</span>
+<span class="nc" id="L141">            Statement st = conn.createStatement();</span>
 
-<span class="nc" id="L115">            ResultSet rs = st.executeQuery(&quot;SELECT * FROM reservas r ,usuarios u WHERE numero = &quot; + numeroRes + &quot; and r.nicknameCliente =u.nickname &quot;);</span>
+<span class="nc" id="L143">            ResultSet rs = st.executeQuery(&quot;SELECT * FROM reservas r ,usuarios u WHERE numero = &quot; + numeroRes + &quot; and r.nicknameCliente =u.nickname &quot;);</span>
 
-<span class="nc bnc" id="L117" title="All 2 branches missed.">            while (rs.next()) {</span>
-<span class="nc" id="L118">                Cliente c = new Cliente();</span>
-<span class="nc" id="L119">                c.setNickname(rs.getString(&quot;nicknameCliente&quot;));</span>
-<span class="nc" id="L120">                dtaux.setCliente(c);</span>
-<span class="nc" id="L121">                dtaux.setNumero(rs.getInt(&quot;numero&quot;));</span>
-<span class="nc" id="L122">                dtaux.setPrecio(rs.getInt(&quot;precio&quot;));</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L146">                Cliente c = new Cliente();</span>
+<span class="nc" id="L147">                c.setNickname(rs.getString(&quot;nicknameCliente&quot;));</span>
+<span class="nc" id="L148">                dtaux.setCliente(c);</span>
+<span class="nc" id="L149">                dtaux.setNumero(rs.getInt(&quot;numero&quot;));</span>
+<span class="nc" id="L150">                dtaux.setPrecio(rs.getInt(&quot;precio&quot;));</span>
 
-<span class="nc" id="L124">                String fechaR = rs.getString(&quot;fecha&quot;);</span>
-<span class="nc" id="L125">                String[] partesFecha = fechaR.split(&quot;-&quot;);</span>
-<span class="nc" id="L126">                LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));</span>
-<span class="nc" id="L127">                dtaux.setFecha(fechaReserva);</span>
-<span class="nc" id="L128">                dtaux.setEstado(rs.getString(&quot;estado&quot;));</span>
+<span class="nc" id="L152">                String fechaR = rs.getString(&quot;fecha&quot;);</span>
+<span class="nc" id="L153">                String[] partesFecha = fechaR.split(&quot;-&quot;);</span>
+<span class="nc" id="L154">                LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));</span>
+<span class="nc" id="L155">                dtaux.setFecha(fechaReserva);</span>
+<span class="nc" id="L156">                dtaux.setEstado(rs.getString(&quot;estado&quot;));</span>
 
 //           ResultSet rsCant = st.executeQuery(&quot;SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva=&quot;+numeroRes);
 //           while(rsCant.next()){
@@ -137,290 +165,373 @@ public class DatosClientes {
 //               
 //           }
 //           dtaux.setReservaPromociones(listProm);
-<span class="nc" id="L140">            }</span>
-<span class="nc" id="L141">            rs.close();</span>
+<span class="nc" id="L168">            }</span>
+<span class="nc" id="L169">            rs.close();</span>
             //conexion.cerrar();
-<span class="nc" id="L143">            conn.close();</span>
-<span class="nc" id="L144">        } catch (Exception e) {</span>
-<span class="nc" id="L145">        }</span>
-<span class="nc" id="L146">        return dtaux;</span>
+<span class="nc" id="L171">            conn.close();</span>
+<span class="nc" id="L172">        } catch (Exception e) {</span>
+<span class="nc" id="L173">        }</span>
+<span class="nc" id="L174">        return dtaux;</span>
     }
 
     public ArrayList getReservasPromo(String numeroProm) {
 
-<span class="nc" id="L151">        ArrayList&lt;cantidadReservasPromociones&gt; dtProm = new ArrayList();</span>
+<span class="nc" id="L179">        ArrayList&lt;cantidadReservasPromociones&gt; dtProm = new ArrayList();</span>
         Connection conn;
-<span class="nc" id="L153">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L181">        ConexionBD conexion = new ConexionBD();</span>
         try {
-<span class="nc" id="L155">            conn = conexion.conectar();</span>
-<span class="nc" id="L156">            Statement st = conn.createStatement();</span>
-<span class="nc" id="L157">            ResultSet rsCant = st.executeQuery(&quot;SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and cr.nombreProveedor = p.nombreProveedor and numeroReserva=&quot; + numeroProm);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">            while (rsCant.next()) {</span>
-<span class="nc" id="L159">                cantidadReservasPromociones cantProm = new cantidadReservasPromociones();</span>
-<span class="nc" id="L160">                cantProm.setnombreP(rsCant.getString(&quot;nombrePromocion&quot;));</span>
-<span class="nc" id="L161">                cantProm.setCantidad(rsCant.getInt(&quot;cantidad&quot;));</span>
-<span class="nc" id="L162">                cantProm.setTotalL(rsCant.getInt(&quot;totalLinea&quot;));</span>
-<span class="nc" id="L163">                String fechaR = rsCant.getString(&quot;fechaInicio&quot;);</span>
-<span class="nc" id="L164">                String[] partesFecha = fechaR.split(&quot;-&quot;);</span>
-<span class="nc" id="L165">                LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));</span>
-<span class="nc" id="L166">                cantProm.setFechaInicio(fechaReserva);</span>
-<span class="nc" id="L167">                String fechaRf = rsCant.getString(&quot;fechaFin&quot;);</span>
-<span class="nc" id="L168">                String[] partesFechaf = fechaRf.split(&quot;-&quot;);</span>
-<span class="nc" id="L169">                LocalDate fechaReservaf = LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]), Integer.parseInt(partesFechaf[2]));</span>
-<span class="nc" id="L170">                cantProm.setFechaFin(fechaReservaf);</span>
-<span class="nc" id="L171">                Proveedor p = new Proveedor();</span>
-<span class="nc" id="L172">                p.setNombreEmpresa(rsCant.getString(&quot;nombreProveedor&quot;));</span>
-<span class="nc" id="L173">                cantProm.setProveedor(p);</span>
+<span class="nc" id="L183">            conn = conexion.conectar();</span>
+<span class="nc" id="L184">            Statement st = conn.createStatement();</span>
+<span class="nc" id="L185">            ResultSet rsCant = st.executeQuery(&quot;SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and cr.nombreProveedor = p.nombreProveedor and numeroReserva=&quot; + numeroProm);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            while (rsCant.next()) {</span>
+<span class="nc" id="L187">                cantidadReservasPromociones cantProm = new cantidadReservasPromociones();</span>
+<span class="nc" id="L188">                cantProm.setnombreP(rsCant.getString(&quot;nombrePromocion&quot;));</span>
+<span class="nc" id="L189">                cantProm.setCantidad(rsCant.getInt(&quot;cantidad&quot;));</span>
+<span class="nc" id="L190">                cantProm.setTotalL(rsCant.getInt(&quot;totalLinea&quot;));</span>
+<span class="nc" id="L191">                String fechaR = rsCant.getString(&quot;fechaInicio&quot;);</span>
+<span class="nc" id="L192">                String[] partesFecha = fechaR.split(&quot;-&quot;);</span>
+<span class="nc" id="L193">                LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));</span>
+<span class="nc" id="L194">                cantProm.setFechaInicio(fechaReserva);</span>
+<span class="nc" id="L195">                String fechaRf = rsCant.getString(&quot;fechaFin&quot;);</span>
+<span class="nc" id="L196">                String[] partesFechaf = fechaRf.split(&quot;-&quot;);</span>
+<span class="nc" id="L197">                LocalDate fechaReservaf = LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]), Integer.parseInt(partesFechaf[2]));</span>
+<span class="nc" id="L198">                cantProm.setFechaFin(fechaReservaf);</span>
+<span class="nc" id="L199">                Proveedor p = new Proveedor();</span>
+<span class="nc" id="L200">                p.setNombreEmpresa(rsCant.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc" id="L201">                cantProm.setProveedor(p);</span>
 
-<span class="nc" id="L175">                dtProm.add(cantProm);</span>
+<span class="nc" id="L203">                dtProm.add(cantProm);</span>
 
-<span class="nc" id="L177">            }</span>
+<span class="nc" id="L205">            }</span>
             //dtaux.setReservaPromociones(listProm);
 
-<span class="nc" id="L180">            rsCant.close();</span>
+<span class="nc" id="L208">            rsCant.close();</span>
             //conexion.cerrar();
-<span class="nc" id="L182">            conn.close();</span>
-<span class="nc" id="L183">        } catch (Exception e) {</span>
-<span class="nc" id="L184">        }</span>
-<span class="nc" id="L185">        return dtProm;</span>
+<span class="nc" id="L210">            conn.close();</span>
+<span class="nc" id="L211">        } catch (Exception e) {</span>
+<span class="nc" id="L212">        }</span>
+<span class="nc" id="L213">        return dtProm;</span>
 
     }
 
     public ArrayList getServiciosPromo(String numeroSer) {
-<span class="nc" id="L190">        ArrayList&lt;cantidadReservasServicios&gt; dtSer = new ArrayList();</span>
+<span class="nc" id="L218">        ArrayList&lt;cantidadReservasServicios&gt; dtSer = new ArrayList();</span>
         Connection conn;
-<span class="nc" id="L192">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L220">        ConexionBD conexion = new ConexionBD();</span>
         try {
-<span class="nc" id="L194">            conn = conexion.conectar();</span>
-<span class="nc" id="L195">            Statement st = conn.createStatement();</span>
-<span class="nc" id="L196">            ResultSet rsCant = st.executeQuery(&quot;SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and cs.nombreProveedor = s.nombreProveedor and numeroReserva=&quot; + numeroSer);</span>
+<span class="nc" id="L222">            conn = conexion.conectar();</span>
+<span class="nc" id="L223">            Statement st = conn.createStatement();</span>
+<span class="nc" id="L224">            ResultSet rsCant = st.executeQuery(&quot;SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and cs.nombreProveedor = s.nombreProveedor and numeroReserva=&quot; + numeroSer);</span>
 
-<span class="nc bnc" id="L198" title="All 2 branches missed.">            while (rsCant.next()) {</span>
-<span class="nc" id="L199">                cantidadReservasServicios cantSer = new cantidadReservasServicios();</span>
-<span class="nc" id="L200">                cantSer.setNombreS(rsCant.getString(&quot;nombreServicio&quot;));</span>
-<span class="nc" id="L201">                Proveedor p = new Proveedor();</span>
-<span class="nc" id="L202">                p.setNombreEmpresa(rsCant.getString(&quot;nombreProveedor&quot;));</span>
-<span class="nc" id="L203">                cantSer.setProveedor(p);</span>
-<span class="nc" id="L204">                cantSer.setCantidad(rsCant.getInt(&quot;cantidad&quot;));</span>
-<span class="nc" id="L205">                cantSer.setTotalLinea(rsCant.getInt(&quot;totalLinea&quot;));</span>
-<span class="nc" id="L206">                String fechaR = rsCant.getString(&quot;fechaInicio&quot;);</span>
-<span class="nc" id="L207">                String[] partesFecha = fechaR.split(&quot;-&quot;);</span>
-<span class="nc" id="L208">                LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));</span>
-<span class="nc" id="L209">                cantSer.setFechaInicio(fechaReserva);</span>
-<span class="nc" id="L210">                String fechaRf = rsCant.getString(&quot;fechaFin&quot;);</span>
-<span class="nc" id="L211">                String[] partesFechaf = fechaRf.split(&quot;-&quot;);</span>
-<span class="nc" id="L212">                LocalDate fechaReservaf = LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]), Integer.parseInt(partesFechaf[2]));</span>
-<span class="nc" id="L213">                cantSer.setFechaFin(fechaReservaf);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            while (rsCant.next()) {</span>
+<span class="nc" id="L227">                cantidadReservasServicios cantSer = new cantidadReservasServicios();</span>
+<span class="nc" id="L228">                cantSer.setNombreS(rsCant.getString(&quot;nombreServicio&quot;));</span>
+<span class="nc" id="L229">                Proveedor p = new Proveedor();</span>
+<span class="nc" id="L230">                p.setNombreEmpresa(rsCant.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc" id="L231">                cantSer.setProveedor(p);</span>
+<span class="nc" id="L232">                cantSer.setCantidad(rsCant.getInt(&quot;cantidad&quot;));</span>
+<span class="nc" id="L233">                cantSer.setTotalLinea(rsCant.getInt(&quot;totalLinea&quot;));</span>
+<span class="nc" id="L234">                String fechaR = rsCant.getString(&quot;fechaInicio&quot;);</span>
+<span class="nc" id="L235">                String[] partesFecha = fechaR.split(&quot;-&quot;);</span>
+<span class="nc" id="L236">                LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));</span>
+<span class="nc" id="L237">                cantSer.setFechaInicio(fechaReserva);</span>
+<span class="nc" id="L238">                String fechaRf = rsCant.getString(&quot;fechaFin&quot;);</span>
+<span class="nc" id="L239">                String[] partesFechaf = fechaRf.split(&quot;-&quot;);</span>
+<span class="nc" id="L240">                LocalDate fechaReservaf = LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]), Integer.parseInt(partesFechaf[2]));</span>
+<span class="nc" id="L241">                cantSer.setFechaFin(fechaReservaf);</span>
 
-<span class="nc" id="L215">                dtSer.add(cantSer);</span>
-<span class="nc" id="L216">            }</span>
-<span class="nc" id="L217">            rsCant.close();</span>
+<span class="nc" id="L243">                dtSer.add(cantSer);</span>
+<span class="nc" id="L244">            }</span>
+<span class="nc" id="L245">            rsCant.close();</span>
             //conexion.cerrar();
-<span class="nc" id="L219">            conn.close();</span>
-<span class="nc" id="L220">        } catch (Exception e) {</span>
-<span class="nc" id="L221">        }</span>
-<span class="nc" id="L222">        return dtSer;</span>
+<span class="nc" id="L247">            conn.close();</span>
+<span class="nc" id="L248">        } catch (Exception e) {</span>
+<span class="nc" id="L249">        }</span>
+<span class="nc" id="L250">        return dtSer;</span>
     }
 
-    public ArrayList verInfoCliente() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L226">        ArrayList clientes = new ArrayList();</span>
-<span class="nc" id="L227">        int indice = 0;</span>
+    public ArrayList&lt;Cliente&gt; verInfoCliente() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L254">        ArrayList&lt;Cliente&gt; clientes = new ArrayList();</span>
+<span class="nc" id="L255">        int indice = 0;</span>
         Connection conn;
 
-<span class="nc" id="L230">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L258">        ConexionBD conexion = new ConexionBD();</span>
 
-<span class="nc" id="L232">        conn = conexion.conectar();</span>
+<span class="nc" id="L260">        conn = conexion.conectar();</span>
 
-<span class="nc" id="L234">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L262">        Statement st = conn.createStatement();</span>
 
-<span class="nc" id="L236">        ResultSet rs = st.executeQuery(&quot;select * from usuarios where clientes=&quot; + 1);</span>
-<span class="nc bnc" id="L237" title="All 2 branches missed.">        while (rs.next()) {</span>
+<span class="nc" id="L264">        ResultSet rs = st.executeQuery(&quot;select * from usuarios where cliente= true order by nickname&quot;);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        while (rs.next()) {</span>
             //System.out.println(&quot;a&quot;);
-<span class="nc" id="L239">            clientes.add(indice, rs.getString(&quot;nickname&quot;));</span>
-<span class="nc" id="L240">            indice++;</span>
-        }
+<span class="nc" id="L267">            Cliente c = new Cliente();</span>
+<span class="nc" id="L268">            c.setNickname(rs.getString(&quot;nickname&quot;));</span>
+<span class="nc" id="L269">            clientes.add(indice, c);</span>
+<span class="nc" id="L270">            indice++;</span>
+<span class="nc" id="L271">        }</span>
 
-<span class="nc" id="L243">        rs.close();</span>
+<span class="nc" id="L273">        rs.close();</span>
         //conexion.cerrar();
-<span class="nc" id="L245">        conn.close();</span>
-<span class="nc" id="L246">        return clientes;</span>
+<span class="nc" id="L275">        conn.close();</span>
+<span class="nc" id="L276">        return clientes;</span>
+    }
+    
+    public ArrayList&lt;Cliente&gt; verInfoClienteBusqueda(String nickname) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L280">        ArrayList&lt;Cliente&gt; clientes = new ArrayList();</span>
+<span class="nc" id="L281">        int indice = 0;</span>
+        Connection conn;
+
+<span class="nc" id="L284">        ConexionBD conexion = new ConexionBD();</span>
+
+<span class="nc" id="L286">        conn = conexion.conectar();</span>
+
+<span class="nc" id="L288">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from usuarios where cliente= true and nickname like ? order by nickname&quot;);</span>
+        
+<span class="nc" id="L290">        pConsulta.setString(1, &quot;%&quot; + nickname + &quot;%&quot;);</span>
+        
+<span class="nc" id="L292">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        while (rs.next()) {</span>
+            //System.out.println(&quot;a&quot;);
+<span class="nc" id="L296">            Cliente c = new Cliente();</span>
+<span class="nc" id="L297">            c.setNickname(rs.getString(&quot;nickname&quot;));</span>
+<span class="nc" id="L298">            clientes.add(indice, c);</span>
+<span class="nc" id="L299">            indice++;</span>
+<span class="nc" id="L300">        }</span>
+
+<span class="nc" id="L302">        rs.close();</span>
+        //conexion.cerrar();
+<span class="nc" id="L304">        conn.close();</span>
+<span class="nc" id="L305">        return clientes;</span>
     }
     
     public ArrayList&lt;Cliente&gt; selectAllObjetosClientes() throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L251">        ArrayList&lt;Cliente&gt; clientes = new ArrayList&lt;Cliente&gt;();</span>
+<span class="nc" id="L310">        ArrayList&lt;Cliente&gt; clientes = new ArrayList&lt;Cliente&gt;();</span>
         
-<span class="nc" id="L253">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L312">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L257">        conn = conexion.conectar();</span>
+<span class="nc" id="L316">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L259">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L318">        Statement st = conn.createStatement();</span>
         
-<span class="nc" id="L261">        ResultSet rs = st.executeQuery(&quot;select * from usuarios u where cliente = true&quot;);</span>
+<span class="nc" id="L320">        ResultSet rs = st.executeQuery(&quot;select * from usuarios u where cliente = true&quot;);</span>
         
-<span class="nc bnc" id="L263" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">        while(rs.next()){</span>
             //categorias.add(new Proveedor(rs.getString(&quot;nombre&quot;), &quot;&quot;, new ArrayList()));
-<span class="nc" id="L265">            String fecha = rs.getString(&quot;fechaNacimiento&quot;);</span>
-<span class="nc" id="L266">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
-<span class="nc" id="L267">            clientes.add(new Cliente(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), &quot;&quot;, new HashMap()));</span>
-<span class="nc" id="L268">        }</span>
+<span class="nc" id="L324">            String fecha = rs.getString(&quot;fechaNacimiento&quot;);</span>
+<span class="nc" id="L325">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
+<span class="nc" id="L326">            clientes.add(new Cliente(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), &quot;&quot;, new HashMap()));</span>
+<span class="nc" id="L327">        }</span>
         
-<span class="nc" id="L270">        rs.close();</span>
-<span class="nc" id="L271">        conn.close();</span>
+<span class="nc" id="L329">        rs.close();</span>
+<span class="nc" id="L330">        conn.close();</span>
         
-<span class="nc" id="L273">        return clientes;</span>
+<span class="nc" id="L332">        return clientes;</span>
         
     }
     
     public ArrayList&lt;cantidadReservasPromociones&gt; selectPromocionesReserva(int numero) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L279">        ArrayList&lt;cantidadReservasPromociones&gt; promociones = new ArrayList&lt;cantidadReservasPromociones&gt;();</span>
+<span class="nc" id="L338">        ArrayList&lt;cantidadReservasPromociones&gt; promociones = new ArrayList&lt;cantidadReservasPromociones&gt;();</span>
         
-<span class="nc" id="L281">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L340">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L285">        conn = conexion.conectar();</span>
+<span class="nc" id="L344">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L287">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from cantidadreservaspromociones where numeroReserva = ?&quot;);</span>
+<span class="nc" id="L346">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from cantidadreservaspromociones where numeroReserva = ?&quot;);</span>
         
-<span class="nc" id="L289">        pConsulta.setInt(1, numero);</span>
+<span class="nc" id="L348">        pConsulta.setInt(1, numero);</span>
         
-<span class="nc" id="L291">        ResultSet rs = pConsulta.executeQuery();</span>
+<span class="nc" id="L350">        ResultSet rs = pConsulta.executeQuery();</span>
         
-<span class="nc bnc" id="L293" title="All 2 branches missed.">        while(rs.next()){</span>
-<span class="nc" id="L294">            String fechaInicio = rs.getString(&quot;fechaInicio&quot;);</span>
-<span class="nc" id="L295">            String[] datosFI  = fechaInicio.split(&quot;-&quot;);</span>
-<span class="nc" id="L296">            String fechaFin = rs.getString(&quot;fechaFin&quot;);</span>
-<span class="nc" id="L297">            String[] datosFF  = fechaFin.split(&quot;-&quot;);</span>
-<span class="nc" id="L298">            cantidadReservasPromociones crp = new cantidadReservasPromociones(rs.getInt(&quot;cantidad&quot;), rs.getInt(&quot;totalLinea&quot;), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Promocion(), new Proveedor());</span>
-<span class="nc" id="L299">            crp.setNombrePromocion(rs.getString(&quot;nombrePromocion&quot;));</span>
-<span class="nc" id="L300">            crp.setNombreProveedor(rs.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L353">            String fechaInicio = rs.getString(&quot;fechaInicio&quot;);</span>
+<span class="nc" id="L354">            String[] datosFI  = fechaInicio.split(&quot;-&quot;);</span>
+<span class="nc" id="L355">            String fechaFin = rs.getString(&quot;fechaFin&quot;);</span>
+<span class="nc" id="L356">            String[] datosFF  = fechaFin.split(&quot;-&quot;);</span>
+<span class="nc" id="L357">            cantidadReservasPromociones crp = new cantidadReservasPromociones(rs.getInt(&quot;cantidad&quot;), rs.getInt(&quot;totalLinea&quot;), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Promocion(), new Proveedor());</span>
+<span class="nc" id="L358">            crp.setNombrePromocion(rs.getString(&quot;nombrePromocion&quot;));</span>
+<span class="nc" id="L359">            crp.setNombreProveedor(rs.getString(&quot;nombreProveedor&quot;));</span>
             //System.out.println(&quot;****&quot; + rs.getString(&quot;nombrePromocion&quot;) + &quot;****&quot;);
-<span class="nc" id="L302">            promociones.add(crp);</span>
-<span class="nc" id="L303">        }</span>
+<span class="nc" id="L361">            promociones.add(crp);</span>
+<span class="nc" id="L362">        }</span>
         
-<span class="nc" id="L305">        rs.close();</span>
-<span class="nc" id="L306">        conn.close();</span>
+<span class="nc" id="L364">        rs.close();</span>
+<span class="nc" id="L365">        conn.close();</span>
         
-<span class="nc" id="L308">        return promociones;</span>
+<span class="nc" id="L367">        return promociones;</span>
     }
     
     public ArrayList&lt;cantidadReservasServicios&gt; selectServiciosReserva(int numero) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L313">        ArrayList&lt;cantidadReservasServicios&gt; servicios = new ArrayList&lt;cantidadReservasServicios&gt;();</span>
+<span class="nc" id="L372">        ArrayList&lt;cantidadReservasServicios&gt; servicios = new ArrayList&lt;cantidadReservasServicios&gt;();</span>
         
-<span class="nc" id="L315">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L374">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L319">        conn = conexion.conectar();</span>
+<span class="nc" id="L378">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L321">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from cantidadreservasservicios where numeroReserva = ?&quot;);</span>
+<span class="nc" id="L380">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from cantidadreservasservicios where numeroReserva = ?&quot;);</span>
         
-<span class="nc" id="L323">        pConsulta.setInt(1, numero);</span>
+<span class="nc" id="L382">        pConsulta.setInt(1, numero);</span>
         
-<span class="nc" id="L325">        ResultSet rs = pConsulta.executeQuery();</span>
+<span class="nc" id="L384">        ResultSet rs = pConsulta.executeQuery();</span>
         
-<span class="nc bnc" id="L327" title="All 2 branches missed.">        while(rs.next()){</span>
-<span class="nc" id="L328">            String fechaInicio = rs.getString(&quot;fechaInicio&quot;);</span>
-<span class="nc" id="L329">            String[] datosFI  = fechaInicio.split(&quot;-&quot;);</span>
-<span class="nc" id="L330">            String fechaFin = rs.getString(&quot;fechaFin&quot;);</span>
-<span class="nc" id="L331">            String[] datosFF  = fechaFin.split(&quot;-&quot;);</span>
-<span class="nc" id="L332">            cantidadReservasServicios crs = new cantidadReservasServicios(rs.getInt(&quot;cantidad&quot;), rs.getInt(&quot;totalLinea&quot;), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Proveedor(), new Servicio());</span>
-<span class="nc" id="L333">            crs.setNombreProveedor(rs.getString(&quot;nombreProveedor&quot;));</span>
-<span class="nc" id="L334">            crs.setNombreServicio(rs.getString(&quot;nombreServicio&quot;));</span>
-<span class="nc" id="L335">            servicios.add(crs);</span>
-<span class="nc" id="L336">        }</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L387">            String fechaInicio = rs.getString(&quot;fechaInicio&quot;);</span>
+<span class="nc" id="L388">            String[] datosFI  = fechaInicio.split(&quot;-&quot;);</span>
+<span class="nc" id="L389">            String fechaFin = rs.getString(&quot;fechaFin&quot;);</span>
+<span class="nc" id="L390">            String[] datosFF  = fechaFin.split(&quot;-&quot;);</span>
+<span class="nc" id="L391">            cantidadReservasServicios crs = new cantidadReservasServicios(rs.getInt(&quot;cantidad&quot;), rs.getInt(&quot;totalLinea&quot;), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Proveedor(), new Servicio());</span>
+<span class="nc" id="L392">            crs.setNombreProveedor(rs.getString(&quot;nombreProveedor&quot;));</span>
+<span class="nc" id="L393">            crs.setNombreServicio(rs.getString(&quot;nombreServicio&quot;));</span>
+<span class="nc" id="L394">            servicios.add(crs);</span>
+<span class="nc" id="L395">        }</span>
         
-<span class="nc" id="L338">        rs.close();</span>
-<span class="nc" id="L339">        conn.close();</span>
+<span class="nc" id="L397">        rs.close();</span>
+<span class="nc" id="L398">        conn.close();</span>
         
-<span class="nc" id="L341">        return servicios;</span>
+<span class="nc" id="L400">        return servicios;</span>
     }
     
     public ArrayList&lt;Reserva&gt; selectReservasCliente(Cliente c) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L345">        ArrayList&lt;Reserva&gt; reservas = new ArrayList&lt;Reserva&gt;();</span>
+<span class="nc" id="L404">        ArrayList&lt;Reserva&gt; reservas = new ArrayList&lt;Reserva&gt;();</span>
         
-<span class="nc" id="L347">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L406">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L351">        conn = conexion.conectar();</span>
+<span class="nc" id="L410">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L353">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from reservas where nicknameCliente = ?&quot;);</span>
+<span class="nc" id="L412">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from reservas where nicknameCliente = ?&quot;);</span>
         
-<span class="nc" id="L355">        pConsulta.setString(1, c.getNickname());</span>
+<span class="nc" id="L414">        pConsulta.setString(1, c.getNickname());</span>
         
-<span class="nc" id="L357">        ResultSet rs = pConsulta.executeQuery();</span>
+<span class="nc" id="L416">        ResultSet rs = pConsulta.executeQuery();</span>
         
-<span class="nc bnc" id="L359" title="All 2 branches missed.">        while(rs.next()){</span>
-<span class="nc" id="L360">            String fecha = rs.getString(&quot;fecha&quot;);</span>
-<span class="nc" id="L361">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
-<span class="nc" id="L362">            String estado = rs.getString(&quot;estado&quot;);</span>
-<span class="nc" id="L363">            Estado estadoReserva = Estado.REGISTRADA;</span>
-<span class="nc bnc" id="L364" title="All 18 branches missed.">            switch(estado){</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L419">            String fecha = rs.getString(&quot;fecha&quot;);</span>
+<span class="nc" id="L420">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
+<span class="nc" id="L421">            String estado = rs.getString(&quot;estado&quot;);</span>
+<span class="nc" id="L422">            Estado estadoReserva = Estado.REGISTRADA;</span>
+<span class="nc bnc" id="L423" title="All 18 branches missed.">            switch(estado){</span>
                 case &quot;registrada&quot;:
-<span class="nc" id="L366">                    estadoReserva = Estado.REGISTRADA;</span>
-<span class="nc" id="L367">                    break;</span>
+<span class="nc" id="L425">                    estadoReserva = Estado.REGISTRADA;</span>
+<span class="nc" id="L426">                    break;</span>
                 case &quot;cancelada&quot;:
-<span class="nc" id="L369">                    estadoReserva = Estado.CANCELADA;</span>
-<span class="nc" id="L370">                    break;</span>
+<span class="nc" id="L428">                    estadoReserva = Estado.CANCELADA;</span>
+<span class="nc" id="L429">                    break;</span>
                 case &quot;facturada&quot;:
-<span class="nc" id="L372">                    estadoReserva = Estado.FACTURADA;</span>
-<span class="nc" id="L373">                    break;</span>
+<span class="nc" id="L431">                    estadoReserva = Estado.FACTURADA;</span>
+<span class="nc" id="L432">                    break;</span>
                 case &quot;pagada&quot;:
-<span class="nc" id="L375">                    estadoReserva = Estado.PAGADA;</span>
+<span class="nc" id="L434">                    estadoReserva = Estado.PAGADA;</span>
                     break;
             }
-<span class="nc" id="L378">            reservas.add(new Reserva(rs.getInt(&quot;numero&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), rs.getInt(&quot;precio&quot;), c, new ArrayList(), new ArrayList(), estadoReserva));</span>
-<span class="nc" id="L379">        }</span>
+<span class="nc" id="L437">            reservas.add(new Reserva(rs.getInt(&quot;numero&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), rs.getInt(&quot;precio&quot;), c, new ArrayList(), new ArrayList(), estadoReserva));</span>
+<span class="nc" id="L438">        }</span>
         
-<span class="nc" id="L381">        rs.close();</span>
-<span class="nc" id="L382">        conn.close();</span>
+<span class="nc" id="L440">        rs.close();</span>
+<span class="nc" id="L441">        conn.close();</span>
         
-<span class="nc" id="L384">        return reservas;</span>
+<span class="nc" id="L443">        return reservas;</span>
     }
     
-    public void deleteAllClientes(String s) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L388">        ConexionBD conexion = new ConexionBD();</span>
+    public Cliente seleccionarCliente(String nickname) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L447">         ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L392">        conn = conexion.conectar();</span>
+<span class="nc" id="L451">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L394">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L453">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from usuarios u left join imagenesusuarios i on u.nickname=i.nickname where u.cliente=true and u.nickname=?&quot;);</span>
         
-<span class="nc" id="L396">        String[] sql = s.split(&quot;;&quot;);</span>
+<span class="nc" id="L455">        pConsulta.setString(1,nickname);</span>
         
-<span class="nc bnc" id="L398" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
-<span class="nc" id="L399">            st.executeUpdate(sql[i]);</span>
+<span class="nc" id="L457">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L459">        Cliente c = new Cliente();</span>
+<span class="nc" id="L460">        HashMap&lt;Integer,Reserva&gt; reservas = new HashMap&lt;Integer,Reserva&gt;();</span>
+                
+<span class="nc bnc" id="L462" title="All 2 branches missed.">        while(rs.next()){</span>
+            
+<span class="nc" id="L464">            String fecha = rs.getString(&quot;fechaNacimiento&quot;);</span>
+<span class="nc" id="L465">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
+<span class="nc" id="L466">            c=new Cliente(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), rs.getString(&quot;ruta&quot;), new HashMap());</span>
+                        
+<span class="nc" id="L468">        }</span>
+        
+<span class="nc" id="L470">        c.setReservasCliente(reservas);</span>
+        
+<span class="nc" id="L472">        return c;</span>
+        
+    }
+    
+    public ArrayList&lt;Reserva&gt; reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
+<span class="nc" id="L477">         ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L481">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L483">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from reservas where nicknameCliente=? order by numero&quot;);</span>
+        
+<span class="nc" id="L485">        pConsulta.setString(1,nickname);</span>
+        
+<span class="nc" id="L487">        ResultSet rs = pConsulta.executeQuery();</span>
+<span class="nc" id="L488">        ArrayList&lt;Reserva&gt; listRes=new ArrayList&lt;Reserva&gt;();</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L490">            Reserva r =new Reserva();</span>
+<span class="nc" id="L491">            r.setNumero(rs.getInt(&quot;numero&quot;));</span>
+<span class="nc" id="L492">            listRes.add(r);</span>
+<span class="nc" id="L493">        }</span>
+<span class="nc" id="L494">        return listRes;</span>
+    }
+    
+    
+    public void deleteAllClientes(String s) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L499">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L503">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L505">        Statement st = conn.createStatement();</span>
+        
+<span class="nc" id="L507">        String[] sql = s.split(&quot;;&quot;);</span>
+        
+<span class="nc bnc" id="L509" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
+<span class="nc" id="L510">            st.executeUpdate(sql[i]);</span>
         }
         
-<span class="nc" id="L402">        conn.close();</span>
+<span class="nc" id="L513">        conn.close();</span>
         
         
-<span class="nc" id="L405">    }</span>
+<span class="nc" id="L516">    }</span>
     
     public void insertDatosClientesDePrueba(String s) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L408">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L519">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L412">        conn = conexion.conectar();</span>
+<span class="nc" id="L523">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L414">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L525">        Statement st = conn.createStatement();</span>
         
-<span class="nc" id="L416">        String[] sql = s.split(&quot;;&quot;);</span>
+<span class="nc" id="L527">        String[] sql = s.split(&quot;;&quot;);</span>
         
-<span class="nc bnc" id="L418" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
-<span class="nc" id="L419">            st.executeUpdate(sql[i]);</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
+<span class="nc" id="L530">            st.executeUpdate(sql[i]);</span>
         }
         
-<span class="nc" id="L422">        conn.close();</span>
+<span class="nc" id="L533">        conn.close();</span>
         
-<span class="nc" id="L424">    }</span>
+<span class="nc" id="L535">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

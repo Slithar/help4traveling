@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorClientes.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorClientes.java</span></div><h1>ControladorClientes.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorClientes.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling_Promo_&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorClientes.java</span></div><h1>ControladorClientes.java</h1><pre class="source lang-java linenums">/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -18,122 +19,132 @@ import java.util.*;
 public class ControladorClientes implements IControladorClientes {
     
     private HashMap&lt;String, Cliente&gt; ListaClientes;
-<span class="fc" id="L21">    private HashMap&lt;String, Proveedor&gt; ListaProveedores = new HashMap&lt;String, Proveedor&gt;();</span>
-<span class="fc" id="L22">    private HashMap&lt;String, Promocion&gt; ListaPromociones = new HashMap&lt;String, Promocion&gt;();</span>
+<span class="fc" id="L22">    private HashMap&lt;String, Proveedor&gt; ListaProveedores = new HashMap&lt;String, Proveedor&gt;();</span>
+<span class="fc" id="L23">    private HashMap&lt;String, Promocion&gt; ListaPromociones = new HashMap&lt;String, Promocion&gt;();</span>
     
-<span class="fc" id="L24">    public ControladorClientes() {</span>
+<span class="fc" id="L25">    public ControladorClientes() {</span>
 
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L27">    }</span>
 
     public HashMap&lt;String, Proveedor&gt; getListaProveedores() {
-<span class="nc" id="L29">        return ListaProveedores;</span>
+<span class="nc" id="L30">        return ListaProveedores;</span>
     }
 
     public void setListaProveedores(HashMap&lt;String, Proveedor&gt; ListaProveedores) {
-<span class="nc" id="L33">        this.ListaProveedores = ListaProveedores;</span>
-<span class="nc" id="L34">    }</span>
+<span class="nc" id="L34">        this.ListaProveedores = ListaProveedores;</span>
+<span class="nc" id="L35">    }</span>
 
     public HashMap&lt;String, Promocion&gt; getListaPromociones() {
-<span class="nc" id="L37">        return ListaPromociones;</span>
+<span class="nc" id="L38">        return ListaPromociones;</span>
     }
 
     public void setListaPromociones(HashMap&lt;String, Promocion&gt; ListaPromociones) {
-<span class="nc" id="L41">        this.ListaPromociones = ListaPromociones;</span>
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L42">        this.ListaPromociones = ListaPromociones;</span>
+<span class="nc" id="L43">    }</span>
     
     
     
     @Override
     public void actualizarClientes() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L48">        ListaClientes = new HashMap&lt;String, Cliente&gt;();</span>
-<span class="nc" id="L49">        DatosClientes clientes = new DatosClientes();</span>
-<span class="nc" id="L50">        DatosUsuarios usuarios = new DatosUsuarios();</span>
-<span class="nc" id="L51">        ArrayList&lt;Cliente&gt; cli = clientes.selectAllObjetosClientes();</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        for(int i = 0; i &lt; cli.size(); i++){</span>
-<span class="nc" id="L53">            System.out.println(&quot;CLIENTE: &quot; + cli.get(i).getNickname());</span>
-<span class="nc" id="L54">            cli.get(i).setImagenUsuario(usuarios.selectImagenPerfil(cli.get(i)));</span>
-<span class="nc" id="L55">            HashMap&lt;Integer, Reserva&gt; reservas = new HashMap&lt;Integer, Reserva&gt;();</span>
-<span class="nc" id="L56">            ArrayList&lt;Reserva&gt; resultadoReservas = clientes.selectReservasCliente(cli.get(i));</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">            for(int j = 0; j &lt; resultadoReservas.size(); j++){</span>
-<span class="nc" id="L58">                System.out.println(&quot; --&quot; + resultadoReservas.get(j).getNumero());</span>
-<span class="nc" id="L59">                reservas.put(resultadoReservas.get(j).getNumero(), resultadoReservas.get(j));</span>
+<span class="nc" id="L49">        ListaClientes = new HashMap&lt;String, Cliente&gt;();</span>
+<span class="nc" id="L50">        DatosClientes clientes = new DatosClientes();</span>
+<span class="nc" id="L51">        DatosUsuarios usuarios = new DatosUsuarios();</span>
+<span class="nc" id="L52">        ArrayList&lt;Cliente&gt; cli = clientes.selectAllObjetosClientes();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for(int i = 0; i &lt; cli.size(); i++){</span>
+<span class="nc" id="L54">            System.out.println(&quot;CLIENTE: &quot; + cli.get(i).getNickname());</span>
+<span class="nc" id="L55">            cli.get(i).setImagenUsuario(usuarios.selectImagenPerfil(cli.get(i)));</span>
+<span class="nc" id="L56">            HashMap&lt;Integer, Reserva&gt; reservas = new HashMap&lt;Integer, Reserva&gt;();</span>
+<span class="nc" id="L57">            ArrayList&lt;Reserva&gt; resultadoReservas = clientes.selectReservasCliente(cli.get(i));</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            for(int j = 0; j &lt; resultadoReservas.size(); j++){</span>
+<span class="nc" id="L59">                System.out.println(&quot; --&quot; + resultadoReservas.get(j).getNumero());</span>
+<span class="nc" id="L60">                reservas.put(resultadoReservas.get(j).getNumero(), resultadoReservas.get(j));</span>
             }
-<span class="nc" id="L61">            cli.get(i).setReservasCliente(reservas);</span>
+<span class="nc" id="L62">            cli.get(i).setReservasCliente(reservas);</span>
             //System.out.println(&quot;***** &quot; + cli.get(i).getNickname() + &quot; *****&quot;);
-<span class="nc" id="L63">            ListaClientes.put(cli.get(i).getNickname(), cli.get(i));</span>
+<span class="nc" id="L64">            ListaClientes.put(cli.get(i).getNickname(), cli.get(i));</span>
             //cli.get(i).setReservasCliente();
         }
         
         //ACÁ VOY A ASOCIAR CADA RESERVA DE CLIENTE A CANTIDAD_RESERVA_PROMOCIONES O CANTIDAD_RESERVA_SERVICIOS
         
-<span class="nc" id="L69">        Iterator it = ListaClientes.entrySet().iterator();</span>
+<span class="nc" id="L70">        Iterator it = ListaClientes.entrySet().iterator();</span>
         
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        while(it.hasNext()){</span>
-<span class="nc" id="L72">            Map.Entry c = (Map.Entry) it.next();</span>
-<span class="nc" id="L73">            Cliente cliente = (Cliente) c.getValue();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        while(it.hasNext()){</span>
+<span class="nc" id="L73">            Map.Entry c = (Map.Entry) it.next();</span>
+<span class="nc" id="L74">            Cliente cliente = (Cliente) c.getValue();</span>
             
-<span class="nc" id="L75">            Iterator itReserva = cliente.getReservasCliente().entrySet().iterator();</span>
+<span class="nc" id="L76">            Iterator itReserva = cliente.getReservasCliente().entrySet().iterator();</span>
             
-<span class="nc" id="L77">            System.out.println(&quot;CLIENTE: &quot;+ cliente.getNickname());</span>
+<span class="nc" id="L78">            System.out.println(&quot;CLIENTE: &quot;+ cliente.getNickname());</span>
             
-<span class="nc bnc" id="L79" title="All 2 branches missed.">            while(itReserva.hasNext()){</span>
-<span class="nc" id="L80">                Map.Entry re = (Map.Entry) itReserva.next();</span>
-<span class="nc" id="L81">                Reserva r = (Reserva) re.getValue();</span>
-<span class="nc" id="L82">                System.out.println(&quot; - RESERVA: &quot; + r.getNumero());</span>
-<span class="nc" id="L83">                ArrayList&lt;cantidadReservasPromociones&gt; crp = clientes.selectPromocionesReserva(r.getNumero());</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">                if(crp.size() &gt; 0){</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">                    for(int i = 0; i &lt; crp.size(); i++){</span>
-<span class="nc" id="L86">                        crp.get(i).setProveedor((Proveedor) ListaProveedores.get(crp.get(i).getNombreProveedor()));</span>
-<span class="nc" id="L87">                        System.out.println(&quot;  ** PROVEEDOR PROMOCIÓN: &quot; + crp.get(i).getProveedor().getNombreEmpresa());</span>
-<span class="nc" id="L88">                        crp.get(i).setPromocion((Promocion) ListaPromociones.get(crp.get(i).getNombrePromocion()));</span>
-<span class="nc" id="L89">                        System.out.println(&quot;  ** PROMOCION: &quot; + crp.get(i).getPromocion().getNombre());</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            while(itReserva.hasNext()){</span>
+<span class="nc" id="L81">                Map.Entry re = (Map.Entry) itReserva.next();</span>
+<span class="nc" id="L82">                Reserva r = (Reserva) re.getValue();</span>
+<span class="nc" id="L83">                System.out.println(&quot; - RESERVA: &quot; + r.getNumero());</span>
+<span class="nc" id="L84">                ArrayList&lt;cantidadReservasPromociones&gt; crp = clientes.selectPromocionesReserva(r.getNumero());</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                if(crp.size() &gt; 0){</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                    for(int i = 0; i &lt; crp.size(); i++){</span>
+<span class="nc" id="L87">                        crp.get(i).setProveedor((Proveedor) ListaProveedores.get(crp.get(i).getNombreProveedor()));</span>
+<span class="nc" id="L88">                        System.out.println(&quot;  ** PROVEEDOR PROMOCIÓN: &quot; + crp.get(i).getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L89">                        crp.get(i).setPromocion((Promocion) ListaPromociones.get(crp.get(i).getNombrePromocion()));</span>
+<span class="nc" id="L90">                        System.out.println(&quot;  ** PROMOCION: &quot; + crp.get(i).getPromocion().getNombre());</span>
                     }
-<span class="nc" id="L91">                    r.setReservacantPromociones(crp);</span>
+<span class="nc" id="L92">                    r.setReservacantPromociones(crp);</span>
                 }
                 
                 
-<span class="nc" id="L95">                ArrayList&lt;cantidadReservasServicios&gt; crs = clientes.selectServiciosReserva(r.getNumero());</span>
+<span class="nc" id="L96">                ArrayList&lt;cantidadReservasServicios&gt; crs = clientes.selectServiciosReserva(r.getNumero());</span>
                 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">                if(crs.size() &gt; 0){</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">                    for(int i = 0; i &lt; crs.size(); i++){</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if(crs.size() &gt; 0){</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                    for(int i = 0; i &lt; crs.size(); i++){</span>
                         
-<span class="nc" id="L100">                        crs.get(i).setProveedor((Proveedor) ListaProveedores.get(crs.get(i).getNombreProveedor()));</span>
-<span class="nc" id="L101">                        System.out.println(&quot;  ** PROVEEDOR SERVICIO: &quot; + crs.get(i).getProveedor().getNombreEmpresa());</span>
-<span class="nc" id="L102">                        HashMap&lt;String, Servicio&gt; servs = crs.get(i).getProveedor().getServicios();</span>
-<span class="nc" id="L103">                        crs.get(i).setServicio(servs.get(crs.get(i).getNombreServicio()));</span>
-<span class="nc" id="L104">                        System.out.println(&quot;  ** SERVICIO: &quot; + crs.get(i).getServicio().getNombreServicio());</span>
+<span class="nc" id="L101">                        crs.get(i).setProveedor((Proveedor) ListaProveedores.get(crs.get(i).getNombreProveedor()));</span>
+<span class="nc" id="L102">                        System.out.println(&quot;  ** PROVEEDOR SERVICIO: &quot; + crs.get(i).getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L103">                        HashMap&lt;String, Servicio&gt; servs = crs.get(i).getProveedor().getServicios();</span>
+<span class="nc" id="L104">                        crs.get(i).setServicio(servs.get(crs.get(i).getNombreServicio()));</span>
+<span class="nc" id="L105">                        System.out.println(&quot;  ** SERVICIO: &quot; + crs.get(i).getServicio().getNombreServicio());</span>
                     }
 
-<span class="nc" id="L107">                    r.setServiciosReserva(crs);</span>
+<span class="nc" id="L108">                    r.setServiciosReserva(crs);</span>
                 }
                 
-<span class="nc" id="L110">            }</span>
-<span class="nc" id="L111">        }</span>
-<span class="nc" id="L112">    }</span>
+<span class="nc" id="L111">            }</span>
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">    }</span>
 
     @Override
     public int getCantClientes() {
-<span class="nc" id="L116">        return ListaClientes.size();</span>
+<span class="nc" id="L117">        return ListaClientes.size();</span>
     }
-
+    
+    public boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L121">        DatosUsuarios usuarios = new DatosUsuarios();</span>
+<span class="nc" id="L122">        Usuario u = new Cliente();</span>
+<span class="nc" id="L123">        u.setEmail(correo);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if(usuarios.cantidadEmail(u.getEmail()) == 0)</span>
+<span class="nc" id="L125">            return false;</span>
+        else 
+<span class="nc" id="L127">            return true;</span>
+    }
+    
     @Override
     public boolean correoValido(String correo) {
-<span class="nc" id="L121">        Cliente c = new Cliente();</span>
-<span class="nc" id="L122">        c.setEmail(correo);</span>
-<span class="nc" id="L123">        return c.correoValido();</span>
+<span class="nc" id="L132">        Cliente c = new Cliente();</span>
+<span class="nc" id="L133">        c.setEmail(correo);</span>
+<span class="nc" id="L134">        return c.correoValido();</span>
     }
 
     @Override
     public boolean copiarPerfil(String nickname, String rutaImagen) throws IOException {
-<span class="nc" id="L128">        Cliente c = new Cliente();</span>
-<span class="nc" id="L129">        c.setNickname(nickname);</span>
-<span class="nc" id="L130">        c.setImagen(rutaImagen);</span>
+<span class="nc" id="L139">        Cliente c = new Cliente();</span>
+<span class="nc" id="L140">        c.setNickname(nickname);</span>
+<span class="nc" id="L141">        c.setImagen(rutaImagen);</span>
 
         try {
-<span class="nc" id="L133">            c.copiarPerfil();</span>
-<span class="nc" id="L134">            return true;</span>
-<span class="nc" id="L135">        } catch (IOException ex) {</span>
-<span class="nc" id="L136">            return false;</span>
+<span class="nc" id="L144">            c.copiarPerfil();</span>
+<span class="nc" id="L145">            return true;</span>
+<span class="nc" id="L146">        } catch (IOException ex) {</span>
+<span class="nc" id="L147">            return false;</span>
         }
 
     }
@@ -141,41 +152,60 @@ public class ControladorClientes implements IControladorClientes {
     @Override
     public boolean existeNickname(String c) throws SQLException, ClassNotFoundException {
 
-<span class="nc" id="L144">        DatosUsuarios cliente = new DatosUsuarios();</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (cliente.selectCountUsuarios(c) == 0) {</span>
-<span class="nc" id="L146">            return false;</span>
+<span class="nc" id="L155">        DatosUsuarios cliente = new DatosUsuarios();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        if (cliente.selectCountUsuarios(c) == 0) {</span>
+<span class="nc" id="L157">            return false;</span>
         } else {
-<span class="nc" id="L148">            return true;</span>
+<span class="nc" id="L159">            return true;</span>
         }
     }
 
     @Override
     public void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException {
-<span class="nc" id="L154">        DatosClientes cliente = new DatosClientes();</span>
-<span class="nc" id="L155">        Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap&lt;Integer, Reserva&gt;());</span>
-<span class="nc" id="L156">        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (rutaImagen != &quot;perfiles/perfil.PNG&quot;) {</span>
-<span class="nc" id="L158">            cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());</span>
+<span class="nc" id="L165">        DatosClientes cliente = new DatosClientes();</span>
+<span class="nc" id="L166">        Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap&lt;Integer, Reserva&gt;());</span>
+<span class="nc" id="L167">        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (rutaImagen != &quot;perfiles/perfil.PNG&quot;) {</span>
+<span class="nc" id="L169">            cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());</span>
         }
-<span class="nc" id="L160">    }</span>
+<span class="nc" id="L171">    }</span>
 
     public ArrayList verInfoReserva() throws SQLException, ClassNotFoundException {
         //solo obtiene los numeros de la reserva
-<span class="nc" id="L164">        DatosClientes dataux = new DatosClientes();</span>
-<span class="nc" id="L165">        return dataux.verInfoReserva();</span>
+<span class="nc" id="L175">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L176">        return dataux.verInfoReserva();</span>
     }
-  
+    public ArrayList datosReserva ()throws SQLException, ClassNotFoundException {
+<span class="nc" id="L179">        DatosClientes dataux =new DatosClientes();</span>
+<span class="nc" id="L180">        ArrayList&lt;Reserva&gt; reservas=dataux.datosReserva();</span>
+<span class="nc" id="L181">        ArrayList&lt;DataReserva&gt; dtreservas=new ArrayList();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        for(int i=0;i&lt;reservas.size();i++){</span>
+<span class="nc" id="L183">            DataReserva dtres= new DataReserva();</span>
+<span class="nc" id="L184">            dtres.setNumero(reservas.get(i).getNumero());</span>
+<span class="nc" id="L185">            dtres.setEstado(reservas.get(i).getEstado().toString());</span>
+<span class="nc" id="L186">            dtreservas.add(dtres);</span>
+        }
+<span class="nc" id="L188">        return dtreservas;</span>
+    }
+     public void updateEstadoReserva(int numero,String estado) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L191">         DatosClientes dataux =new DatosClientes();</span>
+<span class="nc" id="L192">         Reserva res=new Reserva();</span>
+<span class="nc" id="L193">         res.setNumero(numero);</span>
+<span class="nc" id="L194">         res.setEstado(estado);</span>
+<span class="nc" id="L195">         dataux.updateEstadoReserva(res.getNumero(),res.getEstado().toString());</span>
+         
+<span class="nc" id="L197">     }</span>
     public DataReserva getReserva(String numeroRes){
-<span class="nc" id="L169">        DataReserva dtAux =new  DataReserva ();</span>
-<span class="nc" id="L170">        DatosClientes datCli = new DatosClientes();</span>
-<span class="nc" id="L171">        ArrayList &lt;DataCantidadReservasPromociones&gt; listProm= new ArrayList();</span>
-<span class="nc" id="L172">        ArrayList &lt;DataCantidadReservasServicios&gt; listServ= new ArrayList();</span>
-<span class="nc" id="L173">        Reserva res= datCli.getReserva(numeroRes);</span>
-<span class="nc" id="L174">     dtAux.setNumero(res.getNumero());</span>
-<span class="nc" id="L175">     dtAux.setCliente(res.getCliente().getNickname());</span>
-<span class="nc" id="L176">     dtAux.setPrecio(res.getPrecio());</span>
-<span class="nc" id="L177">     dtAux.setFecha(res.getFecha());</span>
-<span class="nc" id="L178">     dtAux.setEstado(String.valueOf(res.getEstado()));</span>
+<span class="nc" id="L199">        DataReserva dtAux =new  DataReserva ();</span>
+<span class="nc" id="L200">        DatosClientes datCli = new DatosClientes();</span>
+<span class="nc" id="L201">        ArrayList &lt;DataCantidadReservasPromociones&gt; listProm= new ArrayList();</span>
+<span class="nc" id="L202">        ArrayList &lt;DataCantidadReservasServicios&gt; listServ= new ArrayList();</span>
+<span class="nc" id="L203">        Reserva res= datCli.getReserva(numeroRes);</span>
+<span class="nc" id="L204">        dtAux.setNumero(res.getNumero());</span>
+<span class="nc" id="L205">        dtAux.setCliente(res.getCliente().getNickname());</span>
+<span class="nc" id="L206">        dtAux.setPrecio(res.getPrecio());</span>
+<span class="nc" id="L207">        dtAux.setFecha(res.getFecha());</span>
+<span class="nc" id="L208">        dtAux.setEstado(String.valueOf(res.getEstado()));</span>
      /*if(res.getReservacantPromociones().size() &gt; 0){
          for(int i=0;i&lt;res.getReservacantPromociones().size();i++){
             cantidadReservasPromociones promAux= res.getReservacantPromociones().get(i);
@@ -192,81 +222,140 @@ public class ControladorClientes implements IControladorClientes {
          }
      }*/
           
-<span class="nc" id="L195">     return dtAux;</span>
+<span class="nc" id="L225">     return dtAux;</span>
     //return new DataReserva();
         
     }
     @Override
       public ArrayList getReservasPromo(String numeroProm){
-<span class="nc" id="L201">        DatosClientes dataux = new DatosClientes();</span>
-<span class="nc" id="L202">        ArrayList&lt;cantidadReservasPromociones&gt; listProm = new ArrayList();</span>
-<span class="nc" id="L203">        listProm = dataux.getReservasPromo(numeroProm);</span>
+<span class="nc" id="L231">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L232">        ArrayList&lt;cantidadReservasPromociones&gt; listProm = new ArrayList();</span>
+<span class="nc" id="L233">        listProm = dataux.getReservasPromo(numeroProm);</span>
         
-<span class="nc" id="L205">        ArrayList&lt;DataCantidadReservasPromociones&gt; dataListProm = new ArrayList&lt;DataCantidadReservasPromociones&gt;();</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">        for(int i=0;i&lt;listProm.size();i++){</span>
-<span class="nc" id="L207">            cantidadReservasPromociones promAux= (cantidadReservasPromociones) listProm.get(i);</span>
-<span class="nc" id="L208">            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());</span>
-<span class="nc" id="L209">            dataListProm.add(dataProm);</span>
+<span class="nc" id="L235">        ArrayList&lt;DataCantidadReservasPromociones&gt; dataListProm = new ArrayList&lt;DataCantidadReservasPromociones&gt;();</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        for(int i=0;i&lt;listProm.size();i++){</span>
+<span class="nc" id="L237">            cantidadReservasPromociones promAux= (cantidadReservasPromociones) listProm.get(i);</span>
+<span class="nc" id="L238">            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(), promAux.getTotalLinea(), promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L239">            dataListProm.add(dataProm);</span>
         }
         
-<span class="nc" id="L212">        return dataListProm;</span>
+<span class="nc" id="L242">        return dataListProm;</span>
         //return new ArrayList();
       }
       
     @Override
        public ArrayList getReservasServ(String numeroServ){
-<span class="nc" id="L218">          DatosClientes dataux = new DatosClientes();</span>
-<span class="nc" id="L219">          ArrayList &lt;cantidadReservasServicios&gt; listServ= new ArrayList();</span>
-<span class="nc" id="L220">          listServ = dataux.getServiciosPromo(numeroServ);</span>
+<span class="nc" id="L248">          DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L249">          ArrayList &lt;cantidadReservasServicios&gt; listServ= new ArrayList();</span>
+<span class="nc" id="L250">          listServ = dataux.getServiciosPromo(numeroServ);</span>
           
-<span class="nc" id="L222">          ArrayList&lt;DataCantidadReservasServicios&gt; dataListServ = new ArrayList&lt;DataCantidadReservasServicios&gt;();</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">           for(int i=0;i&lt;listServ.size();i++){</span>
-<span class="nc" id="L224">         cantidadReservasServicios promServ = listServ.get(i);</span>
-<span class="nc" id="L225">         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(), promServ.getTotalLinea(), promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());</span>
-<span class="nc" id="L226">         dataListServ.add(promServi);</span>
+<span class="nc" id="L252">          ArrayList&lt;DataCantidadReservasServicios&gt; dataListServ = new ArrayList&lt;DataCantidadReservasServicios&gt;();</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">           for(int i=0;i&lt;listServ.size();i++){</span>
+<span class="nc" id="L254">         cantidadReservasServicios promServ = listServ.get(i);</span>
+<span class="nc" id="L255">         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(), promServ.getTotalLinea(), promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());</span>
+<span class="nc" id="L256">         dataListServ.add(promServi);</span>
          
      }     
-<span class="nc" id="L229">           return dataListServ;</span>
+<span class="nc" id="L259">           return dataListServ;</span>
       }
       
-    public ArrayList verInfoCliente()throws SQLException, ClassNotFoundException {
-<span class="nc" id="L233">        DataCliente clientes = new DataCliente();</span>
-<span class="nc" id="L234">        DatosClientes dataux = new DatosClientes();</span>
-<span class="nc" id="L235">        ArrayList&lt;String&gt; nickCli = new ArrayList();</span>
-<span class="nc" id="L236">        ResultSet rs = null;</span>
+    public ArrayList&lt;DataCliente&gt; verInfoCliente()throws SQLException, ClassNotFoundException {
+        
+<span class="nc" id="L264">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L265">        ArrayList&lt;Cliente&gt; listCli =dataux.verInfoCliente();</span>
+<span class="nc" id="L266">        ArrayList&lt;DataCliente&gt; nickCli = new ArrayList();</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        for(int i=0;i&lt;listCli.size();i++){</span>
+<span class="nc" id="L268">            DataCliente clientes = new DataCliente();</span>
+<span class="nc" id="L269">            clientes.setNickname(listCli.get(i).getNickname());</span>
+<span class="nc" id="L270">            nickCli.add(clientes);</span>
+        }
       
 
-<span class="nc" id="L239">        return dataux.verInfoReserva();</span>
+<span class="nc" id="L274">        return nickCli;</span>
     }
     
-    public ArrayList&lt;DataCliente&gt; getClientes()throws SQLException, ClassNotFoundException{
-<span class="nc" id="L243">        ArrayList&lt;DataCliente&gt; listResult = new ArrayList ();</span>
-<span class="nc" id="L244">        DatosClientes datCli = new DatosClientes();</span>
-<span class="nc" id="L245">        DatosUsuarios datosU =new DatosUsuarios();</span>
-        
-<span class="nc" id="L247">        ArrayList&lt;Cliente&gt; listClientes =datCli.selectAllObjetosClientes();</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">        for(int i=0;i&lt;listClientes.size();i++){</span>
-<span class="nc" id="L249">            Imagen imagenPerf = datosU.selectImagenPerfil(listClientes.get(i));</span>
-<span class="nc" id="L250">            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath()));</span>
+    public ArrayList&lt;DataCliente&gt; verInfoClienteBusqueda(String nickname) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L278">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L279">        Cliente c = new Cliente();</span>
+<span class="nc" id="L280">        c.setNickname(nickname);</span>
+<span class="nc" id="L281">        ArrayList&lt;Cliente&gt; listCli =dataux.verInfoClienteBusqueda(c.getNickname());</span>
+<span class="nc" id="L282">        ArrayList&lt;DataCliente&gt; nickCli = new ArrayList();</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">        for(int i=0;i&lt;listCli.size();i++){</span>
+<span class="nc" id="L284">            DataCliente clientes = new DataCliente();</span>
+<span class="nc" id="L285">            clientes.setNickname(listCli.get(i).getNickname());</span>
+<span class="nc" id="L286">            nickCli.add(clientes);</span>
         }
-<span class="nc" id="L252">        return listResult;</span>
+      
+
+<span class="nc" id="L290">        return nickCli;</span>
+    }
+    
+    public DataCliente seleccionarCliente(String nickname) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L294">        DatosClientes dataux = new DatosClientes();</span>
+<span class="nc" id="L295">        Cliente c = new Cliente();</span>
+<span class="nc" id="L296">        DataCliente dtc = new DataCliente();</span>
+<span class="nc" id="L297">        c.setNickname(nickname);</span>
+<span class="nc" id="L298">        Cliente cli=dataux.seleccionarCliente(c.getNickname());</span>
+<span class="nc" id="L299">        dtc.setNickname(cli.getNickname());</span>
+<span class="nc" id="L300">        dtc.setNombre(cli.getNombre());</span>
+<span class="nc" id="L301">        dtc.setApellido(cli.getApellido());</span>
+<span class="nc" id="L302">        dtc.setEmail(cli.getEmail());</span>
+<span class="nc" id="L303">        dtc.setFechaNac(cli.getFechaNac());</span>
+<span class="nc" id="L304">        dtc.setRutaImagen(cli.getImagenUsuario().getPath());</span>
+        /*HashMap&lt;Integer,DataReserva&gt; listRes=new HashMap&lt;Integer,DataReserva&gt;();
+        Iterator it = cli.getReservasCliente().entrySet().iterator();
+        
+        while(it.hasNext()){
+            Map.Entry res = (Map.Entry) it.next();
+            //Cliente cliente = (Cliente) c.getValue();
+            DataReserva r = new DataReserva();
+            r.setNumero((Integer) res.getKey());
+            listRes.put(r.getNumero(), r);
+        }
+        dtc.setReservas(listRes);*/
+<span class="nc" id="L316">        return dtc;</span>
+    }
+    public ArrayList&lt;DataReserva&gt; reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
+<span class="nc" id="L319">        DatosClientes dataux= new DatosClientes();</span>
+<span class="nc" id="L320">        Cliente c= new Cliente ();</span>
+<span class="nc" id="L321">        c.setNickname(nickname);</span>
+<span class="nc" id="L322">        ArrayList&lt;Reserva&gt; datosRes =dataux.reservasCliente(c.getNickname());</span>
+<span class="nc" id="L323">         ArrayList&lt;DataReserva&gt; dtRes =new ArrayList&lt;DataReserva&gt;();</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">        for(int i =0;i&lt;datosRes.size();i++){</span>
+<span class="nc" id="L325">            DataReserva dtReserva =new DataReserva();</span>
+<span class="nc" id="L326">            dtReserva.setNumero(datosRes.get(i).getNumero());</span>
+<span class="nc" id="L327">           dtRes.add(dtReserva);</span>
+        }
+<span class="nc" id="L329">        return dtRes;</span>
+    }
+    public ArrayList&lt;DataCliente&gt; getClientes()throws SQLException, ClassNotFoundException{
+<span class="nc" id="L332">        ArrayList&lt;DataCliente&gt; listResult = new ArrayList ();</span>
+<span class="nc" id="L333">        DatosClientes datCli = new DatosClientes();</span>
+<span class="nc" id="L334">        DatosUsuarios datosU =new DatosUsuarios();</span>
+        
+<span class="nc" id="L336">        ArrayList&lt;Cliente&gt; listClientes =datCli.selectAllObjetosClientes();</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">        for(int i=0;i&lt;listClientes.size();i++){</span>
+<span class="nc" id="L338">            Imagen imagenPerf = datosU.selectImagenPerfil(listClientes.get(i));</span>
+<span class="nc" id="L339">            listResult.add(new DataCliente(listClientes.get(i).getNickname(),listClientes.get(i).getNombre(),listClientes.get(i).getApellido(),listClientes.get(i).getEmail(),listClientes.get(i).getFechaNac(),imagenPerf.getPath(), new HashMap()));</span>
+        }
+<span class="nc" id="L341">        return listResult;</span>
     }
 
     @Override
     public void deleteAllClientes() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L257">        DatosClientes dc = new DatosClientes();</span>
-<span class="nc" id="L258">        dc.deleteAllClientes(&quot;delete from imagenesusuarios where ruta &lt;&gt; \&quot;\&quot;;\n&quot; +</span>
+<span class="nc" id="L346">        DatosClientes dc = new DatosClientes();</span>
+<span class="nc" id="L347">        dc.deleteAllClientes(&quot;delete from imagenesusuarios where ruta &lt;&gt; \&quot;\&quot;;\n&quot; +</span>
                         &quot;delete from proveedores where nombreEmpresa &lt;&gt; \&quot;\&quot;;\n&quot; +
                         &quot;delete from reservas where numero &gt; 0;\n&quot; +
                         &quot;delete from usuarios where nickname &lt;&gt; \&quot;\&quot;;\n&quot; +
                         &quot;\n&quot; +
                         &quot;ALTER TABLE reservas AUTO_INCREMENT=1;&quot;);
-<span class="nc" id="L264">    }</span>
+<span class="nc" id="L353">    }</span>
 
     @Override
     public void insertDatosClientesDePrueba() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L268">        DatosClientes dc = new DatosClientes();</span>
-<span class="nc" id="L269">        dc.insertDatosClientesDePrueba(&quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 1100, 'FACTURADA', 'oWood');\n&quot; +</span>
+<span class="nc" id="L357">        DatosClientes dc = new DatosClientes();</span>
+<span class="nc" id="L358">        dc.insertDatosClientesDePrueba(&quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 1100, 'FACTURADA', 'oWood');\n&quot; +</span>
                         &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-1-1', 3050, 'CANCELADA', 'eWatson');\n&quot; +
                         &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-3-5', 135, 'PAGADA', 'BruceS');\n&quot; +
                         &quot;insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-5-8', 600, 'PAGADA', 'JeffW');\n&quot; +
@@ -283,7 +372,107 @@ public class ControladorClientes implements IControladorClientes {
                         &quot;insert into cantidadreservasservicios values(5, 'Air-France-FC', 'AirFrance', 2, 200, '2016-8-7', '2016-8-10', 100);\n&quot; +
                         &quot;insert into cantidadreservasservicios values(6, 'Casa para p4 BsAs', 'Segundo Hogar', 1, 80, '2016-8-14', '2016-8-21', 80);\n&quot; +
                         &quot;insert into cantidadreservasservicios values(7, 'Euro-Vuelo-LC', 'Iberia', 2, 1700, '2016-8-7', '2016-8-7', 850);&quot;);
-<span class="nc" id="L286">    }</span>
+<span class="nc" id="L375">    }</span>
+    
+    @Override
+    //public void realizarReserva(DataReserva dataReserva) throws SQLException, ClassNotFoundException{
+    public int realizarReserva(LocalDate Fecha, int precio, String estado, String nickCliente) throws SQLException, ClassNotFoundException{
+    
+<span class="nc" id="L381">        DatosReservas res = new DatosReservas();</span>
+<span class="nc" id="L382">        int numRes = 0;</span>
+<span class="nc" id="L383">        Reserva reserva = new Reserva();</span>
+<span class="nc" id="L384">        Cliente cliente = new Cliente();</span>
+<span class="nc" id="L385">        cliente.setNickname(nickCliente);</span>
+<span class="nc" id="L386">        reserva.setCliente(cliente);</span>
+<span class="nc" id="L387">        reserva.setEstado(estado);</span>
+<span class="nc" id="L388">        reserva.setFecha(Fecha);</span>
+<span class="nc" id="L389">        reserva.setPrecio(precio);</span>
+<span class="nc" id="L390">        numRes = res.insertarReserva(reserva.getFecha().toString(), reserva.getPrecio(), reserva.getEstado().toString(), reserva.getCliente().getNickname());</span>
+        
+<span class="nc" id="L392">        return numRes;</span>
+        
+        
+    }
+    @Override
+    public void datosAsociadosReserva(int numReserva, TableModel modelo)throws SQLException, ClassNotFoundException{
+        //System.out.println(numReserva + &quot;dentro&quot;);
+<span class="nc" id="L399">        DatosReservas res = new DatosReservas();</span>
+     //Tipo&quot;, &quot;Nombre&quot;,&quot;proveedor&quot; ,  &quot;Cantidad&quot;, &quot;Precio Unitario&quot;,&quot;Total&quot;, &quot;Inicio&quot;, &quot;Fin&quot;
+
+<span class="nc bnc" id="L402" title="All 2 branches missed.">        for(int i = 0; i&lt; modelo.getRowCount(); i++){</span>
+<span class="nc bnc" id="L403" title="All 2 branches missed.">            if(modelo.getValueAt(i, 0) == &quot;SERVICIO&quot;){</span>
+                    
+<span class="nc" id="L405">                    Servicio s = new Servicio();</span>
+<span class="nc" id="L406">                    s.setNombreServicio(modelo.getValueAt(i, 1).toString());</span>
+<span class="nc" id="L407">                    Proveedor p = new Proveedor();</span>
+<span class="nc" id="L408">                    p.setNombreEmpresa(modelo.getValueAt(i, 2).toString());</span>
+<span class="nc" id="L409">                    String fechaInicio = modelo.getValueAt(i, 6).toString();</span>
+<span class="nc" id="L410">                    String[] datosFI = fechaInicio.split(&quot;/&quot;);</span>
+<span class="nc" id="L411">                    LocalDate fInicio = LocalDate.of(Integer.parseInt(datosFI[2]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[0]));</span>
+<span class="nc" id="L412">                    String fechaFin = modelo.getValueAt(i, 7).toString();</span>
+<span class="nc" id="L413">                    String[] datosFF = fechaFin.split(&quot;/&quot;);</span>
+<span class="nc" id="L414">                    LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[0]));</span>
+<span class="nc" id="L415">                    cantidadReservasServicios crs = new cantidadReservasServicios(Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), fInicio, fFin, p, s);</span>
+<span class="nc" id="L416">                    int precioUnitario = crs.getTotalLinea() / crs.getCantidad();</span>
+<span class="nc" id="L417">                    res.insertarServicioReserva(numReserva, crs.getServicio().getNombreServicio(), crs.getProveedor().getNombreEmpresa(), crs.getCantidad(), crs.getTotalLinea(), crs.getFechaInicio().toString(), crs.getFechaFin().toString(), precioUnitario);</span>
+                    //res.insertarServicioReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), , , , modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
+<span class="nc" id="L419">            }</span>
+            else{   
+<span class="nc" id="L421">                    Promocion prom = new Promocion();</span>
+<span class="nc" id="L422">                    prom.setNombre(modelo.getValueAt(i, 1).toString());</span>
+<span class="nc" id="L423">                    Proveedor p = new Proveedor();</span>
+<span class="nc" id="L424">                    p.setNombreEmpresa(modelo.getValueAt(i, 2).toString());</span>
+<span class="nc" id="L425">                    String fechaInicio = modelo.getValueAt(i, 6).toString();</span>
+<span class="nc" id="L426">                    String[] datosFI = fechaInicio.split(&quot;/&quot;);</span>
+<span class="nc" id="L427">                    LocalDate fInicio = LocalDate.of(Integer.parseInt(datosFI[2]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[0]));</span>
+<span class="nc" id="L428">                    String fechaFin = modelo.getValueAt(i, 7).toString();</span>
+<span class="nc" id="L429">                    String[] datosFF = fechaFin.split(&quot;/&quot;);</span>
+<span class="nc" id="L430">                    LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[0]));</span>
+<span class="nc" id="L431">                    cantidadReservasPromociones crp = new cantidadReservasPromociones(Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), fInicio, fFin, prom, p);</span>
+<span class="nc" id="L432">                    int precioUnitario = crp.getTotalLinea() / crp.getCantidad();</span>
+<span class="nc" id="L433">                    res.insertarPromocionReserva(numReserva, crp.getPromocion().getNombre(), crp.getProveedor().getNombreEmpresa(), crp.getCantidad(), crp.getTotalLinea(), crp.getFechaInicio().toString(), crp.getFechaFin().toString(), precioUnitario);</span>
+                   //res.insertarPromocionReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
+           }
+        }
+        
+<span class="nc" id="L438">    }</span>
+
+    @Override
+    public ArrayList&lt;DataReserva&gt; getAllReservas() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L442">        ArrayList&lt;DataReserva&gt; AlldataReservas = new ArrayList();</span>
+        
+<span class="nc" id="L444">        ArrayList&lt;Reserva&gt; AllReservas = new ArrayList();</span>
+<span class="nc" id="L445">        DatosReservas datosreservas = new DatosReservas();</span>
+<span class="nc" id="L446">        AllReservas = datosreservas.getAllReservas();</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">        for(int i = 0; i &lt; AllReservas.size(); i++){</span>
+<span class="nc" id="L448">            DataReserva dataReserva = new DataReserva();</span>
+<span class="nc" id="L449">            dataReserva.setNumero(AllReservas.get(i).getNumero());</span>
+<span class="nc" id="L450">            dataReserva.setFecha(AllReservas.get(i).getFecha());</span>
+<span class="nc" id="L451">            dataReserva.setPrecio(AllReservas.get(i).getPrecio());</span>
+<span class="nc" id="L452">            dataReserva.setEstado(AllReservas.get(i).getEstado().toString());</span>
+<span class="nc" id="L453">            dataReserva.setCliente(AllReservas.get(i).getCliente().getNickname());</span>
+<span class="nc" id="L454">            AlldataReservas.add(dataReserva);</span>
+        }
+<span class="nc" id="L456">        return AlldataReservas;</span>
+    }
+    
+    
+    @Override
+    public void deleteReserva(int numReserva) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L462">        DatosReservas datosreservas = new DatosReservas();</span>
+<span class="nc" id="L463">        datosreservas.deleteCantResPromo(numReserva);</span>
+<span class="nc" id="L464">        datosreservas.deleteCantResServ(numReserva);</span>
+<span class="nc" id="L465">        datosreservas.deleteReservas(numReserva);</span>
+<span class="nc" id="L466">    }</span>
+    
+    public int getNumeroReserva(LocalDate fecha, int precio, String nickname) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L469">        DatosReservas dr = new DatosReservas();</span>
+<span class="nc" id="L470">        Cliente c = new Cliente();</span>
+<span class="nc" id="L471">        c.setNickname(nickname);</span>
+<span class="nc" id="L472">        Reserva r = new Reserva(0, fecha, precio, c, new ArrayList(), new ArrayList(), Estado.REGISTRADA);</span>
+<span class="nc" id="L473">        return dr.getNumeroReserva(r.getFecha().toString(), r.getPrecio(), r.getCliente().getNickname());</span>
+    }
+    
     
     
     

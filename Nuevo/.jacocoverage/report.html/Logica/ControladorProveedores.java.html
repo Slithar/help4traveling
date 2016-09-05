@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorProveedores.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorProveedores.java</span></div><h1>ControladorProveedores.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControladorProveedores.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling_Promo_&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Logica</a> &gt; <span class="el_source">ControladorProveedores.java</span></div><h1>ControladorProveedores.java</h1><pre class="source lang-java linenums">/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -102,82 +102,99 @@ public class ControladorProveedores implements IControladorProveedores{
             
 <span class="nc" id="L103">        }</span>
 <span class="nc" id="L104">    }</span>
-
+    
+    @Override
+    public boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L108">        DatosUsuarios usuarios = new DatosUsuarios();</span>
+<span class="nc" id="L109">        Usuario u = new Proveedor();</span>
+<span class="nc" id="L110">        u.setEmail(correo);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if(usuarios.cantidadEmail(u.getEmail()) == 0)</span>
+<span class="nc" id="L112">            return false;</span>
+        else 
+<span class="nc" id="L114">            return true;</span>
+    }
+    
     @Override
     public int getCantProveedores() {
-<span class="nc" id="L108">        return ListaProveedores.size();</span>
+<span class="nc" id="L119">        return ListaProveedores.size();</span>
     }
     
     @Override
     public void actualizarCiudades() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L113">        DatosCiudades ciudades = new DatosCiudades();</span>
-<span class="nc" id="L114">        ListaCiudades = new HashMap&lt;String, Ciudad&gt;();</span>
+<span class="nc" id="L124">        DatosCiudades ciudades = new DatosCiudades();</span>
+<span class="nc" id="L125">        ListaCiudades = new HashMap&lt;String, Ciudad&gt;();</span>
         
-<span class="nc" id="L116">        ArrayList&lt;Ciudad&gt; ciudadesResultado = ciudades.selectAllCiudades();</span>
+<span class="nc" id="L127">        ArrayList&lt;Ciudad&gt; ciudadesResultado = ciudades.selectAllCiudades();</span>
         
-<span class="nc bnc" id="L118" title="All 2 branches missed.">        for(int i = 0; i &lt; ciudadesResultado.size(); i++){</span>
-<span class="nc" id="L119">            ListaCiudades.put(ciudadesResultado.get(i).getNombre(), ciudadesResultado.get(i));</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for(int i = 0; i &lt; ciudadesResultado.size(); i++){</span>
+<span class="nc" id="L130">            ListaCiudades.put(ciudadesResultado.get(i).getNombre(), ciudadesResultado.get(i));</span>
         }
-<span class="nc" id="L121">    }</span>
+<span class="nc" id="L132">    }</span>
 
     @Override
     public int getCantCiudades() {
-<span class="nc" id="L125">        return ListaCiudades.size();</span>
+<span class="nc" id="L136">        return ListaCiudades.size();</span>
     }
     
     @Override
     public boolean existeNickname(String nickname) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L131">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L132">        p.setNickname(nickname);</span>
+<span class="nc" id="L142">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L143">        p.setNickname(nickname);</span>
         
-<span class="nc" id="L134">        DatosUsuarios proveedor = new DatosUsuarios();</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">        if(proveedor.selectCountUsuarios(p.getNickname()) == 0)</span>
-<span class="nc" id="L136">            return false;</span>
+<span class="nc" id="L145">        DatosUsuarios proveedor = new DatosUsuarios();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if(proveedor.selectCountUsuarios(p.getNickname()) == 0)</span>
+<span class="nc" id="L147">            return false;</span>
         else
-<span class="nc" id="L138">            return true;              </span>
+<span class="nc" id="L149">            return true;              </span>
     }
     
     @Override
     public boolean correoValido(String correo){
-<span class="nc" id="L143">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L144">        p.setEmail(correo);</span>
+<span class="nc" id="L154">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L155">        p.setEmail(correo);</span>
         
-<span class="nc" id="L146">        return p.correoValido();</span>
+<span class="nc" id="L157">        return p.correoValido();</span>
+    }
+    
+    public boolean sitiWebValido(String sitioWeb) {
+<span class="nc" id="L161">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L162">        p.setLink(sitioWeb);</span>
+<span class="nc" id="L163">        return p.sitioWebValido();</span>
     }
     
     @Override
     public boolean existeNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L151">        Proveedor p = new Proveedor();        </span>
-<span class="nc" id="L152">        p.setNombreEmpresa(nombreEmpresa);</span>
+<span class="nc" id="L168">        Proveedor p = new Proveedor();        </span>
+<span class="nc" id="L169">        p.setNombreEmpresa(nombreEmpresa);</span>
         
-<span class="nc" id="L154">        DatosProveedores proveedor = new DatosProveedores();</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">        if(proveedor.selectCountNombreEmpresa(p.getNombreEmpresa()) == 0)</span>
-<span class="nc" id="L156">            return false;</span>
+<span class="nc" id="L171">        DatosProveedores proveedor = new DatosProveedores();</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if(proveedor.selectCountNombreEmpresa(p.getNombreEmpresa()) == 0)</span>
+<span class="nc" id="L173">            return false;</span>
         else
-<span class="nc" id="L158">            return true;</span>
+<span class="nc" id="L175">            return true;</span>
     }
     
     
     @Override
     public boolean copiarPerfil(String nickname, ArrayList&lt;String&gt; rutaImagen) throws IOException{
-<span class="nc" id="L164">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L165">        p.setNickname(nickname);</span>
+<span class="nc" id="L181">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L182">        p.setNickname(nickname);</span>
         
-<span class="nc" id="L167">        ArrayList&lt;Imagen&gt; imagenes = new ArrayList&lt;Imagen&gt;();</span>
+<span class="nc" id="L184">        ArrayList&lt;Imagen&gt; imagenes = new ArrayList&lt;Imagen&gt;();</span>
         
-<span class="nc bnc" id="L169" title="All 2 branches missed.">        for(int i = 0; i &lt; rutaImagen.size(); i++){</span>
-<span class="nc" id="L170">            imagenes.add(new Imagen(rutaImagen.get(i), p));</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">        for(int i = 0; i &lt; rutaImagen.size(); i++){</span>
+<span class="nc" id="L187">            imagenes.add(new Imagen(rutaImagen.get(i), p));</span>
             //String ruta = rutaImagen.get(i);
-<span class="nc" id="L172">            p.setImagenesUsuario(imagenes);</span>
+<span class="nc" id="L189">            p.setImagenesUsuario(imagenes);</span>
         }
         
         try{
-<span class="nc" id="L176">            p.copiarPerfil();</span>
-<span class="nc" id="L177">            return true;</span>
+<span class="nc" id="L193">            p.copiarPerfil();</span>
+<span class="nc" id="L194">            return true;</span>
         }
-<span class="nc" id="L179">        catch(IOException ex){</span>
-<span class="nc" id="L180">            return false;</span>
+<span class="nc" id="L196">        catch(IOException ex){</span>
+<span class="nc" id="L197">            return false;</span>
         }       
     }
     
@@ -191,20 +208,20 @@ public class ControladorProveedores implements IControladorProveedores{
     @Override
     public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList&lt;String&gt; rutaImagen, String empresa, String sitioWeb, HashMap&lt;String, Servicio&gt; servicios) throws SQLException, ClassNotFoundException{
         //System.out.println(&quot;1&quot;);
-<span class="nc" id="L194">        Proveedor p = new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb, servicios);</span>
+<span class="nc" id="L211">        Proveedor p = new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb, servicios);</span>
         //System.out.println(&quot;2&quot;);
-<span class="nc" id="L196">        DatosProveedores proveedor = new DatosProveedores();</span>
+<span class="nc" id="L213">        DatosProveedores proveedor = new DatosProveedores();</span>
         //System.out.println(&quot;3&quot;);
-<span class="nc" id="L198">        proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString());</span>
+<span class="nc" id="L215">        proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString());</span>
         //System.out.println(&quot;4&quot;);
-<span class="nc" id="L200">        proveedor.agregarDatosProveedor(p.getNickname(), p.getNombreEmpresa(), p.getLink());</span>
+<span class="nc" id="L217">        proveedor.agregarDatosProveedor(p.getNickname(), p.getNombreEmpresa(), p.getLink());</span>
         //System.out.println(&quot;5&quot;);
-<span class="nc bnc" id="L202" title="All 2 branches missed.">        if(rutaImagen.size() &gt; 0){</span>
-<span class="nc" id="L203">            ArrayList&lt;Imagen&gt; imagenes = p.getImagenesUsuario();</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        if(rutaImagen.size() &gt; 0){</span>
+<span class="nc" id="L220">            ArrayList&lt;Imagen&gt; imagenes = p.getImagenesUsuario();</span>
             //System.out.println(&quot;Tamaño: &quot; + imagenes.size());
-<span class="nc bnc" id="L205" title="All 2 branches missed.">            for(int i = 0; i &lt; imagenes.size(); i++){</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">                if(imagenes.get(i).getPath() != &quot;perfiles/perfil.PNG&quot;){</span>
-<span class="nc" id="L207">                    proveedor.agregarImagen(p.getNickname(), imagenes.get(i).getPath());</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">            for(int i = 0; i &lt; imagenes.size(); i++){</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                if(imagenes.get(i).getPath() != &quot;perfiles/perfil.PNG&quot;){</span>
+<span class="nc" id="L224">                    proveedor.agregarImagen(p.getNickname(), imagenes.get(i).getPath());</span>
                 }
             } 
         }
@@ -212,102 +229,102 @@ public class ControladorProveedores implements IControladorProveedores{
         
         
         //System.out.println(&quot;6&quot;);
-<span class="nc" id="L215">    }</span>
+<span class="nc" id="L232">    }</span>
     
     @Override
     public ArrayList&lt;DataCiudad&gt; getCiudades() throws SQLException, ClassNotFoundException{
-<span class="nc" id="L219">        DatosCiudades ciudades = new DatosCiudades();</span>
+<span class="nc" id="L236">        DatosCiudades ciudades = new DatosCiudades();</span>
         
-<span class="nc" id="L221">        ArrayList&lt;Ciudad&gt; arrayCiudades = ciudades.selectAllCiudades();</span>
-<span class="nc" id="L222">        ArrayList&lt;DataCiudad&gt; resultado = new ArrayList();</span>
+<span class="nc" id="L238">        ArrayList&lt;Ciudad&gt; arrayCiudades = ciudades.selectAllCiudades();</span>
+<span class="nc" id="L239">        ArrayList&lt;DataCiudad&gt; resultado = new ArrayList();</span>
         
-<span class="nc bnc" id="L224" title="All 2 branches missed.">        for(int i = 0; i &lt; arrayCiudades.size(); i++){</span>
-<span class="nc" id="L225">            resultado.add(i, new DataCiudad(arrayCiudades.get(i).getNombre(), arrayCiudades.get(i).getPais().getNombre()));</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        for(int i = 0; i &lt; arrayCiudades.size(); i++){</span>
+<span class="nc" id="L242">            resultado.add(i, new DataCiudad(arrayCiudades.get(i).getNombre(), arrayCiudades.get(i).getPais().getNombre()));</span>
         }
         
-<span class="nc" id="L228">        return resultado;</span>
+<span class="nc" id="L245">        return resultado;</span>
         
     }
     
     @Override
     public ArrayList&lt;DataProveedor&gt; getProveedores() throws SQLException, ClassNotFoundException{
-<span class="nc" id="L234">        DatosProveedores proveedores = new DatosProveedores();</span>
+<span class="nc" id="L251">        DatosProveedores proveedores = new DatosProveedores();</span>
         
-<span class="nc" id="L236">        ArrayList&lt;Proveedor&gt; arrayProveedores = proveedores.selectAllProveedores();</span>
-<span class="nc" id="L237">        ArrayList&lt;DataProveedor&gt; resultado = new ArrayList();</span>
+<span class="nc" id="L253">        ArrayList&lt;Proveedor&gt; arrayProveedores = proveedores.selectAllProveedores();</span>
+<span class="nc" id="L254">        ArrayList&lt;DataProveedor&gt; resultado = new ArrayList();</span>
         
-<span class="nc bnc" id="L239" title="All 2 branches missed.">        for(int i = 0; i &lt; arrayProveedores.size(); i++){</span>
-<span class="nc" id="L240">            String nombreEmpresa = arrayProveedores.get(i).getNombreEmpresa();</span>
-<span class="nc" id="L241">            DataProveedor dp = new DataProveedor();</span>
-<span class="nc" id="L242">            dp.setNombreEmpresa(nombreEmpresa);</span>
-<span class="nc" id="L243">            resultado.add(dp);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        for(int i = 0; i &lt; arrayProveedores.size(); i++){</span>
+<span class="nc" id="L257">            String nombreEmpresa = arrayProveedores.get(i).getNombreEmpresa();</span>
+<span class="nc" id="L258">            DataProveedor dp = new DataProveedor();</span>
+<span class="nc" id="L259">            dp.setNombreEmpresa(nombreEmpresa);</span>
+<span class="nc" id="L260">            resultado.add(dp);</span>
         }
         
-<span class="nc" id="L246">        return resultado;</span>
+<span class="nc" id="L263">        return resultado;</span>
     }
     
     @Override
     public boolean existeNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L252">        Servicio s = new Servicio();</span>
-<span class="nc" id="L253">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L254">        p.setNombreEmpresa(nombreProveedor);</span>
-<span class="nc" id="L255">        s.setNombreServicio(nombre);</span>
-<span class="nc" id="L256">        s.setProveedorServicio(p);</span>
+<span class="nc" id="L269">        Servicio s = new Servicio();</span>
+<span class="nc" id="L270">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L271">        p.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L272">        s.setNombreServicio(nombre);</span>
+<span class="nc" id="L273">        s.setProveedorServicio(p);</span>
         
-<span class="nc" id="L258">        DatosServicios servicios = new DatosServicios();</span>
+<span class="nc" id="L275">        DatosServicios servicios = new DatosServicios();</span>
         
-<span class="nc bnc" id="L260" title="All 2 branches missed.">        if(servicios.selectCountNombreServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa()) == 0)</span>
-<span class="nc" id="L261">            return false;</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        if(servicios.selectCountNombreServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa()) == 0)</span>
+<span class="nc" id="L278">            return false;</span>
         else
-<span class="nc" id="L263">            return true;</span>
+<span class="nc" id="L280">            return true;</span>
     }
     
     @Override
     public void agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList&lt;String&gt; imagenes, ArrayList&lt;String&gt; categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L269">        Proveedor prov = new Proveedor();</span>
-<span class="nc" id="L270">        prov.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L286">        Proveedor prov = new Proveedor();</span>
+<span class="nc" id="L287">        prov.setNombreEmpresa(nombreProveedor);</span>
         
-<span class="nc" id="L272">        ArrayList&lt;ImagenServicio&gt; imagenesServicio = new ArrayList&lt;ImagenServicio&gt;();</span>
-<span class="nc" id="L273">        ArrayList&lt;Categoria&gt; categoriasServicio = new ArrayList&lt;Categoria&gt;();</span>
+<span class="nc" id="L289">        ArrayList&lt;ImagenServicio&gt; imagenesServicio = new ArrayList&lt;ImagenServicio&gt;();</span>
+<span class="nc" id="L290">        ArrayList&lt;Categoria&gt; categoriasServicio = new ArrayList&lt;Categoria&gt;();</span>
         
-<span class="nc bnc" id="L275" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.size(); i++){</span>
-<span class="nc" id="L276">            imagenesServicio.add(new ImagenServicio(imagenes.get(i), new Servicio()));            </span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.size(); i++){</span>
+<span class="nc" id="L293">            imagenesServicio.add(new ImagenServicio(imagenes.get(i), new Servicio()));            </span>
         }
         
-<span class="nc bnc" id="L279" title="All 2 branches missed.">        for(int i = 0; i &lt; categorias.size(); i++){</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">        for(int i = 0; i &lt; categorias.size(); i++){</span>
             //JOptionPane.showMessageDialog(null, categorias.get(i));
-<span class="nc" id="L281">            String cat = (String) categorias.get(i);</span>
+<span class="nc" id="L298">            String cat = (String) categorias.get(i);</span>
             //int cant = contador(cat, '&gt;');
             
-<span class="nc" id="L284">            int cant = 0;</span>
+<span class="nc" id="L301">            int cant = 0;</span>
         
-<span class="nc bnc" id="L286" title="All 2 branches missed.">            for(int j = 0; j &lt; cat.length(); j++){</span>
-<span class="nc bnc" id="L287" title="All 2 branches missed.">                if(cat.charAt(j) == '&gt;')</span>
-<span class="nc" id="L288">                    cant++;</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">            for(int j = 0; j &lt; cat.length(); j++){</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">                if(cat.charAt(j) == '&gt;')</span>
+<span class="nc" id="L305">                    cant++;</span>
             }
             
-<span class="nc" id="L291">            String[] c = cat.split(&quot;&gt;&quot;);</span>
+<span class="nc" id="L308">            String[] c = cat.split(&quot;&gt;&quot;);</span>
             //categorias.add((String) cat);
             
-<span class="nc" id="L294">            categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));</span>
+<span class="nc" id="L311">            categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));</span>
         }
         
        
         
         
-<span class="nc" id="L300">        Servicio s = new Servicio(nombre, descripcion, precio, prov, imagenesServicio, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()),  new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);  </span>
+<span class="nc" id="L317">        Servicio s = new Servicio(nombre, descripcion, precio, prov, imagenesServicio, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()),  new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);  </span>
         
         
-<span class="nc" id="L303">        DatosServicios servicios = new DatosServicios();</span>
+<span class="nc" id="L320">        DatosServicios servicios = new DatosServicios();</span>
         
-<span class="nc" id="L305">        boolean hayDestino = true;</span>
+<span class="nc" id="L322">        boolean hayDestino = true;</span>
         
-<span class="nc bnc" id="L307" title="All 2 branches missed.">        if(s.getDestino().getNombre().equals(&quot;No&quot;))</span>
-<span class="nc" id="L308">            hayDestino = false;</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">        if(s.getDestino().getNombre().equals(&quot;No&quot;))</span>
+<span class="nc" id="L325">            hayDestino = false;</span>
         else
-<span class="nc" id="L310">            hayDestino = true;</span>
+<span class="nc" id="L327">            hayDestino = true;</span>
         
         //System.out.println(s.getDestino().getNombre());
         
@@ -319,94 +336,77 @@ public class ControladorProveedores implements IControladorProveedores{
         
         //JOptionPane.showMessageDialog(null, s.getProveedorServicio().getNombreEmpresa());
         
-<span class="nc" id="L322">        servicios.insertar(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), tieneDestino);</span>
+<span class="nc" id="L339">        servicios.insertar(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), tieneDestino);</span>
         
         
         
         //ArrayList&lt;Categoria&gt; categoriasServicio = s.getCategoriasServicio();
-<span class="nc" id="L327">        categoriasServicio = s.getCategoriasServicio();</span>
+<span class="nc" id="L344">        categoriasServicio = s.getCategoriasServicio();</span>
         
-<span class="nc bnc" id="L329" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasServicio.size(); i++){</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasServicio.size(); i++){</span>
             //JOptionPane.showMessageDialog(null, categoriasServicio.get(i).getNombre());
-<span class="nc" id="L331">            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre(), categoriasServicio.get(i).getRutaCategoria());</span>
+<span class="nc" id="L348">            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre(), categoriasServicio.get(i).getRutaCategoria());</span>
         }
         
         //ArrayList&lt;ImagenServicio&gt; imagenes = s.getImagenesServicio();
-<span class="nc" id="L335">        imagenesServicio = s.getImagenesServicio();</span>
+<span class="nc" id="L352">        imagenesServicio = s.getImagenesServicio();</span>
         
-<span class="nc bnc" id="L337" title="All 2 branches missed.">        for(int i = 0; i &lt;imagenesServicio.size(); i++){</span>
-<span class="nc" id="L338">            servicios.agregarImagen(imagenesServicio.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">        for(int i = 0; i &lt;imagenesServicio.size(); i++){</span>
+<span class="nc" id="L355">            servicios.agregarImagen(imagenesServicio.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
         }
         
-<span class="nc" id="L341">    }</span>
+<span class="nc" id="L358">    }</span>
     
     @Override
     public void copiarImagenServicio(String nombreActual, String nombreDestino) throws IOException{
-<span class="nc" id="L345">        ImagenServicio is = new ImagenServicio(nombreActual, new Servicio());</span>
+<span class="nc" id="L362">        ImagenServicio is = new ImagenServicio(nombreActual, new Servicio());</span>
         //try {
-<span class="nc" id="L347">        is.copiarImagen(nombreDestino);</span>
+<span class="nc" id="L364">        is.copiarImagen(nombreDestino);</span>
         //} catch (IOException ex) {
             //Logger.getLogger(ControladorProveedores.class.getName()).log(Level.SEVERE, null, ex);
             //throws ex;
         //}
-<span class="nc" id="L352">    }</span>
+<span class="nc" id="L369">    }</span>
     
     @Override
     public ArrayList&lt;DataServicio&gt; getServicios() throws SQLException, ClassNotFoundException{
-<span class="nc" id="L356">        DatosServicios servicios = new DatosServicios();</span>
+<span class="nc" id="L373">        DatosServicios servicios = new DatosServicios();</span>
         
-<span class="nc" id="L358">        ArrayList&lt;Servicio&gt; todosLosServicios = servicios.selectNombreServicios();</span>
-<span class="nc" id="L359">        ArrayList&lt;DataServicio&gt; resultado = new ArrayList&lt;DataServicio&gt;();</span>
+<span class="nc" id="L375">        ArrayList&lt;Servicio&gt; todosLosServicios = servicios.selectNombreServicios();</span>
+<span class="nc" id="L376">        ArrayList&lt;DataServicio&gt; resultado = new ArrayList&lt;DataServicio&gt;();</span>
         
-<span class="nc bnc" id="L361" title="All 2 branches missed.">        for(int i = 0; i &lt; todosLosServicios.size(); i++){</span>
-<span class="nc" id="L362">            DataServicio ds = new DataServicio();</span>
-<span class="nc" id="L363">            ds.setNombreServicio(todosLosServicios.get(i).getNombreServicio());</span>
-<span class="nc" id="L364">            ds.setNombreProveedor(todosLosServicios.get(i).getProveedorServicio().getNombreEmpresa());</span>
-<span class="nc" id="L365">            resultado.add(ds);</span>
+<span class="nc bnc" id="L378" title="All 2 branches missed.">        for(int i = 0; i &lt; todosLosServicios.size(); i++){</span>
+<span class="nc" id="L379">            DataServicio ds = new DataServicio();</span>
+<span class="nc" id="L380">            ds.setNombreServicio(todosLosServicios.get(i).getNombreServicio());</span>
+<span class="nc" id="L381">            ds.setNombreProveedor(todosLosServicios.get(i).getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L382">            resultado.add(ds);</span>
         }
         
-<span class="nc" id="L368">        return resultado;</span>
+<span class="nc" id="L385">        return resultado;</span>
     }
     
     @Override
     public DataServicio getDatosServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L373">        Servicio s = new Servicio();</span>
-<span class="nc" id="L374">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L375">        p.setNombreEmpresa(nombreProveedor);</span>
-<span class="nc" id="L376">        s.setNombreServicio(nombre);</span>
-<span class="nc" id="L377">        s.setProveedorServicio(p);</span>
+<span class="nc" id="L390">        Servicio s = new Servicio();</span>
+<span class="nc" id="L391">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L392">        p.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L393">        s.setNombreServicio(nombre);</span>
+<span class="nc" id="L394">        s.setProveedorServicio(p);</span>
         
-<span class="nc" id="L379">        DatosServicios servicios = new DatosServicios();</span>
+<span class="nc" id="L396">        DatosServicios servicios = new DatosServicios();</span>
         
-<span class="nc" id="L381">        Servicio datosServicio = servicios.selectServicioPorNombre(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
-<span class="nc" id="L382">        DataServicio ds = new DataServicio();</span>
+<span class="nc" id="L398">        Servicio datosServicio = servicios.selectServicioPorNombre(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L399">        DataServicio ds = new DataServicio();</span>
         
-<span class="nc" id="L384">        ds.setNombreProveedor(datosServicio.getProveedorServicio().getNombreEmpresa());</span>
-<span class="nc" id="L385">        ds.setDescripcionServicio(datosServicio.getDescripcionServicio());</span>
-<span class="nc" id="L386">        ds.setPrecioServicio(datosServicio.getPrecioServicio());</span>
+<span class="nc" id="L401">        ds.setNombreProveedor(datosServicio.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L402">        ds.setDescripcionServicio(datosServicio.getDescripcionServicio());</span>
+<span class="nc" id="L403">        ds.setPrecioServicio(datosServicio.getPrecioServicio());</span>
         
-<span class="nc" id="L388">        return ds;</span>
+<span class="nc" id="L405">        return ds;</span>
     }
     
     @Override
     public DataCiudad getCiudadOrigen(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L393">        Servicio s = new Servicio();</span>
-<span class="nc" id="L394">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L395">        p.setNombreEmpresa(nombreProveedor);</span>
-<span class="nc" id="L396">        s.setNombreServicio(nombre);</span>
-<span class="nc" id="L397">        s.setProveedorServicio(p);</span>
-        
-<span class="nc" id="L399">        DatosServicios ds = new DatosServicios();</span>
-        
-<span class="nc" id="L401">        Ciudad ciudadOrigen = ds.getCiudadOrigen(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
-        
-<span class="nc" id="L403">        DataCiudad resultadoCiudad = new DataCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais().getNombre());</span>
-        
-<span class="nc" id="L405">        return resultadoCiudad;</span>
-        
-    }
-    
-    public DataCiudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
 <span class="nc" id="L410">        Servicio s = new Servicio();</span>
 <span class="nc" id="L411">        Proveedor p = new Proveedor();</span>
 <span class="nc" id="L412">        p.setNombreEmpresa(nombreProveedor);</span>
@@ -415,182 +415,179 @@ public class ControladorProveedores implements IControladorProveedores{
         
 <span class="nc" id="L416">        DatosServicios ds = new DatosServicios();</span>
         
-<span class="nc" id="L418">        Ciudad ciudadDestino = ds.getCiudadDestino(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L418">        Ciudad ciudadOrigen = ds.getCiudadOrigen(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
         
-<span class="nc" id="L420">        DataCiudad resultadoCiudad = new DataCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais().getNombre());</span>
+<span class="nc" id="L420">        DataCiudad resultadoCiudad = new DataCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais().getNombre());</span>
         
 <span class="nc" id="L422">        return resultadoCiudad;</span>
         
     }
     
+    public DataCiudad getCiudadDestino(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L427">        Servicio s = new Servicio();</span>
+<span class="nc" id="L428">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L429">        p.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L430">        s.setNombreServicio(nombre);</span>
+<span class="nc" id="L431">        s.setProveedorServicio(p);</span>
+        
+<span class="nc" id="L433">        DatosServicios ds = new DatosServicios();</span>
+        
+<span class="nc" id="L435">        Ciudad ciudadDestino = ds.getCiudadDestino(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+        
+<span class="nc" id="L437">        DataCiudad resultadoCiudad = new DataCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais().getNombre());</span>
+        
+<span class="nc" id="L439">        return resultadoCiudad;</span>
+        
+    }
+    
     @Override
     public ArrayList&lt;DataCategoria&gt; getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L428">        Servicio s = new Servicio();</span>
-<span class="nc" id="L429">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L430">        p.setNombreEmpresa(nombreProveedor);</span>
-<span class="nc" id="L431">        s.setNombreServicio(nombre);</span>
-<span class="nc" id="L432">        s.setProveedorServicio(p);</span>
+<span class="nc" id="L445">        Servicio s = new Servicio();</span>
+<span class="nc" id="L446">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L447">        p.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L448">        s.setNombreServicio(nombre);</span>
+<span class="nc" id="L449">        s.setProveedorServicio(p);</span>
         
-<span class="nc" id="L434">        DatosServicios ds = new DatosServicios();</span>
+<span class="nc" id="L451">        DatosServicios ds = new DatosServicios();</span>
         
-<span class="nc" id="L436">        ArrayList&lt;Categoria&gt; resultadoCategorias = ds.getCategorias(nombre, nombreProveedor);</span>
+<span class="nc" id="L453">        ArrayList&lt;Categoria&gt; resultadoCategorias = ds.getCategorias(nombre, nombreProveedor);</span>
         
-<span class="nc" id="L438">        ArrayList&lt;DataCategoria&gt; categoriasDelServicio = new ArrayList&lt;DataCategoria&gt;();</span>
+<span class="nc" id="L455">        ArrayList&lt;DataCategoria&gt; categoriasDelServicio = new ArrayList&lt;DataCategoria&gt;();</span>
         
-<span class="nc bnc" id="L440" title="All 2 branches missed.">        for(int i = 0; i &lt; resultadoCategorias.size(); i++){</span>
-<span class="nc" id="L441">            categoriasDelServicio.add(new DataCategoria(resultadoCategorias.get(i).getNombre(), resultadoCategorias.get(i).getRutaCategoria()));</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">        for(int i = 0; i &lt; resultadoCategorias.size(); i++){</span>
+<span class="nc" id="L458">            categoriasDelServicio.add(new DataCategoria(resultadoCategorias.get(i).getNombre(), resultadoCategorias.get(i).getRutaCategoria()));</span>
         }
         
-<span class="nc" id="L444">        return categoriasDelServicio;</span>
+<span class="nc" id="L461">        return categoriasDelServicio;</span>
     }
     
-    @Override
-    public ArrayList&lt;DataImagen&gt; getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L449">        Servicio s = new Servicio();</span>
-<span class="nc" id="L450">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L451">        p.setNombreEmpresa(nombreProveedor);</span>
-<span class="nc" id="L452">        s.setNombreServicio(nombre);</span>
-<span class="nc" id="L453">        s.setProveedorServicio(p);</span>
-        
-<span class="nc" id="L455">        DatosServicios ds = new DatosServicios();</span>
-        
-<span class="nc" id="L457">        ArrayList&lt;ImagenServicio&gt; resultadoImagenes = ds.getImagenes(nombre, nombreProveedor);</span>
-        
-<span class="nc" id="L459">        ArrayList&lt;DataImagen&gt; imagenesDelServicio = new ArrayList&lt;DataImagen&gt;();</span>
-        
-        //System.out.println(resultadoImagenes.size());
-        
-<span class="nc bnc" id="L463" title="All 2 branches missed.">        if(resultadoImagenes.size() &gt; 0){</span>
-<span class="nc bnc" id="L464" title="All 2 branches missed.">            for(int i = 0; i &lt; resultadoImagenes.size(); i++){</span>
-<span class="nc" id="L465">                imagenesDelServicio.add(new DataImagen(resultadoImagenes.get(i).getPath(), &quot;&quot;));</span>
-            }
-        }
-        
-<span class="nc" id="L469">        return imagenesDelServicio;</span>
-    }
     
     @Override
-    public void modificarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList&lt;String&gt; imagenes, ArrayList reservas, ArrayList promociones, ArrayList&lt;String&gt; categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
+    public void modificarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList&lt;String&gt; imagenes, ArrayList&lt;String&gt; categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException{
         
         //Servicio s = new Servicio();
-<span class="nc" id="L476">        Proveedor p = new Proveedor();</span>
-<span class="nc" id="L477">        p.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L469">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L470">        p.setNombreEmpresa(nombreProveedor);</span>
         /*s.setNombreServicio(nombre);
         s.setProveedorServicio(p);*/
         
-<span class="nc" id="L481">        DatosServicios servicios = new DatosServicios();</span>
+<span class="nc" id="L474">        DatosServicios servicios = new DatosServicios();</span>
         
-<span class="nc" id="L483">        ArrayList&lt;ImagenServicio&gt; imagenesServicio = new ArrayList&lt;ImagenServicio&gt;();</span>
+<span class="nc" id="L476">        ArrayList&lt;ImagenServicio&gt; imagenesServicio = new ArrayList&lt;ImagenServicio&gt;();</span>
         
-<span class="nc bnc" id="L485" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.size(); i++){</span>
-<span class="nc" id="L486">            imagenesServicio.add(new ImagenServicio(imagenes.get(i), new Servicio()));</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.size(); i++){</span>
+<span class="nc" id="L479">            imagenesServicio.add(new ImagenServicio(imagenes.get(i), new Servicio()));</span>
         }
         
-<span class="nc" id="L489">        ArrayList&lt;Categoria&gt; categoriasServicio = new ArrayList&lt;Categoria&gt;();</span>
+<span class="nc" id="L482">        ArrayList&lt;Categoria&gt; categoriasServicio = new ArrayList&lt;Categoria&gt;();</span>
         
-<span class="nc bnc" id="L491" title="All 2 branches missed.">        for(int i = 0; i &lt; categorias.size(); i++){</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">        for(int i = 0; i &lt; categorias.size(); i++){</span>
             
-<span class="nc" id="L493">            String cat = (String) categorias.get(i);</span>
+<span class="nc" id="L486">            String cat = (String) categorias.get(i);</span>
             //int cant = contador(cat, '&gt;');
             
-<span class="nc" id="L496">            int cant = 0;</span>
+<span class="nc" id="L489">            int cant = 0;</span>
         
-<span class="nc bnc" id="L498" title="All 2 branches missed.">            for(int j = 0; j &lt; cat.length(); j++){</span>
-<span class="nc bnc" id="L499" title="All 2 branches missed.">                if(cat.charAt(j) == '&gt;')</span>
-<span class="nc" id="L500">                    cant++;</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">            for(int j = 0; j &lt; cat.length(); j++){</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">                if(cat.charAt(j) == '&gt;')</span>
+<span class="nc" id="L493">                    cant++;</span>
             }
             
-<span class="nc" id="L503">            String[] c = cat.split(&quot;&gt;&quot;);</span>
+<span class="nc" id="L496">            String[] c = cat.split(&quot;&gt;&quot;);</span>
             
-<span class="nc" id="L505">            categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));</span>
+<span class="nc" id="L498">            categoriasServicio.add(new Categoria(c[cant].trim(), categorias.get(i), new ArrayList()));</span>
         }
         
-<span class="nc" id="L508">        Servicio s = new Servicio(nombre, descripcion, precio, p, imagenesServicio, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()), new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);</span>
+<span class="nc" id="L501">        Servicio s = new Servicio(nombre, descripcion, precio, p, imagenesServicio, categoriasServicio, new Ciudad(ciudadOrigen, new ArrayList(), new Pais()), new Ciudad(ciudadDestino, new ArrayList(), new Pais()), tieneDestino);</span>
         
-<span class="nc" id="L510">        boolean hayDestino = true;</span>
+<span class="nc" id="L503">        boolean hayDestino = true;</span>
         
-<span class="nc bnc" id="L512" title="All 2 branches missed.">        if(s.getDestino().getNombre().equals(&quot;No&quot;))</span>
-<span class="nc" id="L513">            hayDestino = false;</span>
+<span class="nc bnc" id="L505" title="All 2 branches missed.">        if(s.getDestino().getNombre().equals(&quot;No&quot;))</span>
+<span class="nc" id="L506">            hayDestino = false;</span>
         else
-<span class="nc" id="L515">            hayDestino = true;</span>
+<span class="nc" id="L508">            hayDestino = true;</span>
         
-<span class="nc" id="L517">        servicios.modificarServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), hayDestino);</span>
+<span class="nc" id="L510">        servicios.modificarServicio(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), s.getOrigen().getNombre(), s.getDestino().getNombre(), s.getDescripcionServicio(), s.getPrecioServicio(), hayDestino);</span>
         
-<span class="nc" id="L519">        servicios.eliminarImagenes(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
-<span class="nc" id="L520">        servicios.eliminarCategorias(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L512">        servicios.eliminarImagenes(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L513">        servicios.eliminarCategorias(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
         
-<span class="nc" id="L522">        categoriasServicio = s.getCategoriasServicio();</span>
+<span class="nc" id="L515">        categoriasServicio = s.getCategoriasServicio();</span>
         
-<span class="nc bnc" id="L524" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasServicio.size(); i++){</span>
-<span class="nc" id="L525">            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre(), categoriasServicio.get(i).getRutaCategoria());</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">        for(int i = 0; i &lt; categoriasServicio.size(); i++){</span>
+<span class="nc" id="L518">            servicios.agregarCategoria(s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa(), categoriasServicio.get(i).getNombre(), categoriasServicio.get(i).getRutaCategoria());</span>
         }
         
-<span class="nc" id="L528">        imagenesServicio = s.getImagenesServicio();</span>
+<span class="nc" id="L521">        imagenesServicio = s.getImagenesServicio();</span>
         
-<span class="nc bnc" id="L530" title="All 2 branches missed.">        for(int i = 0; i &lt;imagenesServicio.size(); i++){</span>
-<span class="nc" id="L531">            servicios.agregarImagen(imagenesServicio.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">        for(int i = 0; i &lt;imagenesServicio.size(); i++){</span>
+<span class="nc" id="L524">            servicios.agregarImagen(imagenesServicio.get(i).getPath(), s.getNombreServicio(), s.getProveedorServicio().getNombreEmpresa());</span>
         }
         
         
         
         //this.agregarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList&lt;String&gt; imagenes, ArrayList reservas, ArrayList promociones, ArrayList&lt;String&gt; categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino);
         
-<span class="nc" id="L538">    }</span>
+<span class="nc" id="L531">    }</span>
     
     @Override
     public ArrayList&lt;DataServicio&gt; getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L543">        Servicio s = new Servicio();</span>
-<span class="nc" id="L544">        s.setNombreServicio(nombre);</span>
+<span class="nc" id="L536">        Servicio s = new Servicio();</span>
+<span class="nc" id="L537">        s.setNombreServicio(nombre);</span>
         
-<span class="nc" id="L546">        DatosServicios ds = new DatosServicios();</span>
+<span class="nc" id="L539">        DatosServicios ds = new DatosServicios();</span>
         
-<span class="nc" id="L548">        ArrayList&lt;Servicio&gt; servicios = ds.getServiciosPorBusqueda(s.getNombreServicio());</span>
-<span class="nc" id="L549">        ArrayList&lt;DataServicio&gt; resultadoServicio = new ArrayList&lt;DataServicio&gt;();</span>
+<span class="nc" id="L541">        ArrayList&lt;Servicio&gt; servicios = ds.getServiciosPorBusqueda(s.getNombreServicio());</span>
+<span class="nc" id="L542">        ArrayList&lt;DataServicio&gt; resultadoServicio = new ArrayList&lt;DataServicio&gt;();</span>
         
-<span class="nc bnc" id="L551" title="All 2 branches missed.">        for(int i = 0; i &lt; servicios.size(); i++){</span>
-<span class="nc" id="L552">            DataServicio serv = new DataServicio();</span>
-<span class="nc" id="L553">            serv.setNombreServicio(servicios.get(i).getNombreServicio());</span>
-<span class="nc" id="L554">            serv.setNombreProveedor(servicios.get(i).getProveedorServicio().getNombreEmpresa());</span>
-<span class="nc" id="L555">            resultadoServicio.add(serv);</span>
+<span class="nc bnc" id="L544" title="All 2 branches missed.">        for(int i = 0; i &lt; servicios.size(); i++){</span>
+<span class="nc" id="L545">            DataServicio serv = new DataServicio();</span>
+<span class="nc" id="L546">            serv.setNombreServicio(servicios.get(i).getNombreServicio());</span>
+<span class="nc" id="L547">            serv.setNombreProveedor(servicios.get(i).getProveedorServicio().getNombreEmpresa());</span>
+<span class="nc" id="L548">            resultadoServicio.add(serv);</span>
         }
         
-<span class="nc" id="L558">        return resultadoServicio;</span>
+<span class="nc" id="L551">        return resultadoServicio;</span>
     }
     
+    @Override
     public void eliminarImagenesUsuarios(){
-<span class="nc" id="L562">        File fichero = new File(&quot;src/Logica/Perfiles&quot;);</span>
-<span class="nc" id="L563">        File[]imagenes = fichero.listFiles();</span>
+<span class="nc" id="L556">        File fichero = new File(&quot;src/Logica/Perfiles&quot;);</span>
+<span class="nc" id="L557">        File[]imagenes = fichero.listFiles();</span>
         
-<span class="nc bnc" id="L565" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.length; i++){</span>
-<span class="nc" id="L566">            imagenes[i].delete();</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.length; i++){</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">            if(!imagenes[i].getName().equalsIgnoreCase(&quot;perfil.png&quot;)) </span>
+<span class="nc" id="L561">                imagenes[i].delete();</span>
         }
-<span class="nc" id="L568">    }</span>
+<span class="nc" id="L563">    }</span>
     
+    @Override
     public void eliminarImagenesServicios(){
-<span class="nc" id="L571">        File fichero = new File(&quot;src/Logica/ImagenesServicios&quot;);</span>
-<span class="nc" id="L572">        File[]imagenes = fichero.listFiles();</span>
+<span class="nc" id="L567">        File fichero = new File(&quot;src/Logica/ImagenesServicios&quot;);</span>
+<span class="nc" id="L568">        File[]imagenes = fichero.listFiles();</span>
         
-<span class="nc bnc" id="L574" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.length; i++){</span>
-<span class="nc" id="L575">            imagenes[i].delete();</span>
+<span class="nc bnc" id="L570" title="All 2 branches missed.">        for(int i = 0; i &lt; imagenes.length; i++){</span>
+<span class="nc bnc" id="L571" title="All 2 branches missed.">            if(!imagenes[i].getName().equalsIgnoreCase(&quot;agregarImagenServicio.png&quot;)) </span>
+<span class="nc" id="L572">                imagenes[i].delete();</span>
         }
-<span class="nc" id="L577">    }</span>
+<span class="nc" id="L574">    }</span>
 
     @Override
     public void deleteAllProveedores() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L581">        DatosProveedores dp = new DatosProveedores();</span>
-<span class="nc" id="L582">        dp.deleteAllProveedores(&quot;delete from imagenesservicios where ruta &lt;&gt; \&quot;\&quot;; \n&quot; +</span>
+<span class="nc" id="L578">        DatosProveedores dp = new DatosProveedores();</span>
+<span class="nc" id="L579">        dp.deleteAllProveedores(&quot;delete from imagenesservicios where ruta &lt;&gt; \&quot;\&quot;; \n&quot; +</span>
                         &quot;delete from serviciosdepromociones where nombreServicio &lt;&gt; \&quot;\&quot;; \n&quot; +
                         &quot;delete from cantidadreservasservicios where nombreServicio &lt;&gt; \&quot;\&quot;; \n&quot; +
                         &quot;delete from servicios where nombre &lt;&gt; \&quot;\&quot;; \n&quot; +
                         &quot;delete from ciudades where nombre &lt;&gt; \&quot;\&quot;; \n&quot; +
                         &quot;delete from paises where nombre &lt;&gt; \&quot;\&quot;;&quot;);
-<span class="nc" id="L588">    }</span>
+<span class="nc" id="L585">    }</span>
 
     @Override
     public void insertCiudadesDePrueba() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L592">        DatosCiudades dc = new DatosCiudades();</span>
-<span class="nc" id="L593">        dc.insertCiudadesDePrueba(&quot;insert into paises values('Uruguay');\n&quot; +</span>
+<span class="nc" id="L589">        DatosCiudades dc = new DatosCiudades();</span>
+<span class="nc" id="L590">        dc.insertCiudadesDePrueba(&quot;insert into paises values('Uruguay');\n&quot; +</span>
                         &quot;insert into paises values('Argentina');\n&quot; +
                         &quot;insert into paises values('Colombia');\n&quot; +
                         &quot;insert into paises values('Estados Unidos');\n&quot; +
@@ -616,12 +613,12 @@ public class ControladorProveedores implements IControladorProveedores{
                         &quot;insert into ciudades values('Cantón', 'China');\n&quot; +
                         &quot;insert into ciudades values('Florianópolis', 'Brasil');\n&quot; +
                         &quot;insert into ciudades values('Bariloche', 'Argentina');&quot;);
-<span class="nc" id="L619">    }</span>
+<span class="nc" id="L616">    }</span>
 
     @Override
     public void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L623">        DatosProveedores dp = new DatosProveedores();</span>
-<span class="nc" id="L624">        dp.insertDatosProveedoresDePrueba(&quot;insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false);\n&quot; +</span>
+<span class="nc" id="L620">        DatosProveedores dp = new DatosProveedores();</span>
+<span class="nc" id="L621">        dp.insertDatosProveedoresDePrueba(&quot;insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false);\n&quot; +</span>
                         &quot;insert into usuarios values('moody', 'Alastor', 'Moody', 'eu.car@eucar.com', '1965-9-2', false);\n&quot; +
                         &quot;insert into usuarios values('remus', 'Remus', 'Lupin', 'iberia@gmail.com', '1970-5-4', false);\n&quot; +
                         &quot;insert into usuarios values('adippet', 'Armando', 'Dippet', 'tam@outlook.com', '1967-2-12', false);\n&quot; +
@@ -670,10 +667,156 @@ public class ControladorProveedores implements IControladorProveedores{
                         &quot;insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Luxury south beach corner apartment-Segundo Hogar-1.jpg', 'Luxury south beach corner apartment', 'Segundo Hogar');\n&quot; +
                         &quot;insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Coche-Miami-Segundo Hogar-1.png', 'Coche-Miami', 'Segundo Hogar');\n&quot; +
                         &quot;INSERT INTO categoriasdeservicios VALUES ('Air-France-FC ','AirFrance','Air France','Vuelos &gt; Empresas &gt; Air France'),('Air-France-FC ','AirFrance','First Class','Vuelos &gt; Tipo vuelo &gt; First Class'),('Casa para p4 BsAs ','Segundo Hogar','2 dormitorios','Alojamientos &gt; Habitaciones &gt; 2 dormitorios'),('Casa para p4 BsAs ','Segundo Hogar','Casa','Alojamientos &gt; Tipo alojamiento &gt; Casa'),('Coche-Miami ','Segundo Hogar','Auto','Automóviles &gt; Tipo vehículo &gt; Auto'),('Coche-Miami ','Segundo Hogar','Chevrolet','Automóviles &gt; Marca &gt; Chevrolet'),('Coche-Miami ','Segundo Hogar','Económico','Automóviles &gt; Tarifa &gt; Económico'),('Euro-Car-1 ','EuropCar','Auto','Automóviles &gt; Tipo vehículo &gt; Auto'),('Euro-Car-1 ','EuropCar','Chevrolet','Automóviles &gt; Marca &gt; Chevrolet'),('Euro-Car-1 ','EuropCar','Económico','Automóviles &gt; Tarifa &gt; Económico'),('Euro-Car-2 ','EuropCar','Auto','Automóviles &gt; Tipo vehículo &gt; Auto'),('Euro-Car-2 ','EuropCar','Chevrolet','Automóviles &gt; Marca &gt; Chevrolet'),('Euro-Car-2 ','EuropCar','Standard','Automóviles &gt; Tarifa &gt; Standard'),('Euro-Car-3 ','EuropCar','Auto','Automóviles &gt; Tipo vehículo &gt; Auto'),('Euro-Car-3 ','EuropCar','Chevrolet','Automóviles &gt; Marca &gt; Chevrolet'),('Euro-Car-3 ','EuropCar','Full','Automóviles &gt; Tarifa &gt; Full'),('Euro-Vuelo-FC ','Iberia','First Class','Vuelos &gt; Tipo vuelo &gt; First Class'),('Euro-Vuelo-FC ','Iberia','Iberia','Vuelos &gt; Empresas &gt; Iberia'),('Euro-Vuelo-LC ','Iberia','Iberia','Vuelos &gt; Empresas &gt; Iberia'),('Euro-Vuelo-LC ','Iberia','LowCost','Vuelos &gt; Tipo vuelo &gt; LowCost'),('Euro-Vuelo-S ','Iberia','Iberia','Vuelos &gt; Empresas &gt; Iberia'),('Euro-Vuelo-S ','Iberia','Standard','Vuelos &gt; Tipo vuelo &gt; Standard'),('Floripa G. House ','Segundo Hogar','2 dormitorios','Alojamientos &gt; Habitaciones &gt; 2 dormitorios'),('Floripa G. House ','Segundo Hogar','Alojamientos','Alojamientos'),('Floripa G. House ','Segundo Hogar','Casa','Alojamientos &gt; Tipo alojamiento &gt; Casa'),('Luxury south beach corner apartment ','Segundo Hogar','2 dormitorios','Alojamientos &gt; Habitaciones &gt; 2 dormitorios'),('Luxury south beach corner apartment ','Segundo Hogar','Hotel','Alojamientos &gt; Tipo alojamiento &gt; Hotel'),('Luxury south beach corner apartment ','Segundo Hogar','Playa','Alojamientos &gt; Ubicación &gt; Playa'),('TAM-FC ','TAM','First Class','Vuelos &gt; Tipo vuelo &gt; First Class'),('TAM-FC ','TAM','TAM','Vuelos &gt; Empresas &gt; TAM');&quot;);
-<span class="nc" id="L673">    }</span>
+<span class="nc" id="L670">    }</span>
     
-
-    
-    
+@Override
+public ArrayList&lt;DataServicio&gt; getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException{
+<span class="nc" id="L674">    ArrayList&lt;DataServicio&gt; servicios = new ArrayList();</span>
+<span class="nc" id="L675">    DatosServicios dServicios = new DatosServicios();</span>
+<span class="nc" id="L676">    ArrayList&lt;Servicio&gt; servProve = new ArrayList();</span>
+<span class="nc" id="L677">    Proveedor proveedor = new Proveedor();</span>
+<span class="nc" id="L678">    proveedor.setNombreEmpresa(NombreProveedor);</span>
+<span class="nc" id="L679">    servProve = dServicios.getServiciosProveedor(proveedor.getNombreEmpresa());</span>
+<span class="nc" id="L680">    int tamanio = servProve.size();</span>
+<span class="nc" id="L681">    int inicio = 0;</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">    for (inicio = 0;inicio&lt;tamanio;inicio++){</span>
+<span class="nc" id="L683">        DataServicio serv = new DataServicio();</span>
+<span class="nc" id="L684">        serv.setNombreServicio(servProve.get(inicio).getNombreServicio());</span>
+<span class="nc" id="L685">        serv.setPrecioServicio(servProve.get(inicio).getPrecioServicio());</span>
+<span class="nc" id="L686">        servicios.add(serv);</span>
+    }
+<span class="nc" id="L688">    return servicios;</span>
 }
+    @Override
+    
+    public ArrayList&lt;DataProveedor&gt; getInfoProveedores() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L693">        DatosProveedores proveedores = new DatosProveedores();</span>
+<span class="nc" id="L694">        ArrayList&lt;Proveedor&gt; arrayProveedores = proveedores.selectAllObjetosProveedores();</span>
+<span class="nc" id="L695">        ArrayList&lt;DataProveedor&gt; resultado = new ArrayList();</span>
+<span class="nc bnc" id="L696" title="All 2 branches missed.">        for(int i = 0; i &lt; arrayProveedores.size(); i++){</span>
+<span class="nc" id="L697">            DataProveedor dp = new DataProveedor();</span>
+<span class="nc" id="L698">            dp.setNombre(arrayProveedores.get(i).getNombre());</span>
+<span class="nc" id="L699">            dp.setApellido(arrayProveedores.get(i).getApellido());</span>
+<span class="nc" id="L700">            dp.setNickname(arrayProveedores.get(i).getNickname());</span>
+<span class="nc" id="L701">            dp.setEmail(arrayProveedores.get(i).getEmail());</span>
+<span class="nc" id="L702">            dp.setFechaNac(arrayProveedores.get(i).getFechaNac());</span>
+<span class="nc" id="L703">            dp.setNombreEmpresa(arrayProveedores.get(i).getNombreEmpresa());</span>
+<span class="nc" id="L704">            dp.setLink(arrayProveedores.get(i).getLink());</span>
+            //set imagenes???
+<span class="nc" id="L706">            resultado.add(dp);</span>
+        }
+<span class="nc" id="L708">        return resultado;</span>
+    }
+    
+    @Override
+    public ArrayList&lt;DataProveedor&gt; verInfoProveedorBusqueda(String nickname) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L713">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L714">        p.setNickname(nickname);</span>
+<span class="nc" id="L715">        DatosProveedores dataux = new DatosProveedores();</span>
+        
+<span class="nc" id="L717">        ArrayList&lt;Proveedor&gt; Prov =dataux.verInfoProveedorBusqueda(p.getNickname());</span>
+<span class="nc" id="L718">        ArrayList&lt;DataProveedor&gt; InfoProveedores = new ArrayList();</span>
+<span class="nc bnc" id="L719" title="All 2 branches missed.">        for(int i = 0; i&lt;Prov.size(); i++){</span>
+<span class="nc" id="L720">            DataProveedor dtProv = new DataProveedor();</span>
+<span class="nc" id="L721">            dtProv.setNickname(Prov.get(i).getNickname());</span>
+<span class="nc" id="L722">            InfoProveedores.add(dtProv);</span>
+        }
+        /*
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        
+        DatosServicios ds = new DatosServicios();
+        
+        ArrayList&lt;Servicio&gt; servicios = ds.getServiciosPorBusqueda(s.getNombreServicio());
+        ArrayList&lt;DataServicio&gt; resultadoServicio = new ArrayList&lt;DataServicio&gt;();
+        
+        for(int i = 0; i &lt; servicios.size(); i++){
+            DataServicio serv = new DataServicio();
+            serv.setNombreServicio(servicios.get(i).getNombreServicio());
+            serv.setNombreProveedor(servicios.get(i).getProveedorServicio().getNombreEmpresa());
+            resultadoServicio.add(serv);
+        }
+        
+        return resultadoServicio;
+    }
+        }*/
+
+<span class="nc" id="L744">        return InfoProveedores;</span>
+    }
+    @Override
+    public ArrayList&lt;DataImagen&gt; getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L748">        Servicio s = new Servicio();</span>
+<span class="nc" id="L749">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L750">        p.setNombreEmpresa(nombreProveedor);</span>
+<span class="nc" id="L751">        s.setNombreServicio(nombre);</span>
+<span class="nc" id="L752">        s.setProveedorServicio(p);</span>
+        
+<span class="nc" id="L754">        DatosServicios ds = new DatosServicios();</span>
+        
+<span class="nc" id="L756">        ArrayList&lt;ImagenServicio&gt; resultadoImagenes = ds.getImagenes(nombre, nombreProveedor);</span>
+        
+<span class="nc" id="L758">        ArrayList&lt;DataImagen&gt; imagenesDelServicio = new ArrayList&lt;DataImagen&gt;();</span>
+        
+        //System.out.println(resultadoImagenes.size());
+        
+<span class="nc bnc" id="L762" title="All 2 branches missed.">        if(resultadoImagenes.size() &gt; 0){</span>
+<span class="nc bnc" id="L763" title="All 2 branches missed.">            for(int i = 0; i &lt; resultadoImagenes.size(); i++){</span>
+<span class="nc" id="L764">                imagenesDelServicio.add(new DataImagen(resultadoImagenes.get(i).getPath(), &quot;&quot;));</span>
+            }
+        }
+        
+<span class="nc" id="L768">        return imagenesDelServicio;</span>
+    }
+
+    @Override
+    public ArrayList&lt;DataImagen&gt; getImagenesProv(String nickname) throws SQLException, ClassNotFoundException {
+        //Servicio s = new Servicio();
+<span class="nc" id="L774">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L775">        p.setNickname(nickname);</span>
+        
+<span class="nc" id="L777">        DatosProveedores ds = new DatosProveedores();</span>
+        
+<span class="nc" id="L779">        ArrayList&lt;Imagen&gt; resultadoImagenes = ds.getImagenesProv( p.getNickname());</span>
+        
+<span class="nc" id="L781">        ArrayList&lt;DataImagen&gt; imagenesDelProveedor = new ArrayList&lt;DataImagen&gt;();</span>
+        
+        //System.out.println(resultadoImagenes.size());
+        
+<span class="nc bnc" id="L785" title="All 2 branches missed.">        if(resultadoImagenes.size() &gt; 0){</span>
+<span class="nc bnc" id="L786" title="All 2 branches missed.">            for(int i = 0; i &lt; resultadoImagenes.size(); i++){</span>
+<span class="nc" id="L787">                imagenesDelProveedor.add(new DataImagen(resultadoImagenes.get(i).getPath(), &quot;&quot;));</span>
+            }
+        }
+        
+<span class="nc" id="L791">        return imagenesDelProveedor;</span>
+    }
+
+    @Override
+    public DataProveedor verInfoProveedor(String nickname) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L796">        DatosProveedores dataux = new DatosProveedores();</span>
+<span class="nc" id="L797">        DatosUsuarios datausu = new DatosUsuarios();</span>
+<span class="nc" id="L798">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L799">        p.setNickname(nickname);</span>
+<span class="nc" id="L800">        Proveedor Prov =dataux.seleccionarProveedor(p.getNickname());</span>
+<span class="nc" id="L801">        ArrayList&lt;DataProveedor&gt; InfoProveedores = new ArrayList();</span>
+        //DataProveedor proveedores = new DataProveedor();
+        //proveedores.setNickname(Prov.getNickname());
+            //nickProv.add(proveedores);
+        //DataProveedor dtProv = new DataProveedor();
+            //if(!Prov.isEmpty()){
+<span class="nc" id="L807">            ArrayList&lt;Imagen&gt; imagenesProveedor = datausu.selectImagenesPerfil(p);</span>
+<span class="nc" id="L808">            ArrayList&lt;String&gt; rutaImagenes = new ArrayList();</span>
+<span class="nc bnc" id="L809" title="All 2 branches missed.">            for(int i = 0; i &lt; imagenesProveedor.size(); i++){</span>
+<span class="nc" id="L810">                rutaImagenes.add(imagenesProveedor.get(i).getPath());</span>
+            }
+            
+<span class="nc" id="L813">            DataProveedor dtProv = new DataProveedor(Prov.getNickname(),Prov.getNombre(),Prov.getApellido(),Prov.getEmail(),Prov.getFechaNac(),rutaImagenes,Prov.getNombreEmpresa(),Prov.getLink());</span>
+            //InfoProveedores.add(dtProv);
+        
+
+<span class="nc" id="L817">        return dtProv;</span>
+    }    
+
+}
+
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

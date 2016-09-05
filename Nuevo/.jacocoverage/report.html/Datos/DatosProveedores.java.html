@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosProveedores.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosProveedores.java</span></div><h1>DatosProveedores.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosProveedores.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling_Promo_&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosProveedores.java</span></div><h1>DatosProveedores.java</h1><pre class="source lang-java linenums">/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Datos;
 
+import Logica.Cliente;
+import Logica.Imagen;
+import Logica.ImagenServicio;
 import java.sql.*;
 import java.util.*;
 import Logica.Proveedor;
+import Logica.Reserva;
 import Logica.Servicio;
+import Logica.Usuario;
 import java.time.*;
 
 /**
@@ -19,231 +24,326 @@ public class DatosProveedores {
     
     //private ConexionBD conexion;
     
-<span class="nc" id="L22">    public DatosProveedores(){</span>
+<span class="nc" id="L27">    public DatosProveedores(){</span>
         //conexion = new ConexionBD();
-<span class="nc" id="L24">    }</span>
+<span class="nc" id="L29">    }</span>
     
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
         Connection conn;
         
-<span class="nc" id="L29">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L34">        ConexionBD conexion = new ConexionBD();</span>
         
-<span class="nc" id="L31">        conn = conexion.conectar();</span>
+<span class="nc" id="L36">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L33">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into usuarios values(?, ?, ?, ?, ?, false)&quot;);</span>
+<span class="nc" id="L38">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into usuarios values(?, ?, ?, ?, ?, false)&quot;);</span>
         
-<span class="nc" id="L35">        pConsulta.setString(1, nickname);</span>
-<span class="nc" id="L36">        pConsulta.setString(2, nombre);</span>
-<span class="nc" id="L37">        pConsulta.setString(3, apellido);</span>
-<span class="nc" id="L38">        pConsulta.setString(4, email);</span>
-<span class="nc" id="L39">        pConsulta.setString(5, fechaNac);</span>
+<span class="nc" id="L40">        pConsulta.setString(1, nickname);</span>
+<span class="nc" id="L41">        pConsulta.setString(2, nombre);</span>
+<span class="nc" id="L42">        pConsulta.setString(3, apellido);</span>
+<span class="nc" id="L43">        pConsulta.setString(4, email);</span>
+<span class="nc" id="L44">        pConsulta.setString(5, fechaNac);</span>
         
-<span class="nc" id="L41">        pConsulta.executeUpdate();</span>
+<span class="nc" id="L46">        pConsulta.executeUpdate();</span>
         
         //conexion.cerrar();
-<span class="nc" id="L44">        conn.close();</span>
-<span class="nc" id="L45">    }</span>
+<span class="nc" id="L49">        conn.close();</span>
+<span class="nc" id="L50">    }</span>
     
     public void agregarDatosProveedor(String nickname, String nombreEmpresa, String link) throws SQLException, ClassNotFoundException{
         Connection conn;
         
-<span class="nc" id="L50">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L55">        ConexionBD conexion = new ConexionBD();</span>
         
-<span class="nc" id="L52">        conn = conexion.conectar();</span>
+<span class="nc" id="L57">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L54">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into proveedores values(?, ?, ?)&quot;);</span>
+<span class="nc" id="L59">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into proveedores values(?, ?, ?)&quot;);</span>
         
-<span class="nc" id="L56">        pConsulta.setString(1, nombreEmpresa);</span>
-<span class="nc" id="L57">        pConsulta.setString(2, link);</span>
-<span class="nc" id="L58">        pConsulta.setString(3, nickname);</span>
+<span class="nc" id="L61">        pConsulta.setString(1, nombreEmpresa);</span>
+<span class="nc" id="L62">        pConsulta.setString(2, link);</span>
+<span class="nc" id="L63">        pConsulta.setString(3, nickname);</span>
         
-<span class="nc" id="L60">        pConsulta.executeUpdate();</span>
+<span class="nc" id="L65">        pConsulta.executeUpdate();</span>
         
         //conexion.cerrar();
-<span class="nc" id="L63">        conn.close();</span>
-<span class="nc" id="L64">    }</span>
+<span class="nc" id="L68">        conn.close();</span>
+<span class="nc" id="L69">    }</span>
     
     public void agregarImagen(String nickname, String ruta) throws SQLException, ClassNotFoundException{
         Connection conn;
         
-<span class="nc" id="L69">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L74">        ConexionBD conexion = new ConexionBD();</span>
         
-<span class="nc" id="L71">        conn = conexion.conectar();</span>
+<span class="nc" id="L76">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L73">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into imagenesusuarios values(?, ?)&quot;);</span>
+<span class="nc" id="L78">        PreparedStatement pConsulta = conn.prepareStatement(&quot;insert into imagenesusuarios values(?, ?)&quot;);</span>
         
-<span class="nc" id="L75">        pConsulta.setString(1, ruta);</span>
-<span class="nc" id="L76">        pConsulta.setString(2, nickname);</span>
+<span class="nc" id="L80">        pConsulta.setString(1, ruta);</span>
+<span class="nc" id="L81">        pConsulta.setString(2, nickname);</span>
         
-<span class="nc" id="L78">        pConsulta.executeUpdate();</span>
+<span class="nc" id="L83">        pConsulta.executeUpdate();</span>
         
         //conexion.cerrar();
-<span class="nc" id="L81">        conn.close();</span>
-<span class="nc" id="L82">    }</span>
+<span class="nc" id="L86">        conn.close();</span>
+<span class="nc" id="L87">    }</span>
     
     public int selectCountNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L85">        int cant = 0;</span>
+<span class="nc" id="L90">        int cant = 0;</span>
         
         Connection conn;
         
-<span class="nc" id="L89">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L94">        ConexionBD conexion = new ConexionBD();</span>
         
-<span class="nc" id="L91">        conn = conexion.conectar();</span>
+<span class="nc" id="L96">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L93">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select count(*) cantidad from proveedores where nombreEmpresa = ?&quot;);</span>
+<span class="nc" id="L98">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select count(*) cantidad from proveedores where nombreEmpresa = ?&quot;);</span>
         
-<span class="nc" id="L95">        pConsulta.setString(1, nombreEmpresa);</span>
+<span class="nc" id="L100">        pConsulta.setString(1, nombreEmpresa);</span>
         
-<span class="nc" id="L97">        ResultSet rs = pConsulta.executeQuery();</span>
+<span class="nc" id="L102">        ResultSet rs = pConsulta.executeQuery();</span>
         
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        while(rs.next()){</span>
-<span class="nc" id="L100">            cant = rs.getInt(&quot;cantidad&quot;);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L105">            cant = rs.getInt(&quot;cantidad&quot;);</span>
         }
         
-<span class="nc" id="L103">        rs.close();</span>
+<span class="nc" id="L108">        rs.close();</span>
         //conexion.cerrar();
-<span class="nc" id="L105">        conn.close();</span>
+<span class="nc" id="L110">        conn.close();</span>
         
-<span class="nc" id="L107">        return cant;</span>
+<span class="nc" id="L112">        return cant;</span>
     }
     
     public ArrayList&lt;Proveedor&gt; selectAllProveedores() throws SQLException, ClassNotFoundException{
-<span class="nc" id="L111">        ArrayList proveedores = new ArrayList();</span>
-<span class="nc" id="L112">        int indice = 0;</span>
+<span class="nc" id="L116">        ArrayList proveedores = new ArrayList();</span>
+<span class="nc" id="L117">        int indice = 0;</span>
         
         Connection conn;
         
-<span class="nc" id="L116">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L121">        ConexionBD conexion = new ConexionBD();</span>
         
-<span class="nc" id="L118">        conn = conexion.conectar();</span>
+<span class="nc" id="L123">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L120">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L125">        Statement st = conn.createStatement();</span>
         
-<span class="nc" id="L122">        ResultSet rs = st.executeQuery(&quot;select nombreEmpresa from proveedores order by nombreEmpresa&quot;);</span>
+<span class="nc" id="L127">        ResultSet rs = st.executeQuery(&quot;select nombreEmpresa from proveedores order by nombreEmpresa&quot;);</span>
         
-<span class="nc bnc" id="L124" title="All 2 branches missed.">        while(rs.next()){</span>
-<span class="nc" id="L125">            Proveedor prov = new Proveedor();</span>
-<span class="nc" id="L126">            prov.setNombreEmpresa(rs.getString(&quot;nombreEmpresa&quot;));</span>
-<span class="nc" id="L127">            proveedores.add(indice, prov);</span>
-<span class="nc" id="L128">            indice++;</span>
-<span class="nc" id="L129">        }</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L130">            Proveedor prov = new Proveedor();</span>
+<span class="nc" id="L131">            prov.setNombreEmpresa(rs.getString(&quot;nombreEmpresa&quot;));</span>
+<span class="nc" id="L132">            proveedores.add(indice, prov);</span>
+<span class="nc" id="L133">            indice++;</span>
+<span class="nc" id="L134">        }</span>
         
-<span class="nc" id="L131">        rs.close();</span>
+<span class="nc" id="L136">        rs.close();</span>
         //conexion.cerrar();
         
-<span class="nc" id="L134">        conn.close();</span>
+<span class="nc" id="L139">        conn.close();</span>
         
-<span class="nc" id="L136">        return proveedores;</span>
+<span class="nc" id="L141">        return proveedores;</span>
         
     }
     
     public ArrayList&lt;Proveedor&gt; selectAllObjetosProveedores() throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L142">        ArrayList&lt;Proveedor&gt; proveedores = new ArrayList&lt;Proveedor&gt;();</span>
+<span class="nc" id="L147">        ArrayList&lt;Proveedor&gt; proveedores = new ArrayList&lt;Proveedor&gt;();</span>
         
-<span class="nc" id="L144">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L149">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L148">        conn = conexion.conectar();</span>
+<span class="nc" id="L153">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L150">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L155">        Statement st = conn.createStatement();</span>
         
-<span class="nc" id="L152">        ResultSet rs = st.executeQuery(&quot;select * from usuarios u, proveedores p where cliente = false and u.nickname = p.nickname&quot;);</span>
+<span class="nc" id="L157">        ResultSet rs = st.executeQuery(&quot;select * from usuarios u, proveedores p where cliente = false and u.nickname = p.nickname&quot;);</span>
         
-<span class="nc bnc" id="L154" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        while(rs.next()){</span>
             //categorias.add(new Proveedor(rs.getString(&quot;nombre&quot;), &quot;&quot;, new ArrayList()));
-<span class="nc" id="L156">            String fecha = rs.getString(&quot;fechaNacimiento&quot;);</span>
-<span class="nc" id="L157">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
-<span class="nc" id="L158">            proveedores.add(new Proveedor(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString(&quot;nombreEmpresa&quot;), rs.getString(&quot;link&quot;), new HashMap()));</span>
-<span class="nc" id="L159">        }</span>
+<span class="nc" id="L161">            String fecha = rs.getString(&quot;fechaNacimiento&quot;);</span>
+<span class="nc" id="L162">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
+<span class="nc" id="L163">            proveedores.add(new Proveedor(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString(&quot;nombreEmpresa&quot;), rs.getString(&quot;link&quot;), new HashMap()));</span>
+<span class="nc" id="L164">        }</span>
         
-<span class="nc" id="L161">        rs.close();</span>
-<span class="nc" id="L162">        conn.close();</span>
+<span class="nc" id="L166">        rs.close();</span>
+<span class="nc" id="L167">        conn.close();</span>
         
-<span class="nc" id="L164">        return proveedores;</span>
+<span class="nc" id="L169">        return proveedores;</span>
         
     }
     
     public ArrayList&lt;Servicio&gt; selectServiciosPorProveedor(Proveedor p) throws SQLException, ClassNotFoundException{
         
-<span class="nc" id="L170">        ArrayList&lt;Servicio&gt; servicios = new ArrayList&lt;Servicio&gt;();</span>
+<span class="nc" id="L175">        ArrayList&lt;Servicio&gt; servicios = new ArrayList&lt;Servicio&gt;();</span>
         
-<span class="nc" id="L172">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L177">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L176">        conn = conexion.conectar();</span>
+<span class="nc" id="L181">        conn = conexion.conectar();</span>
         
         //Statement st = conn.createStatement();
         
-<span class="nc" id="L180">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select * from servicios where nombreProveedor = ?&quot;);</span>
+<span class="nc" id="L185">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select * from servicios where nombreProveedor = ?&quot;);</span>
         
-<span class="nc" id="L182">        pConsulta.setString(1, p.getNombreEmpresa());</span>
+<span class="nc" id="L187">        pConsulta.setString(1, p.getNombreEmpresa());</span>
                 
-<span class="nc" id="L184">        ResultSet rs = pConsulta.executeQuery();</span>
+<span class="nc" id="L189">        ResultSet rs = pConsulta.executeQuery();</span>
         
-<span class="nc bnc" id="L186" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        while(rs.next()){</span>
             //categorias.add(new Proveedor(rs.getString(&quot;nombre&quot;), &quot;&quot;, new ArrayList()));
             /*String fecha = rs.getString(&quot;fechaNacimiento&quot;);
             String[] datosFecha = fecha.split(&quot;-&quot;);
             proveedores.add(new Proveedor(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString(&quot;nombreEmpresa&quot;), rs.getString(&quot;link&quot;), new HashMap()));
             */
-<span class="nc" id="L192">            Servicio s = new Servicio();</span>
+<span class="nc" id="L197">            Servicio s = new Servicio();</span>
             
-<span class="nc" id="L194">            s.setNombreServicio(rs.getString(&quot;nombre&quot;));</span>
-<span class="nc" id="L195">            s.setProveedorServicio(p);</span>
-<span class="nc" id="L196">            s.setDescripcionServicio(rs.getString(&quot;descripcion&quot;));</span>
-<span class="nc" id="L197">            s.setPrecioServicio(rs.getInt(&quot;precio&quot;));</span>
-<span class="nc" id="L198">            servicios.add(s);</span>
-<span class="nc" id="L199">        }</span>
+<span class="nc" id="L199">            s.setNombreServicio(rs.getString(&quot;nombre&quot;));</span>
+<span class="nc" id="L200">            s.setProveedorServicio(p);</span>
+<span class="nc" id="L201">            s.setDescripcionServicio(rs.getString(&quot;descripcion&quot;));</span>
+<span class="nc" id="L202">            s.setPrecioServicio(rs.getInt(&quot;precio&quot;));</span>
+<span class="nc" id="L203">            servicios.add(s);</span>
+<span class="nc" id="L204">        }</span>
         
-<span class="nc" id="L201">        rs.close();</span>
-<span class="nc" id="L202">        conn.close();</span>
+<span class="nc" id="L206">        rs.close();</span>
+<span class="nc" id="L207">        conn.close();</span>
         
-<span class="nc" id="L204">        return servicios;</span>
+<span class="nc" id="L209">        return servicios;</span>
         
     }
     
     
     
     public void deleteAllProveedores(String s) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L211">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L216">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L215">        conn = conexion.conectar();</span>
+<span class="nc" id="L220">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L217">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L222">        Statement st = conn.createStatement();</span>
         
-<span class="nc" id="L219">        String[] sql = s.split(&quot;;&quot;);</span>
+<span class="nc" id="L224">        String[] sql = s.split(&quot;;&quot;);</span>
         
-<span class="nc bnc" id="L221" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
-<span class="nc" id="L222">            st.executeUpdate(sql[i]);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
+<span class="nc" id="L227">            st.executeUpdate(sql[i]);</span>
         }        
-<span class="nc" id="L224">        conn.close();</span>
-<span class="nc" id="L225">    }</span>
+<span class="nc" id="L229">        conn.close();</span>
+<span class="nc" id="L230">    }</span>
     
     public void insertDatosProveedoresDePrueba(String s) throws SQLException, ClassNotFoundException{
-<span class="nc" id="L228">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L233">        ConexionBD conexion = new ConexionBD();</span>
         
         Connection conn;
         
-<span class="nc" id="L232">        conn = conexion.conectar();</span>
+<span class="nc" id="L237">        conn = conexion.conectar();</span>
         
-<span class="nc" id="L234">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L239">        Statement st = conn.createStatement();</span>
         
-<span class="nc" id="L236">        String[] sql = s.split(&quot;;&quot;);</span>
+<span class="nc" id="L241">        String[] sql = s.split(&quot;;&quot;);</span>
         
-<span class="nc bnc" id="L238" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
-<span class="nc" id="L239">            st.executeUpdate(sql[i]);</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        for(int i = 0; i &lt; sql.length; i++){</span>
+<span class="nc" id="L244">            st.executeUpdate(sql[i]);</span>
         }
         
-<span class="nc" id="L242">        conn.close();</span>
+<span class="nc" id="L247">        conn.close();</span>
                
-<span class="nc" id="L244">    }</span>
+<span class="nc" id="L249">    }</span>
     
+  public ArrayList&lt;Proveedor&gt; verInfoProveedorBusqueda(String nickname) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L252">        ArrayList&lt;Proveedor&gt; proveedor = new ArrayList();</span>
+<span class="nc" id="L253">        int indice = 0;</span>
+        Connection conn;
+
+<span class="nc" id="L256">        ConexionBD conexion = new ConexionBD();</span>
+
+<span class="nc" id="L258">        conn = conexion.conectar();</span>
+
+<span class="nc" id="L260">        PreparedStatement pConsulta = conn.prepareCall(&quot;select * from usuarios where cliente= false and nickname like ? order by nickname&quot;);</span>
+        
+<span class="nc" id="L262">        pConsulta.setString(1, &quot;%&quot; + nickname + &quot;%&quot;);</span>
+        
+<span class="nc" id="L264">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        while (rs.next()) {</span>
+            //System.out.println(&quot;a&quot;);
+<span class="nc" id="L268">            Proveedor p = new Proveedor();</span>
+<span class="nc" id="L269">            p.setNickname(rs.getString(&quot;nickname&quot;));</span>
+<span class="nc" id="L270">            proveedor.add(indice, p);</span>
+<span class="nc" id="L271">            indice++;</span>
+<span class="nc" id="L272">        }</span>
+
+<span class="nc" id="L274">        rs.close();</span>
+        //conexion.cerrar();
+<span class="nc" id="L276">        conn.close();</span>
+<span class="nc" id="L277">        return proveedor;</span>
+    }  
+   
+  
+      public Proveedor seleccionarProveedor(String nickname) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L282">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L286">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L288">        PreparedStatement pConsulta = conn.prepareCall(&quot;select u.*, p.nombreEmpresa, p.link from usuarios u , imagenesusuarios i , proveedores p WHERE p.nickname=u.nickname AND u.cliente=false and u.nickname=?&quot;);</span>
+        
+<span class="nc" id="L290">        pConsulta.setString(1,nickname);</span>
+        
+<span class="nc" id="L292">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L294">        Proveedor p = new Proveedor();</span>
+<span class="nc" id="L295">        HashMap&lt;String,Servicio&gt; servicio = new HashMap&lt;String,Servicio&gt;();</span>
+                
+<span class="nc bnc" id="L297" title="All 2 branches missed.">        if(rs.next()){</span>
+            
+<span class="nc" id="L299">            String fecha = rs.getString(&quot;fechaNacimiento&quot;);</span>
+<span class="nc" id="L300">            String[] datosFecha = fecha.split(&quot;-&quot;);</span>
+<span class="nc" id="L301">            p=new Proveedor(rs.getString(&quot;nickname&quot;), rs.getString(&quot;nombre&quot;), rs.getString(&quot;apellido&quot;), rs.getString(&quot;email&quot;), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(),rs.getString(&quot;nombreEmpresa&quot;), rs.getString(&quot;link&quot;), new HashMap());</span>
+                        
+        }
+        
+        
+        
+<span class="nc" id="L307">        return p;</span>
+        
+    }
     
-    
+    public ArrayList&lt;Imagen&gt; getImagenesProv(String nickProveedor) throws SQLException, ClassNotFoundException{
+        Connection conn;
+        
+<span class="nc" id="L314">        ConexionBD conexion = new ConexionBD();</span>
+        
+<span class="nc" id="L316">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L318">        PreparedStatement pConsulta = conn.prepareStatement(&quot;select ruta from imagenesusuarios i, usuarios u where u.cliente = false and u.nickname=i.nickname and u.nickname = ?&quot;);</span>
+        
+<span class="nc" id="L320">        pConsulta.setString(1, nickProveedor);</span>
+        
+        //System.out.println(&quot;entree acá&quot;);
+        
+<span class="nc" id="L324">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+        //Categoria c = new Ciudad();
+        
+<span class="nc" id="L328">        ArrayList&lt;Imagen&gt; imagenes = new ArrayList&lt;Imagen&gt;();</span>
+        
+<span class="nc bnc" id="L330" title="All 2 branches missed.">        if(rs != null){</span>
+            //System.out.println(&quot;entree&quot;);
+<span class="nc bnc" id="L332" title="All 2 branches missed.">            while(rs.next()){</span>
+<span class="nc" id="L333">                imagenes.add(new Imagen(rs.getString(&quot;ruta&quot;), new Usuario()));</span>
+                //System.out.println(&quot;agreguee&quot;);
+                //c.setPais(new Pais(rs.getString(&quot;nombrePais&quot;)));
+            }
+        }
+        
+        
+<span class="nc" id="L340">        rs.close();</span>
+        
+<span class="nc" id="L342">        conn.close();</span>
+        
+<span class="nc" id="L344">        return imagenes;</span>
+        
+    }
+      
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

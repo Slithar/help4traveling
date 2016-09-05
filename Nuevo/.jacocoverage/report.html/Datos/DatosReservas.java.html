@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatosReservas.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Help4Traveling_Promo_&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Datos</a> &gt; <span class="el_source">DatosReservas.java</span></div><h1>DatosReservas.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Datos;
+
+import Logica.Cliente;
+import Logica.Reserva;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author ezequiel
+ */
+public class DatosReservas {
+    
+<span class="nc" id="L24">    public DatosReservas(){</span>
+        
+<span class="nc" id="L26">    }</span>
+    public int insertarReserva(String fecha, int precio, String estado, String cliente) throws SQLException, ClassNotFoundException{
+        Connection conn;
+<span class="nc" id="L29">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L30">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L32">        int numRes = 0;</span>
+        
+<span class="nc" id="L34">        PreparedStatement st = conn.prepareStatement(&quot;insert into reservas (fecha, precio, estado, nicknameCliente)values (? ,? ,? ,?)&quot;, Statement.RETURN_GENERATED_KEYS);</span>
+        
+<span class="nc" id="L36">        st.setString(1, fecha);</span>
+<span class="nc" id="L37">        st.setInt(2, precio);</span>
+<span class="nc" id="L38">        st.setString(3, estado);</span>
+<span class="nc" id="L39">        st.setString(4, cliente);</span>
+        
+<span class="nc" id="L41">        st.executeUpdate();</span>
+<span class="nc" id="L42">        ResultSet rs = st.getGeneratedKeys();</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        if(rs != null &amp;&amp; rs.next()){</span>
+<span class="nc" id="L44">           numRes = rs.getInt(1);</span>
+        }
+
+<span class="nc" id="L47">        conn.close();</span>
+<span class="nc" id="L48">        return numRes;</span>
+    }
+    
+    public void insertarServicioReserva(int numRes, String nombreServicio, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin, int precioUnit ) throws SQLException, ClassNotFoundException{
+       Connection conn;
+<span class="nc" id="L53">       ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L54">       conn = conexion.conectar();</span>
+       
+<span class="nc" id="L56">       PreparedStatement st = conn.prepareStatement(&quot;insert into cantidadreservasservicios values (?, ?, ?, ?, ?, ?, ?, ?)&quot;);</span>
+       
+<span class="nc" id="L58">       st.setInt(1, numRes);</span>
+<span class="nc" id="L59">       st.setString(2, nombreServicio);</span>
+<span class="nc" id="L60">       st.setString(3, nombreProveedor);</span>
+<span class="nc" id="L61">       st.setInt(4, cantidad);</span>
+<span class="nc" id="L62">       st.setInt(5, totalLinea);</span>
+<span class="nc" id="L63">       st.setString(6, fechaInicio);</span>
+<span class="nc" id="L64">       st.setString(7, fechaFin);</span>
+<span class="nc" id="L65">       st.setInt(8, precioUnit);</span>
+       
+<span class="nc" id="L67">       st.executeUpdate();</span>
+<span class="nc" id="L68">       conn.close();</span>
+       
+<span class="nc" id="L70">    }</span>
+    
+    public void insertarPromocionReserva(int numRes, String nombrePromocion, String nombreProveedor, int cantidad, int totalLinea, String fechaInicio, String fechaFin, int precioUnit) throws SQLException, ClassNotFoundException{
+        Connection conn;
+<span class="nc" id="L74">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L75">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L77">        PreparedStatement st = conn.prepareStatement(&quot;insert into cantidadreservaspromociones values(?, ?, ?, ?, ?, ?, ?, ?)&quot;);</span>
+<span class="nc" id="L78">        st.setInt(1, numRes);</span>
+<span class="nc" id="L79">        st.setString(2, nombrePromocion);</span>
+<span class="nc" id="L80">        st.setString(3, nombreProveedor);</span>
+<span class="nc" id="L81">        st.setInt(4, cantidad);</span>
+<span class="nc" id="L82">        st.setInt(5, totalLinea);</span>
+<span class="nc" id="L83">        st.setString(6, fechaInicio);</span>
+<span class="nc" id="L84">        st.setString(7, fechaFin);</span>
+<span class="nc" id="L85">        st.setInt(8, precioUnit);</span>
+        
+<span class="nc" id="L87">        st.executeUpdate();</span>
+<span class="nc" id="L88">        conn.close();</span>
+        
+                
+<span class="nc" id="L91">    }</span>
+    
+    public void deleteReservas(int numReserva) throws SQLException, ClassNotFoundException{
+        Connection conn;
+<span class="nc" id="L95">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L96">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L98">            PreparedStatement st = conn.prepareStatement(&quot;delete from reservas where reservas.numero = ?&quot;);</span>
+<span class="nc" id="L99">            st.setInt(1, numReserva);</span>
+<span class="nc" id="L100">        st.executeUpdate();</span>
+<span class="nc" id="L101">        conn.close();</span>
+                
+        
+<span class="nc" id="L104">    }</span>
+    
+    public void deleteCantResServ(int numRes) throws SQLException, ClassNotFoundException{
+        Connection conn;
+<span class="nc" id="L108">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L109">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L111">        PreparedStatement st = conn.prepareStatement(&quot;delete from cantidadreservasservicios where cantidadreservasservicios.numeroReserva = ? &quot;);</span>
+<span class="nc" id="L112">        st.setInt(1, numRes);</span>
+        
+<span class="nc" id="L114">        st.executeUpdate();</span>
+<span class="nc" id="L115">        conn.close();</span>
+<span class="nc" id="L116">    }</span>
+    public void deleteCantResPromo(int numRes) throws SQLException, ClassNotFoundException{
+        Connection conn;
+<span class="nc" id="L119">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L120">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L122">        PreparedStatement st = conn.prepareStatement(&quot;delete from cantidadreservaspromociones where cantidadreservaspromociones.numeroReserva = ? &quot;);</span>
+<span class="nc" id="L123">        st.setInt(1, numRes);</span>
+        
+<span class="nc" id="L125">        st.executeUpdate();</span>
+<span class="nc" id="L126">        conn.close();</span>
+<span class="nc" id="L127">    }</span>
+    public ArrayList&lt;Reserva&gt; getAllReservas() throws SQLException, ClassNotFoundException{
+<span class="nc" id="L129">        ArrayList&lt;Reserva&gt; todasReservas = new ArrayList();</span>
+        
+        
+        Connection conn;
+<span class="nc" id="L133">        ConexionBD conexion = new ConexionBD();</span>
+<span class="nc" id="L134">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L136">        Statement st = conn.createStatement();</span>
+<span class="nc" id="L137">        ResultSet rs = st.executeQuery(&quot;Select * from reservas &quot;);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L139">            Reserva reserva = new Reserva();</span>
+<span class="nc" id="L140">            reserva.setNumero(rs.getInt(&quot;numero&quot;));</span>
+<span class="nc" id="L141">            reserva.setFecha(LocalDate.parse(rs.getString(&quot;fecha&quot;)));</span>
+<span class="nc" id="L142">            reserva.setPrecio(rs.getInt(&quot;precio&quot;));</span>
+<span class="nc" id="L143">            reserva.setEstado(rs.getString(&quot;estado&quot;));</span>
+<span class="nc" id="L144">            Cliente cli = new Cliente();</span>
+<span class="nc" id="L145">            cli.setNickname(rs.getString(&quot;nicknameCliente&quot;));</span>
+<span class="nc" id="L146">            reserva.setCliente(cli);</span>
+<span class="nc" id="L147">            todasReservas.add(reserva);</span>
+<span class="nc" id="L148">        }</span>
+<span class="nc" id="L149">        conn.close();</span>
+<span class="nc" id="L150">        return todasReservas;</span>
+        
+    }
+    
+    public int getNumeroReserva(String fecha, int precio, String nickname) throws SQLException, ClassNotFoundException{
+<span class="nc" id="L155">        ConexionBD conexion = new ConexionBD();</span>
+        
+        Connection conn;
+        
+<span class="nc" id="L159">        conn = conexion.conectar();</span>
+        
+<span class="nc" id="L161">        PreparedStatement pConsulta = conn.prepareCall(&quot;select max(numero) numero from reservas where fecha = ? and precio = ? and nicknameCliente = ? and estado = 'REGISTRADA'&quot;);</span>
+        
+<span class="nc" id="L163">        pConsulta.setString(1, fecha);</span>
+<span class="nc" id="L164">        pConsulta.setInt(2, precio);</span>
+<span class="nc" id="L165">        pConsulta.setString(3, nickname);</span>
+        
+<span class="nc" id="L167">        ResultSet rs = pConsulta.executeQuery();</span>
+        
+<span class="nc" id="L169">        int numeroConsulta = 0;</span>
+        
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        while(rs.next()){</span>
+<span class="nc" id="L172">            numeroConsulta = rs.getInt(&quot;numero&quot;);</span>
+        }
+        
+<span class="nc" id="L175">        rs.close();</span>
+<span class="nc" id="L176">        conn.close();</span>
+        
+<span class="nc" id="L178">        return numeroConsulta;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
