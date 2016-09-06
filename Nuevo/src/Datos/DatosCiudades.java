@@ -15,8 +15,6 @@ import Logica.Pais;
  */
 public class DatosCiudades {
     
-    //private ConexionBD conexion =  new ConexionBD();
-    
     public ArrayList<Ciudad> selectAllCiudades() throws SQLException, ClassNotFoundException{
         ArrayList ciudades = new ArrayList();
         int indice = 0;
