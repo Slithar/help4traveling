@@ -46,7 +46,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         initComponents();
     }
     
-    public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat,String servicio) {
+    /*public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat,String servicio) {
     initComponents();
 
     this.icprov = icprov;
@@ -74,7 +74,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
     lblImagen1.setVisible(true);
 
-    /*DefaultTableModel modelo = new DefaultTableModel();*/
     modeloTabla modelo = new modeloTabla();
     modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
 
@@ -117,7 +116,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 //     KeyEvent keyEvent = new KeyEvent("");
 //    this.txtBusqueda.dispatchEvent(keyEvent);
 
-}
+}*/
         
     public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
@@ -208,28 +207,13 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         /*DefaultTableModel modelo = new DefaultTableModel();*/
         modeloTabla modelo = new modeloTabla();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+        modelo.addRow(new Object[]{NombreDelServicio, ProveedorDelServicio});
+        tbServicios.setModel(modelo);
         
-        eventoBusqueda(NombreDelServicio);
+        //eventoBusqueda(NombreDelServicio);
         panelBusqueda.setVisible(false);
         //btnAceptar.setVisible(false);
         panelBotonAceptar.setVisible(false);
-        /*comentario*/
-        /*try{
-            ArrayList<DataServicio> datosServicios = icprov.getServicios();
-            
-            for(int i = 0; i < datosServicios.size(); i++){
-                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
-            }
-            
-            tbServicios.setModel(modelo);
-        }
-        catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(ClassNotFoundException ex){
-            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }*/
         
         //panelTabla.setVisible(false);
         panelDatos.setVisible(true);
@@ -338,7 +322,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }        
+            }               
     }
 
     /**
