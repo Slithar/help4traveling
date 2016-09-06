@@ -31,16 +31,13 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
      */
     
     private String rutaImagen = "";
-    //private Usuario nuevoUsuario;
     private IControladorClientes iccli;
-    private IControladorProveedores icprov;
-    //private 
     
     public ifrmAltaUsuarios() {        
         initComponents();               
     }
     
-    public ifrmAltaUsuarios(IControladorClientes iccli, IControladorProveedores icprov) {
+    public ifrmAltaUsuarios(IControladorClientes iccli) {
         setTitle("Registro de clientes");
         
         initComponents();
@@ -52,7 +49,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         limpiar();
         
         this.iccli = iccli;
-        this.icprov = icprov;
     }
     
     public void setImagenPerfil(String ruta, String tipo){
@@ -76,18 +72,16 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
         
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel(new String[]{"Cliente", "Proveedor"});
-        
         txtNickname.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
         txtCorreo.setText("");
-        spnDia.setModel(new SpinnerNumberModel(1,1,31,1));
+        spnDia.setModel(new SpinnerNumberModel(1,1,31,1)); //(valor por defecto, mínimo, máximo, orden incremental)
         spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
         Calendar fecha = Calendar.getInstance();
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
         setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
-        setRutaImagen("../Logica/perfiles/perfil.PNG");
+        setRutaImagen("src/Logica/perfiles/perfil.PNG");
         
         txtNickname.requestFocus();
     }
@@ -413,7 +407,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                                 txtCorreo.requestFocus();
                             }
                             else{
-                                if(this.rutaImagen != "../Logica/perfiles/perfil.PNG"){
+                                if(this.rutaImagen != "src/Logica/perfiles/perfil.PNG"){
                                     imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
                                     this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
                                 }

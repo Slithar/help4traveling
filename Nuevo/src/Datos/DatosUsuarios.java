@@ -20,8 +20,7 @@ public class DatosUsuarios {
     }
     
     public int selectCountUsuarios(String nickname) throws SQLException, ClassNotFoundException{
-        int num = 0;
-        
+        int num = 0;        
                 
         Connection conn;
         

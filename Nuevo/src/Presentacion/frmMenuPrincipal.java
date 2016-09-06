@@ -311,7 +311,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_NuevaCatActionPerformed
 
     private void miRegClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegClientesActionPerformed
-       ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this.iccli, this.icprov);
+       ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this.iccli);
        nuevoPanel.add(vAltaUsuarios);
        vAltaUsuarios.show();
         

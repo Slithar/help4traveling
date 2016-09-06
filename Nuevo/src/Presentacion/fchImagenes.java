@@ -133,13 +133,13 @@ public class fchImagenes extends javax.swing.JFrame {
             }
             else{
                 if(iAltaUsuario != null)
-                    JOptionPane.showMessageDialog(iAltaUsuario, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(iAltaUsuario, "El archivo seleccionado no es una imagen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 else if(iAltaServicio != null)
-                    JOptionPane.showMessageDialog(iAltaServicio, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                if(iAltaProveedores != null)
-                    JOptionPane.showMessageDialog(iAltaProveedores, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(iAltaServicio, "El archivo seleccionado no es una imagen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                else if(iAltaProveedores != null)
+                    JOptionPane.showMessageDialog(iAltaProveedores, "El archivo seleccionado no es una imagen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 else if(iActualizarServicio != null)
-                    JOptionPane.showMessageDialog(iActualizarServicio, "El archivo seleccionado no es una imágen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(iActualizarServicio, "El archivo seleccionado no es una imagen", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }   
         }
         else{

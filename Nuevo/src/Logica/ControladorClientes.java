@@ -149,7 +149,9 @@ public class ControladorClientes implements IControladorClientes {
     public boolean existeNickname(String c) throws SQLException, ClassNotFoundException {
 
         DatosUsuarios cliente = new DatosUsuarios();
-        if (cliente.selectCountUsuarios(c) == 0) {
+        Cliente cli = new Cliente();
+        cli.setNickname(c);
+        if (cliente.selectCountUsuarios(cli.getNickname()) == 0) {
             return false;
         } else {
             return true;
@@ -161,7 +163,8 @@ public class ControladorClientes implements IControladorClientes {
         DatosClientes cliente = new DatosClientes();
         Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap<Integer, Reserva>());
         cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());
-        if (rutaImagen != "perfiles/perfil.PNG") {
+        //System.out.println(rutaImagen);
+        if (!rutaImagen.equals("src/Logica/perfiles/perfil.PNG")) {
             cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());
         }
     }
