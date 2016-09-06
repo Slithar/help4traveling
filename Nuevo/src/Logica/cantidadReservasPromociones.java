@@ -64,8 +64,7 @@ public class cantidadReservasPromociones {
 
     public void setPromocion(Promocion promocion) {
         this.promocion = promocion;
-    }
-    
+    }   
 
     public int getCantidad() {
         return cantidad;

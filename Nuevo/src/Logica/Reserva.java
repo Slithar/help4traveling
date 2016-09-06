@@ -95,6 +95,10 @@ public class Reserva {
     public void setPrecio(int Precio) {
         this.precio = Precio;
     }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
      
     
     

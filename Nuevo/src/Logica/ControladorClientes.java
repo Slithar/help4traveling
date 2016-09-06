@@ -51,12 +51,12 @@ public class ControladorClientes implements IControladorClientes {
         DatosUsuarios usuarios = new DatosUsuarios();
         ArrayList<Cliente> cli = clientes.selectAllObjetosClientes();
         for(int i = 0; i < cli.size(); i++){
-            System.out.println("CLIENTE: " + cli.get(i).getNickname());
+            //System.out.println("CLIENTE: " + cli.get(i).getNickname());
             cli.get(i).setImagenUsuario(usuarios.selectImagenPerfil(cli.get(i)));
             HashMap<Integer, Reserva> reservas = new HashMap<Integer, Reserva>();
             ArrayList<Reserva> resultadoReservas = clientes.selectReservasCliente(cli.get(i));
             for(int j = 0; j < resultadoReservas.size(); j++){
-                System.out.println(" --" + resultadoReservas.get(j).getNumero());
+                //System.out.println(" --" + resultadoReservas.get(j).getNumero());
                 reservas.put(resultadoReservas.get(j).getNumero(), resultadoReservas.get(j));
             }
             cli.get(i).setReservasCliente(reservas);
@@ -71,19 +71,19 @@ public class ControladorClientes implements IControladorClientes {
             
             Iterator itReserva = cliente.getReservasCliente().entrySet().iterator();
             
-            System.out.println("CLIENTE: "+ cliente.getNickname());
+            //System.out.println("CLIENTE: "+ cliente.getNickname());
             
             while(itReserva.hasNext()){
                 Map.Entry re = (Map.Entry) itReserva.next();
                 Reserva r = (Reserva) re.getValue();
-                System.out.println(" - RESERVA: " + r.getNumero());
+                //System.out.println(" - RESERVA: " + r.getNumero());
                 ArrayList<cantidadReservasPromociones> crp = clientes.selectPromocionesReserva(r.getNumero());
                 if(crp.size() > 0){
                     for(int i = 0; i < crp.size(); i++){
                         crp.get(i).setProveedor((Proveedor) ListaProveedores.get(crp.get(i).getNombreProveedor()));
-                        System.out.println("  ** PROVEEDOR PROMOCIÓN: " + crp.get(i).getProveedor().getNombreEmpresa());
+                        //System.out.println("  ** PROVEEDOR PROMOCIÓN: " + crp.get(i).getProveedor().getNombreEmpresa());
                         crp.get(i).setPromocion((Promocion) ListaPromociones.get(crp.get(i).getNombrePromocion()));
-                        System.out.println("  ** PROMOCION: " + crp.get(i).getPromocion().getNombre());
+                        //System.out.println("  ** PROMOCION: " + crp.get(i).getPromocion().getNombre());
                     }
                     r.setReservacantPromociones(crp);
                 }
@@ -95,10 +95,10 @@ public class ControladorClientes implements IControladorClientes {
                     for(int i = 0; i < crs.size(); i++){
                         
                         crs.get(i).setProveedor((Proveedor) ListaProveedores.get(crs.get(i).getNombreProveedor()));
-                        System.out.println("  ** PROVEEDOR SERVICIO: " + crs.get(i).getProveedor().getNombreEmpresa());
+                        //System.out.println("  ** PROVEEDOR SERVICIO: " + crs.get(i).getProveedor().getNombreEmpresa());
                         HashMap<String, Servicio> servs = crs.get(i).getProveedor().getServicios();
                         crs.get(i).setServicio(servs.get(crs.get(i).getNombreServicio()));
-                        System.out.println("  ** SERVICIO: " + crs.get(i).getServicio().getNombreServicio());
+                        //System.out.println("  ** SERVICIO: " + crs.get(i).getServicio().getNombreServicio());
                     }
 
                     r.setServiciosReserva(crs);

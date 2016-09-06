@@ -47,9 +47,7 @@ public class Imagen {
         };
        
         Files.copy(desde, hasta, opciones);
-        this.path = "src/Logica/perfiles/" + nombre + ".jpg";
-        
-        
+        this.path = "src/Logica/perfiles/" + nombre + ".jpg";       
     }
     
 }

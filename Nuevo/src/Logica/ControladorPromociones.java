@@ -52,7 +52,7 @@ public class ControladorPromociones implements IControladorPromociones{
         
         for(int i = 0; i < proms.size(); i++){
             Promocion p = (Promocion) proms.get(i);
-            System.out.println("PROMOCION: " + p.getNombre());
+            //System.out.println("PROMOCION: " + p.getNombre());
             ArrayList<Servicio> servs = promociones.selectServiciosPromocion(p.getNombre());
             ArrayList<Servicio> serviciosDePromocion = new ArrayList<Servicio>();
             for(int j = 0; j < servs.size(); j++){

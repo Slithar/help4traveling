@@ -34,12 +34,12 @@ public class ControladorCategorias implements IControladorCategorias{
         Iterator it = ListaCategorias.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry cat = (Map.Entry) it.next();
-            System.out.println("* " + cat.getKey());
+            //System.out.println("* " + cat.getKey());
             ArrayList<Categoria> catHijas = categorias.selectCategoriasHijas(String.valueOf(cat.getKey()));
             Categoria c = (Categoria) cat.getValue();
             c.setCategoriasHijas(catHijas);
             for(int i = 0; i < c.getCategoriasHijas().size(); i++){
-                System.out.println("-- " + c.getCategoriasHijas().get(i).getNombre());
+                //System.out.println("-- " + c.getCategoriasHijas().get(i).getNombre());
             }
         }
     }

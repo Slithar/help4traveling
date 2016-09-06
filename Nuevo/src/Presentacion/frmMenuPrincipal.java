@@ -42,6 +42,33 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         
         this.setIconImage(icono);
+        
+        
+        /*try{
+            iccat.actualizarCategorias();
+            icprov.setListaCategorias(iccat.getListaCategorias());
+            icprov.actualizarProveedores();
+            icprov.actualizarCiudades();
+            icprom.setListaProveedores(icprov.getListaProveedores());
+            icprom.actualizarPromociones();
+            iccli.setListaPromociones(icprom.getListaPromociones());
+            iccli.setListaProveedores(icprov.getListaProveedores());            
+            iccli.actualizarClientes();
+        }
+        catch(SQLException ex){
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
+        System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
+        System.out.println("CIUDADES: " + icprov.getCantCiudades());
+        System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
+        System.out.println("CLIENTES: " + iccli.getCantClientes());*/
     }
     
     public void setCursorFrame(Cursor c){
@@ -278,7 +305,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miActualizarReservaActionPerformed
 
     private void NuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaCatActionPerformed
-        
         nuevaCateFrame agregar = new nuevaCateFrame();
         add(agregar);
         agregar.setVisible(true);
@@ -295,6 +321,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         ifrmAltaServicio vAltaServicio = new ifrmAltaServicio(icprov, iccat);
         nuevoPanel.add(vAltaServicio);
         vAltaServicio.setVisible(true);        
+        
     }//GEN-LAST:event_miRegServiciosNuevoActionPerformed
 
     private void miCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCategoriasActionPerformed
@@ -364,7 +391,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 vProgreso.setVisible(false);
             }
             catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             catch(ClassNotFoundException ex){
@@ -375,13 +403,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         else{
             vProgreso.setVisible(false);
             this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
-        }
-        
-        
-        
-        
-        //JOptionPane.showMessageDialog(this, "Datos eliminados correctamente");
-        
+        }       
     }//GEN-LAST:event_miDatosDePruebaActionPerformed
 
     private void mEliminarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mEliminarDatosActionPerformed
@@ -409,6 +431,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             }
             catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             catch(ClassNotFoundException ex){

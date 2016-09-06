@@ -27,13 +27,7 @@ public class Presentacion {
         menuPrincipal.setVisible(true);
         menuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuPrincipal.setTitle("Help4Traveling - Menú principal");
-        
-        
-
-    }
-    
-    
-    
+    }    
 }
 
 
