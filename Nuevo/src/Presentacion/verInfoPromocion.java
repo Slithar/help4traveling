@@ -240,6 +240,7 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado promoción", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
+            dbServicios.removeAllItems();
             String promocion = "";
             promocion = this.lstPromociones.getSelectedValue();
             //modelo.clear();

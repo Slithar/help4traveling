@@ -359,6 +359,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         txtBusqueda = new javax.swing.JTextField();
         panelBotonAceptar = new javax.swing.JPanel();
         btnAceptar = new javax.swing.JButton();
+        panelBotonAceptar1 = new javax.swing.JPanel();
+        btnAceptar1 = new javax.swing.JButton();
         panelDatos = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -455,17 +457,42 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         panelBotonAceptar.setLayout(panelBotonAceptarLayout);
         panelBotonAceptarLayout.setHorizontalGroup(
             panelBotonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonAceptarLayout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
+            .addGroup(panelBotonAceptarLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBotonAceptarLayout.setVerticalGroup(
             panelBotonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonAceptarLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(37, 37, 37)
                 .addComponent(btnAceptar)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
+        btnAceptar1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnAceptar1.setText("Aceptar");
+        btnAceptar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBotonAceptar1Layout = new javax.swing.GroupLayout(panelBotonAceptar1);
+        panelBotonAceptar1.setLayout(panelBotonAceptar1Layout);
+        panelBotonAceptar1Layout.setHorizontalGroup(
+            panelBotonAceptar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonAceptar1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAceptar1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+        );
+        panelBotonAceptar1Layout.setVerticalGroup(
+            panelBotonAceptar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonAceptar1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(btnAceptar1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelTablaLayout = new javax.swing.GroupLayout(panelTabla);
@@ -480,9 +507,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 .addGap(0, 27, Short.MAX_VALUE)
                 .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(panelBotonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                        .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                    .addComponent(panelBusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
         );
         panelTablaLayout.setVerticalGroup(
@@ -724,10 +750,11 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                     //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
 
                     if(imagenesDelServicio.size() == 0){
-
+                        lblImagen1.setVisible(false);
                         lblImagenes.setVisible(true);
                     }
                     else{
+                        lblImagen1.setVisible(true);
                         for(int i = 0; i < imagenesDelServicio.size(); i++){
                             File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
                             String rutaAbsoluta = ficheroImagen.getAbsolutePath();
@@ -919,6 +946,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAceptar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -940,6 +968,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblProveedor;
     private javax.swing.JList<String> lstCategorias;
     private javax.swing.JPanel panelBotonAceptar;
+    private javax.swing.JPanel panelBotonAceptar1;
     private javax.swing.JPanel panelBusqueda;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelGeneral;
