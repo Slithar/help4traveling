@@ -45,79 +45,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     public ifrmInformacionServicios() {
         initComponents();
     }
-    
-    /*public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat,String servicio) {
-    initComponents();
-
-    this.icprov = icprov;
-    this.iccat = iccat;
-
-
-
-    Dimension tamanioVentana = this.getSize();
-
-    setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
-
-    panelDatos.setVisible(false);
-
-    lstCategorias.setBackground(UIManager.getColor("Label.background"));
-    lblDescripcion.setBackground(UIManager.getColor("Label.background"));
-
-
-    panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
-    tbServicios.requestFocus();
-
-    lblImagen1.addMouseListener(new OyenteLabel());
-    lblImagen1.setSize(143, 143);
-    panelImagenes.add(lblImagen1);
-    lblImagen1.setLocation(0, 0);
-    lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
-    lblImagen1.setVisible(true);
-
-    modeloTabla modelo = new modeloTabla();
-    modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
-
-    try{
-        ArrayList<DataServicio> datosServicios = icprov.getServicios();
-
-        for(int i = 0; i < datosServicios.size(); i++){
-            modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
-        }
-
-        tbServicios.setModel(modelo);
-    }
-    catch(SQLException ex){
-        JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-    }
-    catch(ClassNotFoundException ex){
-        JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-    }
-    this.tbServicios.selectAll();
-    this.txtBusqueda.setText(servicio);
-    this.txtBusqueda.setEditable(false);
-    DefaultTableModel modelo2 = new DefaultTableModel(); 
-    modelo2.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
-    modelo2.addRow(new Object[]{servicio, "prov"});
-    int a = 0;
-    boolean control = true;
-    while(a<modelo.getRowCount() && control==true){
-        if(modelo.getValueAt(a, 0).equals(modelo2.getValueAt(0, 0))){
-            modelo2.setRowCount(0);
-            modelo2.addRow(new Object[]{modelo.getValueAt(a, 0),modelo.getValueAt(a, 1)});
-            modelo.setRowCount(0);
-            modelo.addRow(new Object[]{modelo2.getValueAt(0, 0),modelo2.getValueAt(0, 1)});
-            control = false;
-        }
-        a++;
-    }
-    this.tbServicios.selectAll();
-    this.btnAceptar.doClick();
-//     KeyEvent keyEvent = new KeyEvent("");
-//    this.txtBusqueda.dispatchEvent(keyEvent);
-
-}*/
-        
+           
     public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
         
@@ -148,8 +76,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblDescripcion.setEditable(false);
         
         lblDescripcion.setEditable(false);
-        
-        /*DefaultTableModel modelo = new DefaultTableModel();*/
         modeloTabla modelo = new modeloTabla();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
         
@@ -178,9 +104,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         this.icprov = icprov;
         this.iccat = iccat;
-        
-        
-        
+               
         Dimension tamanioVentana = this.getSize();
         
         setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
@@ -204,18 +128,14 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         
         
-        /*DefaultTableModel modelo = new DefaultTableModel();*/
         modeloTabla modelo = new modeloTabla();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
         modelo.addRow(new Object[]{NombreDelServicio, ProveedorDelServicio});
         tbServicios.setModel(modelo);
         
-        //eventoBusqueda(NombreDelServicio);
         panelBusqueda.setVisible(false);
-        //btnAceptar.setVisible(false);
         panelBotonAceptar.setVisible(false);
         
-        //panelTabla.setVisible(false);
         panelDatos.setVisible(true);
         
         if(lblImagen3 != null){
@@ -246,7 +166,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 if(datosServicio.getDescripcionServicio() != ""){
                     lblDescripcion.setText(datosServicio.getDescripcionServicio());
                     lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
-                    //lblOrigen.
 
                     DataCiudad ciudad = icprov.getCiudadOrigen(NombreDelServicio, ProveedorDelServicio);
                     lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
@@ -269,8 +188,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
                     ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes(NombreDelServicio, ProveedorDelServicio);
 
-                    //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
-
                     if(imagenesDelServicio.size() == 0){
 
                         lblImagenes.setVisible(true);
@@ -291,8 +208,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 else{
                     panelDatos.setVisible(false);
                     if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
-                        txtBusqueda.setText("");                        
-                        //modeloTabla modelo = new modeloTabla();
+                        txtBusqueda.setText("");       
                         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
 
                         try{
@@ -677,9 +593,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             tbServicios.requestFocus();
         } 
         else{
-            
-            //System.out.println(tbServicios.getValueAt(tbServicios.getSelectedRow(), 0) + " - " + tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-            
             if(lblImagen3 != null){
                 lblImagen3.setVisible(false);
                 lblImagen3 = null;
@@ -708,7 +621,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 if(datosServicio.getDescripcionServicio() != ""){
                     lblDescripcion.setText(datosServicio.getDescripcionServicio());
                     lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
-                    //lblOrigen.
 
                     DataCiudad ciudad = icprov.getCiudadOrigen((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
                     lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
@@ -730,8 +642,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                     lstCategorias.setModel(modeloLista);
 
                     ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
-
-                    //System.out.println("Ruta: " + imagenesDelServicio.get(0).getPath());
 
                     if(imagenesDelServicio.size() == 0){
                         lblImagen1.setVisible(false);
@@ -792,10 +702,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     public void setImagenLabel(String ruta, String tipo){
-        //System.out.println("entre");
         JLabel lblImagen = labelActual();
         if(tipo.equals("defecto")){
-            //System.out.println("hola");
             ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
             ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
             lblImagen.setIcon(imagenDimensionada);
@@ -806,7 +714,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             lblImagen.setIcon(imagenDimensionada);
             
             if(lblImagen == lblImagen1){
-                //System.out.println("2");
                 rutaImagen1 = ruta;
                 lblImagen2 = new JLabel();
                 lblImagen2.setSize(143, 143);
@@ -814,12 +721,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 lblImagen2.setLocation(190, 0);
                 lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 lblImagen2.addMouseListener(new OyenteLabel());
-                //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen2.setComponentPopupMenu(eliminarImagen1);
-                //agregarPopup(2);
             }
             else if(lblImagen == lblImagen2){
-                //System.out.println("3");
                 rutaImagen2 = ruta;
                 lblImagen3 = new JLabel();
                 lblImagen3.setSize(143, 143);
@@ -827,9 +730,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 lblImagen3.setLocation(380, 0);
                 lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 lblImagen3.addMouseListener(new OyenteLabel());
-                //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen3.setComponentPopupMenu(eliminarImagen2);
-                //agregarPopup(3);
             }
             else{
                 rutaImagen3 = ruta;
@@ -856,7 +756,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            //JOptionPane.showMessageDialog(null, "entre");
             if(e.getButton() == MouseEvent.BUTTON1){
                 if((JLabel) e.getSource() == lblImagen1)
                     visor = new frmVisor(rutaImagen1);
@@ -903,8 +802,8 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             tbServicios.setModel(modelo);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -920,7 +819,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbServiciosKeyTyped
 
     private void tbServiciosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyPressed
-        //JOptionPane.showMessageDialog(this, "No");
+        
     }//GEN-LAST:event_tbServiciosKeyPressed
 
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed

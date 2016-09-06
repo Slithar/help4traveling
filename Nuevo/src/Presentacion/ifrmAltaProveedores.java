@@ -43,7 +43,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
        
         setTitle("Registro de proveedores");
         
-        //this.setSize(780, 570);
         lblImagenPerfil.setSize(200, 200);
         
         perfiles = new ArrayList<LabelImagen>();
@@ -83,14 +82,8 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
         txtNombreEmpresa.setText("");
         txtSitioWeb.setText("");
-        /*cmbTipoUsuario.setSelectedItem("Cliente");
-        txtEmpresa.setText("");
-        txtSitioWeb.setText("");
-        aparecerDatosProveedor(false);*/
-        //perfiles = new ArrayList<LabelImagen>();
         if(perfiles.size() > 0){
             Container parent = perfiles.get(0).getParent();
-            //int i = 0;
             while(perfiles.size() > 0){
                 perfiles.remove(0);
             }
@@ -101,8 +94,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         
         refrescarPerfiles();
         setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
-        
-        //JOptionPane.showMessageDialog(this, perfiles.);
         
         txtNickname.requestFocus();
     }
@@ -117,7 +108,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
             lblImagen1.addMouseListener(new OyenteLabel());
             LabelImagen imagen = new LabelImagen(ruta);
-            //imagen.setSize(100, 100);
             
             JPopupMenu jpmEliminar = new JPopupMenu();
             MenuItemPopup pm = new MenuItemPopup(lblImagen1, "Eliminar");
@@ -130,24 +120,16 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             if(perfiles.get(0) == imagen){
                 setImagenPerfil(ruta, "absoluta");
                 panelImagenes.add(lblImagen1);
-                /*lblImagen1.setLocation(0, 0);
-                ImageIcon imagenPerfil = new ImageIcon(ruta);
-                ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen1.getWidth(), lblImagen1.getHeight(), Image.SCALE_DEFAULT));
-                lblImagen1.setIcon(imagenDimensionadaPerfil);
-                lblImagen1.setRutaImagen(ruta);*/
             }
-            //else{
             lblImagen1.setVisible(false);
             refrescarPerfiles();
-            //}
         }
         
     }
     
     public void refrescarPerfiles(){
         int i = 0;
-        for( i = 0; i < perfiles.size(); i++){
-            //JOptionPane.showMessageDialog(this, perfiles.get(i).getRutaImagen());            
+        for( i = 0; i < perfiles.size(); i++){            
             ImageIcon imagenPerfil = new ImageIcon(perfiles.get(i).getRutaImagen());
             ImageIcon imagenDimensionadaPerfil = new ImageIcon(imagenPerfil.getImage().getScaledInstance(perfiles.get(i).getWidth(), perfiles.get(i).getHeight(), Image.SCALE_DEFAULT));
             perfiles.get(i).setIcon(imagenDimensionadaPerfil);       
@@ -199,8 +181,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             this.addMouseListener(new OyenteLabel());
             
-            /**** ACÁ ME QUEDE *****/
-            
             JPopupMenu jpmEliminar = new JPopupMenu();
             MenuItemPopup pm = new MenuItemPopup(this, "Eliminar");
             pm.addActionListener(new OyentePopup());
@@ -245,7 +225,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if(e.getButton() == MouseEvent.BUTTON1){
-                //setImagenPerfil()
                 LabelImagen elemento = (LabelImagen) e.getSource();
                 setImagenPerfil(elemento.getRutaImagen(), "absoluta");
             }
@@ -301,13 +280,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                 
                 i++;
             }
-        }
-
-      
-        
+        }       
     }
-
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -607,8 +582,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        //System.out.println(spnAnio.getValue());
-        //System.out.println(cmbTipoUsuario.getSelectedIndex());
         boolean imagenCorrecta = false;
         LocalDate fechaNac;
 
@@ -707,7 +680,6 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
 
                     }
                     catch(SQLException ex){
-                        //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                         JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                         //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -718,75 +690,24 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                         lblImagenPerfil.requestFocus();
                     }
                 }
-            }
-                //}
-        }
-        /*else{
-                //nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
-
-                if(!iccli.correoValido(txtCorreo.getText())){
-                    JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    txtCorreo.requestFocus();
-                }
-                else{
-                    try{
-                        if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                        imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
-                        else
-                        imagenCorrecta = true;
-                    }
-                    catch(IOException ex){
-                        JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                        lblImagenPerfil.requestFocus();
-                    }
-                    if(imagenCorrecta){
-
-                        try{
-                            if(iccli.existeNickname(txtNickname.getText())){
-                                JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                txtNickname.requestFocus();
-                            }
-                            else{
-                                iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
-                                JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                limpiar();
-                            }
-                        }
-                        catch(SQLException ex){
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-                        catch(ClassNotFoundException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-
-                    }
-                }
-            }*/
-        
-        //}
+            }               
+        }       
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void lblImagenPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenPerfilMouseClicked
-        /*if(evt.getButton() == MouseEvent.BUTTON1){
-            fchImagenes selectorImagen = new fchImagenes(this);
-            selectorImagen.setVisible(true);
-        }*/
-
+        
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
     private void txtNombreEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreEmpresaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtNombreEmpresaActionPerformed
 
     private void lblAgregarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarPerfilMouseClicked

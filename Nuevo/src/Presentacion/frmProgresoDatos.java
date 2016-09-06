@@ -28,8 +28,6 @@ public class frmProgresoDatos extends javax.swing.JFrame {
         Dimension tamanioVentana = this.getSize();
         setLocation((1900 - tamanioVentana.width)/2, (1000 - tamanioVentana.height)/2);
         
-        //this.setUndecorated(true);
-        
         lblSpinner.setSize(75, 75);
         
         lblTitulo.setText(label);
@@ -37,8 +35,6 @@ public class frmProgresoDatos extends javax.swing.JFrame {
         ImageIcon spinner = new ImageIcon(getClass().getResource("Imagenes/cargando.png"));
         ImageIcon spinnerDimensionado = new ImageIcon(spinner.getImage().getScaledInstance(lblSpinner.getWidth(), lblSpinner.getHeight(), Image.SCALE_DEFAULT));
         lblSpinner.setIcon(spinnerDimensionado);
-        //pgbProgreso.setValue(n);
-        //pgbProgreso.setValue(50);
     }
     
 

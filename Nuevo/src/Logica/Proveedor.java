@@ -33,9 +33,7 @@ public class Proveedor extends Usuario {
         
         this.nombreEmpresa = nombreEmpresa;
         this.link = link;
-        //JOptionPane.showMessageDialog(null, rutaProveedor.size());
         for(int i = 0; i < rutaProveedor.size(); i++){
-            //JOptionPane.showMessageDialog(null, rutaProveedor.get(i));
             this.imagenesUsuario.add(new Imagen(rutaProveedor.get(i), this));
         }
         this.servicios = servicios;

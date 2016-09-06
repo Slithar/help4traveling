@@ -41,14 +41,6 @@ public class Usuario {
              
     }
 
-    /*public Imagen getImagenUsuario() {
-        return imagenUsuario;
-    }
-
-    public void setImagenUsuario(Imagen imagenUsuario) {
-        this.imagenUsuario = imagenUsuario;
-    }*/
-
     public String getNickname() {
         return nickname;
     }
@@ -101,27 +93,5 @@ public class Usuario {
             return true;
         else
             return false;
-    }
-    
-    /*public boolean fechaValida(){
-        
-        if(fechaNac.getMonthValue() == 1 || fechaNac.getMonthValue() == 3 || fechaNac.getMonthValue() == 5 || fechaNac.getMonthValue() == 7 || fechaNac.getMonthValue() == 8 || fechaNac.getMonthValue() == 10 || fechaNac.getMonthValue() == 12){
-            return true;
-        }
-        else if(fechaNac.getMonthValue() == 4 || fechaNac.getMonthValue() == 6 || fechaNac.getMonthValue() == 9 || fechaNac.getMonthValue() == 11){
-            if(fechaNac.getDayOfMonth()== 31)
-                return false;
-            else
-                return true;
-        }
-        else{
-            if(fechaNac.getDayOfMonth() == 30 || fechaNac.getDayOfMonth() == 31)
-                return false;
-            else
-                return true;
-        }
-    }*/
-    
-    
-    
+    }   
 }

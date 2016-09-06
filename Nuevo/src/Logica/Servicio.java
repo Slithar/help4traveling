@@ -41,14 +41,8 @@ public class Servicio {
         if(tieneDestino)
             this.destino = destino;
         else
-            this.destino = new Ciudad();
-        
-        //System.out.println(this.destino.getNombre());                
+            this.destino = new Ciudad();               
     }
-
-    /*public Servicio() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
     
     public ArrayList<Categoria> getCategoriasServicio() {
         return categoriasServicio;

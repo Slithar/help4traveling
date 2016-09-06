@@ -47,7 +47,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         
         
         panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20));
-        //aparecerDatosProveedor(false);
         lblImagenPerfil.setSize(200, 200); 
         
         limpiar();
@@ -73,23 +72,11 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         this.rutaImagen = r;
     }
     
-    /*public void aparecerDatosProveedor(boolean b){
-        lblEmpresa.setVisible(b);
-        lblSitioWeb.setVisible(b);
-        txtEmpresa.setVisible(b);
-        txtSitioWeb.setVisible(b);
-    }*/
-    
     public void limpiar(){
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
         
         DefaultComboBoxModel modelo = new DefaultComboBoxModel(new String[]{"Cliente", "Proveedor"});
-        //cmbTipoUsuario.setModel(modelo);
-        /*if(cmbTipoUsuario)
-        cmbTipoUsuario.addItem("Cliente");
-        cmbTipoUsuario.addItem("Proveedor");*/
-        //cmbTipoUsuario.
         
         txtNickname.setText("");
         txtNombre.setText("");
@@ -99,14 +86,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
         Calendar fecha = Calendar.getInstance();
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
-        /*cmbTipoUsuario.setSelectedItem("Cliente");
-        txtEmpresa.setText("");
-        txtSitioWeb.setText("");
-        aparecerDatosProveedor(false);*/
         setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
         setRutaImagen("../Logica/perfiles/perfil.PNG");
-        
-        //panelPerfil.setBorder(BorderFactory.createTitledBorder("Imagen de perfil"));
         
         txtNickname.requestFocus();
     }
@@ -366,11 +347,10 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -383,8 +363,6 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        //System.out.println(spnAnio.getValue());
-        //System.out.println(cmbTipoUsuario.getSelectedIndex());
         boolean imagenCorrecta = false;
         LocalDate fechaNac;
                
@@ -448,8 +426,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                                 }
                             }
                         }
-                        catch(SQLException ex){
-                            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        catch(SQLException ex){                            
                             JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                             //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                         }
@@ -459,113 +436,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                             lblImagenPerfil.requestFocus();
                         }
-
-                        //}
                     }
-            }
-            /*boolean fechaValida = false;
-            
-            try{
-                LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-                fechaValida = true;
-            }
-            catch(DateTimeException ex){
-                JOptionPane.showMessageDialog(this, "El fomato de la fecha de nacimiento ingresada para el nuevo usuario es inválida", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                fechaValida = false;
-            }
-            
-            if(fechaValida){
-                fechaNac = LocalDate.of((Integer) spnAnio.getValue(), (Integer) spnMes.getValue(), (Integer) spnDia.getValue());
-                
-                    else{
-
-                        try{
-
-                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                                imagenCorrecta = icprov.copiarPerfil(txtNickname.getText(), rutaImagen);                            
-                            else
-                                imagenCorrecta = true;
-
-                        }
-                        catch(IOException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                            lblImagenPerfil.requestFocus();
-                        }
-                        if(imagenCorrecta){
-                            this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
-                            try{
-                               if(icprov.existeNickname(txtNickname.getText())){
-                                    JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                    txtNickname.requestFocus();
-                                }
-                               else{
-                                    if(icprov.existeNombreEmpresa(txtEmpresa.getText())){
-                                        JOptionPane.showMessageDialog(this, "El nombre de empresa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                        txtEmpresa.requestFocus();
-                                    }
-                                    else{
-                                        icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutaImagen, txtEmpresa.getText(), txtSitioWeb.getText());
-                                        JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                        limpiar();  
-                                    }
-                               }
-                            }
-                            catch(SQLException ex){
-                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
-                            catch(ClassNotFoundException ex){
-                                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
-
-                        }
-                    }
-                }
-                else{
-                    //nuevoUsuario = new Cliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, new ArrayList());
-
-                    if(!iccli.correoValido(txtCorreo.getText())){
-                       JOptionPane.showMessageDialog(this, "El formato del correo electrónico ingresado no es válido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                       txtCorreo.requestFocus();
-                    }
-                    else{
-                        try{
-                            if(this.rutaImagen != "../Logica/perfiles/perfil.PNG")
-                                imagenCorrecta = iccli.copiarPerfil(txtNickname.getText(), rutaImagen);
-                            else
-                                imagenCorrecta = true;
-                        }
-                        catch(IOException ex){
-                            JOptionPane.showMessageDialog(this, "No se ha podido agregar imagen de perfil", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                            lblImagenPerfil.requestFocus();
-                        }
-                        if(imagenCorrecta){
-                            this.rutaImagen = "src/Logica/perfiles/" + txtNickname.getText() + ".jpg";
-                            try{
-                               if(iccli.existeNickname(txtNickname.getText())){
-                                    JOptionPane.showMessageDialog(this, "El nickname ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                                    txtNickname.requestFocus();
-                                }
-                               else{
-                                   iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
-                                    JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                    limpiar();
-                               }
-                            }
-                            catch(SQLException ex){
-                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
-                            catch(ClassNotFoundException ex){
-                                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
-
-                        }
-                    }
-                }
-            } */           
+            }                       
         }        
     }//GEN-LAST:event_btnAceptarActionPerformed
 

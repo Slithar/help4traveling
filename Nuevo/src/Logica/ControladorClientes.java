@@ -60,12 +60,8 @@ public class ControladorClientes implements IControladorClientes {
                 reservas.put(resultadoReservas.get(j).getNumero(), resultadoReservas.get(j));
             }
             cli.get(i).setReservasCliente(reservas);
-            //System.out.println("***** " + cli.get(i).getNickname() + " *****");
             ListaClientes.put(cli.get(i).getNickname(), cli.get(i));
-            //cli.get(i).setReservasCliente();
         }
-        
-        //ACÁ VOY A ASOCIAR CADA RESERVA DE CLIENTE A CANTIDAD_RESERVA_PROMOCIONES O CANTIDAD_RESERVA_SERVICIOS
         
         Iterator it = ListaClientes.entrySet().iterator();
         
@@ -171,7 +167,6 @@ public class ControladorClientes implements IControladorClientes {
     }
 
     public ArrayList verInfoReserva() throws SQLException, ClassNotFoundException {
-        //solo obtiene los numeros de la reserva
         DatosClientes dataux = new DatosClientes();
         return dataux.verInfoReserva();
     }
@@ -205,27 +200,11 @@ public class ControladorClientes implements IControladorClientes {
         dtAux.setCliente(res.getCliente().getNickname());
         dtAux.setPrecio(res.getPrecio());
         dtAux.setFecha(res.getFecha());
-        dtAux.setEstado(String.valueOf(res.getEstado()));
-     /*if(res.getReservacantPromociones().size() > 0){
-         for(int i=0;i<res.getReservacantPromociones().size();i++){
-            cantidadReservasPromociones promAux= res.getReservacantPromociones().get(i);
-            DataCantidadReservasPromociones dataProm=new DataCantidadReservasPromociones(promAux.getCantidad(),promAux.getFechaInicio(),promAux.getFechaFin(),promAux.getPromocion().getNombre(), promAux.getProveedor().getNombreEmpresa());
-            listProm.add(dataProm);
-
-
-         }
-         for(int i=0;i<res.getServiciosReserva().size();i++){
-             cantidadReservasServicios promServ =res.getServiciosReserva().get(i);
-             DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(),promServ.getFechaInicio(),promServ.getFechaFin(),0,promServ.getNombreS(),promServ.getProveedor().getNombreEmpresa());
-             listServ.add(promServi);
-
-         }
-     }*/
-          
+        dtAux.setEstado(String.valueOf(res.getEstado()));          
      return dtAux;
-    //return new DataReserva();
         
     }
+    
     @Override
       public ArrayList getReservasPromo(String numeroProm){
         DatosClientes dataux = new DatosClientes();
@@ -240,23 +219,21 @@ public class ControladorClientes implements IControladorClientes {
         }
         
         return dataListProm;
-        //return new ArrayList();
       }
       
     @Override
-       public ArrayList getReservasServ(String numeroServ){
-          DatosClientes dataux = new DatosClientes();
-          ArrayList <cantidadReservasServicios> listServ= new ArrayList();
-          listServ = dataux.getServiciosPromo(numeroServ);
+        public ArrayList getReservasServ(String numeroServ){
+            DatosClientes dataux = new DatosClientes();
+            ArrayList <cantidadReservasServicios> listServ= new ArrayList();
+            listServ = dataux.getServiciosPromo(numeroServ);
           
-          ArrayList<DataCantidadReservasServicios> dataListServ = new ArrayList<DataCantidadReservasServicios>();
-           for(int i=0;i<listServ.size();i++){
-         cantidadReservasServicios promServ = listServ.get(i);
-         DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(), promServ.getTotalLinea(), promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());
-         dataListServ.add(promServi);
-         
-     }     
-           return dataListServ;
+            ArrayList<DataCantidadReservasServicios> dataListServ = new ArrayList<DataCantidadReservasServicios>();
+            for(int i=0;i<listServ.size();i++){
+                cantidadReservasServicios promServ = listServ.get(i);
+                DataCantidadReservasServicios promServi = new DataCantidadReservasServicios(promServ.getCantidad(), promServ.getTotalLinea(), promServ.getFechaInicio(),promServ.getFechaFin(), 0, promServ.getNombreS(), promServ.getProveedor().getNombreEmpresa());
+                dataListServ.add(promServi);
+            }     
+            return dataListServ;
       }
       
     public ArrayList<DataCliente> verInfoCliente()throws SQLException, ClassNotFoundException {
@@ -269,8 +246,6 @@ public class ControladorClientes implements IControladorClientes {
             clientes.setNickname(listCli.get(i).getNickname());
             nickCli.add(clientes);
         }
-      
-
         return nickCli;
     }
     
@@ -285,8 +260,6 @@ public class ControladorClientes implements IControladorClientes {
             clientes.setNickname(listCli.get(i).getNickname());
             nickCli.add(clientes);
         }
-      
-
         return nickCli;
     }
     
@@ -302,17 +275,7 @@ public class ControladorClientes implements IControladorClientes {
         dtc.setEmail(cli.getEmail());
         dtc.setFechaNac(cli.getFechaNac());
         dtc.setRutaImagen(cli.getImagenUsuario().getPath());
-        /*HashMap<Integer,DataReserva> listRes=new HashMap<Integer,DataReserva>();
-        Iterator it = cli.getReservasCliente().entrySet().iterator();
         
-        while(it.hasNext()){
-            Map.Entry res = (Map.Entry) it.next();
-            //Cliente cliente = (Cliente) c.getValue();
-            DataReserva r = new DataReserva();
-            r.setNumero((Integer) res.getKey());
-            listRes.put(r.getNumero(), r);
-        }
-        dtc.setReservas(listRes);*/
         return dtc;
     }
     public ArrayList<DataReserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
@@ -374,8 +337,7 @@ public class ControladorClientes implements IControladorClientes {
                         "insert into cantidadreservasservicios values(7, 'Euro-Vuelo-LC', 'Iberia', 2, 1700, '2016-8-7', '2016-8-7', 850);");
     }
     
-    @Override
-    //public void realizarReserva(DataReserva dataReserva) throws SQLException, ClassNotFoundException{
+    @Override    
     public int realizarReserva(LocalDate Fecha, int precio, String estado, String nickCliente) throws SQLException, ClassNotFoundException{
     
         DatosReservas res = new DatosReservas();
@@ -395,10 +357,9 @@ public class ControladorClientes implements IControladorClientes {
     }
     @Override
     public void datosAsociadosReserva(int numReserva, TableModel modelo)throws SQLException, ClassNotFoundException{
-        //System.out.println(numReserva + "dentro");
+        
         DatosReservas res = new DatosReservas();
-     //Tipo", "Nombre","proveedor" ,  "Cantidad", "Precio Unitario","Total", "Inicio", "Fin"
-
+     
         for(int i = 0; i< modelo.getRowCount(); i++){
             if(modelo.getValueAt(i, 0) == "SERVICIO"){
                     
@@ -414,8 +375,7 @@ public class ControladorClientes implements IControladorClientes {
                     LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[0]));
                     cantidadReservasServicios crs = new cantidadReservasServicios(Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), fInicio, fFin, p, s);
                     int precioUnitario = crs.getTotalLinea() / crs.getCantidad();
-                    res.insertarServicioReserva(numReserva, crs.getServicio().getNombreServicio(), crs.getProveedor().getNombreEmpresa(), crs.getCantidad(), crs.getTotalLinea(), crs.getFechaInicio().toString(), crs.getFechaFin().toString(), precioUnitario);
-                    //res.insertarServicioReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), , , , modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
+                    res.insertarServicioReserva(numReserva, crs.getServicio().getNombreServicio(), crs.getProveedor().getNombreEmpresa(), crs.getCantidad(), crs.getTotalLinea(), crs.getFechaInicio().toString(), crs.getFechaFin().toString(), precioUnitario);                    
             }
             else{   
                     Promocion prom = new Promocion();
@@ -431,7 +391,7 @@ public class ControladorClientes implements IControladorClientes {
                     cantidadReservasPromociones crp = new cantidadReservasPromociones(Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), fInicio, fFin, prom, p);
                     int precioUnitario = crp.getTotalLinea() / crp.getCantidad();
                     res.insertarPromocionReserva(numReserva, crp.getPromocion().getNombre(), crp.getProveedor().getNombreEmpresa(), crp.getCantidad(), crp.getTotalLinea(), crp.getFechaInicio().toString(), crp.getFechaFin().toString(), precioUnitario);
-                   //res.insertarPromocionReserva(numReserva, modelo.getValueAt(i, 1).toString(), modelo.getValueAt(i, 2).toString(), Integer.parseInt(modelo.getValueAt(i, 3).toString()), Integer.parseInt(modelo.getValueAt(i, 5).toString()), modelo.getValueAt(i, 6).toString(), modelo.getValueAt(i, 7).toString(), Integer.parseInt(modelo.getValueAt(i, 4).toString()));
+                   
            }
         }
         

@@ -37,7 +37,6 @@ public interface IControladorProveedores {
     public abstract ArrayList<DataCategoria> getCategorias(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataImagen> getImagenes(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataImagen> getImagenesProv(String nombreProveedor) throws SQLException, ClassNotFoundException;
-
     public abstract void modificarServicio(String nombre, String descripcion, int precio, String nombreProveedor, ArrayList<String> imagenes, ArrayList<String> categorias, String ciudadOrigen, String ciudadDestino, boolean tieneDestino) throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataServicio> getServiciosPorBusqueda(String nombre) throws SQLException, ClassNotFoundException;
     public abstract void actualizarProveedores() throws SQLException, ClassNotFoundException;    
@@ -52,9 +51,7 @@ public interface IControladorProveedores {
     public abstract void eliminarImagenesServicios();
     public abstract void deleteAllProveedores() throws SQLException, ClassNotFoundException;
     public abstract void insertCiudadesDePrueba() throws SQLException, ClassNotFoundException;
-    public abstract void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException;
-    
-    
+    public abstract void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException;    
     public abstract ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException;
     
 }

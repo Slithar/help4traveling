@@ -40,11 +40,7 @@ public class cantidadReservasPromociones {
     public void setNombrePromocion(String nombrePromocion){
         this.nombrePromocion = nombrePromocion;
     }
-
-    /*public cantidadReservasPromociones(int aInt, int aInt0, LocalDate of, LocalDate of0, Promocion promocion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
+    
     public String getNombreP(){
         return promocion.getNombre();
     }

@@ -24,7 +24,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
     private IControladorClientes iccli;
     
         private String[] columnas = {"Nombre", "Proveedor", "Cantidad", "Precio unitario", "Total línea","Fecha inicio", "Fecha fin", "Tipo"};
-    private DefaultTableModel datosPromocionServ = new DefaultTableModel(null, columnas) {
+        private DefaultTableModel datosPromocionServ = new DefaultTableModel(null, columnas) {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
         }
@@ -36,7 +36,6 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
     
     public ifrmVerInfoReserva(IControladorClientes iccli) {
         initComponents();
-        /** Después del merge **/
         setTitle("Ver información de reservas");
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (600 - tamanioVentana.height)/2);
@@ -123,7 +122,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelBuscarLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addGap(45, 45, 45)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
@@ -134,9 +133,9 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(34, 34, 34)
                 .addComponent(jButton1)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jlabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -275,19 +274,14 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
         }
         else{
             String selected =listRes.getSelectedValue();
-            /*comentarioo*/
-            
-            //JOptionPane.showMessageDialog(this, selected);
             
             try{
                 datosPromocionServ = new DefaultTableModel(null, columnas);
                 DataReserva dtcant =this.iccli.getReserva(selected);
                 this.jnickCliente.setText(dtcant.getCliente());
                 this.jPrecio.setText("U$S " + dtcant.getPrecio());
-                //this.jFecha.setText(dtcant.getFecha().toString());
                 this.jFecha.setText(dtcant.getFecha().getDayOfMonth() + "/" + dtcant.getFecha().getMonthValue() + "/" + dtcant.getFecha().getYear());
                 this.jEstado.setText(dtcant.getEstado().toString());
-                //JOptionPane.showMessageDialog(this, dtcant.getCliente());
 
                 ArrayList <DataCantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);
                 ArrayList<DataCantidadReservasServicios>listServ=this.iccli.getReservasServ(selected);

@@ -188,13 +188,10 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCatActionPerformed
-        // TODO add your handling code here:
-        //ControladorCategorias CC = new ControladorCategorias();
         if(txtNombreCat.getText().equals("")){
             JOptionPane.showMessageDialog(this, "No se ha ingresado el nombre de la nueva categoría", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtNombreCat.requestFocus();
@@ -221,52 +218,26 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                             }
                            String catAgregar = txtNombreCat.getText();
 
-                            //try {
-                                resultado = iccat.agregarNuevaCategoriaHija(catAgregar, elegido);
-                                //System.out.println("Primer try");
-                                txtNombreCat.setText(null);
-                            /*} catch (SQLException ex) {
-                                txtNombreCat.setText(null);
-                                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
-                                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (ClassNotFoundException ex) {
-                                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            }*/
+                            
+                            resultado = iccat.agregarNuevaCategoriaHija(catAgregar, elegido);
+                            
+                            txtNombreCat.setText(null);
+                            
                             if(resultado == true){
-                                   JOptionPane.showMessageDialog(this, "La nueva categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
-                                //try {
-                                    this.llenarArbol("", null);
-                                    //System.out.println("Segundo try");
-                                    txtNombreCat.setText(null);
-                                /*} catch (SQLException ex) {
-                                    txtNombreCat.setText(null);
-                                    JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la acción solicitada","ERROR",JOptionPane.ERROR_MESSAGE);
-                                    //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
-                                    //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                                } catch (ClassNotFoundException ex) {
-                                    Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                                }*/
+                                JOptionPane.showMessageDialog(this, "La nueva categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                                
+                                this.llenarArbol("", null);
+                                txtNombreCat.setText(null);                                
                             }
                         }
                         else{
                             String catAgregar = txtNombreCat.getText();
-                            //try {
-                               resultado = iccat.agregarNuevaCategoriaPadre(catAgregar);
-                               if(resultado == true){
-                                   JOptionPane.showMessageDialog(this, "La categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
-                                   this.llenarArbol("", null);
-                                   txtNombreCat.setText(null);
-                               }
-                            /*} catch (SQLException ex) {
-                                JOptionPane.showMessageDialog(this, "Hay un problema con la base de datos, por lo que no fue posible completar la accion solicitada.","ERROR",JOptionPane.ERROR_MESSAGE);
+                            resultado = iccat.agregarNuevaCategoriaPadre(catAgregar);
+                            if(resultado == true){
+                                JOptionPane.showMessageDialog(this, "La categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                                this.llenarArbol("", null);
                                 txtNombreCat.setText(null);
-                                //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
-                                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (ClassNotFoundException ex) {
-                                Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            }*/
-
+                            }
                         }
                         cmbTipo.setSelectedIndex(0);
                     }
@@ -276,7 +247,6 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                 txtNombreCat.setText(null);
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                 //JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
-                //Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(nuevaCateFrame.class.getName()).log(Level.SEVERE, null, ex);
             } 
@@ -295,10 +265,8 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmbTipoItemStateChanged
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
-        //ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
             ArrayList<DataCategoria> categoriasPadres = iccat.getCategoriasPadres();
-            //System.out.println(categoriasPadres.size());
             for(int i = 0; i < categoriasPadres.size(); i++){
                 DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i).getNombre());
                 root.add(nodosSuperiores);

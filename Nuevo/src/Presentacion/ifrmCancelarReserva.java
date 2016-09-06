@@ -41,8 +41,6 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
         
         
         setTitle("Cancelar reserva");
-        //Dimension tamanioVentana = this.getSize();
-        //setLocation((1400 - tamanioVentana.width)/2, (700 - tamanioVentana.height)/2);
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
         PanelDatos.setVisible(true);
@@ -174,7 +172,6 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
                 try {
                     iccli.deleteReserva(Integer.parseInt(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0).toString()));
                     JOptionPane.showMessageDialog(this, "La reserva ha sido cancelada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                    //tblReservas.clearSelection();
                     cargar();
                     
                 }
@@ -191,7 +188,6 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

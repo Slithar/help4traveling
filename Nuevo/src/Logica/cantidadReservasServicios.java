@@ -12,7 +12,6 @@ import java.time.LocalDate;
  * @author chaos
  */
 public class cantidadReservasServicios {
-    //private Reserva reserva;
     private Proveedor proveedor;
     private Servicio servicio;
     private String nombreProveedor;
@@ -50,7 +49,6 @@ public class cantidadReservasServicios {
     public void setNombreS(String nombre) {
         Servicio s = new Servicio();
         s.setNombreServicio(nombre);
-        //this.nombre=nombre;
         this.servicio = s;
     }
 

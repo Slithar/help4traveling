@@ -29,14 +29,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
      * Creates new form ifrmVerInfoProveedores
      * 
      */
-    /*private JLabel lblImagen1 = new JLabel();
-    private JLabel lblImagen2;
-    private JLabel lblImagen3;
-    
-    private String rutaImagen1 = "";
-    private String rutaImagen2 = "";
-    private String rutaImagen3 = "";*/
-    
+        
     private frmVisor visor;
     
     private ArrayList<LabelImagen> perfiles = new ArrayList<LabelImagen>();
@@ -69,17 +62,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         
         setTitle("Ver información de proveedores");
         
-        this.icprov = icprov;
-        
-        /*comentario*/
-        
-        /*lblImagen1.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
-        lblImagen1.setSize(105, 105);
-        panelImagenes.add(lblImagen1);
-        lblImagen1.setLocation(0, 0);
-        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
-        lblImagen1.setVisible(true);*/
-        
+        this.icprov = icprov;        
         
         lblImagenPerfil.setSize(200, 200); 
         lblImagenPerfil.setVisible(true);
@@ -92,7 +75,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             DefaultListModel modelo = new DefaultListModel();
             ArrayList<DataProveedor> listDtProv =new ArrayList();
             listDtProv=icprov.getInfoProveedores();
-            //JOptionPane.showMessageDialog(this, listDtCli.size());
             for(int i=0;i<listDtProv.size(); i++){
                modelo.addElement(listDtProv.get(i).getNickname());
             }
@@ -100,8 +82,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             lstProv.setModel(modelo);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -429,9 +411,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         else{
             try {                
                 limpiar();
-                //JOptionPane.showMessageDialog(this, lstProv.getSelectedValue());
                 DataProveedor dtProv = icprov.verInfoProveedor(lstProv.getSelectedValue());
-                //JOptionPane.showMessageDialog(this, dtProv.getNombre());
                 txtNombre.setText(dtProv.getNombre());
                 txtApellido.setText(dtProv.getApellido());
                 txtCorreo.setText(dtProv.getEmail());
@@ -440,8 +420,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 txtSitioWeb.setText("");
                 sitioWeb = dtProv.getLink();
                 txtSitioWeb.setText("<html><a href = \"" + sitioWeb + "\">" + sitioWeb + "</a></html>");
-                //txtSitioWeb.setText("<html><a href=\"www.google.com.uy\">hola</a></html>");
-                //txtSitioWeb = new JLabelLink(dtProv.getLink(), dtProv.getLink());
                 
                 ArrayList<DataServicio> servicios = new ArrayList();
                 servicios = icprov.getServiciosProveedor(dtProv.getNombreEmpresa());
@@ -462,7 +440,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 if(imagenesProv.size() == 0){
                     File directorio = new File("src/Logica/perfiles/perfil.png");
                     setImagenPerfil(directorio.getAbsolutePath(), "absoluta");
-                    //lblImagenes.setVisible(true);
                 }
                 else{
                     for(int i = 0; i < imagenesProv.size(); i++){                        
@@ -497,8 +474,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 
                 panelDatos.setVisible(true);
             } catch(SQLException ex){
-                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -512,7 +489,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             DefaultListModel modelo = new DefaultListModel();
             ArrayList<DataProveedor> listDtProv =new ArrayList();
             listDtProv=icprov.verInfoProveedorBusqueda(txtBusqueda.getText());
-            //JOptionPane.showMessageDialog(this, listDtCli.size());
             for(int i=0;i<listDtProv.size(); i++){
                 modelo.addElement(listDtProv.get(i).getNickname());
             }
@@ -520,8 +496,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             lstProv.setModel(modelo);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -530,15 +506,10 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
     private void lblImagenPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenPerfilMouseClicked
-        /*if(evt.getButton() == MouseEvent.BUTTON1){
-            fchImagenes selectorImagen = new fchImagenes(this);
-            selectorImagen.setVisible(true);
-        }*/
+        
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
     private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
-        // TODO add your handling code here:
-        
         servicio = (String) cmbServicios.getSelectedItem();
         proveedor = txtNombreEmpresa.getText();
         ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat, servicio, proveedor);
@@ -574,12 +545,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
 
             }
             perfiles.clear();
-           /* lblImagen1 = new JLabel();
-            lblImagen2 = new JLabel();
-            lblImagen3 = new JLabel();
-            rutaImagen1 = "";
-            rutaImagen2 = "";
-            rutaImagen3 = "";*/
     }
     
     private class LabelImagen extends JLabel{
@@ -588,16 +553,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             this.setSize(124, 124);
             this.rutaImagen = rutaImagen;
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            //this.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
-            
-            /**** ACÁ ME QUEDE *****/
-            
-            //JPopupMenu jpmEliminar = new JPopupMenu();
-            //ifrmAltaProveedores.MenuItemPopup pm = new ifrmAltaProveedores.MenuItemPopup(this, "Eliminar");
-            //pm.addActionListener(new ifrmAltaProveedores.OyentePopup());
-            //jpmEliminar.add(pm);
-            
-            //this.setComponentPopupMenu(jpmEliminar);
         }
 
         private LabelImagen() {
@@ -614,10 +569,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     }
 
     public void setImagenLabel(String ruta, String tipo){
-        //System.out.println("entre");
-        //JLabel lblImagen = labelActual();
         if(tipo.equals("defecto")){
-            //System.out.println("hola");
             ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
             ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
             lblImagenPerfil.setIcon(imagenDimensionada);
@@ -625,84 +577,21 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         else{
             ImageIcon imagenPerfil = new ImageIcon(ruta);
             ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagenPerfil.getWidth(), lblImagenPerfil.getHeight(), Image.SCALE_DEFAULT));
-            lblImagenPerfil.setIcon(imagenDimensionada);
-            
-            /*if(lblImagen == lblImagen1){
-                //System.out.println("2");
-                rutaImagen1 = ruta;
-                lblImagen2 = new JLabel();
-                lblImagen2.setSize(105, 105);
-                panelImagenes.add(lblImagen2);
-                lblImagen2.setLocation(135, 0);
-                lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                lblImagen2.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
-                //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen2.setComponentPopupMenu(eliminarImagen1);
-                //agregarPopup(2);
-            }
-            else if(lblImagen == lblImagen2){
-                //System.out.println("3");
-                rutaImagen2 = ruta;
-                lblImagen3 = new JLabel();
-                lblImagen3.setSize(105,105);
-                panelImagenes.add(lblImagen3);
-                lblImagen3.setLocation(240, 0);
-                lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                lblImagen3.addMouseListener(new ifrmVerInfoProveedores.OyenteLabel());
-                //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen3.setComponentPopupMenu(eliminarImagen2);
-                //agregarPopup(3);
-            }
-            else{
-                rutaImagen3 = ruta;
-            }*/
+            lblImagenPerfil.setIcon(imagenDimensionada);            
         }       
     }
-    
-    /*public JLabel labelActual(){
-        
-        if(lblImagen2 == null){
-            return lblImagen1;
-        }
-        else if(lblImagen3 == null)
-            return lblImagen2;
-        else
-            return lblImagen3;
-    }*/
        
     private class OyenteLabel implements MouseListener{
 
-        /*@Override
+        @Override
         public void mouseClicked(MouseEvent e) {
             if(e.getButton() == MouseEvent.BUTTON1){
-                //setImagenPerfil()
-                ifrmVerInfoProveedores.LabelImagen elemento = (ifrmVerInfoProveedores.LabelImagen) e.getSource();
-                setImagenPerfil(elemento.getRutaImagen(), "absoluta");
-            }
-        }*/
-        @Override
-            public void mouseClicked(MouseEvent e) {
-                //JOptionPane.showMessageDialog(null, "entre");
-                if(e.getButton() == MouseEvent.BUTTON1){
-                    /*if((JLabel) e.getSource() == perfiles.get(0))
-                        JOptionPane.showMessageDialog(null, "anduvo!!");*/
-                    //JOptionPane.showMessageDialog(null, e.getSource());
-                    //LabelImagen imagen = (LabelImagen) e.getSource();
-                    /*boolean ok = false;
-                    while(!ok){
-                        try{*/
-                            JLabel img = (JLabel) e.getSource();
-                            LabelImagen imagen = (LabelImagen) img;
-                            setImagenPerfil(imagen.getRutaImagen(), "absoluta");
-                            //ok = true;
-                        /*}
-                        catch(ClassCastException ex){
-                            ok = false;
-                        }
-                    }*/
-                    
+                JLabel img = (JLabel) e.getSource();
+                LabelImagen imagen = (LabelImagen) img;
+                setImagenPerfil(imagen.getRutaImagen(), "absoluta");      
             }
         }
+        
         @Override
         public void mousePressed(MouseEvent e) {
             
@@ -756,30 +645,5 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtNombreEmpresa;
     private javax.swing.JLabel txtSitioWeb;
     // End of variables declaration//GEN-END:variables
-/*class Panel extends JDesktopPane{
-    
-    public Panel(){
-              
-    }
-    
-    public Panel(ifrmAltaUsuarios vUsuarios){
-        add(vUsuarios);
-    }
-    
-    @Override
-    public void paintComponent(Graphics g){
-        Toolkit miPantalla = Toolkit.getDefaultToolkit();
-        Dimension tamanio = getSize();
-        
-        ImageIcon imagen = new ImageIcon(getClass().getResource("imagenes/aficheMenuPrincipal.png"));
-        
-        g.drawImage(imagen.getImage(), 0, 0, tamanio.width, tamanio.height, null);
-        
-        setOpaque(false);
-       
-        super.paintComponent(g);
-        }
-    }
-*/
 }
 

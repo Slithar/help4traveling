@@ -113,7 +113,6 @@ public class fchImagenes extends javax.swing.JFrame {
             File archivoSeleccionado = imagen.getSelectedFile();
             String extension = (String) archivoSeleccionado.getPath().substring(archivoSeleccionado.getPath().length() - 3, archivoSeleccionado.getPath().length()).toUpperCase();
             if(extension.equals("GIF") || extension.equals("JPG") || extension.equals("PNG")){
-                //System.out.println("1");
                 String ruta = (String) archivoSeleccionado.getPath();
                 if(iAltaUsuario != null){
                     iAltaUsuario.setImagenPerfil(ruta, "absoluta");
@@ -121,11 +120,9 @@ public class fchImagenes extends javax.swing.JFrame {
                 }
                 else if(iAltaProveedores != null){                    
                     iAltaProveedores.agregarImagenPerfil(ruta);
-                    //System.out.println("listo");
                 }
                 else if(iAltaServicio != null){
                     iAltaServicio.setImagenLabel(ruta, "absoluta");
-                    //iAltaServicio.setRutaImagen(ruta);
                 }
                 else if(iActualizarServicio != null){
                     iActualizarServicio.setImagenLabel(ruta, "absoluta");

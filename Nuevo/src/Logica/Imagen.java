@@ -27,22 +27,6 @@ public class Imagen {
     public void setPath(String path) {
         this.path = path;
     }
-
-    /*public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }*/
     
     public Usuario getUsuario(){
         return this.usuario;

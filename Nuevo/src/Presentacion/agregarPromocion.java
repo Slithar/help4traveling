@@ -40,7 +40,6 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         spnDescuento.setModel(modelospn);
         modelo = new DefaultListModel();
         modelo2 = new DefaultListModel();
-        //this.txtPrecioPromo.setEditable(false);
         panelServicios.setBorder(BorderFactory.createTitledBorder("Servicios del proveedor"));
         setTitle("Registro de promociones");
         listaServicios.setModel(modelo);
@@ -111,8 +110,6 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     }
     
     public void precioPromo(){
-        
-        //JOptionPane.showMessageDialog(this, precioTotal);
         
         descuento = (Integer) this.spnDescuento.getValue();
         
@@ -432,17 +429,17 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_dbProveedoresActionPerformed
 
     private void spnDescuentoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnDescuentoStateChanged
-        // TODO add your handling code here:
+        
         precioPromo();
     }//GEN-LAST:event_spnDescuentoStateChanged
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        // TODO add your handling code here:
+        
         this.dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void agregarPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarPromoActionPerformed
-        // TODO add your handling code here:
+        
         boolean errores = false;
         int resultadoPromocion = 0;
         int resultadoServiciosPromocion = 0;
@@ -460,20 +457,15 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         }
         if(errores == false){            
             try {
-                //JOptionPane.showMessageDialog(this, this.precio);
+                
                 resultadoPromocion = this.icpromo.agregarPromocion(this.precio, this.txtNombrePromo.getText(), this.descuento, String.valueOf(this.dbProveedores.getSelectedItem()));
                 for(vueltas = 0; vueltas < this.listaServiciosElegidos.getModel().getSize(); vueltas ++){
                     String servicio = this.icpromo.getNombreServicio(this.listaServiciosElegidos.getModel().getElementAt(vueltas));
                     resultadoServiciosPromocion = this.icpromo.agregarServiciosPromocion(this.txtNombrePromo.getText(),servicio,this.dbProveedores.getSelectedItem().toString());   
                 }
-                /*if(resultadoPromocion == 1 && resultadoServiciosPromocion == this.listaServiciosElegidos.getModel().getSize()-1){
-                    JOptionPane.showMessageDialog(null, "La promoción ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                }*/
                 JOptionPane.showMessageDialog(this, "La promoción ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                 clearCamps();
             } catch (SQLException | ClassNotFoundException ex) {
-                //if(ex.getMessage().substring(0, 15))
-                //JOptionPane.showMessageDialog(null, "Ha ocurrido un error con la base de datos. Por favor intente denuevo mas tarde.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 
                 if(ex.getMessage().substring(0, 15).equals("Duplicate entry")){
                     JOptionPane.showMessageDialog(this, "El nombre de la promoción ya existe para el proveedor indicado", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -486,17 +478,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_agregarPromoActionPerformed
 
     private void lblSeleccionarServicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSeleccionarServicioMouseClicked
-        /*if(evt.getButton() == MouseEvent.BUTTON1){
-            DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-            if(categoriaRepetida(modelo, rutaCategoria)){
-                JOptionPane.showMessageDialog(this, "La categoría ya se encuentra agregada para el servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                modelo.addElement(rutaCategoria);
-            }
-            lstCategorias.setModel(modelo);
-
-        }*/
+        
         if(evt.getButton() == MouseEvent.BUTTON1){
             if(this.listaServicios.getSelectedValue()==null){
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un servicio de la lsita de servicios", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);

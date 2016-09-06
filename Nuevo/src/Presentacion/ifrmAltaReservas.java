@@ -49,8 +49,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     }
 
     ifrmAltaReservas(IControladorProveedores icprov, IControladorClientes iccli, IControladorPromociones icprom){
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    
+        
         initComponents();
     
         setTitle("Nueva reserva");
@@ -94,10 +93,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 
                 modeloServ.addRow(new Object[]{"SERVICIO", DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor(), icprov.getDatosServicio(DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor()).getPrecioServicio()});
             
-                //System.out.println(DatosServicios.get(i).getPrecioServicio()+ "serv 1");
             }
             tblServicios.setModel(modeloServ);
-            //ArrayList<DataPromocion> DatosPromocion = icprom.getPromociones();
         }
             catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -110,8 +107,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         try{
             ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
             for(int i = 0; i < DatasPromociones.size(); i++){
-                
-                    //String proveedor = icprom.getServiciosPorPromocion(DatasPromociones.get(i).getNombre()).get(0).getNombreProveedor();
                     modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor() ,DatasPromociones.get(i).getPrecio() });
             }
         }
@@ -557,7 +552,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUsuariosActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cmbUsuariosActionPerformed
 
     private void tblServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiciosMouseClicked
@@ -565,7 +560,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblServiciosMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -585,8 +579,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "La operación ha finalizado de manera correcta.\nNúmero de la reserva: " + iccli.getNumeroReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), cmbUsuarios.getSelectedItem().toString()), "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
             }
             catch (SQLException ex) {
-                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             } 
             catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -605,26 +599,20 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 for(int i = 0 ; i < DatasServicios.size(); i++){
 
                     modeloServ.addRow(new Object[]{"SERVICIO", DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor(), icprov.getDatosServicio(DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor()).getPrecioServicio()});
-
-                    //System.out.println(DatosServicios.get(i).getPrecioServicio()+ "serv 1");
                 }
                 tblServicios.setModel(modeloServ);
-                //ArrayList<DataPromocion> DatosPromocion = icprom.getPromociones();
             }
-                catch(SQLException ex){
-                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-
-                }
-                catch(ClassNotFoundException ex){
-                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
 
             try{
                 ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
                 for(int i = 0; i < DatasPromociones.size(); i++){
-
-                        //String proveedor = icprom.getServiciosPorPromocion(DatasPromociones.get(i).getNombre()).get(0).getNombreProveedor();
-                        modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor(),DatasPromociones.get(i).getPrecio() });
+                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor(),DatasPromociones.get(i).getPrecio() });
                 }
             }
             catch(SQLException ex){
@@ -640,17 +628,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void lblAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarProductoMouseClicked
-        /*if(evt.getButton() == MouseEvent.BUTTON1){
-            DefaultListModel modelo = (DefaultListModel) lstCategorias.getModel();
-            if(categoriaRepetida(modelo, rutaCategoria)){
-                JOptionPane.showMessageDialog(this, "La categoría ya se encuentra agregada para el servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                modelo.addElement(rutaCategoria);
-            }
-            lstCategorias.setModel(modelo);
-
-        }*/
         if(tblServicios.getSelectedRow() > -1){
             try {
                 // TODO add your handling code here:
@@ -716,7 +693,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             }
             int cantidad = (Integer) spnCant.getValue();
             int precio = Integer.parseInt(lblPrecio.getText());
-            //JOptionPane.showMessageDialog(this, cantidad + " * " + precio);
             if(ok == true){
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem miEliminar = new JMenuItem("Eliminar");
@@ -727,7 +703,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 DefaultTableModel modeloAsoc = new DefaultTableModel();
                 modeloAsoc = (DefaultTableModel) tblAsociaciones.getModel();
                 modeloAsoc.setColumnIdentifiers(new Object[]{ "Tipo", "Nombre", "Proveedor" , "Cantidad", "Precio unitario", "Total línea", "Inicio", "Fin"});
-                //modeloAsoc.addRow(new Object[]{ lblTipo.getText() , lblServicio.getText(), lblProveedor.getText() , String.valueOf(spnCant.getValue()), lblPrecio.getText(), String.valueOf(cantidad * precio), LocalDate.of((Integer) spnIniAnio.getValue(), (Integer) spnIniMes.getValue(), (Integer) spnIniDia.getValue()), LocalDate.of((Integer) spnFinAnio.getValue(), (Integer) spnFinMes.getValue(), (Integer) spnFinDia.getValue())});
                 modeloAsoc.addRow(new Object[]{ lblTipo.getText() , lblServicio.getText(), lblProveedor.getText() , String.valueOf(spnCant.getValue()), lblPrecio.getText(), String.valueOf(cantidad * precio), spnIniDia.getValue() + "/" + spnIniMes.getValue() + "/" + spnIniAnio.getValue(), spnFinDia.getValue() + "/" + spnFinMes.getValue() + "/" + spnFinAnio.getValue()});
                 
                 precioTotal += cantidad * precio;

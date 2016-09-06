@@ -30,6 +30,7 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
     private IControladorCategorias iccat;
     private int vueltas=0;
     private DefaultListModel modelo = new DefaultListModel();
+    
     public verInfoPromocion(IControladorPromociones icpromo,IControladorProveedores icprov, IControladorCategorias iccat) {
         initComponents();
         
@@ -243,11 +244,9 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
             dbServicios.removeAllItems();
             String promocion = "";
             promocion = this.lstPromociones.getSelectedValue();
-            //modelo.clear();
             String NombrePromo = "";
             String NombreProv = "";
 
-            //int i = 0;
             NombrePromo = getNombrePromo(promocion);
             NombreProv = getNombreProv(promocion);
             DataPromocion promo = new DataPromocion();
@@ -255,10 +254,8 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
             try {
                 promo = this.icpromo.getDataPromocion(NombrePromo, NombreProv);
                 servicios = this.icpromo.getServiciosPromocion(NombrePromo, NombreProv);
-                //System.out.println(servicios.size());
                 for(int i=0;i<servicios.size();i++){
                     dbServicios.addItem(servicios.get(i).getNombreServicio());
-                    //System.out.println(servicios.get(i).getNombreServicio());
                 }
                 this.txtNombre.setText(NombrePromo);
                 this.txtProveedor.setText(NombreProv);

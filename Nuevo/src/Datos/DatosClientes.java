@@ -28,10 +28,8 @@ import java.util.*;
  * @author usuario
  */
 public class DatosClientes {
-
-    //private ConexionBD conexion;
+    
     public DatosClientes() {
-        //conexion = new ConexionBD();
     }
 
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException {
@@ -51,7 +49,6 @@ public class DatosClientes {
 
         pConsulta.executeUpdate();
 
-        //conexion.cerrar();
         conn.close();
     }
 
@@ -69,7 +66,6 @@ public class DatosClientes {
 
         pConsulta.executeUpdate();
 
-        //conexion.cerrar();
         conn.close();
     }
 
@@ -87,13 +83,11 @@ public class DatosClientes {
         ResultSet rs = st.executeQuery("select numero from reservas order by numero");
 
         while (rs.next()) {
-            //System.out.println("a");
             reservas.add(indice, rs.getString("numero"));
             indice++;
         }
 
         rs.close();
-        //conexion.cerrar();
         conn.close();
 
         return reservas;
@@ -101,8 +95,8 @@ public class DatosClientes {
     }
     public ArrayList datosReserva ()throws SQLException, ClassNotFoundException {
         ArrayList<Reserva> reservas = new ArrayList();
-         Connection conn;
-         int indice = 0;
+        Connection conn;
+        int indice = 0;
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
         Statement st = conn.createStatement();
@@ -154,20 +148,8 @@ public class DatosClientes {
                 LocalDate fechaReserva = LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));
                 dtaux.setFecha(fechaReserva);
                 dtaux.setEstado(rs.getString("estado"));
-
-//           ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and numeroReserva="+numeroRes);
-//           while(rsCant.next()){
-//               Promocion prom = new Promocion();
-//               prom.setDescuento(rsCant.getInt("descuento"));
-//               prom.setNombre(rsCant.getString("nombrePromocion"));
-//               prom.setPrecio(rsCant.getInt("precio"));
-//               listProm.add(prom);
-//               
-//           }
-//           dtaux.setReservaPromociones(listProm);
             }
             rs.close();
-            //conexion.cerrar();
             conn.close();
         } catch (Exception e) {
         }
@@ -203,10 +185,8 @@ public class DatosClientes {
                 dtProm.add(cantProm);
 
             }
-            //dtaux.setReservaPromociones(listProm);
 
             rsCant.close();
-            //conexion.cerrar();
             conn.close();
         } catch (Exception e) {
         }
@@ -243,7 +223,6 @@ public class DatosClientes {
                 dtSer.add(cantSer);
             }
             rsCant.close();
-            //conexion.cerrar();
             conn.close();
         } catch (Exception e) {
         }
@@ -263,7 +242,6 @@ public class DatosClientes {
 
         ResultSet rs = st.executeQuery("select * from usuarios where cliente= true order by nickname");
         while (rs.next()) {
-            //System.out.println("a");
             Cliente c = new Cliente();
             c.setNickname(rs.getString("nickname"));
             clientes.add(indice, c);
@@ -271,7 +249,6 @@ public class DatosClientes {
         }
 
         rs.close();
-        //conexion.cerrar();
         conn.close();
         return clientes;
     }
@@ -292,7 +269,6 @@ public class DatosClientes {
         ResultSet rs = pConsulta.executeQuery();
         
         while (rs.next()) {
-            //System.out.println("a");
             Cliente c = new Cliente();
             c.setNickname(rs.getString("nickname"));
             clientes.add(indice, c);
@@ -300,7 +276,6 @@ public class DatosClientes {
         }
 
         rs.close();
-        //conexion.cerrar();
         conn.close();
         return clientes;
     }
@@ -320,7 +295,6 @@ public class DatosClientes {
         ResultSet rs = st.executeQuery("select * from usuarios u where cliente = true");
         
         while(rs.next()){
-            //categorias.add(new Proveedor(rs.getString("nombre"), "", new ArrayList()));
             String fecha = rs.getString("fechaNacimiento");
             String[] datosFecha = fecha.split("-");
             clientes.add(new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), "", new HashMap()));
@@ -357,7 +331,6 @@ public class DatosClientes {
             cantidadReservasPromociones crp = new cantidadReservasPromociones(rs.getInt("cantidad"), rs.getInt("totalLinea"), LocalDate.of(Integer.parseInt(datosFI[0]), Integer.parseInt(datosFI[1]), Integer.parseInt(datosFI[2])), LocalDate.of(Integer.parseInt(datosFF[0]), Integer.parseInt(datosFF[1]), Integer.parseInt(datosFF[2])), new Promocion(), new Proveedor());
             crp.setNombrePromocion(rs.getString("nombrePromocion"));
             crp.setNombreProveedor(rs.getString("nombreProveedor"));
-            //System.out.println("****" + rs.getString("nombrePromocion") + "****");
             promociones.add(crp);
         }
         

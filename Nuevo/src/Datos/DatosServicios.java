@@ -23,10 +23,8 @@ import Logica.Promocion;
  */
 public class DatosServicios {
     
-    //private ConexionBD conexion;
-    
     public DatosServicios(){
-        //conexion = new ConexionBD();
+        
     }
     
     public int selectCountNombreServicio(String nombre, String nombreProveedor) throws SQLException, ClassNotFoundException{
@@ -51,7 +49,6 @@ public class DatosServicios {
         
         
         rs.close();
-        //conexion.cerrar();
         conn.close();
         
         return resultado;
@@ -88,14 +85,11 @@ public class DatosServicios {
             pConsulta.executeUpdate();
         }
         
-        //conexion.cerrar();
         conn.close();
     }
     
     public void agregarCategoria(String nombreServicio, String nombreProveedor, String nombreCategoria, String rutaCategoria) throws SQLException, ClassNotFoundException{
-        
-        //JOptionPane.showMessageDialog(null, nombreCategoria);
-        
+                
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
@@ -110,7 +104,6 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -127,7 +120,6 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -167,12 +159,6 @@ public class DatosServicios {
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
-        
-        /*Statement st = conn.createStatement();
-        
-        ResultSet rs = st.executeQuery("select nombre from servicios order by nombre");
-        
-        ArrayList<Servicio> resultado = new ArrayList<Servicio>();*/
         
         PreparedStatement pConsulta = conn.prepareStatement("select nombreProveedor, descripcion, precio from servicios where nombre = ? and nombreProveedor = ?");
         
@@ -269,13 +255,10 @@ public class DatosServicios {
         
         ResultSet rs = pConsulta.executeQuery();
         
-        //Categoria c = new Ciudad();
-        
         ArrayList<Categoria> categorias = new ArrayList<Categoria>();
         
         while(rs.next()){
             categorias.add(new Categoria(rs.getString("nombreCategoria"), rs.getString("rutaCategoria"), new ArrayList()));
-            //c.setPais(new Pais(rs.getString("nombrePais")));
         }
         
         rs.close();
@@ -297,23 +280,15 @@ public class DatosServicios {
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
         
-        //System.out.println("entree acá");
-        
         ResultSet rs = pConsulta.executeQuery();
-        
-        //Categoria c = new Ciudad();
         
         ArrayList<ImagenServicio> imagenes = new ArrayList<ImagenServicio>();
         
         if(rs != null){
-            //System.out.println("entree");
             while(rs.next()){
                 imagenes.add(new ImagenServicio(rs.getString("ruta"), new Servicio()));
-                //System.out.println("agreguee");
-                //c.setPais(new Pais(rs.getString("nombrePais")));
             }
-        }
-        
+        }        
         
         rs.close();
         
@@ -335,7 +310,6 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -351,7 +325,6 @@ public class DatosServicios {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -363,12 +336,8 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        //pConsulta;
-        //JOptionPane.showMessageDialog(null, descripcion + " - " + precio + " - " + ciudadOrigen + " - " + nombre + " - " + nombreProveedor);
-        
         if(tieneDestino){
             PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = ? where nombre = ? and nombreProveedor = ?");
-            //System.out.println("1: " + ciudadDestino);
             pConsulta.setString(1, descripcion);
             pConsulta.setInt(2, precio);
             pConsulta.setString(3, ciudadOrigen);
@@ -381,7 +350,6 @@ public class DatosServicios {
         }
         else{
             PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = null where nombre = ? and nombreProveedor = ?");
-            //System.out.println("1");
             pConsulta.setString(1, descripcion);
             pConsulta.setInt(2, precio);
             pConsulta.setString(3, ciudadOrigen);
@@ -503,36 +471,5 @@ public class DatosServicios {
         rs.close();
         conn.close();
         return servicios;
-    }
-    
-    /*public ArrayList<Servicio> getServicioPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException {
-        Connection conn;
-        ConexionBD conexion = new ConexionBD();
-        conn = conexion.conectar();
-        
-        PreparedStatement st = conn.prepareStatement("SELECT servicios.* FROM servicios, serviciosdepromociones, promociones WHERE promociones.nombre = ? AND promociones.nombre=serviciosdepromociones.nombrePromocion AND serviciosdepromociones.nombreServicio = servicios.nombre and serviciosdepromociones.nombreProveedor=servicios.nombreProveedor");
-        st.setString(1, nombrePromo);
-        ArrayList<Servicio> resultado= new ArrayList();
-        ResultSet rs = st.executeQuery();
-        while(rs.next()){
-            Servicio serv = new Servicio();
-            serv.setNombreServicio(rs.getString("nombre"));
-            Proveedor prov = new Proveedor();
-            prov.setNombreEmpresa(rs.getString("nombreProveedor"));
-            serv.setProveedorServicio(prov);
-            Ciudad origen = new Ciudad(), destino = new Ciudad();
-            origen.setNombre(rs.getString("ciudadOrigen"));
-            destino.setNombre(rs.getString("ciudadDestino"));
-            serv.setOrigen(origen);
-            serv.setDestino(destino);
-            serv.setDescripcionServicio(rs.getString("descripcion"));
-            serv.setPrecioServicio(rs.getInt("precio"));
-            
-            resultado.add(serv);
-        }
-        
-        return resultado;
-    }*/
-    
-    
+    }   
 }

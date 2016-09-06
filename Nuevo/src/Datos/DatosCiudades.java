@@ -34,7 +34,6 @@ public class DatosCiudades {
         }
         
         rs.close();
-        //conexion.cerrar();
         conn.close();
         
         

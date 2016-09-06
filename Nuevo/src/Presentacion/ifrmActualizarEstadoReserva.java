@@ -46,8 +46,6 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
     
         try{
             ArrayList<DataReserva> numRes= this.iccli.datosReserva(); 
-            //System.out.println(numRes.size());
-            //comentario
         for(int i =0;i<numRes.size();i++){
             DataReserva resAux=new DataReserva();
             resAux.setNumero(numRes.get(i).getNumero());
@@ -232,7 +230,6 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
 
             
                 ArrayList<DataReserva> numRes= this.iccli.datosReserva(); 
-                //System.out.println(numRes.size());
 
             for(int i =0;i<numRes.size();i++){
                 DataReserva resAux=new DataReserva();

@@ -14,16 +14,13 @@ import java.util.*;
  * @author usuario
  */
 public class DatosUsuarios {
-    
-    //private ConexionBD conexion;
-    
+        
     public DatosUsuarios(){
-        //conexion = new ConexionBD();
+        
     }
     
     public int selectCountUsuarios(String nickname) throws SQLException, ClassNotFoundException{
         int num = 0;
-       // Statement st = null;
         
                 
         Connection conn;
@@ -37,16 +34,11 @@ public class DatosUsuarios {
         pConsulta.setString(1, nickname);
         
         ResultSet rs = pConsulta.executeQuery();
-        
-        //rs = st.executeQuery("select count(*) cantidad from usuarios where nickname = 'hola'");
-        
-        //num = rs.getInt("cantidad");
         while(rs.next()){
             num = rs.getInt("cantidad");
         }
         
         rs.close();
-        //conexion.cerrar();
         conn.close();
         
         return num;
@@ -63,8 +55,6 @@ public class DatosUsuarios {
         
         conn = conexion.conectar();
         
-        //Statement st = conn.createStatement();
-        
         PreparedStatement pConsulta = conn.prepareStatement("select * from imagenesusuarios where nickname = ?");
         
         pConsulta.setString(1, u.getNickname());
@@ -72,18 +62,6 @@ public class DatosUsuarios {
         ResultSet rs = pConsulta.executeQuery();
         
         while(rs.next()){
-            //categorias.add(new Proveedor(rs.getString("nombre"), "", new ArrayList()));
-            /*String fecha = rs.getString("fechaNacimiento");
-            String[] datosFecha = fecha.split("-");
-            proveedores.add(new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap()));
-            */
-            /*Servicio s = new Servicio();
-            
-            s.setNombreServicio(rs.getString("nombre"));
-            s.setProveedorServicio(p);
-            s.setDescripcionServicio(rs.getString("descripcion"));
-            s.setPrecioServicio(rs.getInt("precio"));
-            servicios.add(s);*/
             imagenes.add(new Imagen(rs.getString("ruta"), u));
         }
         
@@ -103,8 +81,6 @@ public class DatosUsuarios {
         Connection conn;
         
         conn = conexion.conectar();
-        
-        //Statement st = conn.createStatement();
         
         PreparedStatement pConsulta = conn.prepareStatement("select * from imagenesusuarios where nickname = ?");
         

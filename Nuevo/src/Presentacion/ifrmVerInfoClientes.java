@@ -31,9 +31,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
     public ifrmVerInfoClientes(IControladorClientes iccli) {
         initComponents();
         
-        this.iccli = iccli;
-        
-        //panelDatosCliente.setBorder(BorderFactory.createTitledBorder("Información del cliente"));
+        this.iccli = iccli;        
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
         
         panelReservas.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -53,7 +51,6 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
             DefaultListModel modelo = new DefaultListModel();
             ArrayList<DataCliente> listDtCli =new ArrayList();
             listDtCli=iccli.verInfoCliente();
-            //JOptionPane.showMessageDialog(this, listDtCli.size());
             for(int i=0;i<listDtCli.size(); i++){
                modelo.addElement(listDtCli.get(i).getNickname());
             }
@@ -61,8 +58,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
             lstClientes.setModel(modelo);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -473,8 +470,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 }
                 panelDatos.setVisible(true);
             } catch(SQLException ex){
-                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -489,7 +486,6 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
             DefaultListModel modelo = new DefaultListModel();
             ArrayList<DataCliente> listDtCli =new ArrayList();
             listDtCli=iccli.verInfoClienteBusqueda(txtBusqueda.getText());
-            //JOptionPane.showMessageDialog(this, listDtCli.size());
             for(int i=0;i<listDtCli.size(); i++){
                modelo.addElement(listDtCli.get(i).getNickname());
             }
@@ -497,8 +493,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
             lstClientes.setModel(modelo);
         }
         catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -507,33 +503,22 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
     private void lblImagenPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenPerfilMouseClicked
-        /*if(evt.getButton() == MouseEvent.BUTTON1){
-            fchImagenes selectorImagen = new fchImagenes(this);
-            selectorImagen.setVisible(true);
-        }*/
-
+        
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
     private void btnAceptarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarReservaActionPerformed
-        refrescarReservas();
-            
+        refrescarReservas();            
     }//GEN-LAST:event_btnAceptarReservaActionPerformed
     
     public void refrescarReservas(){
         String selected =String.valueOf(cmbReservasCliente.getSelectedItem());
-            /*comentarioo*/
-            
-            //JOptionPane.showMessageDialog(this, selected);
             
             try{
                 datosPromocionServ = new DefaultTableModel(null, columnas);
                 DataReserva dtcant =this.iccli.getReserva(selected);
-                //this.jnickCliente.setText(dtcant.getCliente());
                 this.jPrecio.setText("U$S " + dtcant.getPrecio());
-                //this.jFecha.setText(dtcant.getFecha().toString());
                 this.jFecha.setText(dtcant.getFecha().getDayOfMonth() + "/" + dtcant.getFecha().getMonthValue() + "/" + dtcant.getFecha().getYear());
                 this.jEstado.setText(dtcant.getEstado().toString());
-                //JOptionPane.showMessageDialog(this, dtcant.getCliente());
 
                 ArrayList <DataCantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);
                 ArrayList<DataCantidadReservasServicios>listServ=this.iccli.getReservasServ(selected);

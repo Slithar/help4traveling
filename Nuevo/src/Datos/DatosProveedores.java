@@ -22,10 +22,8 @@ import java.time.*;
  */
 public class DatosProveedores {
     
-    //private ConexionBD conexion;
-    
     public DatosProveedores(){
-        //conexion = new ConexionBD();
+        
     }
     
     public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
@@ -45,7 +43,6 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -64,7 +61,6 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -82,7 +78,6 @@ public class DatosProveedores {
         
         pConsulta.executeUpdate();
         
-        //conexion.cerrar();
         conn.close();
     }
     
@@ -106,7 +101,7 @@ public class DatosProveedores {
         }
         
         rs.close();
-        //conexion.cerrar();
+        
         conn.close();
         
         return cant;
@@ -134,7 +129,6 @@ public class DatosProveedores {
         }
         
         rs.close();
-        //conexion.cerrar();
         
         conn.close();
         
@@ -157,7 +151,6 @@ public class DatosProveedores {
         ResultSet rs = st.executeQuery("select * from usuarios u, proveedores p where cliente = false and u.nickname = p.nickname");
         
         while(rs.next()){
-            //categorias.add(new Proveedor(rs.getString("nombre"), "", new ArrayList()));
             String fecha = rs.getString("fechaNacimiento");
             String[] datosFecha = fecha.split("-");
             proveedores.add(new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap()));
@@ -180,8 +173,6 @@ public class DatosProveedores {
         
         conn = conexion.conectar();
         
-        //Statement st = conn.createStatement();
-        
         PreparedStatement pConsulta = conn.prepareStatement("select * from servicios where nombreProveedor = ?");
         
         pConsulta.setString(1, p.getNombreEmpresa());
@@ -189,11 +180,6 @@ public class DatosProveedores {
         ResultSet rs = pConsulta.executeQuery();
         
         while(rs.next()){
-            //categorias.add(new Proveedor(rs.getString("nombre"), "", new ArrayList()));
-            /*String fecha = rs.getString("fechaNacimiento");
-            String[] datosFecha = fecha.split("-");
-            proveedores.add(new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap()));
-            */
             Servicio s = new Servicio();
             
             s.setNombreServicio(rs.getString("nombre"));
@@ -264,7 +250,6 @@ public class DatosProveedores {
         ResultSet rs = pConsulta.executeQuery();
         
         while (rs.next()) {
-            //System.out.println("a");
             Proveedor p = new Proveedor();
             p.setNickname(rs.getString("nickname"));
             proveedor.add(indice, p);
@@ -272,7 +257,6 @@ public class DatosProveedores {
         }
 
         rs.close();
-        //conexion.cerrar();
         conn.close();
         return proveedor;
     }  
@@ -319,20 +303,13 @@ public class DatosProveedores {
         
         pConsulta.setString(1, nickProveedor);
         
-        //System.out.println("entree acá");
-        
         ResultSet rs = pConsulta.executeQuery();
-        
-        //Categoria c = new Ciudad();
         
         ArrayList<Imagen> imagenes = new ArrayList<Imagen>();
         
         if(rs != null){
-            //System.out.println("entree");
             while(rs.next()){
                 imagenes.add(new Imagen(rs.getString("ruta"), new Usuario()));
-                //System.out.println("agreguee");
-                //c.setPais(new Pais(rs.getString("nombrePais")));
             }
         }
         

@@ -35,10 +35,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     private String rutaImagen2 = "";
     private String rutaImagen3 = "";
     
-    //private ControladorProveedores proveedores = new ControladorProveedores();
-    
-    //private JLabel lblSeleccionado;
-    
     private JMenuItem miEliminar1 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar2 = new JMenuItem("Eliminar");
     private JMenuItem miEliminar3 = new JMenuItem("Eliminar");
@@ -68,10 +64,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         
-        
-        
-        //cmbCiudadOrigen.setFont(new Font("Tahoma", 11, Font.PLAIN));
-        
         try{
             cargarComboBoxCiudades(cmbCiudadOrigen, icprov.getCiudades(), false);
             cargarComboBoxCiudades(cmbCiudadDestino, icprov.getCiudades(), true);
@@ -85,8 +77,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-         
-        //lblImagen1.setIcon(new IconImage(get))
+        
         lblImagen1.setSize(143, 143);
         panelImagenes.add(lblImagen1);
         lblImagen1.setLocation(0, 0);
@@ -97,22 +88,17 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         lblImagen1.addMouseListener(new OyenteLabel(this));
         
-        //Controlad  
+        
         lblAgregarCategoria.setSize(38, 38);
         
         ImageIcon iconoCategoria = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
         ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
         lblAgregarCategoria.setIcon(iconoDimensionado);
         
-        //limpiar();
-        
         DefaultListModel modeloLista = new DefaultListModel();
         lstCategorias.setModel(modeloLista);
         
-        agregarPopup(4);
-        
-        
-               
+        agregarPopup(4);               
     }
     
     public void limpiar(){
@@ -139,14 +125,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         rutaImagen1 = "";
         
-        /*lblImagen1.setSize(143, 143);
-        panelImagenes.add(lblImagen1);
-        lblImagen1.setLocation(0, 0);
-        lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
         setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-        //agregarPopup(1);
-        
-        //lblImagen1.addMouseListener(new OyenteLabel(this));
                
         txtPrecio.setText("");
         cmbCiudadOrigen.setSelectedIndex(0);
@@ -168,8 +147,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         
         txtNombreServicio.requestFocus();
         
-        //agregarPopup(4);
-        
     }
     
     public void agregarPopup(int sub){
@@ -182,7 +159,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
         else if(sub == 2){
             JPopupMenu eliminarImagen2 = new JPopupMenu();
-            //JMenuItem miEliminar2 = new JMenuItem("Eliminar");
             miEliminar2.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
             miEliminar2.addActionListener(new OyentePopup());
             eliminarImagen2.add(miEliminar2);
@@ -190,7 +166,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
         else if(sub == 3){
             JPopupMenu eliminarImagen3 = new JPopupMenu();
-            //JMenuItem miEliminar3 = new JMenuItem("Eliminar");
             miEliminar3.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
             miEliminar3.addActionListener(new OyentePopup());
             eliminarImagen3.add(miEliminar3);
@@ -224,7 +199,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     }
     
     public void setImagenLabel(String ruta, String tipo){
-        //System.out.println("entre");
         JLabel lblImagen = labelActual();
         if(tipo.equals("defecto")){
             ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
@@ -237,7 +211,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             lblImagen.setIcon(imagenDimensionada);
             
             if(lblImagen == lblImagen1){
-                //System.out.println("2");
                 rutaImagen1 = ruta;
                 lblImagen2 = new JLabel();
                 lblImagen2.setSize(143, 143);
@@ -246,11 +219,9 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 lblImagen2.addMouseListener(new OyenteLabel(this));
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen2.setComponentPopupMenu(eliminarImagen1);
                 agregarPopup(2);
             }
             else if(lblImagen == lblImagen2){
-                //System.out.println("3");
                 rutaImagen2 = ruta;
                 lblImagen3 = new JLabel();
                 lblImagen3.setSize(143, 143);
@@ -259,7 +230,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 lblImagen3.addMouseListener(new OyenteLabel(this));
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen3.setComponentPopupMenu(eliminarImagen2);
                 agregarPopup(3);
             }
             else{
@@ -325,8 +295,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     else if((JLabel) e.getSource() == lblImagen3)
                         visor = new frmVisor(rutaImagen3);
                     
-                    //visor.setUndecorated(true);
-                    //visor.setUndecorated(true);
                     visor.setBounds(515, 200, 900, 600);
                     visor.setVisible(true);
                 }
@@ -361,14 +329,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         private JLabel lblImagen;
         
         public OyentePopup(){
-            //lblImagen = lbl;
+            
         }
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            //System.out.println(labelSeleccionado);
-            //JOptionPane.showMessageDialog(null, e.getSource());
-            //if(lstCategorias.getSelectedIndex() > -1){
             
                 if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
@@ -442,7 +407,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                     }
                     
                 }
-            //}
         }
             
         
@@ -451,10 +415,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
-        //ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
             ArrayList<DataCategoria> categoriasPadres = iccat.getCategoriasPadres();
-            //System.out.println(categoriasPadres.size());
             for(int i = 0; i < categoriasPadres.size(); i++){
                 DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i).getNombre());
                 root.add(nodosSuperiores);
@@ -751,7 +713,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //System.out.println("Precio (en U$S): " + txtPrecio.getText());
         if(cmbProveedor.getModel().getSize() == 0){
             JOptionPane.showMessageDialog(this, "No hay proveedores cargados en el sistema", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
@@ -815,10 +776,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
                             ArrayList<String> categorias = obtenerCategorias(modelo);
 
-                            //Proveedor proveedor = new Proveedor();
-
-                            //proveedor.setNombreEmpresa((String) cmbProveedor.getSelectedItem());
-
                             String proveedor = (String) cmbProveedor.getSelectedItem();
 
 
@@ -831,17 +788,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                                 String cDestino = (String) cmbCiudadDestino.getSelectedItem();
                                 String[] ciudadD = cDestino.split(",");
 
-                                //ciudadDestino = new Ciudad();
-                                //ciudadDestino.setNombre(ciudadD[0]);
-
                                 ciudadDestino = ciudadD[0].trim();
-
-                                //System.out.println("Ciudad: " + ciudadD[0]);
 
                                 tieneDestino = true;
                             }
                             else{
-                                //System.out.println("entre aca");
                                 ciudadDestino = "";
                             }
 
@@ -853,10 +804,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
                             int precio = Integer.parseInt(txtPrecio.getText());
 
-                            //System.out.println(precio);
-
-                            //Servicio servicio = new Servicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
-
                             icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
 
                             limpiar();
@@ -865,8 +812,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         }
                     }
                     catch(SQLException ex){
-                        //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                     catch(ClassNotFoundException ex){
                         JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -883,24 +830,11 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         ArrayList<String> categorias = new ArrayList();
         for(int i = 0; i < modelo.getSize(); i++){
             String cat = (String) modelo.getElementAt(i);
-            /*int cant = contador(cat, '>');
-            String[] c = cat.split(">");*/
             categorias.add((String) cat);
         }
         
         return categorias;
     }
-    
-   /* public int contador(String cadena, char letra){
-        int cant = 0;
-        
-        for(int i = 0; i < cadena.length(); i++){
-            if(cadena.charAt(i) == letra)
-                cant++;
-        }
-        
-        return cant;
-    }*/
     
     public boolean esNumerico(String txt){
         try{
@@ -914,13 +848,10 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     
     public boolean categoriaRepetida(DefaultListModel modelo, String categoria){
         boolean repetido = false;
-        //System.out.println(modelo.getSize());
         for(int i = 0; i < modelo.getSize(); i++){
-            //System.out.print(modelo.getElementAt(i) + " - " + rutaCategoria);
             if(modelo.getElementAt(i).equals(rutaCategoria))
                 repetido = true;
         }
-        //System.out.print("/");
         return repetido;
     }
     

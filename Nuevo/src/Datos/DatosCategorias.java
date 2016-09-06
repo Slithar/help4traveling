@@ -16,15 +16,10 @@ import javax.swing.JOptionPane;
  */
 public class DatosCategorias {
     
-    //private ConexionBD conexion;
-    
     public DatosCategorias(){
-        //conexion = new ConexionBD();
     }
     
     public ArrayList selectCategoriasPadres() throws SQLException, ClassNotFoundException{
-        //int indice = 0;
-        
         ArrayList<Categoria> resultado = new ArrayList();
         
         Connection conn;
@@ -40,19 +35,15 @@ public class DatosCategorias {
         while(rs.next()){
             Categoria c = new Categoria(rs.getString("nombre"), "", new ArrayList());
             resultado.add(c);
-            //indice++;
         }
         
         rs.close();
-        //conexion.cerrar();
         conn.close();
         
         return resultado;
     }
     
     public ArrayList<Categoria> selectCategoriasHijas(String categoria) throws SQLException, ClassNotFoundException{
-        //int indice = 0;
-        
         ArrayList<Categoria> resultado = new ArrayList();
         
         Connection conn;
@@ -74,7 +65,6 @@ public class DatosCategorias {
         }
         
         rs.close();
-        //conexion.cerrar();
         conn.close();
         
         return resultado;
@@ -94,8 +84,6 @@ public class DatosCategorias {
         pConsulta.setString(1, nombre);
         
         int rows = pConsulta.executeUpdate();
-        
-        //conexion.cerrar();
         
         conn.close();
 
@@ -124,8 +112,6 @@ public class DatosCategorias {
             resultado = false;
         }
         
-        //conexion.cerrar();
-        
         conn.close();
         
         return resultado;
@@ -151,14 +137,11 @@ public class DatosCategorias {
         while(rs.next()){
             Categoria categoria = new Categoria(rs.getString("nombre"), "", new ArrayList());
             cates.add(categoria);
-            //indice 
         }
             
         rs.close();
         
-        //conexion.cerrar();
-        
-        conn.close();// He hecho un cambio para pablo
+        conn.close();
         
         return cates;
     }
@@ -202,10 +185,6 @@ public class DatosCategorias {
         for(int i = 0; i < sql.length; i++){
             st.executeUpdate(sql[i]);
         }
-                
-        /*st.executeUpdate("delete from categoriasdeservicios where nombreCategoria <> \"\";"
-                        + "delete from categoriasrelacionadas where categoriaHija <> \"\";\n" +
-                        "delete from categorias where nombre <> \"\";");*/
         
         conn.close();
         

@@ -18,8 +18,6 @@ import java.util.logging.Logger;
  * @author usuario
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
-   // private ifrmAltaUsuarios altaUsuarios = new ifrmAltaUsuarios();
-    //private ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios();
     public static Panel nuevoPanel = new Panel();
     private IControladorClientes iccli;
     private IControladorProveedores icprov;
@@ -32,10 +30,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
      */
     public frmMenuPrincipal(){
         initComponents();
-        //add(altaUsuarios);
-        //aca el comentario de mi rama
-        //add(new Panel());
-        //hola otro comentario de master
         
         setContentPane(nuevoPanel);
         Fabrica fab = new Fabrica();
@@ -48,33 +42,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         
         this.setIconImage(icono);
-        
-        
-        /*try{
-            iccat.actualizarCategorias();
-            icprov.setListaCategorias(iccat.getListaCategorias());
-            icprov.actualizarProveedores();
-            icprov.actualizarCiudades();
-            icprom.setListaProveedores(icprov.getListaProveedores());
-            icprom.actualizarPromociones();
-            iccli.setListaPromociones(icprom.getListaPromociones());
-            iccli.setListaProveedores(icprov.getListaProveedores());            
-            iccli.actualizarClientes();
-        }
-        catch(SQLException ex){
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(ClassNotFoundException ex){
-            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
-        System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
-        System.out.println("CIUDADES: " + icprov.getCantCiudades());
-        System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
-        System.out.println("CLIENTES: " + iccli.getCantClientes());*/
     }
     
     public void setCursorFrame(Cursor c){
@@ -311,18 +278,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miActualizarReservaActionPerformed
 
     private void NuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaCatActionPerformed
-        // TODO add your handling code here:
-        /*Acá creo la instancia de agregar Categoría.
-        Tampoco anda acá.*/
+        
         nuevaCateFrame agregar = new nuevaCateFrame();
         add(agregar);
         agregar.setVisible(true);
     }//GEN-LAST:event_NuevaCatActionPerformed
 
     private void miRegClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegClientesActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("click!");
-       // altaUsuarios.setVisible(true);
        ifrmAltaUsuarios vAltaUsuarios = new ifrmAltaUsuarios(this.iccli, this.icprov);
        nuevoPanel.add(vAltaUsuarios);
        vAltaUsuarios.show();
@@ -330,19 +292,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miRegClientesActionPerformed
 
     private void miRegServiciosNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegServiciosNuevoActionPerformed
-        
-        //System.out.println("1");
         ifrmAltaServicio vAltaServicio = new ifrmAltaServicio(icprov, iccat);
-        //System.out.println("1");
         nuevoPanel.add(vAltaServicio);
-        //System.out.println("1");
-        vAltaServicio.setVisible(true);
-        //System.out.println("1");
-        
+        vAltaServicio.setVisible(true);        
     }//GEN-LAST:event_miRegServiciosNuevoActionPerformed
 
     private void miCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCategoriasActionPerformed
-        // TODO add your handling code here:
         nuevaCateFrame agregar = new nuevaCateFrame(this.iccat);
         add(agregar);
         agregar.setVisible(true);
@@ -360,9 +315,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
        vInformacionServicio.setVisible(true);
     }//GEN-LAST:event_miConsServiciosActionPerformed
     private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
-        // TODO add your handling code here:
-        /*VerInfoReserva agregar = new VerInfoReserva(this.iccli);
-      agregar.setVisible(true);*/
         ifrmVerInfoReserva agregar = new ifrmVerInfoReserva(this.iccli);
         nuevoPanel.add(agregar);
         agregar.setVisible(true);
@@ -412,7 +364,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 vProgreso.setVisible(false);
             }
             catch(SQLException ex){
-                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
@@ -458,7 +409,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             }
             catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             catch(ClassNotFoundException ex){
@@ -472,7 +422,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mEliminarDatosActionPerformed
     private void miRegPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegPromocionesActionPerformed
-        // TODO add your handling code here:
         agregarPromocion promo = new agregarPromocion(icprom,icprov);
         add(promo);
         promo.setVisible(true);
@@ -491,7 +440,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miCancelarReservaActionPerformed
 
     private void miConsPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsPromocionesActionPerformed
-        // TODO add your handling code here:
         verInfoPromocion promo = new verInfoPromocion(this.icprom, this.icprov,this.iccat);
         add(promo);
         promo.setVisible(true);
@@ -581,10 +529,6 @@ class Panel extends JDesktopPane{
     public Panel(){
               
     }
-    
-    /*public Panel(ifrmAltaUsuarios vUsuarios){
-        add(vUsuarios);
-    }*/
     
     @Override
     public void paintComponent(Graphics g){

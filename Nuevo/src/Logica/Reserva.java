@@ -25,9 +25,7 @@ public class Reserva {
         this.cliente=new Cliente();
         this.estado=Estado.REGISTRADA;
         this.serviciosReserva=new ArrayList();
-        this.reservacantPromociones=new ArrayList();
-        
-               
+        this.reservacantPromociones=new ArrayList();               
     }
 
     public Reserva(int numero, LocalDate fecha, int precio, Cliente cliente, ArrayList<cantidadReservasServicios> serviciosReserva, ArrayList<cantidadReservasPromociones> reservacantPromociones, Estado estado) {

@@ -56,11 +56,8 @@ public class ControladorPromociones implements IControladorPromociones{
             ArrayList<Servicio> servs = promociones.selectServiciosPromocion(p.getNombre());
             ArrayList<Servicio> serviciosDePromocion = new ArrayList<Servicio>();
             for(int j = 0; j < servs.size(); j++){
-                //System.out.println(" --" + ListaProveedores.size());
                 Proveedor prov = (Proveedor) ListaProveedores.get(servs.get(j).getProveedorServicio().getNombreEmpresa());
                 Servicio s = (Servicio) prov.getServicios().get(servs.get(j).getNombreServicio());
-                
-                //System.out.println(" --" + s.getNombreServicio());
                 serviciosDePromocion.add(s);
             }
             p.setServicios(serviciosDePromocion);
@@ -213,24 +210,6 @@ public String getNombreServicio(String cadena){
         return resultado;
     }
     
-    /*@Override
-    public ArrayList<DataServicio> getServiciosPorPromocion(String nombrePromo) throws SQLException, ClassNotFoundException{
-        ArrayList<DataServicio> resultado = new ArrayList();
-        DatosServicios servicio = new DatosServicios();
-        ArrayList<Servicio> todoslosservicios = servicio.getServicioPorPromocion(nombrePromo);
-        for(int i = 0; i < todoslosservicios.size(); i++){
-            DataServicio serv = new DataServicio();
-            serv.setNombreServicio(todoslosservicios.get(i).getNombreServicio());
-            serv.setNombreProveedor(todoslosservicios.get(i).getProveedorServicio().getNombreEmpresa());
-            serv.setOrigen(todoslosservicios.get(i).getOrigen().getNombre());
-            serv.setDestino(todoslosservicios.get(i).getDestino().getNombre());
-            serv.setDescripcionServicio(todoslosservicios.get(i).getDescripcionServicio());
-            serv.setPrecioServicio(todoslosservicios.get(i).getPrecioServicio());
-            
-            resultado.add(serv);
-        }
-       return resultado; 
-    }*/
     @Override
     public DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
         DataPromocion promocion = new DataPromocion();
@@ -243,8 +222,9 @@ public String getNombreServicio(String cadena){
         promocion.setPrecio(promo.getPrecio());
         return promocion;
     }
-@Override
-public ArrayList<DataServicio> getServiciosPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
+    
+    @Override
+    public ArrayList<DataServicio> getServiciosPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
         ArrayList<DataServicio> DTservs = new ArrayList();
         ArrayList<Servicio> servs = new ArrayList();
         Promocion promo = new Promocion();
@@ -263,5 +243,5 @@ public ArrayList<DataServicio> getServiciosPromocion(String nombrePromo, String 
         }
         return DTservs;
 
-}
+    }
 }

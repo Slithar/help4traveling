@@ -22,10 +22,6 @@ public class Ciudad {
         this.nombre = nombre;
         this.pais = pais;
     }
-
-    /*public Ciudad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
     
     public Pais getPais() {
         return pais;
@@ -35,7 +31,6 @@ public class Ciudad {
         this.pais = Pais;
     }
     
-    // No tengo muy claro como hacer la relación de este lado de las clases....
     public String getNombre() {
         return nombre;
     }

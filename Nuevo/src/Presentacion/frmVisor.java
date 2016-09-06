@@ -25,20 +25,12 @@ public class frmVisor extends javax.swing.JFrame {
     }
     
     public frmVisor(String ruta){
-        //System.out.println("constructor");
         initComponents();
         this.ruta = ruta;
         
         setTitle("Visualizador de imágenes");
         
-        
-        //this.setUndecorated(true);
-        
-        //System.out.println(ruta);
-        
         PanelVisor panel = new PanelVisor();
-        
-        //System.out.println("hi");
         
         setContentPane(panel);
         
@@ -46,24 +38,15 @@ public class frmVisor extends javax.swing.JFrame {
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         
         this.setIconImage(icono);
-        
-        //System.out.println("nuevo hola");
     }
     
     public frmVisor(String ruta, ifrmActualizarServicio ifrm){
-        //System.out.println("constructor");
         initComponents();
         this.ruta = ruta;
         
         setTitle("Visualizador de imágenes");
         
-        //this.setUndecorated(true);
-        
-        //System.out.println(ruta);
-        
         PanelVisor panel = new PanelVisor();
-        
-        //System.out.println("hi");
         
         setContentPane(panel);
         this.ifrm = ifrm;
@@ -72,8 +55,6 @@ public class frmVisor extends javax.swing.JFrame {
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         
         this.setIconImage(icono);
-        
-        //System.out.println("nuevo hola");
     }
 
     /**
@@ -170,7 +151,6 @@ public class frmVisor extends javax.swing.JFrame {
         
         @Override
         public void paint(Graphics g){
-            //System.out.println("hola");
             super.paintComponent(g);
             
             ImageIcon imagen = new ImageIcon(ruta);
@@ -179,13 +159,10 @@ public class frmVisor extends javax.swing.JFrame {
                 g.drawImage(imagen.getImage(), (900 - imagen.getIconWidth()) / 2, (550 - imagen.getIconHeight()) /2, imagen.getIconWidth(), imagen.getIconHeight(), null);
             }
             else if(imagen.getIconWidth() < imagen.getIconHeight()){
-                //System.out.println("entre aca");
                 if(imagen.getIconWidth() < 600 && imagen.getIconHeight() > 900){
-                    //System.out.println("1");
                     g.drawImage(imagen.getImage(), (900 - imagen.getIconWidth()) / 2, (550 - imagen.getIconHeight()) /2, imagen.getIconWidth(), 600, null);
                 }
                 else{
-                    //System.out.println("2");
                     g.drawImage(imagen.getImage(), (750 - 300) / 2, 0, 450, 600, null);
                 }
             }
@@ -197,10 +174,6 @@ public class frmVisor extends javax.swing.JFrame {
         
     }
     
-    //private class OyenteVentana implements windowsListener{
-    
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

@@ -58,8 +58,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         this.icprov = icprov;
         this.iccat = iccat;
         
-        //System.out.println("entre");
-        
         setTitle("Actualizar servicio");
         setSize(858, 793);
         Dimension tamanioVentana = this.getSize();
@@ -67,17 +65,11 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         setLocation((1400 - tamanioVentana.width)/2, (825 - tamanioVentana.height)/2);
         
         try{     
-            //System.out.println("1");
             cargarComboBoxServicios(cmbNombreServicios, icprov.getServicios(), false);
-            //System.out.println("2");
             cargarComboBoxCiudades(cmbCiudadOrigen, icprov.getCiudades(), false);
-            //System.out.println("3");
             cargarComboBoxCiudades(cmbCiudadDestino, icprov.getCiudades(), true);
-            //System.out.println("4");
             cargarComboBoxProveedores(cmbProveedor, icprov.getProveedores(), false);
-            //System.out.println("5");
             llenarArbol("", null);
-            //System.out.println("6");
             
         }
         catch(SQLException ex){
@@ -88,28 +80,19 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
-        //System.out.println("entre");
-        
         DefaultListModel modeloLista = new DefaultListModel();
         lstCategorias.setModel(modeloLista);
-        //System.out.println("entre");
         lblAgregarCategoria.setSize(38, 38);
-        
-        //System.out.println("entre");
         
         ImageIcon iconoCategoria = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
         ImageIcon iconoDimensionado = new ImageIcon(iconoCategoria.getImage().getScaledInstance(lblAgregarCategoria.getWidth(), lblAgregarCategoria.getHeight(), Image.SCALE_DEFAULT));
         lblAgregarCategoria.setIcon(iconoDimensionado);
         
-        //lblSitioWeb4.setLocation(200, 200);
-        //cmbProveedor.setForeground(Color.BLACK);
-        //System.out.println("entre");
         lblImagen1.setSize(143, 143);
         panelImagenes.add(lblImagen1);
         lblImagen1.setLocation(0, 0);
         lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         lblImagen1.setVisible(true);
-        //System.out.println("entre");
         panelDatos.setVisible(false);
         panelBotones.setVisible(false);
         
@@ -117,10 +100,8 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     }
     
     public void setImagenLabel(String ruta, String tipo){
-        //System.out.println("entre");
         JLabel lblImagen = labelActual();
         if(tipo.equals("defecto")){
-            //System.out.println("hola");
             ImageIcon imagenPerfil = new ImageIcon(getClass().getResource(ruta));
             ImageIcon imagenDimensionada = new ImageIcon(imagenPerfil.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
             lblImagen.setIcon(imagenDimensionada);
@@ -131,7 +112,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             lblImagen.setIcon(imagenDimensionada);
             
             if(lblImagen == lblImagen1){
-                //System.out.println("2");
                 rutaImagen1 = ruta;
                 lblImagen2 = new JLabel();
                 lblImagen2.setSize(143, 143);
@@ -140,11 +120,9 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                 lblImagen2.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 lblImagen2.addMouseListener(new OyenteLabel(this));
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen2.setComponentPopupMenu(eliminarImagen1);
                 agregarPopup(2);
             }
             else if(lblImagen == lblImagen2){
-                //System.out.println("3");
                 rutaImagen2 = ruta;
                 lblImagen3 = new JLabel();
                 lblImagen3.setSize(143, 143);
@@ -153,7 +131,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                 lblImagen3.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 lblImagen3.addMouseListener(new OyenteLabel(this));
                 setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
-                //lblImagen3.setComponentPopupMenu(eliminarImagen2);
                 agregarPopup(3);
             }
             else{
@@ -210,7 +187,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         }
         else if(sub == 2){
             JPopupMenu eliminarImagen2 = new JPopupMenu();
-            //JMenuItem miEliminar2 = new JMenuItem("Eliminar");
             miEliminar2.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
             miEliminar2.addActionListener(new OyentePopup());
             eliminarImagen2.add(miEliminar2);
@@ -218,7 +194,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         }
         else if(sub == 3){
             JPopupMenu eliminarImagen3 = new JPopupMenu();
-            //JMenuItem miEliminar3 = new JMenuItem("Eliminar");
             miEliminar3.setIcon(new ImageIcon(getClass().getResource("../Presentacion/Imagenes/iconoEliminar.png")));
             miEliminar3.addActionListener(new OyentePopup());
             eliminarImagen3.add(miEliminar3);
@@ -244,8 +219,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     
     
     private class OyenteLabel implements MouseListener{
-        
-        //private int cant = 0;
         private JLabel lblImagen;
         private ifrmActualizarServicio vActualizarServicio;
         
@@ -255,8 +228,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            /*cant++;
-            JOptionPane.showMessageDialog(null, cant);*/
             if(!visorAbierto){
                 if(e.getButton() == MouseEvent.BUTTON1){
                     if(cambioValido((JLabel) e.getSource())){
@@ -271,16 +242,11 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                         else if((JLabel) e.getSource() == lblImagen3)
                             visor = new frmVisor(rutaImagen3, this.vActualizarServicio);
                         visorAbierto = true;
-                        //visor.setUndecorated(true);
-                        //visor.setUndecorated(true);
                         visor.setBounds(515, 200, 900, 600);
                         visor.setVisible(true);
                     }
                 }
             }
-            
-            //cant = 0;
-            
         }
 
         @Override
@@ -330,14 +296,11 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         private JLabel lblImagen;
         
         public OyentePopup(){
-            //lblImagen = lbl;
+            
         }
         
         @Override
-        public void actionPerformed(ActionEvent e) {
-            //System.out.println(labelSeleccionado);
-            //JOptionPane.showMessageDialog(null, e.getSource());
-            
+        public void actionPerformed(ActionEvent e) {            
                 if(e.getSource() == miEliminar1 && rutaImagen1 != ""){
                 
                     if(rutaImagen2 == ""){
@@ -750,12 +713,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                 try{
                     ArrayList<DataImagen> imagenesAnteriores = icprov.getImagenes(nombreServicio[0], proveedorServicio);
                     
-                    /*for(int i = 0; i < imagenesAnteriores.size(); i++){
-                        File ficheroImagen = new File(imagenesAnteriores.get(i).getPath());
-                        File rutaAbsoluta = new File(ficheroImagen.getAbsolutePath());
-                        rutaAbsoluta.delete();
-                    }*/
-                    
                     String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
                         String[] ciudad = cOrigen.split(",");
                         String ciudadOrigen = ciudad[0].trim();
@@ -800,7 +757,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                         int precio = Integer.parseInt(txtPrecio.getText());
                         
                         icprov.modificarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
-                        //icprov.agregarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, new ArrayList(), new ArrayList(), categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         panelDatos.setVisible(false);
                         panelBotones.setVisible(false);
                         cmbNombreServicios.setSelectedIndex(0);
@@ -827,8 +783,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         ArrayList<String> categorias = new ArrayList();
         for(int i = 0; i < modelo.getSize(); i++){
             String cat = (String) modelo.getElementAt(i);
-            /*int cant = contador(cat, '>');
-            String[] c = cat.split(">");*/
             categorias.add((String) cat);
         }
         
@@ -865,13 +819,10 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     
     public boolean categoriaRepetida(DefaultListModel modelo, String categoria){
         boolean repetido = false;
-        //System.out.println(modelo.getSize());
         for(int i = 0; i < modelo.getSize(); i++){
-            //System.out.print(modelo.getElementAt(i) + " - " + rutaCategoria);
             if(modelo.getElementAt(i).equals(rutaCategoria))
                 repetido = true;
         }
-        //System.out.print("/");
         return repetido;
     }
     
@@ -896,9 +847,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             panelImagenes.add(lblImagen1);
             lblImagen1.setLocation(0, 0);
             lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            //lblImagen1.addMouseListener(new Oye);
-            //System.out.println("entre");
-            //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
             lblImagen1.addMouseListener(new OyenteLabel(this));
             lblImagen1.setVisible(true);
             agregarPopup(1);
@@ -932,14 +880,12 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             areaDescripcion.setText(datosServicio.getDescripcionServicio());
             txtPrecio.setText(String.valueOf(datosServicio.getPrecioServicio()));
             cmbProveedor.setSelectedItem(datosServicio.getNombreProveedor());
-            //lblSitioWeb4.setText(datosServicio.getNombreProveedor());
             panelDatos.setVisible(true);
                        
             DataCiudad datosCiudad = icprov.getCiudadOrigen(nombreServicio[0], proveedorServicio);
             cmbCiudadOrigen.setSelectedItem(datosCiudad.getNombre() + ", " + datosCiudad.getPais());
             
             datosCiudad = icprov.getCiudadDestino(nombreServicio[0], proveedorServicio);
-            //JOptionPane.showMessageDialog(null, datosCiudad.getNombre());
             if(datosCiudad.getNombre() == "No"){
                 cmbCiudadDestino.setSelectedItem("No corresponde");
             }
@@ -947,26 +893,18 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                 cmbCiudadDestino.setSelectedItem(datosCiudad.getNombre() + ", " + datosCiudad.getPais());
             }
             
-            //System.out.println("1");
             DefaultListModel modelo = new DefaultListModel();
             
-            //System.out.println("1");
-            
             ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias(nombreServicio[0], proveedorServicio);
-            //System.out.println("1");
             for(int i = 0; i < categoriasDelServicio.size(); i++){
                 modelo.addElement(categoriasDelServicio.get(i).getRutaCategoria());
             }
-            //System.out.println("1");
             lstCategorias.setModel(modelo);
             agregarPopup(4);
-            //System.out.println("1");
             
             ArrayList<DataImagen> imagenesDelServicio = new ArrayList<DataImagen>();
             
             imagenesDelServicio = icprov.getImagenes(nombreServicio[0], proveedorServicio);
-            
-            //System.out.println(imagenesDelServicio.size());
             
             setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
         
@@ -977,9 +915,6 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             else{
                 for(int i = 0; i < imagenesDelServicio.size(); i++){
                     File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
-                    //System.out.println(ficheroImagen.getAbsolutePath());
-                   // System.out.println(ficheroImagen.getAbsolutePath());
-                    //setImagenLabel(imagenesDelServicio.get(i).getPath(), "defecto");
                     setImagenLabel(ficheroImagen.getAbsolutePath(), "absoluta");
                 }
 
@@ -1003,12 +938,9 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     
     public void llenarArbol(String padre, DefaultMutableTreeNode nodoPadre) throws SQLException, ClassNotFoundException{
         
-        //System.out.println("entre");
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorías disponibles");
-        //ControladorCategorias categoriasHandler = new ControladorCategorias();
         if(padre == ""){
             ArrayList<DataCategoria> categoriasPadres = iccat.getCategoriasPadres();
-            //System.out.println(categoriasPadres.size());
             for(int i = 0; i < categoriasPadres.size(); i++){
                 DefaultMutableTreeNode nodosSuperiores = new DefaultMutableTreeNode(categoriasPadres.get(i).getNombre());
                 root.add(nodosSuperiores);
