@@ -195,7 +195,7 @@ public class ControladorProveedores implements IControladorProveedores{
         if(rutaImagen.size() > 0){
             ArrayList<Imagen> imagenes = p.getImagenesUsuario();
             for(int i = 0; i < imagenes.size(); i++){
-                if(imagenes.get(i).getPath() != "perfiles/perfil.PNG"){
+                if(imagenes.get(i).getPath() != "src/Logica/perfiles/perfil.PNG"){
                     proveedor.agregarImagen(p.getNickname(), imagenes.get(i).getPath());
                 }
             } 
@@ -712,7 +712,6 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         Proveedor p = new Proveedor();
         p.setNickname(nickname);
         Proveedor Prov =dataux.seleccionarProveedor(p.getNickname());
-        ArrayList<DataProveedor> InfoProveedores = new ArrayList();
             ArrayList<Imagen> imagenesProveedor = datausu.selectImagenesPerfil(p);
             ArrayList<String> rutaImagenes = new ArrayList();
             for(int i = 0; i < imagenesProveedor.size(); i++){

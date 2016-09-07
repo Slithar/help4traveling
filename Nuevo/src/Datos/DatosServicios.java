@@ -456,7 +456,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select nombre,precio from servicios where nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select nombre, precio from servicios where nombreProveedor = ?");
         
         pConsulta.setString(1, NombreProveedor);
         

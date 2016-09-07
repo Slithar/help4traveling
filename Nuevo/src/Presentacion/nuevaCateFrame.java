@@ -224,19 +224,21 @@ public class nuevaCateFrame extends javax.swing.JInternalFrame {
                             txtNombreCat.setText(null);
                             
                             if(resultado == true){
-                                JOptionPane.showMessageDialog(this, "La nueva categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "La nueva categoría ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                 
                                 this.llenarArbol("", null);
-                                txtNombreCat.setText(null);                                
+                                txtNombreCat.setText(null); 
+                                txtNombreCat.requestFocus();
                             }
                         }
                         else{
                             String catAgregar = txtNombreCat.getText();
                             resultado = iccat.agregarNuevaCategoriaPadre(catAgregar);
                             if(resultado == true){
-                                JOptionPane.showMessageDialog(this, "La categoría ha sido agregada de manera correcta", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "La nueva categoría ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                 this.llenarArbol("", null);
                                 txtNombreCat.setText(null);
+                                txtNombreCat.requestFocus();
                             }
                         }
                         cmbTipo.setSelectedIndex(0);

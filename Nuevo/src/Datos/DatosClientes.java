@@ -121,15 +121,15 @@ public class DatosClientes {
         pConsulta.setString(1, estado);
         pConsulta.setInt(2, numero);
         pConsulta.executeUpdate();
+        conn.close();
     }
-    public Reserva getReserva(String numeroRes) {
+    public Reserva getReserva(String numeroRes) throws SQLException, ClassNotFoundException {
         Reserva dtaux = new Reserva();
         ArrayList<cantidadReservasPromociones> listProm = new ArrayList();
         ArrayList<cantidadReservasServicios> listServ = new ArrayList();
         Connection conn;
 
         ConexionBD conexion = new ConexionBD();
-        try {
             conn = conexion.conectar();
 
             Statement st = conn.createStatement();
@@ -151,17 +151,14 @@ public class DatosClientes {
             }
             rs.close();
             conn.close();
-        } catch (Exception e) {
-        }
         return dtaux;
     }
 
-    public ArrayList getReservasPromo(String numeroProm) {
+    public ArrayList getReservasPromo(String numeroProm) throws SQLException, ClassNotFoundException {
 
         ArrayList<cantidadReservasPromociones> dtProm = new ArrayList();
         Connection conn;
         ConexionBD conexion = new ConexionBD();
-        try {
             conn = conexion.conectar();
             Statement st = conn.createStatement();
             ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and cr.nombreProveedor = p.nombreProveedor and numeroReserva=" + numeroProm);
@@ -188,17 +185,14 @@ public class DatosClientes {
 
             rsCant.close();
             conn.close();
-        } catch (Exception e) {
-        }
         return dtProm;
 
     }
 
-    public ArrayList getServiciosPromo(String numeroSer) {
+    public ArrayList getServiciosPromo(String numeroSer) throws SQLException, ClassNotFoundException {
         ArrayList<cantidadReservasServicios> dtSer = new ArrayList();
         Connection conn;
         ConexionBD conexion = new ConexionBD();
-        try {
             conn = conexion.conectar();
             Statement st = conn.createStatement();
             ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and cs.nombreProveedor = s.nombreProveedor and numeroReserva=" + numeroSer);
@@ -224,8 +218,6 @@ public class DatosClientes {
             }
             rsCant.close();
             conn.close();
-        } catch (Exception e) {
-        }
         return dtSer;
     }
 

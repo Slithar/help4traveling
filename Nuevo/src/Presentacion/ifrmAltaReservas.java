@@ -573,10 +573,11 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No hay clientes registrados en el sistema", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            try {   
-                numRes  = iccli.realizarReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), "REGISTRADA", cmbUsuarios.getSelectedItem().toString());
+            try {
+                String[] nickCliente = cmbUsuarios.getSelectedItem().toString().split("<");
+                numRes  = iccli.realizarReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), "REGISTRADA", nickCliente[0].trim());
                 iccli.datosAsociadosReserva(numRes, tblAsociaciones.getModel());
-                JOptionPane.showMessageDialog(this, "La operación ha finalizado de manera correcta.\nNúmero de la reserva: " + iccli.getNumeroReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), cmbUsuarios.getSelectedItem().toString()), "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "La operación ha finalizado de manera correcta.\nNúmero de la reserva: " + iccli.getNumeroReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), nickCliente[0].trim()), "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
             }
             catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -585,7 +586,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-            limpiar();
+            limpiar();                 
+            cmbUsuarios.setSelectedIndex(0);
             lblPrecioTotal.setText("0");
             DefaultTableModel modeloServ = new DefaultTableModel();
             modeloServ.setColumnIdentifiers(new Object[]{"Tipo","Nombre","Proveedor","Precio"});
@@ -667,6 +669,9 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         lblAgregarReserva.requestFocus();
         boolean ok = true;
         try{
+            /*** Estas dos líneas son solamente para verificar si el formato de la fecha es válido, en caso de no serlo lanzará una excepción ***/
+            LocalDate.of(Integer.parseInt(spnIniAnio.getValue().toString()), Integer.parseInt(spnIniMes.getValue().toString()), Integer.parseInt(spnIniDia.getValue().toString()));
+            LocalDate.of(Integer.parseInt(spnFinAnio.getValue().toString()), Integer.parseInt(spnFinMes.getValue().toString()), Integer.parseInt(spnFinDia.getValue().toString()));
             if(lblServicio.getText() == "No seleccionado" && lblProveedor.getText() == "No seleccionado" && lblPrecio.getText() == "0"){
                 ok = false;
                 JOptionPane.showMessageDialog(this, "No se ha seleccionado ningún producto de la lista", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -750,6 +755,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 if(tblAsociaciones.getModel().getRowCount() == 0){
                     lblPrecioTotal.setText("0");
                     panelReservas.setVisible(false);
+                    cmbUsuarios.setSelectedIndex(0);
                     
                 }
                 System.out.println(lblPrecioTotal.getText());
@@ -829,12 +835,12 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         ));
         
         panelReservas.setVisible(false);
-        tblAsociaciones.setVisible(false);
+        tblAsociaciones.setVisible(false);  
     }
     
      public void llenarcmbClientes(JComboBox combo, ArrayList<DataCliente> datos){
         for(int i = 0; i < datos.size(); i++){
-            combo.addItem(datos.get(i).getNickname());
+            combo.addItem(datos.get(i).getNickname() + " <" + datos.get(i).getNombre() + " " + datos.get(i).getApellido() + ">");
         }
         
     }

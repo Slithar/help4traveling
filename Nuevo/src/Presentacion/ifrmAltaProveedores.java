@@ -103,25 +103,26 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "La imagen de perfil seleccionada ya se encuentra cargada", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            LabelImagen lblImagen1 = new LabelImagen();
+            /*** LOS COMENTARIOS ESTOS QUEDAN POR LAS DUDAS QUE DE PROBLEMAS LUEGO ***/
+            /*LabelImagen lblImagen1 = new LabelImagen();
             lblImagen1.setSize(100, 100);
             lblImagen1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            lblImagen1.addMouseListener(new OyenteLabel());
+            lblImagen1.addMouseListener(new OyenteLabel());*/
             LabelImagen imagen = new LabelImagen(ruta);
             
-            JPopupMenu jpmEliminar = new JPopupMenu();
-            MenuItemPopup pm = new MenuItemPopup(lblImagen1, "Eliminar");
-            pm.addActionListener(new OyentePopup());
-            jpmEliminar.add(pm);
+            //JPopupMenu jpmEliminar = new JPopupMenu();
+            //MenuItemPopup pm = new MenuItemPopup(lblImagen1, "Eliminar");
+            //pm.addActionListener(new OyentePopup());
+            //jpmEliminar.add(pm);
             
-            lblImagen1.setComponentPopupMenu(jpmEliminar);
+            //lblImagen1.setComponentPopupMenu(jpmEliminar);
 
             perfiles.add(imagen);
             if(perfiles.get(0) == imagen){
                 setImagenPerfil(ruta, "absoluta");
-                panelImagenes.add(lblImagen1);
+                //panelImagenes.add(lblImagen1);
             }
-            lblImagen1.setVisible(false);
+            //lblImagen1.setVisible(false);
             refrescarPerfiles();
         }
         

@@ -35,9 +35,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     
     private frmVisor visor;
     
-    private class modeloTabla extends DefaultTableModel{
-        
-    };
+    private DefaultTableModel modelo;
     
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
@@ -76,7 +74,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         lblDescripcion.setEditable(false);
         
         lblDescripcion.setEditable(false);
-        modeloTabla modelo = new modeloTabla();
+        modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
         
         try{
@@ -128,7 +126,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         
         
-        modeloTabla modelo = new modeloTabla();
+        modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
         modelo.addRow(new Object[]{NombreDelServicio, ProveedorDelServicio});
         tbServicios.setModel(modelo);
@@ -665,7 +663,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                     panelDatos.setVisible(false);
                     if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
                         txtBusqueda.setText("");                        
-                        modeloTabla modelo = new modeloTabla();
+                        modelo = new DefaultTableModel();
                         modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
 
                         try{

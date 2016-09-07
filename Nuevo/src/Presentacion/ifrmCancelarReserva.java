@@ -167,7 +167,7 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se pudo completar la accion, no ha seleccionado ninguna reserva", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar la reserva N° "+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +" ?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
+            int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar la reserva número "+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +" ?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
             if(resp == 0){
                 try {
                     iccli.deleteReserva(Integer.parseInt(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0).toString()));
@@ -205,7 +205,7 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
         ArrayList<DataReserva> reservas = new ArrayList();
                 try {
                     modelo = new DefaultTableModel();
-                    modelo.setColumnIdentifiers(new Object[] {"Numero" ,"Fecha" ,"Precio" ,"Estado" , "Nickname cliente"});
+                    modelo.setColumnIdentifiers(new Object[] {"Número" ,"Fecha" ,"Precio" ,"Estado" , "Nickname cliente"});
                     reservas = iccli.getAllReservas();
                     for(int i = 0; i < reservas.size(); i++){
                         modelo.addRow(new Object[] {reservas.get(i).getNumero(), reservas.get(i).getFecha().getDayOfMonth() + "/" + reservas.get(i).getFecha().getMonthValue() + "/" + reservas.get(i).getFecha().getYear(), reservas.get(i).getPrecio(), reservas.get(i).getEstado(), reservas.get(i).getCliente()});

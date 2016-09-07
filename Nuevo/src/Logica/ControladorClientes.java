@@ -163,7 +163,6 @@ public class ControladorClientes implements IControladorClientes {
         DatosClientes cliente = new DatosClientes();
         Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap<Integer, Reserva>());
         cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());
-        //System.out.println(rutaImagen);
         if (!rutaImagen.equals("src/Logica/perfiles/perfil.PNG")) {
             cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());
         }
@@ -193,7 +192,7 @@ public class ControladorClientes implements IControladorClientes {
          dataux.updateEstadoReserva(res.getNumero(),res.getEstado().toString());
          
      }
-    public DataReserva getReserva(String numeroRes){
+    public DataReserva getReserva(String numeroRes) throws SQLException, ClassNotFoundException{
         DataReserva dtAux =new  DataReserva ();
         DatosClientes datCli = new DatosClientes();
         ArrayList <DataCantidadReservasPromociones> listProm= new ArrayList();
@@ -209,7 +208,7 @@ public class ControladorClientes implements IControladorClientes {
     }
     
     @Override
-      public ArrayList getReservasPromo(String numeroProm){
+      public ArrayList getReservasPromo(String numeroProm) throws SQLException, ClassNotFoundException{
         DatosClientes dataux = new DatosClientes();
         ArrayList<cantidadReservasPromociones> listProm = new ArrayList();
         listProm = dataux.getReservasPromo(numeroProm);
@@ -225,7 +224,7 @@ public class ControladorClientes implements IControladorClientes {
       }
       
     @Override
-        public ArrayList getReservasServ(String numeroServ){
+        public ArrayList getReservasServ(String numeroServ) throws SQLException, ClassNotFoundException{
             DatosClientes dataux = new DatosClientes();
             ArrayList <cantidadReservasServicios> listServ= new ArrayList();
             listServ = dataux.getServiciosPromo(numeroServ);

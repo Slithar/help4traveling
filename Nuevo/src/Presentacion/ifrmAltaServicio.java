@@ -353,7 +353,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
                         setImagenLabel(rutaImagen2, "absoluta");
 
-                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                        //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
 
                         rutaImagen1 = rutaImagen2;
                         rutaImagen2 = "";                   
@@ -369,7 +369,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
                         setImagenLabel(rutaImagen3, "absoluta");
 
-                        setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
+                        //setImagenLabel("../Logica/ImagenesServicios/agregarImagenServicio.png", "defecto");
 
                         rutaImagen1 = rutaImagen2;
                         rutaImagen2 = rutaImagen3;
@@ -716,7 +716,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         if(cmbProveedor.getModel().getSize() == 0){
             JOptionPane.showMessageDialog(this, "No hay proveedores cargados en el sistema", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
-        else if(cmbProveedor.getModel().getSize() == 0){
+        else if(cmbCiudadOrigen.getModel().getSize() == 0){
             JOptionPane.showMessageDialog(this, "No hay ciudades cargadas en el sistema", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
@@ -777,8 +777,6 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                             ArrayList<String> categorias = obtenerCategorias(modelo);
 
                             String proveedor = (String) cmbProveedor.getSelectedItem();
-
-
 
                             boolean tieneDestino = false;
 

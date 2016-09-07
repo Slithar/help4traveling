@@ -37,7 +37,7 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
     };
     public ifrmActualizarEstadoReserva(IControladorClientes iccli){
         initComponents();
-         setTitle("Actualizar estado reserva");
+        setTitle("Actualizar estado reserva");
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (745 - tamanioVentana.height)/2);
         
@@ -134,8 +134,8 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(lblNumero)))
                     .addGroup(panelEstadoLayout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(154, 154, 154)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         panelEstadoLayout.setVerticalGroup(
@@ -151,7 +151,7 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
                 .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnModificar)
-                .addGap(60, 60, 60))
+                .addGap(67, 67, 67))
         );
 
         tablaRes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -176,13 +176,13 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -195,7 +195,7 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -226,7 +226,8 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
             iccli.updateEstadoReserva(Integer.parseInt(lblNumero.getText()), (String) cmbEstado.getSelectedItem());
             JOptionPane.showMessageDialog(this, "El estado de la reserva ha sido modificado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
             panelEstado.setVisible(false);
-                DefaultTableModel model=  new DefaultTableModel(null, columnas);
+            cmbEstado.setSelectedIndex(0);
+            DefaultTableModel model=  new DefaultTableModel(null, columnas);
 
             
                 ArrayList<DataReserva> numRes= this.iccli.datosReserva(); 

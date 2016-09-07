@@ -54,8 +54,8 @@ public class ProveedorIT {
     @Test
     public void testSitioWebValido2() {
         Proveedor p = new Proveedor();
-        p.setLink("help4traveling.com");
-        boolean expResult = true;
+        p.setLink(".help4traveling.com.uy");
+        boolean expResult = false;
         boolean result = p.sitioWebValido();
         assertEquals(expResult, result);
     }
@@ -63,10 +63,30 @@ public class ProveedorIT {
     @Test
     public void testSitioWebValido3() {
         Proveedor p = new Proveedor();
+        p.setLink("help4traveling.com.uy.");
+        boolean expResult = false;
+        boolean result = p.sitioWebValido();
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testSitioWebValido4() {
+        Proveedor p = new Proveedor();
+        p.setLink("help4traveling.com");
+        boolean expResult = true;
+        boolean result = p.sitioWebValido();
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testSitioWebValido5() {
+        Proveedor p = new Proveedor();
         p.setLink("help4traveling.com.uy");
         boolean expResult = true;
         boolean result = p.sitioWebValido();
         assertEquals(expResult, result);
     }
+    
+    
     
 }
