@@ -299,6 +299,8 @@ public class verInfoPromocion extends javax.swing.JInternalFrame {
         nombre = String.valueOf(partes[1].trim());
 
         return nombre;
+        
+        /*verificación*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
