@@ -85,12 +85,31 @@ public class Usuario {
     
     public boolean correoValido(){
         int cantArrobas = 0;
+        int cantPuntos = 0;
+        
+        int posicionArroba = 0;
+        int posicionPunto = 0;
+        
+        if(this.email.charAt(0) == '@' || this.email.charAt(0) == '.')
+            return false;
+        else if(this.email.charAt(this.email.length() - 1) == '@' || this.email.charAt(this.email.length() - 1) == '.')
+            return false;
+        
         for(int i = 0; i < this.email.length(); i++){
-            if(this.email.charAt(i) == '@')
+            if(this.email.charAt(i) == '@'){
                 cantArrobas++;
+                posicionArroba = i;
+            }
+            if(this.email.charAt(i) == '.'){
+                cantPuntos++;
+                posicionPunto = i;
+            }
         }
-        if(cantArrobas == 1)
-            return true;
+        if(cantArrobas == 1 && cantPuntos > 0)
+            if(posicionPunto > posicionArroba)
+                return true;
+            else
+                return false;
         else
             return false;
     }   

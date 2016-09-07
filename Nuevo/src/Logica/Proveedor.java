@@ -91,6 +91,11 @@ public class Proveedor extends Usuario {
     public boolean sitioWebValido(){
         int i = 0;
         
+        if(this.link.charAt(0) == '.')
+            return false;
+        else if(this.link.charAt(this.link.length() - 1) == '.')
+            return false;
+        
         while(i < this.link.length()){
             if(this.link.charAt(i) == '.')
                 return true;
