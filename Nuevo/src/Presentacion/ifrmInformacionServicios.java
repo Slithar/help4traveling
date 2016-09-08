@@ -13,6 +13,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 /**
@@ -56,7 +58,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         setLocation((1400 - tamanioVentana.width)/2, (820 - tamanioVentana.height)/2);
         
-        panelDatos.setVisible(false);
+        //panelDatos.setVisible(false);
         
         lstCategorias.setBackground(UIManager.getColor("Label.background"));
         lblDescripcion.setBackground(UIManager.getColor("Label.background"));
@@ -75,13 +77,13 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         lblDescripcion.setEditable(false);
         modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor", "Empresa"});
         
         try{
             ArrayList<DataServicio> datosServicios = icprov.getServicios();
             
             for(int i = 0; i < datosServicios.size(); i++){
-                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor(), icprov.getNombreEmpresa(datosServicios.get(i).getNombreProveedor()).getNombreEmpresa()});
             }
             
             tbServicios.setModel(modelo);
@@ -94,10 +96,13 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
+        ListSelectionModel modeloSeleccion = tbServicios.getSelectionModel();
+        modeloSeleccion.addListSelectionListener(new OyenteSeleccion());
         
+        tbServicios.changeSelection(0, 0, false, false);
     }
     
-    public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat, String NombreDelServicio, String ProveedorDelServicio) {
+    public ifrmInformacionServicios(IControladorProveedores icprov, IControladorCategorias iccat, String NombreDelServicio, String ProveedorDelServicio, String empresa) {
         initComponents();
         
         this.icprov = icprov;
@@ -127,14 +132,14 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         
         
         modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
-        modelo.addRow(new Object[]{NombreDelServicio, ProveedorDelServicio});
+        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor", "Empresa"});
+        modelo.addRow(new Object[]{NombreDelServicio, ProveedorDelServicio, empresa});
         tbServicios.setModel(modelo);
         
         panelBusqueda.setVisible(false);
-        panelBotonAceptar.setVisible(false);
+        //panelBotonAceptar.setVisible(false);
         
-        panelDatos.setVisible(true);
+        //panelDatos.setVisible(true);
         
         if(lblImagen3 != null){
                 lblImagen3.setVisible(false);
@@ -156,7 +161,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
             rutaImagen1 = "";
             
             lblNombre.setText(NombreDelServicio);
-            lblProveedor.setText(ProveedorDelServicio);
+            lblProveedor.setText(ProveedorDelServicio + " (" + empresa + ")");
 
             try {
                 
@@ -207,13 +212,13 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                     panelDatos.setVisible(false);
                     if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
                         txtBusqueda.setText("");       
-                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor", "Empresa"});
 
                         try{
                             ArrayList<DataServicio> datosServicios = icprov.getServicios();
 
                             for(int i = 0; i < datosServicios.size(); i++){
-                                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+                                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor(), empresa});
                             }
 
                             tbServicios.setModel(modelo);
@@ -255,8 +260,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         panelBusqueda = new javax.swing.JPanel();
         txtBusqueda = new javax.swing.JTextField();
-        panelBotonAceptar = new javax.swing.JPanel();
-        btnAceptar = new javax.swing.JButton();
         panelBotonAceptar1 = new javax.swing.JPanel();
         btnAceptar1 = new javax.swing.JButton();
         panelDatos = new javax.swing.JPanel();
@@ -291,15 +294,20 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre del servicio", "Proveedor"
+                "Nombre del servicio", "Proveedor", "Empresa"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbServicios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbServiciosMouseClicked(evt);
             }
         });
         tbServicios.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -343,31 +351,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25))
         );
 
-        btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelBotonAceptarLayout = new javax.swing.GroupLayout(panelBotonAceptar);
-        panelBotonAceptar.setLayout(panelBotonAceptarLayout);
-        panelBotonAceptarLayout.setHorizontalGroup(
-            panelBotonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBotonAceptarLayout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelBotonAceptarLayout.setVerticalGroup(
-            panelBotonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBotonAceptarLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnAceptar)
-                .addContainerGap(40, Short.MAX_VALUE))
-        );
-
         btnAceptar1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAceptar1.setText("Aceptar");
         btnAceptar1.addActionListener(new java.awt.event.ActionListener() {
@@ -403,10 +386,9 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTablaLayout.createSequentialGroup()
                 .addGap(0, 27, Short.MAX_VALUE)
-                .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelBotonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                    .addComponent(panelBusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                    .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
         );
         panelTablaLayout.setVerticalGroup(
@@ -415,11 +397,9 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                 .addGap(53, 53, 53)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
                 .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(panelBotonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -561,7 +541,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                     .addComponent(lblImagenes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelGeneralLayout = new javax.swing.GroupLayout(panelGeneral);
@@ -664,7 +644,7 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
                     if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
                         txtBusqueda.setText("");                        
                         modelo = new DefaultTableModel();
-                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor", "Empresa"});
 
                         try{
                             ArrayList<DataServicio> datosServicios = icprov.getServicios();
@@ -787,17 +767,26 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     }
     
     public void eventoBusqueda(String buscar){
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor"});
+        /*DefaultTableModel modelo = (DefaultTableModel) tbServicios.getModel();*/
+        //System.out.println(modelo.getRowCount());
+        while(modelo.getRowCount() > 1){
+            modelo.removeRow(1);
+        }
+        
+        
+        
+        //modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor", "Empresa"});
         
         try{
             ArrayList<DataServicio> datosServicios = icprov.getServiciosPorBusqueda(buscar);
-            
+            //JOptionPane.showMessageDialog(null, datosServicios.size());
             for(int i = 0; i < datosServicios.size(); i++){
-                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+                //JOptionPane.showMessageDialog(null, icprov.getNombreEmpresa(datosServicios.get(i).getNombreProveedor()).getNombreEmpresa());
+                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor(), icprov.getNombreEmpresa(datosServicios.get(i).getNombreProveedor()).getNombreEmpresa()});
             }
-            
-            tbServicios.setModel(modelo);
+                        
+            //tbServicios.setModel(modelo);
+            //tbServicios.changeSelection(0, 0, false, false);
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -813,20 +802,150 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBusquedaKeyTyped
     
     private void tbServiciosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyTyped
-        
+        //verInformacionServicio();
     }//GEN-LAST:event_tbServiciosKeyTyped
 
     private void tbServiciosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbServiciosKeyPressed
-        
+        /*if(tbServicios.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado servicio", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            tbServicios.requestFocus();
+        } */
+        //if(tbServicios.getSelectedRow() > -1){
+        //verInformacionServicio();
+        //}
     }//GEN-LAST:event_tbServiciosKeyPressed
+    
+    private class OyenteSeleccion implements ListSelectionListener{
 
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            verInformacionServicio();
+        }
+        
+    }
+    
+    public void verInformacionServicio(){
+        if(lblImagen3 != null){
+                lblImagen3.setVisible(false);
+                lblImagen3 = null;
+                rutaImagen3 = "";
+
+                if(lblImagen2 != null){
+                    lblImagen2.setVisible(false);
+                    lblImagen2 = null;
+                    rutaImagen2 = "";
+                }   
+            }
+            else if(lblImagen2 != null){
+                lblImagen2.setVisible(false);
+                lblImagen2 = null;
+                rutaImagen2 = "";
+            }               
+
+            rutaImagen1 = "";
+            
+            lblNombre.setText((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0));
+            lblProveedor.setText((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1) + " (" + (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 2) + ")");
+
+            try {
+                
+                DataServicio datosServicio = icprov.getDatosServicio((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+                if(datosServicio.getDescripcionServicio() != ""){
+                    lblDescripcion.setText(datosServicio.getDescripcionServicio());
+                    lblPrecio.setText("U$S " + String.valueOf(datosServicio.getPrecioServicio()));
+
+                    DataCiudad ciudad = icprov.getCiudadOrigen((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+                    lblOrigen.setText(ciudad.getNombre() + ", " + ciudad.getPais());
+
+                    ciudad = icprov.getCiudadDestino((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+                    if(ciudad.getNombre().equals("No"))
+                        lblDestino.setText("No corresponde");
+                    else
+                        lblDestino.setText(ciudad.getNombre() + ", " + ciudad.getPais());
+
+                    ArrayList<DataCategoria> categoriasDelServicio = icprov.getCategorias((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+
+                    DefaultListModel modeloLista = new DefaultListModel();
+
+                    for(int i = 0; i < categoriasDelServicio.size(); i++){
+                        modeloLista.addElement(categoriasDelServicio.get(i).getRutaCategoria());
+                    }
+
+                    lstCategorias.setModel(modeloLista);
+
+                    ArrayList<DataImagen> imagenesDelServicio = icprov.getImagenes((String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 0), (String) tbServicios.getValueAt(tbServicios.getSelectedRow(), 1));
+
+                    if(imagenesDelServicio.size() == 0){
+                        lblImagen1.setVisible(false);
+                        lblImagenes.setVisible(true);
+                    }
+                    else{
+                        lblImagen1.setVisible(true);
+                        for(int i = 0; i < imagenesDelServicio.size(); i++){
+                            File ficheroImagen = new File(imagenesDelServicio.get(i).getPath());
+                            String rutaAbsoluta = ficheroImagen.getAbsolutePath();
+
+                            setImagenLabel(rutaAbsoluta, "absoluta");
+                        }
+                        lblImagenes.setVisible(false);
+                    }
+
+
+                    //panelDatos.setVisible(true);
+                }
+                else{
+                    //panelDatos.setVisible(false);
+                    if(JOptionPane.showConfirmDialog(this, "No se han encontrado datos del servicio para el proveedor indicado,\nposiblemente se haya editado algún dato del mismo en la tabla.\n¿Desea volver a cargarla?", "CONFIRMACIÓN", JOptionPane.YES_OPTION) == 0){
+                        //tbServicios.clearSelection();
+                        txtBusqueda.setText("");                        
+                        modelo = new DefaultTableModel();
+                        modelo.setColumnIdentifiers(new Object[]{"Nombre del servicio", "Proveedor", "Empresa"});
+
+                        try{
+                            ArrayList<DataServicio> datosServicios = icprov.getServicios();
+
+                            for(int i = 0; i < datosServicios.size(); i++){
+                                modelo.addRow(new Object[]{datosServicios.get(i).getNombreServicio(), datosServicios.get(i).getNombreProveedor()});
+                            }
+
+                            tbServicios.setModel(modelo);
+                            /*ListSelectionModel modeloSeleccion = tbServicios.getSelectionModel();
+                            modeloSeleccion.addListSelectionListener(new OyenteSeleccion());
+                            tbServicios.changeSelection(0, 0, false, false);*/
+                        }
+                        catch(SQLException ex){
+                            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch(ClassNotFoundException ex){
+                            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+                
+
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+    }
+    
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
         
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
+    private void tbServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbServiciosMouseClicked
+        /*if(tbServicios.getSelectedRow() > -1){
+            verInformacionServicio();
+        }*/
+    }//GEN-LAST:event_tbServiciosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAceptar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -848,7 +967,6 @@ public class ifrmInformacionServicios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblProveedor;
     private javax.swing.JList<String> lstCategorias;
-    private javax.swing.JPanel panelBotonAceptar;
     private javax.swing.JPanel panelBotonAceptar1;
     private javax.swing.JPanel panelBusqueda;
     private javax.swing.JPanel panelDatos;

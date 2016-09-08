@@ -25,6 +25,8 @@ import java.sql.*;
 import java.time.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -60,11 +62,11 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         panelReservas.setVisible(false);
         btnCancelar.setVisible(true);
 
-        lblAgregarProducto.setSize(38, 38);
+        /*lblAgregarProducto.setSize(38, 38);
         
         ImageIcon iconoProducto = new ImageIcon(getClass().getResource("Imagenes/iconoAgregarCategoria.png"));
         ImageIcon iconoDimensionado = new ImageIcon(iconoProducto.getImage().getScaledInstance(lblAgregarProducto.getWidth(), lblAgregarProducto.getHeight(), Image.SCALE_DEFAULT));
-        lblAgregarProducto.setIcon(iconoDimensionado);
+        lblAgregarProducto.setIcon(iconoDimensionado);*/
         
         lblAgregarReserva.setSize(49, 46);
         
@@ -81,7 +83,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         this.icprom = icprom;       
 
         DefaultTableModel modeloServ = new DefaultTableModel();
-        modeloServ.setColumnIdentifiers(new Object[]{"Tipo","Nombre","Proveedor","Precio"});
+        modeloServ.setColumnIdentifiers(new Object[]{"Tipo","Nombre","Proveedor","Empresa","Precio"});
         
         DefaultTableModel modeloAsociaciones = new DefaultTableModel();
         modeloAsociaciones.setColumnIdentifiers(new Object[]{""});
@@ -91,14 +93,14 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             ArrayList<DataServicio> DatasServicios = icprov.getServicios();
             for(int i = 0 ; i < DatasServicios.size(); i++){
                 
-                modeloServ.addRow(new Object[]{"SERVICIO", DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor(), icprov.getDatosServicio(DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor()).getPrecioServicio()});
+                modeloServ.addRow(new Object[]{"SERVICIO", DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor(), icprov.getNombreEmpresa(DatasServicios.get(i).getNombreProveedor()).getNombreEmpresa(), icprov.getDatosServicio(DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor()).getPrecioServicio()});
             
             }
             tblServicios.setModel(modeloServ);
         }
             catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -107,27 +109,30 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         try{
             ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
             for(int i = 0; i < DatasPromociones.size(); i++){
-                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor() ,DatasPromociones.get(i).getPrecio() });
+                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor(), icprov.getNombreEmpresa(DatasPromociones.get(i).getProveedor()).getNombreEmpresa(), DatasPromociones.get(i).getPrecio() });
             }
         }
         catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexion con la base de datos por los que no fue posible completar la accion", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexion con la base de datos por los que no fue posible completar la accion", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
         catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         
         try{
             llenarcmbClientes(cmbUsuarios, iccli.getClientes());
+            tblServicios.getSelectionModel().addListSelectionListener(new OyenteSeleccion());
+            tblServicios.changeSelection(0, 0, false, false);
         }
             catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-
+        
         
     }
 
@@ -157,7 +162,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblServicios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        lblAgregarProducto = new javax.swing.JLabel();
         panelSeleccionado = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblServicio = new javax.swing.JLabel();
@@ -182,6 +186,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         lblAgregarReserva = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        lblEmpresa = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
@@ -221,18 +227,18 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         panelReservas.setLayout(panelReservasLayout);
         panelReservasLayout.setHorizontalGroup(
             panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReservasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelReservasLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelReservasLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5)
                     .addComponent(jLabel3)
-                    .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46))
+                    .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelReservasLayout.setVerticalGroup(
             panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +255,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 .addGroup(panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         btnConfirmar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -277,7 +283,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(557, Short.MAX_VALUE))
         );
         panelConfirmacionLayout.setVerticalGroup(
             panelConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,13 +312,6 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Seleccione servicio o promoción a asociar a la reserva:");
-
-        lblAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblAgregarProductoMouseClicked(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nombre: ");
@@ -381,6 +380,12 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setText("Empresa:");
+
+        lblEmpresa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblEmpresa.setText("No seleccionado");
+
         javax.swing.GroupLayout panelSeleccionadoLayout = new javax.swing.GroupLayout(panelSeleccionado);
         panelSeleccionado.setLayout(panelSeleccionadoLayout);
         panelSeleccionadoLayout.setHorizontalGroup(
@@ -436,8 +441,12 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                                 .addGroup(panelSeleccionadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(spnFinAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(spnIniAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblAgregarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(55, Short.MAX_VALUE))
+                            .addComponent(lblAgregarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelSeleccionadoLayout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelSeleccionadoLayout.setVerticalGroup(
             panelSeleccionadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,7 +463,11 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 .addGroup(panelSeleccionadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(lblProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(panelSeleccionadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(lblEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(panelSeleccionadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -494,17 +507,12 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         panelDatosLayout.setHorizontalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(panelSeleccionado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(lblAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelSeleccionado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,9 +521,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(lblAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
                 .addComponent(panelSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -527,7 +533,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelReservas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(panelConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -578,6 +584,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 numRes  = iccli.realizarReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), "REGISTRADA", nickCliente[0].trim());
                 iccli.datosAsociadosReserva(numRes, tblAsociaciones.getModel());
                 JOptionPane.showMessageDialog(this, "La operación ha finalizado de manera correcta.\nNúmero de la reserva: " + iccli.getNumeroReserva(LocalDate.now(), Integer.parseInt(lblPrecioTotal.getText()), nickCliente[0].trim()), "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                
             }
             catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -589,60 +596,78 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
             limpiar();                 
             cmbUsuarios.setSelectedIndex(0);
             lblPrecioTotal.setText("0");
+            
             DefaultTableModel modeloServ = new DefaultTableModel();
-            modeloServ.setColumnIdentifiers(new Object[]{"Tipo","Nombre","Proveedor","Precio"});
+        modeloServ.setColumnIdentifiers(new Object[]{"Tipo","Nombre","Proveedor","Empresa","Precio"});
+        
+        DefaultTableModel modeloAsociaciones = new DefaultTableModel();
+        modeloAsociaciones.setColumnIdentifiers(new Object[]{""});
+        tblAsociaciones.setModel(modeloAsociaciones);
 
-            DefaultTableModel modeloAsociaciones = new DefaultTableModel();
-            modeloAsociaciones.setColumnIdentifiers(new Object[]{""});
-            tblAsociaciones.setModel(modeloAsociaciones);
-
-            try{
-                ArrayList<DataServicio> DatasServicios = icprov.getServicios();
-                for(int i = 0 ; i < DatasServicios.size(); i++){
-
-                    modeloServ.addRow(new Object[]{"SERVICIO", DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor(), icprov.getDatosServicio(DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor()).getPrecioServicio()});
-                }
-                tblServicios.setModel(modeloServ);
+        try{
+            ArrayList<DataServicio> DatasServicios = icprov.getServicios();
+            for(int i = 0 ; i < DatasServicios.size(); i++){
+                
+                modeloServ.addRow(new Object[]{"SERVICIO", DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor(), icprov.getNombreEmpresa(DatasServicios.get(i).getNombreProveedor()).getNombreEmpresa(), icprov.getDatosServicio(DatasServicios.get(i).getNombreServicio(), DatasServicios.get(i).getNombreProveedor()).getPrecioServicio()});
+            
             }
+            tblServicios.setModel(modeloServ);
+        }
             catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-
-            try{
-                ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
-                for(int i = 0; i < DatasPromociones.size(); i++){
-                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor(),DatasPromociones.get(i).getPrecio() });
-                }
-            }
-            catch(SQLException ex){
-                    JOptionPane.showMessageDialog(this, "Hay un problema de conexion con la base de datos por los que no fue posible completar la accion", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            catch(ClassNotFoundException ex){
-                    JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
         
+        try{
+            ArrayList<DataPromocion> DatasPromociones = icprom.getPromociones();
+            for(int i = 0; i < DatasPromociones.size(); i++){
+                    modeloServ.addRow(new Object[] {"PROMOCIÓN", DatasPromociones.get(i).getNombre(), DatasPromociones.get(i).getProveedor(), icprov.getNombreEmpresa(DatasPromociones.get(i).getProveedor()).getNombreEmpresa(), DatasPromociones.get(i).getPrecio() });
+            }
+        }
+        catch(SQLException ex){
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexion con la base de datos por los que no fue posible completar la accion", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        
+        try{
+            llenarcmbClientes(cmbUsuarios, iccli.getClientes());
+            tblServicios.getSelectionModel().addListSelectionListener(new OyenteSeleccion());
+            tblServicios.changeSelection(0, 0, false, false);
+        }
+            catch(SQLException ex){
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(ClassNotFoundException ex){
+                JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         }
         
         
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    private void lblAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarProductoMouseClicked
+    public void datosReserva(){
         if(tblServicios.getSelectedRow() > -1){
             try {
                 // TODO add your handling code here:
                 lblTipo.setText((String) tblServicios.getValueAt(tblServicios.getSelectedRow(), 0));
                 lblServicio.setText((String) tblServicios.getValueAt(tblServicios.getSelectedRow(), 1));
                 lblProveedor.setText((String) tblServicios.getValueAt(tblServicios.getSelectedRow(), 2));
-                //lblPrecio.setText((String) tblServicios.getValueAt(tblServicios.getSelectedRow(), 3));
+                lblEmpresa.setText((String) tblServicios.getValueAt(tblServicios.getSelectedRow(), 3));
                 if("SERVICIO".equals(lblTipo.getText())){
                     lblPrecio.setText(String.valueOf(icprov.getDatosServicio(lblServicio.getText(), lblProveedor.getText()).getPrecioServicio()));
                 }
                 else{
+                    //JOptionPane.showMessageDialog(null, lblProveedor.getText());
                     lblPrecio.setText(String.valueOf(icprom.getDataPromocion(lblServicio.getText(), lblProveedor.getText()).getPrecio()));
                 }
+                //JOptionPane.showMessageDialog(null, lblProveedor.getText());
                 Calendar fecha = Calendar.getInstance();
 
                 spnIniDia.setModel(new SpinnerNumberModel(fecha.get(Calendar.DAY_OF_MONTH),1,31,1));
@@ -654,17 +679,14 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 spnIniAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), fecha.get(Calendar.YEAR), 2099, 1));        
                 spnFinAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), fecha.get(Calendar.YEAR), 2099, 1));
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
-        else{
-            JOptionPane.showMessageDialog(this, "No se ha indicado servicio o promoción a asociar", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_lblAgregarProductoMouseClicked
-
+    }
+    
     private void lblAgregarReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarReservaMouseClicked
         lblAgregarReserva.requestFocus();
         boolean ok = true;
@@ -707,8 +729,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 tblAsociaciones.setComponentPopupMenu(popup);
                 DefaultTableModel modeloAsoc = new DefaultTableModel();
                 modeloAsoc = (DefaultTableModel) tblAsociaciones.getModel();
-                modeloAsoc.setColumnIdentifiers(new Object[]{ "Tipo", "Nombre", "Proveedor" , "Cantidad", "Precio unitario", "Total línea", "Inicio", "Fin"});
-                modeloAsoc.addRow(new Object[]{ lblTipo.getText() , lblServicio.getText(), lblProveedor.getText() , String.valueOf(spnCant.getValue()), lblPrecio.getText(), String.valueOf(cantidad * precio), spnIniDia.getValue() + "/" + spnIniMes.getValue() + "/" + spnIniAnio.getValue(), spnFinDia.getValue() + "/" + spnFinMes.getValue() + "/" + spnFinAnio.getValue()});
+                modeloAsoc.setColumnIdentifiers(new Object[]{ "Tipo", "Nombre", "Proveedor" , "Empresa", "Cantidad", "Precio unitario", "Total línea", "Inicio", "Fin"});
+                modeloAsoc.addRow(new Object[]{ lblTipo.getText() , lblServicio.getText(), lblProveedor.getText() , lblEmpresa.getText(), String.valueOf(spnCant.getValue()), lblPrecio.getText(), String.valueOf(cantidad * precio), spnIniDia.getValue() + "/" + spnIniMes.getValue() + "/" + spnIniAnio.getValue(), spnFinDia.getValue() + "/" + spnFinMes.getValue() + "/" + spnFinAnio.getValue()});
                 
                 precioTotal += cantidad * precio;
                 lblPrecioTotal.setText(String.valueOf(Integer.parseInt(lblPrecioTotal.getText()) + precioTotal));
@@ -720,6 +742,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
                 //limpiar();
                 lblServicio.setText("No seleccionado");
                 lblProveedor.setText("No seleccionado");
+                lblEmpresa.setText("No seleccionado");
                 lblPrecio.setText("0");
                 lblTipo.setText("No seleccionado");
 
@@ -763,6 +786,15 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
         }
         
     }
+    
+    private class OyenteSeleccion implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            datosReserva();
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -775,6 +807,7 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -785,8 +818,8 @@ public class ifrmAltaReservas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblAgregarProducto;
     private javax.swing.JLabel lblAgregarReserva;
+    private javax.swing.JLabel lblEmpresa;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblPrecioTotal;
     private javax.swing.JLabel lblProveedor;

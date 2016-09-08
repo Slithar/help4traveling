@@ -26,38 +26,22 @@ public class DatosProveedores {
         
     }
     
-    public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException{
+    public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac, String nombreEmpresa, String link) throws SQLException, ClassNotFoundException{
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, false)");
+        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, false, ? ,?)");
         
         pConsulta.setString(1, nickname);
         pConsulta.setString(2, nombre);
         pConsulta.setString(3, apellido);
         pConsulta.setString(4, email);
         pConsulta.setString(5, fechaNac);
-        
-        pConsulta.executeUpdate();
-        
-        conn.close();
-    }
-    
-    public void agregarDatosProveedor(String nickname, String nombreEmpresa, String link) throws SQLException, ClassNotFoundException{
-        Connection conn;
-        
-        ConexionBD conexion = new ConexionBD();
-        
-        conn = conexion.conectar();
-        
-        PreparedStatement pConsulta = conn.prepareStatement("insert into proveedores values(?, ?, ?)");
-        
-        pConsulta.setString(1, nombreEmpresa);
-        pConsulta.setString(2, link);
-        pConsulta.setString(3, nickname);
+        pConsulta.setString(6, nombreEmpresa);
+        pConsulta.setString(7, link);
         
         pConsulta.executeUpdate();
         
@@ -81,8 +65,9 @@ public class DatosProveedores {
         conn.close();
     }
     
-    public int selectCountNombreEmpresa(String nombreEmpresa) throws SQLException, ClassNotFoundException{
-        int cant = 0;
+    public Proveedor getNombreEmpresa(String nick) throws SQLException, ClassNotFoundException{
+        Proveedor p = new Proveedor();
+        //int indice = 0;
         
         Connection conn;
         
@@ -90,21 +75,21 @@ public class DatosProveedores {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from proveedores where nombreEmpresa = ?");
+        PreparedStatement pConsulta = conn.prepareCall("select nombreEmpresa from usuarios where nickname = ?");
         
-        pConsulta.setString(1, nombreEmpresa);
+        pConsulta.setString(1, nick);
         
         ResultSet rs = pConsulta.executeQuery();
         
-        while(rs.next()){
-            cant = rs.getInt("cantidad");
+        while(rs.next()){            
+            p.setNombreEmpresa(rs.getString("nombreEmpresa"));
         }
         
         rs.close();
         
         conn.close();
         
-        return cant;
+        return p;
     }
     
     public ArrayList<Proveedor> selectAllProveedores() throws SQLException, ClassNotFoundException{
@@ -119,10 +104,12 @@ public class DatosProveedores {
         
         Statement st = conn.createStatement();
         
-        ResultSet rs = st.executeQuery("select nombreEmpresa from proveedores order by nombreEmpresa");
+        ResultSet rs = st.executeQuery("select nickname, nombreEmpresa from usuarios where cliente = false order by nickname");
         
         while(rs.next()){
+            
             Proveedor prov = new Proveedor();
+            prov.setNickname(rs.getString("nickname"));
             prov.setNombreEmpresa(rs.getString("nombreEmpresa"));
             proveedores.add(indice, prov);
             indice++;
@@ -148,7 +135,7 @@ public class DatosProveedores {
         
         Statement st = conn.createStatement();
         
-        ResultSet rs = st.executeQuery("select * from usuarios u, proveedores p where cliente = false and u.nickname = p.nickname");
+        ResultSet rs = st.executeQuery("select * from usuarios u where cliente = false");
         
         while(rs.next()){
             String fecha = rs.getString("fechaNacimiento");
@@ -173,7 +160,7 @@ public class DatosProveedores {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select * from servicios where nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select * from servicios where nickProveedor = ?");
         
         pConsulta.setString(1, p.getNombreEmpresa());
                 
@@ -269,7 +256,7 @@ public class DatosProveedores {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareCall("select u.*, p.nombreEmpresa, p.link from usuarios u , imagenesusuarios i , proveedores p WHERE p.nickname=u.nickname AND u.cliente=false and u.nickname=?");
+        PreparedStatement pConsulta = conn.prepareCall("select * from usuarios WHERE cliente=false and nickname=?");
         
         pConsulta.setString(1,nickname);
         

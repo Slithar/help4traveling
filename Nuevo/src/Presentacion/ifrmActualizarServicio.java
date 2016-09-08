@@ -68,7 +68,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             cargarComboBoxServicios(cmbNombreServicios, icprov.getServicios(), false);
             cargarComboBoxCiudades(cmbCiudadOrigen, icprov.getCiudades(), false);
             cargarComboBoxCiudades(cmbCiudadDestino, icprov.getCiudades(), true);
-            cargarComboBoxProveedores(cmbProveedor, icprov.getProveedores(), false);
+            //cargarComboBoxProveedores(cmbProveedor, icprov.getProveedores(), false);
             llenarArbol("", null);
             
         }
@@ -170,7 +170,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
     
     public void cargarComboBoxProveedores(JComboBox combo, ArrayList<DataProveedor> datos, boolean opcional){
         for(int i = 0; i < datos.size(); i++){
-            combo.addItem(datos.get(i).getNombreEmpresa());
+            combo.addItem(datos.get(i).getNickname() + " <" + datos.get(i).getNombreEmpresa() + ">");
         }
         if(opcional){
             combo.addItem("No corresponde");
@@ -711,7 +711,7 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                 String[] nombreServicio = servicioSeleccionado.split("<");
                 String proveedorServicio = nombreServicio[1].substring(0, nombreServicio[1].length() - 1);
                 try{
-                    ArrayList<DataImagen> imagenesAnteriores = icprov.getImagenes(nombreServicio[0], proveedorServicio);
+                    ArrayList<DataImagen> imagenesAnteriores = icprov.getImagenes(nombreServicio[0], getNickProveedorNuevo());
                     
                     String cOrigen = (String) cmbCiudadOrigen.getSelectedItem();
                         String[] ciudad = cOrigen.split(",");
@@ -750,13 +750,13 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                         
                         for(int i = 0; i < imagenes.size(); i++){
                             int numero = i + 1;
-                            icprov.copiarImagenServicio(imagenes.get(i), nombreServicio[0] + "-" + proveedorServicio + "-" + numero);
-                            imagenes.set(i, "src/Logica/ImagenesServicios/" + nombreServicio[0] + "-" + proveedorServicio + "-" + numero + ".jpg");
+                            icprov.copiarImagenServicio(imagenes.get(i), nombreServicio[0] + "-" + getNickProveedorNuevo() + "-" + numero);
+                            imagenes.set(i, "src/Logica/ImagenesServicios/" + nombreServicio[0] + "-" + getNickProveedorNuevo() + "-" + numero + ".jpg");
                         }
                         
                         int precio = Integer.parseInt(txtPrecio.getText());
                         
-                        icprov.modificarServicio(nombreServicio[0], areaDescripcion.getText(), precio, proveedorServicio, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                        icprov.modificarServicio(nombreServicio[0], areaDescripcion.getText(), precio, getNickProveedorNuevo(), imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
                         panelDatos.setVisible(false);
                         panelBotones.setVisible(false);
                         cmbNombreServicios.setSelectedIndex(0);
@@ -765,8 +765,8 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
                 
                 }
                 catch(SQLException ex){
-                    JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
                 catch(ClassNotFoundException ex){
                     JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -879,7 +879,8 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             DataServicio datosServicio = icprov.getDatosServicio(nombreServicio[0], proveedorServicio);
             areaDescripcion.setText(datosServicio.getDescripcionServicio());
             txtPrecio.setText(String.valueOf(datosServicio.getPrecioServicio()));
-            cmbProveedor.setSelectedItem(datosServicio.getNombreProveedor());
+            cmbProveedor.removeAllItems();
+            cmbProveedor.addItem(getNickProveedor() + " <" + icprov.getNombreEmpresa(getNickProveedor()).getNombreEmpresa() + ">");
             panelDatos.setVisible(true);
                        
             DataCiudad datosCiudad = icprov.getCiudadOrigen(nombreServicio[0], proveedorServicio);
@@ -927,8 +928,8 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
             panelBotones.setVisible(true);
         }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -958,6 +959,21 @@ public class ifrmActualizarServicio extends javax.swing.JInternalFrame {
         
         DefaultTreeModel treeModel = new DefaultTreeModel(root);
         treeCategorias.setModel(treeModel);       
+    }
+    
+    
+    public String getNickProveedor(){
+        String combo = cmbNombreServicios.getSelectedItem().toString();
+        String[] partesCombo = combo.split("<");
+        
+        return partesCombo[1].toString().substring(0, partesCombo[1].toString().length() - 1);
+    }
+    
+    public String getNickProveedorNuevo(){
+        String combo = cmbProveedor.getSelectedItem().toString();
+        String[] partesCombo = combo.split("<");
+        
+        return partesCombo[0].toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

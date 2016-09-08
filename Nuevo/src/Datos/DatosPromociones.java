@@ -33,7 +33,7 @@ public class DatosPromociones {
         
         while(rs.next()){
             Proveedor p = new Proveedor();
-            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            p.setNombreEmpresa(rs.getString("nickProveedor"));
             promociones.add(new Promocion(rs.getString("nombre"), rs.getInt("descuento"), rs.getInt("precio"), new ArrayList(), p));
         }
         
@@ -86,7 +86,7 @@ public class DatosPromociones {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareCall("select * from serviciosdepromociones where nombrePromocion = ? AND nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareCall("select * from serviciosdepromociones where nombrePromocion = ? AND nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, prov);
@@ -97,7 +97,7 @@ public class DatosPromociones {
             Servicio s = new Servicio();
             s.setNombreServicio(rs.getString("nombreServicio"));
             Proveedor p = new Proveedor();
-            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            p.setNombreEmpresa(rs.getString("nickProveedor"));
             s.setProveedorServicio(p);
             servicios.add(s);
         }
@@ -205,13 +205,13 @@ public class DatosPromociones {
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
         
-        PreparedStatement st = conn.prepareStatement("select * from promociones where nombre = ? and nombreProveedor = ?");
+        PreparedStatement st = conn.prepareStatement("select * from promociones where nombre = ? and nickProveedor = ?");
         st.setString(1, nombrePromo);
         st.setString(2, nombreProveedor);
         ResultSet rs = st.executeQuery();
         if(rs.next()){
             Proveedor nombreProv = new Proveedor();
-            nombreProv.setNombreEmpresa(rs.getString("nombreProveedor"));
+            nombreProv.setNombreEmpresa(rs.getString("nickProveedor"));
             promo.setProveedor(nombreProv);
             promo.setNombre(rs.getString("nombre"));
             promo.setDescuento(rs.getInt("descuento"));

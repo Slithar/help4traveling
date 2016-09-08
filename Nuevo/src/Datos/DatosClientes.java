@@ -39,7 +39,7 @@ public class DatosClientes {
 
         conn = conexion.conectar();
 
-        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, true)");
+        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, true, null, null)");
 
         pConsulta.setString(1, nickname);
         pConsulta.setString(2, nombre);
@@ -161,7 +161,7 @@ public class DatosClientes {
         ConexionBD conexion = new ConexionBD();
             conn = conexion.conectar();
             Statement st = conn.createStatement();
-            ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and cr.nombreProveedor = p.nombreProveedor and numeroReserva=" + numeroProm);
+            ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservaspromociones cr,promociones p WHERE cr.nombrePromocion=p.nombre and cr.nickProveedor = p.nickProveedor and numeroReserva=" + numeroProm);
             while (rsCant.next()) {
                 cantidadReservasPromociones cantProm = new cantidadReservasPromociones();
                 cantProm.setnombreP(rsCant.getString("nombrePromocion"));
@@ -176,7 +176,7 @@ public class DatosClientes {
                 LocalDate fechaReservaf = LocalDate.of(Integer.parseInt(partesFechaf[0]), Integer.parseInt(partesFechaf[1]), Integer.parseInt(partesFechaf[2]));
                 cantProm.setFechaFin(fechaReservaf);
                 Proveedor p = new Proveedor();
-                p.setNombreEmpresa(rsCant.getString("nombreProveedor"));
+                p.setNombreEmpresa(rsCant.getString("nickProveedor"));
                 cantProm.setProveedor(p);
 
                 dtProm.add(cantProm);
@@ -195,13 +195,13 @@ public class DatosClientes {
         ConexionBD conexion = new ConexionBD();
             conn = conexion.conectar();
             Statement st = conn.createStatement();
-            ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and cs.nombreProveedor = s.nombreProveedor and numeroReserva=" + numeroSer);
+            ResultSet rsCant = st.executeQuery("SELECT * FROM cantidadreservasservicios cs,servicios s WHERE cs.nombreServicio=s.nombre and cs.nickProveedor = s.nickProveedor and numeroReserva=" + numeroSer);
 
             while (rsCant.next()) {
                 cantidadReservasServicios cantSer = new cantidadReservasServicios();
                 cantSer.setNombreS(rsCant.getString("nombreServicio"));
                 Proveedor p = new Proveedor();
-                p.setNombreEmpresa(rsCant.getString("nombreProveedor"));
+                p.setNombreEmpresa(rsCant.getString("nickProveedor"));
                 cantSer.setProveedor(p);
                 cantSer.setCantidad(rsCant.getInt("cantidad"));
                 cantSer.setTotalLinea(rsCant.getInt("totalLinea"));

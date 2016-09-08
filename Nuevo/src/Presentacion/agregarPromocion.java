@@ -65,10 +65,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         if(modelo.getSize() > 0){
             listaServicios.setSelectedIndex(0);
         }
-    }
-    
-    
-    
+    }    
     
     
     public void filldb(){
@@ -84,7 +81,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         }
         tamProve = prove.size();
         for(inicio=0;inicio<tamProve;inicio++){
-            this.dbProveedores.addItem(prove.get(inicio).getNombreEmpresa());
+            this.dbProveedores.addItem(prove.get(inicio).getNickname() + " <" + prove.get(inicio).getNombreEmpresa() + ">");
         }
     }
     
@@ -94,7 +91,7 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         modelo2.removeAllElements();
         ArrayList<DataServicio> servicios = new ArrayList();
         try {
-            servicios = this.icprov.getServiciosProveedor(this.dbProveedores.getItemAt(dbProveedores.getSelectedIndex()));
+            servicios = this.icprov.getServiciosProveedor(getNickProveedor());
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(agregarPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -458,10 +455,10 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         if(errores == false){            
             try {
                 
-                resultadoPromocion = this.icpromo.agregarPromocion(this.precio, this.txtNombrePromo.getText(), this.descuento, String.valueOf(this.dbProveedores.getSelectedItem()));
+                resultadoPromocion = this.icpromo.agregarPromocion(this.precio, this.txtNombrePromo.getText(), this.descuento, getNickProveedor());
                 for(vueltas = 0; vueltas < this.listaServiciosElegidos.getModel().getSize(); vueltas ++){
                     String servicio = this.icpromo.getNombreServicio(this.listaServiciosElegidos.getModel().getElementAt(vueltas));
-                    resultadoServiciosPromocion = this.icpromo.agregarServiciosPromocion(this.txtNombrePromo.getText(),servicio,this.dbProveedores.getSelectedItem().toString());   
+                    resultadoServiciosPromocion = this.icpromo.agregarServiciosPromocion(this.txtNombrePromo.getText(),servicio, getNickProveedor());   
                 }
                 JOptionPane.showMessageDialog(this, "La promoción ha sido agregada de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                 clearCamps();
@@ -501,7 +498,12 @@ public class agregarPromocion extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_lblSeleccionarServicioMouseClicked
-
+    
+    public String getNickProveedor(){
+        String prov = dbProveedores.getSelectedItem().toString();
+        String[] partesProveedores = prov.split("<");
+        return partesProveedores[0].trim();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarPromo;

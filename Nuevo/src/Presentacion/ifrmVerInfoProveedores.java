@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -56,7 +58,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         initComponents();
         lblImagenes.setVisible(false);
         Dimension tamanioVentana = this.getSize();
-        setLocation((1400 - tamanioVentana.width)/2, (750 - tamanioVentana.height)/2);
+        setLocation((1400 - tamanioVentana.width)/2, (800 - tamanioVentana.height)/2);
         panelDatos.setVisible(false);
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda rápida"));
         
@@ -80,6 +82,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             }
             
             lstProv.setModel(modelo);
+            lstProv.getSelectionModel().addListSelectionListener(new OyenteSeleccion());
+            lstProv.setSelectedIndex(0);
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -118,7 +122,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstProv = new javax.swing.JList<>();
-        btnBuscarCliente = new javax.swing.JButton();
         panelBusqueda = new javax.swing.JPanel();
         txtBusqueda = new javax.swing.JTextField();
         panelDatos = new javax.swing.JPanel();
@@ -153,14 +156,6 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         lstProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(lstProv);
 
-        btnBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnBuscarCliente.setText("Aceptar");
-        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarClienteActionPerformed(evt);
-            }
-        });
-
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyTyped(evt);
@@ -194,13 +189,9 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                     .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelClientesLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 75, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClientesLayout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
         );
         panelClientesLayout.setVerticalGroup(
             panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,11 +200,9 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(87, 87, 87)
                 .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btnBuscarCliente)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
 
         lblImagenPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -403,12 +392,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        if(lstProv.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No se seleccionado ningún proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            lstProv.requestFocus();
-        }
-        else{
+    public void verInformacionProveedor(){
+        if(lstProv.getSelectedIndex() > -1){
             try {                
                 limpiar();
                 DataProveedor dtProv = icprov.verInfoProveedor(lstProv.getSelectedValue());
@@ -422,7 +407,7 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 txtSitioWeb.setText("<html><a href = \"" + sitioWeb + "\">" + sitioWeb + "</a></html>");
                 
                 ArrayList<DataServicio> servicios = new ArrayList();
-                servicios = icprov.getServiciosProveedor(dtProv.getNombreEmpresa());
+                servicios = icprov.getServiciosProveedor(lstProv.getSelectedValue());
                 if(servicios.size() == 0){
                     cmbServicios.addItem("No corresponde");
                     btnBuscarServicio.setVisible(false);
@@ -474,15 +459,15 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
                 
                 panelDatos.setVisible(true);
             } catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch(ClassNotFoundException ex){
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
-
+    }
+    
     private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
 
         try{
@@ -496,8 +481,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
             lstProv.setModel(modelo);
         }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -511,8 +496,8 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
 
     private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
         servicio = (String) cmbServicios.getSelectedItem();
-        proveedor = txtNombreEmpresa.getText();
-        ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat, servicio, proveedor);
+        proveedor = lstProv.getSelectedValue();
+        ifrmInformacionServicios vInformacionServicio = new ifrmInformacionServicios(icprov, iccat, servicio, proveedor, txtNombreEmpresa.getText());
         frmMenuPrincipal.nuevoPanel.add(vInformacionServicio);
         
         vInformacionServicio.setVisible(true);
@@ -614,9 +599,17 @@ public class ifrmVerInfoProveedores extends javax.swing.JInternalFrame {
         
     }
     
+    private class OyenteSeleccion implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            verInformacionProveedor();
+        }
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarServicio;
     private javax.swing.JComboBox<String> cmbServicios;
     private javax.swing.JLabel jLabel1;

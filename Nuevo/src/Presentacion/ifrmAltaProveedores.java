@@ -645,11 +645,11 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                             txtCorreo.requestFocus();
                         }
                         else{
-                            if(icprov.existeNombreEmpresa(txtNombreEmpresa.getText())){
+                            /*if(icprov.existeNombreEmpresa(txtNombreEmpresa.getText())){
                                 JOptionPane.showMessageDialog(this, "El nombre de empresa ingresado ya se encuentra en uso", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                                 txtNombreEmpresa.requestFocus();
                             }
-                            else{
+                            else{*/
                                 if(this.perfiles.size() > 0){
 
                                     for(int i = 0; i < perfiles.size(); i++){
@@ -672,12 +672,12 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                                     imagenCorrecta = true;
 
                                 }
-                            if(imagenCorrecta){
-                                icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutasImagenes, txtNombreEmpresa.getText(), txtSitioWeb.getText(), new HashMap<String, Servicio>());
-                                JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
-                                limpiar();
-                            }
-                        }
+                                if(imagenCorrecta){
+                                    icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutasImagenes, txtNombreEmpresa.getText(), txtSitioWeb.getText(), new HashMap<String, Servicio>());
+                                    JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
+                                    limpiar();
+                                }
+                        //}
 
                     }
                     catch(SQLException ex){

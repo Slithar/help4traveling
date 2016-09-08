@@ -34,7 +34,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from servicios where nombre = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select count(*) cantidad from servicios where nombre = ? and nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
@@ -132,7 +132,7 @@ public class DatosServicios {
         
         Statement st = conn.createStatement();
         
-        ResultSet rs = st.executeQuery("select nombre, nombreProveedor from servicios order by nombre");
+        ResultSet rs = st.executeQuery("select nombre, nickProveedor from servicios order by nombre");
         
         ArrayList<Servicio> resultado = new ArrayList<Servicio>();
         
@@ -140,7 +140,7 @@ public class DatosServicios {
             Servicio s = new Servicio();
             s.setNombreServicio(rs.getString("nombre"));
             Proveedor p = new Proveedor();
-            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            p.setNickname(rs.getString("nickProveedor"));
             s.setProveedorServicio(p);
             
             resultado.add(s);
@@ -160,7 +160,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select nombreProveedor, descripcion, precio from servicios where nombre = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select nickProveedor, descripcion, precio from servicios where nombre = ? and nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
@@ -172,7 +172,7 @@ public class DatosServicios {
         while(rs.next()){
             
             Proveedor p = new Proveedor();
-            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            p.setNombreEmpresa(rs.getString("nickProveedor"));
             s.setProveedorServicio(p);
             s.setDescripcionServicio(rs.getString("descripcion"));
             s.setPrecioServicio(rs.getInt("precio"));
@@ -191,7 +191,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select s.ciudadOrigen, c.nombrePais from servicios s, ciudades c where s.ciudadOrigen = c.nombre and s.nombre = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select s.ciudadOrigen, c.nombrePais from servicios s, ciudades c where s.ciudadOrigen = c.nombre and s.nombre = ? and nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
@@ -219,7 +219,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select s.ciudadDestino, c.nombrePais from servicios s, ciudades c where s.ciudadDestino = c.nombre and s.nombre = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select s.ciudadDestino, c.nombrePais from servicios s, ciudades c where s.ciudadDestino = c.nombre and s.nombre = ? and nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
@@ -248,7 +248,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select nombreCategoria, rutaCategoria from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select nombreCategoria, rutaCategoria from categoriasdeservicios where nombreServicio = ? and nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
@@ -275,7 +275,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select ruta from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select ruta from imagenesservicios where nombreServicio = ? and nickProveedor = ?");
         
         pConsulta.setString(1, nombre);
         pConsulta.setString(2, nombreProveedor);
@@ -304,7 +304,7 @@ public class DatosServicios {
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
-        PreparedStatement pConsulta = conn.prepareStatement("delete from imagenesservicios where nombreServicio = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("delete from imagenesservicios where nombreServicio = ? and nickProveedor = ?");
         pConsulta.setString(1, nombreServicio);
         pConsulta.setString(2, nombreProveedor);
         
@@ -319,7 +319,7 @@ public class DatosServicios {
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
-        PreparedStatement pConsulta = conn.prepareStatement("delete from categoriasdeservicios where nombreServicio = ? and nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("delete from categoriasdeservicios where nombreServicio = ? and nickProveedor = ?");
         pConsulta.setString(1, nombreServicio);
         pConsulta.setString(2, nombreProveedor);
         
@@ -337,7 +337,7 @@ public class DatosServicios {
         conn = conexion.conectar();
         
         if(tieneDestino){
-            PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = ? where nombre = ? and nombreProveedor = ?");
+            PreparedStatement pConsulta = conn.prepareStatement("update servicios set descripcion = ?, precio = ?, ciudadOrigen = ?, ciudadDestino = ? where nombre = ? and nickProveedor = ?");
             pConsulta.setString(1, descripcion);
             pConsulta.setInt(2, precio);
             pConsulta.setString(3, ciudadOrigen);
@@ -374,7 +374,7 @@ public class DatosServicios {
         
         ArrayList<Servicio> servicios = new ArrayList<Servicio>();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select nombre, nombreProveedor from servicios where nombre like ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select nombre, nickProveedor from servicios where nombre like ?");
         
         pConsulta.setString(1, "%" + nombre + "%");
         
@@ -384,7 +384,7 @@ public class DatosServicios {
             Servicio s = new Servicio();
             s.setNombreServicio(rs.getString("nombre"));
             Proveedor p = new Proveedor();
-            p.setNombreEmpresa(rs.getString("nombreProveedor"));
+            p.setNombreEmpresa(rs.getString("nickProveedor"));
             s.setProveedorServicio(p);
             
             servicios.add(s);
@@ -456,7 +456,7 @@ public class DatosServicios {
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("select nombre, precio from servicios where nombreProveedor = ?");
+        PreparedStatement pConsulta = conn.prepareStatement("select nombre, precio from servicios where nickProveedor = ?");
         
         pConsulta.setString(1, NombreProveedor);
         

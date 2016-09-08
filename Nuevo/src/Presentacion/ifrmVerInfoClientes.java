@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 /**
@@ -65,6 +67,10 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
+        lstClientes.getSelectionModel().addListSelectionListener(new OyenteSeleccion());
+        lstClientes.setSelectedIndex(0);
+        
+        
     }
     
     public ifrmVerInfoClientes() {
@@ -94,7 +100,6 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstClientes = new javax.swing.JList<>();
-        btnBuscarCliente = new javax.swing.JButton();
         panelBusqueda = new javax.swing.JPanel();
         txtBusqueda = new javax.swing.JTextField();
         panelDatos = new javax.swing.JPanel();
@@ -111,7 +116,6 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         panelComboBox = new javax.swing.JPanel();
         jlabel6 = new javax.swing.JLabel();
         cmbReservasCliente = new javax.swing.JComboBox<>();
-        btnAceptarReserva = new javax.swing.JButton();
         panelDatosReservas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPrecio = new javax.swing.JLabel();
@@ -134,14 +138,6 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
 
         lstClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(lstClientes);
-
-        btnBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnBuscarCliente.setText("Aceptar");
-        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarClienteActionPerformed(evt);
-            }
-        });
 
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -179,10 +175,6 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                         .addGap(0, 98, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClientesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
         );
         panelClientesLayout.setVerticalGroup(
             panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,11 +183,9 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(78, 78, 78)
                 .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btnBuscarCliente)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addContainerGap(258, Short.MAX_VALUE))
         );
 
         panelVerInfoClientes.add(panelClientes, java.awt.BorderLayout.LINE_START);
@@ -235,12 +225,9 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         jlabel6.setText("Seleccione reserva:");
 
         cmbReservasCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        btnAceptarReserva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnAceptarReserva.setText("Aceptar");
-        btnAceptarReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarReservaActionPerformed(evt);
+        cmbReservasCliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbReservasClienteItemStateChanged(evt);
             }
         });
 
@@ -252,20 +239,17 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jlabel6)
                 .addGap(18, 18, 18)
-                .addComponent(cmbReservasCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btnAceptarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbReservasCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelComboBoxLayout.setVerticalGroup(
             panelComboBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelComboBoxLayout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+                .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(panelComboBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlabel6)
-                    .addComponent(cmbReservasCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAceptarReserva))
-                .addGap(30, 30, 30))
+                    .addComponent(cmbReservasCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -389,7 +373,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                             .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(80, 80, 80))
+                .addGap(86, 86, 86))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,7 +408,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelVerInfoClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 1015, Short.MAX_VALUE)
+            .addComponent(panelVerInfoClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,12 +417,10 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        if(lstClientes.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No se seleccionado ningún cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-        }
-        else{
+    
+    public void verInformacionCliente(){
+        
+        if(lstClientes.getSelectedIndex() > -1){
             try {
                 DataCliente dtCli=iccli.seleccionarCliente(lstClientes.getSelectedValue());
                 txtNombre.setText(dtCli.getNombre());
@@ -453,8 +435,9 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 }
                 panelDatosReservas.setVisible(false);
                 if(iccli.reservasCliente(lstClientes.getSelectedValue()).size()==0){
-                    cmbReservasCliente.addItem("No corresponde");
-                    btnAceptarReserva.setVisible(false);
+                    cmbReservasCliente.removeAllItems();
+                    cmbReservasCliente.addItem("No corresponde");        
+                    panelDatosReservas.setVisible(false);
                     
                 }
                 else{
@@ -463,7 +446,7 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                     for(int i=0;i<listDtRes.size();i++){
                         cmbReservasCliente.addItem(String.valueOf(listDtRes.get(i).getNumero()));
                     }
-                    btnAceptarReserva.setVisible(true);
+                    //btnAceptarReserva.setVisible(true);
                     refrescarReservas();
                     panelDatosReservas.setVisible(true);
                     
@@ -477,8 +460,8 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
-
+    }
+    
     private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
         
         
@@ -506,9 +489,9 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_lblImagenPerfilMouseClicked
 
-    private void btnAceptarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarReservaActionPerformed
-        refrescarReservas();            
-    }//GEN-LAST:event_btnAceptarReservaActionPerformed
+    private void cmbReservasClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbReservasClienteItemStateChanged
+        refrescarReservas();
+    }//GEN-LAST:event_cmbReservasClienteItemStateChanged
     
     public void refrescarReservas(){
         String selected =String.valueOf(cmbReservasCliente.getSelectedItem());
@@ -544,10 +527,26 @@ public class ifrmVerInfoClientes extends javax.swing.JInternalFrame {
                 panelDatosReservas.setVisible(true);
             }catch(Exception e){}
     }
+    
+    private class OyenteSeleccion implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            verInformacionCliente();
+        }
+        
+    }
+    
+    private class OyenteSeleccionReserva implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            verInformacionCliente();
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptarReserva;
-    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JComboBox<String> cmbReservasCliente;
     private javax.swing.JLabel jEstado;
     private javax.swing.JLabel jFecha;

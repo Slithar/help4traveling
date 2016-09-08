@@ -71,8 +71,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             llenarArbol("", null);
         }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -135,8 +135,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
             llenarArbol("", null);
         }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -191,7 +191,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
     
     public void cargarComboBoxProveedores(JComboBox combo, ArrayList<DataProveedor> datos, boolean opcional){
         for(int i = 0; i < datos.size(); i++){
-            combo.addItem(datos.get(i).getNombreEmpresa());
+            combo.addItem(datos.get(i).getNickname() + " <" + datos.get(i).getNombreEmpresa() + ">");
         }
         if(opcional){
             combo.addItem("No corresponde");
@@ -752,7 +752,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                 }
                 else{
                     try {
-                        if(icprov.existeNombreServicio(txtNombreServicio.getText(), (String) cmbProveedor.getSelectedItem())){
+                        if(icprov.existeNombreServicio(txtNombreServicio.getText(), getNickProveedor())){
                             JOptionPane.showMessageDialog(this, "El nombre de servicio ingresado ya se encuentra en uso por el proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                             txtNombreServicio.requestFocus();
                         }
@@ -776,7 +776,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
                             ArrayList<String> categorias = obtenerCategorias(modelo);
 
-                            String proveedor = (String) cmbProveedor.getSelectedItem();
+                            //String proveedor = (String) cmbProveedor.getSelectedItem();
 
                             boolean tieneDestino = false;
 
@@ -796,13 +796,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
 
                             for(int i = 0; i < imagenes.size(); i++){
                                 int numero = i + 1;
-                                icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero);
-                                imagenes.set(i, "src/Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + (String) cmbProveedor.getSelectedItem() + "-" + numero + ".jpg");
+                                icprov.copiarImagenServicio(imagenes.get(i), txtNombreServicio.getText() + "-" + getNickProveedor() + "-" + numero);
+                                imagenes.set(i, "src/Logica/ImagenesServicios/" + txtNombreServicio.getText() + "-" + getNickProveedor()+ "-" + numero + ".jpg");
                             }
 
                             int precio = Integer.parseInt(txtPrecio.getText());
 
-                            icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, proveedor, imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
+                            icprov.agregarServicio(txtNombreServicio.getText(), areaDescripcion.getText(), precio, getNickProveedor(), imagenes, categorias, ciudadOrigen, ciudadDestino, tieneDestino);
 
                             limpiar();
                             JOptionPane.showMessageDialog(this, "El nuevo servicio ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
@@ -810,8 +810,8 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
                         }
                     }
                     catch(SQLException ex){
-                        JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                        //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                     catch(ClassNotFoundException ex){
                         JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -823,6 +823,13 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public String getNickProveedor(){
+        String combo = cmbProveedor.getSelectedItem().toString();
+        String[] partesCombo = combo.split("<");
+        
+        return partesCombo[0].toString();
+    }
     
     public ArrayList<String> obtenerCategorias(DefaultListModel modelo){
         ArrayList<String> categorias = new ArrayList();

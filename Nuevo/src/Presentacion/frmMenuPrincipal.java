@@ -342,7 +342,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
        vInformacionServicio.setVisible(true);
     }//GEN-LAST:event_miConsServiciosActionPerformed
     private void miConsReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsReservasActionPerformed
-        ifrmVerInfoReserva agregar = new ifrmVerInfoReserva(this.iccli);
+        ifrmVerInfoReserva agregar = new ifrmVerInfoReserva(this.iccli, this.icprov);
         nuevoPanel.add(agregar);
         agregar.setVisible(true);
         
@@ -391,8 +391,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 vProgreso.setVisible(false);
             }
             catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 this.setCursorFrame(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             catch(ClassNotFoundException ex){

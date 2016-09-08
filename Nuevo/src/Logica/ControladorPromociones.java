@@ -84,30 +84,30 @@ public class ControladorPromociones implements IControladorPromociones{
     @Override
     public void insertDatosPromocionesDePrueba() throws SQLException, ClassNotFoundException {
         DatosPromociones dp = new DatosPromociones();
-        dp.insertDatosPromocionesDePrueba("insert into promociones values('Euro-Cars-E-S', 30, 420, 'EuropCar');\n" +
-                        "insert into promociones values('Euro-Cars-E-F', 30, 420, 'EuropCar');\n" +
-                        "insert into promociones values('Euro-Cars-S-F', 30, 420, 'EuropCar');\n" +
-                        "insert into promociones values('Euro-Vuelos-S-LC', 40, 1170, 'Iberia');\n" +
-                        "insert into promociones values('Euro-Vuelos-S-FC', 40, 1440, 'Iberia');\n" +
-                        "insert into promociones values('Euro-Vuelos-LC-FC', 40, 1290, 'Iberia');\n" +
-                        "insert into promociones values('Sudamérica-Casas', 50, 135, 'Segundo Hogar');\n" +
-                        "insert into promociones values('Miami-Viaje', 30, 462, 'Segundo Hogar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-1', 'EuropCar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-2', 'EuropCar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-1', 'EuropCar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-3', 'EuropCar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-2', 'EuropCar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-3', 'EuropCar');\n" +
-                        "insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-S', 'Iberia');\n" +
-                        "insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-LC', 'Iberia');\n" +
-                        "insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-S', 'Iberia');\n" +
-                        "insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-FC', 'Iberia');\n" +
-                        "insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-LC', 'Iberia');\n" +
-                        "insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-FC', 'Iberia');\n" +
-                        "insert into serviciosdepromociones values('Sudamérica-Casas', 'Casa para p4 BsAs', 'Segundo Hogar');\n" +
-                        "insert into serviciosdepromociones values('Sudamérica-Casas', 'Floripa G. House', 'Segundo Hogar');\n" +
-                        "insert into serviciosdepromociones values('Miami-Viaje', 'Luxury south beach corner apartment', 'Segundo Hogar');\n" +
-                        "insert into serviciosdepromociones values('Miami-Viaje', 'Coche-Miami', 'Segundo Hogar');");
+        dp.insertDatosPromocionesDePrueba("insert into promociones values('Euro-Cars-E-S', 30, 420, 'moody');\n" +
+                        "insert into promociones values('Euro-Cars-E-F', 30, 420, 'moody');\n" +
+                        "insert into promociones values('Euro-Cars-S-F', 30, 420, 'moody');\n" +
+                        "insert into promociones values('Euro-Vuelos-S-LC', 40, 1170, 'remus');\n" +
+                        "insert into promociones values('Euro-Vuelos-S-FC', 40, 1440, 'remus');\n" +
+                        "insert into promociones values('Euro-Vuelos-LC-FC', 40, 1290, 'remus');\n" +
+                        "insert into promociones values('Sudamérica-Casas', 50, 135, 'mHooch');\n" +
+                        "insert into promociones values('Miami-Viaje', 30, 462, 'mHooch');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-1', 'moody');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-S', 'Euro-Car-2', 'moody');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-1', 'moody');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-E-F', 'Euro-Car-3', 'moody');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-2', 'moody');\n" +
+                        "insert into serviciosdepromociones values('Euro-Cars-S-F', 'Euro-Car-3', 'moody');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-S', 'remus');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-LC', 'Euro-Vuelo-LC', 'remus');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-S', 'remus');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-S-FC', 'Euro-Vuelo-FC', 'remus');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-LC', 'remus');\n" +
+                        "insert into serviciosdepromociones values('Euro-Vuelos-LC-FC', 'Euro-Vuelo-FC', 'remus');\n" +
+                        "insert into serviciosdepromociones values('Sudamérica-Casas', 'Casa para p4 BsAs', 'mHooch');\n" +
+                        "insert into serviciosdepromociones values('Sudamérica-Casas', 'Floripa G. House', 'mHooch');\n" +
+                        "insert into serviciosdepromociones values('Miami-Viaje', 'Luxury south beach corner apartment', 'mHooch');\n" +
+                        "insert into serviciosdepromociones values('Miami-Viaje', 'Coche-Miami', 'mHooch');");
     }
     
     
