@@ -106,15 +106,6 @@ public class ControladorProveedoresIT {
     }
 
     /**
-     * Test of existeNombreEmpresa method, of class ControladorProveedores.
-     */
-    @Test
-    public void testExisteNombreEmpresa() throws Exception {
-        ControladorProveedores cp = new ControladorProveedores();
-        assertFalse(cp.existeNombreEmpresa(""));
-    }
-
-    /**
      * Test of agregarProveedor method, of class ControladorProveedores.
      */
     @Test
