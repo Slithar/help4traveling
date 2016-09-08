@@ -151,7 +151,7 @@ public class ifrmActualizarEstadoReserva extends javax.swing.JInternalFrame {
                 .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnModificar)
-                .addGap(67, 67, 67))
+                .addGap(64, 64, 64))
         );
 
         tablaRes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

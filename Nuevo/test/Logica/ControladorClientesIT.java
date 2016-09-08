@@ -5,6 +5,7 @@
  */
 package Logica;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class ControladorClientesIT {
      * Test of getReserva method, of class ControladorClientes.
      */
     @Test
-    public void testGetReserva() {
+    public void testGetReserva() throws SQLException, ClassNotFoundException {
         ControladorClientes cc = new ControladorClientes();
         assertNotNull(cc.getReserva("1"));
     }
@@ -103,7 +104,7 @@ public class ControladorClientesIT {
      * Test of getReservasPromo method, of class ControladorClientes.
      */
     @Test
-    public void testGetReservasPromo() {
+    public void testGetReservasPromo() throws SQLException, ClassNotFoundException {
         ControladorClientes cc = new ControladorClientes();
         assertNotNull(cc.getReservasPromo("1"));
     }
@@ -112,7 +113,7 @@ public class ControladorClientesIT {
      * Test of getReservasServ method, of class ControladorClientes.
      */
     @Test
-    public void testGetReservasServ() {
+    public void testGetReservasServ() throws SQLException, ClassNotFoundException {
         ControladorClientes cc = new ControladorClientes();
         assertNotNull(cc.getReservasServ("1"));
     }

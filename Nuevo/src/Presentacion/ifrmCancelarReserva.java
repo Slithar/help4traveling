@@ -167,7 +167,7 @@ public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se pudo completar la accion, no ha seleccionado ninguna reserva", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar la reserva número "+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +" ?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
+            int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar la reserva número "+ tblReservas.getValueAt(tblReservas.getSelectedRow(), 0) +"?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
             if(resp == 0){
                 try {
                     iccli.deleteReserva(Integer.parseInt(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0).toString()));
