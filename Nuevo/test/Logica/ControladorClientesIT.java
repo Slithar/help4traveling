@@ -117,7 +117,9 @@ public class ControladorClientesIT {
         ControladorClientes cc = new ControladorClientes();
         assertNotNull(cc.getReservasServ("1"));
     }
-
+    
+    /**/
+    
     /**
      * Test of verInfoCliente method, of class ControladorClientes.
      */
