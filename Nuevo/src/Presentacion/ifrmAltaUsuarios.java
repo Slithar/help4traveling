@@ -492,6 +492,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                             lblImagenPerfil.requestFocus();
                         }
                     }
+                /**/
             }                       
         }        
     }//GEN-LAST:event_btnAceptarActionPerformed
