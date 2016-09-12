@@ -98,7 +98,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miRegServiciosActualizar = new javax.swing.JMenuItem();
         miRegPromociones = new javax.swing.JMenuItem();
         mReservas = new javax.swing.JMenu();
-        miNuevaReserva = new javax.swing.JMenuItem();
         miCancelarReserva = new javax.swing.JMenuItem();
         miActualizarReserva = new javax.swing.JMenuItem();
         mConsultas = new javax.swing.JMenu();
@@ -186,14 +185,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mbBarra.add(mRegistros);
 
         mReservas.setText("Reservas");
-
-        miNuevaReserva.setText("Nueva reserva");
-        miNuevaReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miNuevaReservaActionPerformed(evt);
-            }
-        });
-        mReservas.add(miNuevaReserva);
 
         miCancelarReserva.setText("Cancelar reserva");
         miCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -450,12 +441,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         promo.setVisible(true);
     }//GEN-LAST:event_miRegPromocionesActionPerformed
 
-    private void miNuevaReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevaReservaActionPerformed
-        ifrmAltaReservas vAltaReservas = new ifrmAltaReservas(icprov, iccli, icprom);
-        nuevoPanel.add(vAltaReservas);
-        vAltaReservas.setVisible(true);
-    }//GEN-LAST:event_miNuevaReservaActionPerformed
-
     private void miCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCancelarReservaActionPerformed
         ifrmCancelarReserva vCancelarReserva = new ifrmCancelarReserva(iccli);
         nuevoPanel.add(vCancelarReserva);
@@ -537,7 +522,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
     private javax.swing.JMenuItem miDatosDePrueba;
-    private javax.swing.JMenuItem miNuevaReserva;
     private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
     private javax.swing.JMenuItem miRegProveedores;
