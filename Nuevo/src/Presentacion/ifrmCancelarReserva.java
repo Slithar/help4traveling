@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ezequiel
  */
 public class ifrmCancelarReserva extends javax.swing.JInternalFrame {
-
+    /**/
     /**
      * Creates new form ifrmCancelarReserva
      */
