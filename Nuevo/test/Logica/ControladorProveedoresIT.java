@@ -108,12 +108,12 @@ public class ControladorProveedoresIT {
     /**
      * Test of agregarProveedor method, of class ControladorProveedores.
      */
-    @Test
+    /*@Test
     public void testAgregarProveedor() throws Exception {
         ControladorProveedores cp = new ControladorProveedores();
         cp.agregarProveedor("testeo", "testeo", "testeo", "testeo@testeo.com", LocalDate.of(1995, 9, 5), new ArrayList(), "Testeo S.A.", "http://testeo.com.uy", new HashMap<String, Servicio>());
         assertTrue(cp.verInfoProveedorBusqueda("testeo").size() > 0);
-    }
+    }*/
 
     /**
      * Test of getCiudades method, of class ControladorProveedores.

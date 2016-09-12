@@ -32,20 +32,21 @@ public class DatosClientes {
     public DatosClientes() {
     }
 
-    public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac) throws SQLException, ClassNotFoundException {
+    public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac, String pass) throws SQLException, ClassNotFoundException {
         Connection conn;
 
         ConexionBD conexion = new ConexionBD();
 
         conn = conexion.conectar();
 
-        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, true, null, null)");
+        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, true, null, null, ?)");
 
         pConsulta.setString(1, nickname);
         pConsulta.setString(2, nombre);
         pConsulta.setString(3, apellido);
         pConsulta.setString(4, email);
         pConsulta.setString(5, fechaNac);
+        pConsulta.setString(6, pass);
 
         pConsulta.executeUpdate();
 
@@ -289,7 +290,7 @@ public class DatosClientes {
         while(rs.next()){
             String fecha = rs.getString("fechaNacimiento");
             String[] datosFecha = fecha.split("-");
-            clientes.add(new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), "", new HashMap()));
+            clientes.add(new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), "", new HashMap(), rs.getString("pass")));
         }
         
         rs.close();
@@ -428,7 +429,7 @@ public class DatosClientes {
             
             String fecha = rs.getString("fechaNacimiento");
             String[] datosFecha = fecha.split("-");
-            c=new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), rs.getString("ruta"), new HashMap());
+            c=new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), rs.getString("ruta"), new HashMap(), rs.getString("pass"));
                         
         }
         

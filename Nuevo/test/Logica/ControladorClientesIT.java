@@ -52,7 +52,7 @@ public class ControladorClientesIT {
     /**
      * Test of agregarCliente method, of class ControladorClientes.
      */
-    @Test
+    /*@Test
     public void testAgregarCliente() throws Exception {
         
         String nickname = "testeoCliente";
@@ -64,7 +64,7 @@ public class ControladorClientesIT {
         ControladorClientes cc = new ControladorClientes();
         cc.agregarCliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen);
         assertNotNull(cc.verInfoClienteBusqueda("testeoCliente"));
-    }
+    }*/
 
     /**
      * Test of verInfoReserva method, of class ControladorClientes.

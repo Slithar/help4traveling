@@ -26,14 +26,14 @@ public class DatosProveedores {
         
     }
     
-    public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac, String nombreEmpresa, String link) throws SQLException, ClassNotFoundException{
+    public void insertar(String nickname, String nombre, String apellido, String email, String fechaNac, String nombreEmpresa, String link, String pass) throws SQLException, ClassNotFoundException{
         Connection conn;
         
         ConexionBD conexion = new ConexionBD();
         
         conn = conexion.conectar();
         
-        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, false, ? ,?)");
+        PreparedStatement pConsulta = conn.prepareStatement("insert into usuarios values(?, ?, ?, ?, ?, false, ? ,?, ?)");
         
         pConsulta.setString(1, nickname);
         pConsulta.setString(2, nombre);
@@ -42,6 +42,7 @@ public class DatosProveedores {
         pConsulta.setString(5, fechaNac);
         pConsulta.setString(6, nombreEmpresa);
         pConsulta.setString(7, link);
+        pConsulta.setString(8, pass);
         
         pConsulta.executeUpdate();
         
@@ -140,7 +141,7 @@ public class DatosProveedores {
         while(rs.next()){
             String fecha = rs.getString("fechaNacimiento");
             String[] datosFecha = fecha.split("-");
-            proveedores.add(new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap()));
+            proveedores.add(new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(), rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap(), rs.getString("pass")));
         }
         
         rs.close();
@@ -269,7 +270,7 @@ public class DatosProveedores {
             
             String fecha = rs.getString("fechaNacimiento");
             String[] datosFecha = fecha.split("-");
-            p=new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(),rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap());
+            p=new Proveedor(rs.getString("nickname"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), LocalDate.of(Integer.parseInt(datosFecha[0]), Integer.parseInt(datosFecha[1]), Integer.parseInt(datosFecha[2])), new ArrayList(),rs.getString("nombreEmpresa"), rs.getString("link"), new HashMap(), rs.getString("pass"));
                         
         }
         
