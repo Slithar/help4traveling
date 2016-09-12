@@ -20,7 +20,7 @@ public interface IControladorProveedores {
     public abstract boolean correoValido(String correo);
     public abstract boolean sitiWebValido(String sitioWeb);
     public abstract boolean copiarPerfil(String nickname, ArrayList<String> rutaImagen) throws IOException;
-    public abstract void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios) throws SQLException, ClassNotFoundException;
+    public abstract void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios, String pass) throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataCiudad> getCiudades() throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataProveedor> getProveedores() throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataProveedor> getInfoProveedores() throws SQLException, ClassNotFoundException;
@@ -53,5 +53,6 @@ public interface IControladorProveedores {
     public abstract void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException;    
     public abstract ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException;
     public abstract DataProveedor getNombreEmpresa(String nick) throws SQLException,ClassNotFoundException;
+    public abstract String encriptar(String pass);
     
 }

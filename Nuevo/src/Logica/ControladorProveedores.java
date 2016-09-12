@@ -8,10 +8,14 @@ package Logica;
 import Datos.*;
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.*;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import javax.swing.*;
 
@@ -170,13 +174,13 @@ public class ControladorProveedores implements IControladorProveedores{
     }
     
     @Override
-    public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios) throws SQLException, ClassNotFoundException{
+    public void agregarProveedor(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, ArrayList<String> rutaImagen, String empresa, String sitioWeb, HashMap<String, Servicio> servicios, String pass) throws SQLException, ClassNotFoundException{
         
-        Proveedor p = new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb, servicios);
+        Proveedor p = new Proveedor(nickname, nombre, apellido, correo, fechaNac, rutaImagen, empresa, sitioWeb, servicios, pass);
         
         DatosProveedores proveedor = new DatosProveedores();
         
-        proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString(), p.getNombreEmpresa(), p.getLink());
+        proveedor.insertar(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNac().toString(), p.getNombreEmpresa(), p.getLink(),p.getPass());
         
         if(rutaImagen.size() > 0){
             ArrayList<Imagen> imagenes = p.getImagenesUsuario();
@@ -544,15 +548,15 @@ public class ControladorProveedores implements IControladorProveedores{
     @Override
     public void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException {
         DatosProveedores dp = new DatosProveedores();
-        dp.insertDatosProveedoresDePrueba("insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false, 'AirFrance', 'http://www.airfrance.com/');\n" +
-                        "insert into usuarios values('moody', 'Alastor', 'Moody', 'eu.car@eucar.com', '1965-9-2', false, 'EuropCar', 'http://www.europcar.com.uy/');\n" +
-                        "insert into usuarios values('remus', 'Remus', 'Lupin', 'iberia@gmail.com', '1970-5-4', false, 'Iberia', 'http://www.iberia.com/uy/');\n" +
-                        "insert into usuarios values('adippet', 'Armando', 'Dippet', 'tam@outlook.com', '1967-2-12', false, 'TAM', 'http://www.tam.com.br/');\n" +
-                        "insert into usuarios values('mHooch', 'Madam', 'Hooch', 'segHogar@gmail.com', '1963-8-5', false, 'Segundo Hogar', 'http://www.segundohogar.com/');\n" +
-                        "insert into usuarios values('oWood', 'Oliver', 'Wood', 'quidditch28@gmail.com', '1988-12-28', true, null, null);\n" +
-                        "insert into usuarios values('eWatson', 'Emma', 'Watson', 'e.watson@gmail.com', '1990-4-15', true, null, null);\n" +
-                        "insert into usuarios values('BruceS', 'Bruce', 'Sewell', 'bruce.sewell@gmail.com', '1978-12-3', true, null, null);\n" +
-                        "insert into usuarios values('JeffW', 'Jeff', 'Williams', 'jeff.williams@gmail.com', '1984-11-27', true, null, null);\n" +
+        dp.insertDatosProveedoresDePrueba("insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false, 'AirFrance', 'http://www.airfrance.com/', '" + encriptar("tcook") + "');\n" +
+                        "insert into usuarios values('moody', 'Alastor', 'Moody', 'eu.car@eucar.com', '1965-9-2', false, 'EuropCar', 'http://www.europcar.com.uy/', '" + encriptar("moody") + "');\n" +
+                        "insert into usuarios values('remus', 'Remus', 'Lupin', 'iberia@gmail.com', '1970-5-4', false, 'Iberia', 'http://www.iberia.com/uy/', '" + encriptar("remus") + "');\n" +
+                        "insert into usuarios values('adippet', 'Armando', 'Dippet', 'tam@outlook.com', '1967-2-12', false, 'TAM', 'http://www.tam.com.br/', '" + encriptar("adippet") + "');\n" +
+                        "insert into usuarios values('mHooch', 'Madam', 'Hooch', 'segHogar@gmail.com', '1963-8-5', false, 'Segundo Hogar', 'http://www.segundohogar.com/', '" + encriptar("mhooch") + "');\n" +
+                        "insert into usuarios values('oWood', 'Oliver', 'Wood', 'quidditch28@gmail.com', '1988-12-28', true, null, null, '" + encriptar("owood") + "');\n" +
+                        "insert into usuarios values('eWatson', 'Emma', 'Watson', 'e.watson@gmail.com', '1990-4-15', true, null, null, '" + encriptar("ewatson") + "');\n" +
+                        "insert into usuarios values('BruceS', 'Bruce', 'Sewell', 'bruce.sewell@gmail.com', '1978-12-3', true, null, null, '" + encriptar("bruces") + "');\n" +
+                        "insert into usuarios values('JeffW', 'Jeff', 'Williams', 'jeff.williams@gmail.com', '1984-11-27', true, null, null, '" + encriptar("jeffw") + "');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/tCook-1.jpg', 'tCook');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/moody-1.jpg', 'moody');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/remus-1.jpg', 'remus');\n" +
@@ -713,6 +717,32 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         dp.setNombreEmpresa(p.getNombreEmpresa());
         
         return dp;
+    }
+    
+    public String encriptar(String pass){
+        String key = "help4traveling";
+        String passEncriptada = "";
+        
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digPass = md.digest(key.getBytes("utf-8"));
+            byte[] keyBytes = Arrays.copyOf(digPass, 24);
+            
+            SecretKey sk = new SecretKeySpec(keyBytes, "DESede");
+            Cipher c = Cipher.getInstance("DESede");
+            c.init(Cipher.ENCRYPT_MODE, sk);
+            
+            byte[] bytesTextoPlano = pass.getBytes("utf-8");
+            byte[] buf = c.doFinal(bytesTextoPlano);
+            byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
+            
+            passEncriptada = new String(base64Bytes);
+        }
+        catch(Exception ex){
+            
+        }
+        
+        return passEncriptada;
     }
 
 }

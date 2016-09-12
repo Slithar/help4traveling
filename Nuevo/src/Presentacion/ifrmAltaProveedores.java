@@ -66,6 +66,8 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         spnMes.setModel(new SpinnerNumberModel(1,1,12,1));
         Calendar fecha = Calendar.getInstance();
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));       
+        txtSeguridad.setText("Protección baja");
+        txtSeguridad.setForeground(Color.RED);
     }
     
     public void limpiar(){
@@ -91,6 +93,11 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
             parent.repaint();
             
         }
+        
+        txtPass.setText("");
+        txtRePass.setText("");
+        txtSeguridad.setText("Protección baja");
+        txtSeguridad.setForeground(Color.RED);
         
         refrescarPerfiles();
         setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
@@ -322,6 +329,11 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         panelImagenes = new javax.swing.JPanel();
         lblAgregarPerfil = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
+        txtRePass = new javax.swing.JPasswordField();
+        txtSeguridad = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
@@ -359,7 +371,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         panelBotonesLayout.setVerticalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(14, 14, 14)
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -427,9 +439,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         panelPerfilLayout.setVerticalGroup(
             panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPerfilLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(31, 31, 31)
                 .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         txtNombreEmpresa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -470,58 +482,98 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("Imágenes de perfil:");
 
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel15.setText("Contraseña:");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setText("Confirmar contraseña:");
+
+        txtPass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPassKeyTyped(evt);
+            }
+        });
+
+        txtRePass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txtSeguridad.setText("seguridad");
+
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelPerfiles, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5))
-                        .addGap(46, 46, 46)
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSitioWeb)
-                            .addComponent(txtNombreEmpresa)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
-                                .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtNickname)
-                            .addComponent(txtNombre)
-                            .addComponent(txtApellido)
-                            .addComponent(txtCorreo))))
-                .addGap(91, 91, 91)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSeguridad)
+                    .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(panelDatosLayout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelPerfiles, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelDatosLayout.createSequentialGroup()
+                            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelDatosLayout.createSequentialGroup()
+                                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabel12)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel14)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel5))
+                                        .addGap(46, 46, 46))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                                        .addComponent(jLabel15)
+                                        .addGap(100, 100, 100)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                                    .addComponent(jLabel16)
+                                    .addGap(38, 38, 38)))
+                            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtSitioWeb)
+                                .addComponent(txtNombreEmpresa)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                                    .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNickname)
+                                .addComponent(txtNombre)
+                                .addComponent(txtApellido)
+                                .addComponent(txtCorreo)
+                                .addComponent(txtPass)
+                                .addComponent(txtRePass)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(39, 39, 39)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(txtNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addComponent(txtSeguridad)
+                        .addGap(5, 5, 5)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(txtRePass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -533,23 +585,21 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)
-                                .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4)
-                                .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addGap(24, 24, 24)
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel14)))
+                    .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addGap(24, 24, 24)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -576,7 +626,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
         );
 
         pack();
@@ -609,6 +659,18 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         else if(txtSitioWeb.getText().length() == 0){
             JOptionPane.showMessageDialog(this, "No se ha ingresado el link del sitio web del nuevo proveedor", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtSitioWeb.requestFocus();
+        }
+        else if(txtPass.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado contraseña para el nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPass.requestFocus();
+        }
+        else if(txtRePass.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado confirmación de contraseña para el nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtRePass.requestFocus();
+        }
+        else if(!txtPass.getText().equals(txtRePass.getText())){
+            JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con su confirmación", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPass.requestFocus();
         }
         else{
             boolean fechaValida = false;
@@ -673,7 +735,7 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
 
                                 }
                                 if(imagenCorrecta){
-                                    icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutasImagenes, txtNombreEmpresa.getText(), txtSitioWeb.getText(), new HashMap<String, Servicio>());
+                                    icprov.agregarProveedor(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac, rutasImagenes, txtNombreEmpresa.getText(), txtSitioWeb.getText(), new HashMap<String, Servicio>(), icprov.encriptar(txtPass.getText()));
                                     JOptionPane.showMessageDialog(this, "El nuevo usuario ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                     limpiar();
                                 }
@@ -718,6 +780,21 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_lblAgregarPerfilMouseClicked
 
+    private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
+        if(txtPass.getText().length() < 5){
+            txtSeguridad.setText("Protección baja");
+            txtSeguridad.setForeground(Color.RED);
+        }
+        else if(txtPass.getText().length() > 4 &&  txtPass.getText().length() < 8){
+            txtSeguridad.setText("Protección intermedia");
+            txtSeguridad.setForeground(Color.ORANGE);
+        }
+        else{
+            txtSeguridad.setText("Segura");
+            txtSeguridad.setForeground(Color.GREEN.darker());
+        }
+    }//GEN-LAST:event_txtPassKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -727,6 +804,8 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -748,6 +827,9 @@ public class ifrmAltaProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNickname;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreEmpresa;
+    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JPasswordField txtRePass;
+    private javax.swing.JLabel txtSeguridad;
     private javax.swing.JTextField txtSitioWeb;
     // End of variables declaration//GEN-END:variables
 }

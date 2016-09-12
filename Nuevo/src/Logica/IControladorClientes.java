@@ -19,7 +19,7 @@ public interface IControladorClientes {
     public abstract boolean copiarPerfil(String nickname, String rutaImagen) throws IOException;
     public abstract boolean existeNickname(String c) throws SQLException, ClassNotFoundException;
     public abstract boolean existeCorreo(String correo) throws SQLException, ClassNotFoundException; 
-    public abstract void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException;
+    public abstract void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen, String pass) throws SQLException, ClassNotFoundException;
     public abstract ArrayList verInfoReserva()throws SQLException, ClassNotFoundException;
     public abstract DataReserva getReserva(String nombreRes)throws SQLException, ClassNotFoundException;
     public abstract ArrayList getReservasPromo(String numeroProm) throws SQLException, ClassNotFoundException;
@@ -44,4 +44,5 @@ public interface IControladorClientes {
     public abstract void datosAsociadosReserva(int numReserva, TableModel modelo)throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataReserva> getAllReservas() throws SQLException, ClassNotFoundException;
     public abstract int getNumeroReserva(LocalDate fecha, int precio, String nickname) throws SQLException, ClassNotFoundException;
+    public abstract String encriptar(String pass);
 }

@@ -22,8 +22,8 @@ public class Cliente extends Usuario {
         
     }
     
-    public Cliente(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaCliente, HashMap<Integer, Reserva> reservasCliente){
-        super(nickname, nombre, apellido, email, fechaNac);
+    public Cliente(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String rutaCliente, HashMap<Integer, Reserva> reservasCliente, String pass){
+        super(nickname, nombre, apellido, email, fechaNac, pass);
         Imagen imagenUsuario = new Imagen(rutaCliente, this);
         this.imagenUsuario = imagenUsuario;   
         this.reservasCliente = reservasCliente;  

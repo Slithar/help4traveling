@@ -17,6 +17,10 @@ import java.awt.event.MouseEvent;
 import java.time.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.security.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import org.apache.commons.codec.binary.Base64;
 
 //import javax.swing.filechooser.*;
 
@@ -49,6 +53,10 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         limpiar();
         
         this.iccli = iccli;
+        
+        //txtPass.set
+        txtSeguridad.setText("Protección baja");
+        txtSeguridad.setForeground(Color.RED);
     }
     
     public void setImagenPerfil(String ruta, String tipo){
@@ -68,6 +76,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         this.rutaImagen = r;
     }
     
+    
+    
     public void limpiar(){
         Dimension tamanioVentana = this.getSize();
         setLocation((1400 - tamanioVentana.width)/2, (650 - tamanioVentana.height)/2);
@@ -82,6 +92,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         spnAnio.setModel(new SpinnerNumberModel(fecha.get(Calendar.YEAR), 1900, fecha.get(Calendar.YEAR), 1));
         setImagenPerfil("../Logica/perfiles/perfil.PNG", "defecto");
         setRutaImagen("src/Logica/perfiles/perfil.PNG");
+        txtPass.setText("");
+        txtRePass.setText("");
         
         txtNickname.requestFocus();
     }
@@ -117,6 +129,11 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         spnAnio = new javax.swing.JSpinner();
         panelPerfil = new javax.swing.JPanel();
         lblImagenPerfil = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txtSeguridad = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
+        txtRePass = new javax.swing.JPasswordField();
         panelSur = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
@@ -228,35 +245,57 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setText("Contraseña:");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setText("Confirmar contraseña:");
+
+        txtSeguridad.setText("Pass");
+
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPassKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel1))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtNickname)
-                    .addComponent(txtNombre)
-                    .addComponent(txtApellido)
-                    .addComponent(txtCorreo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17))
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNickname)
+                            .addComponent(txtNombre)
+                            .addComponent(txtApellido)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtPass)
+                            .addComponent(txtRePass)))
+                    .addComponent(txtSeguridad))
+                .addGap(75, 75, 75)
                 .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -269,6 +308,16 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(txtNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSeguridad)
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(txtRePass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -293,7 +342,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -332,7 +381,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                 .addGroup(panelSurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelSur, java.awt.BorderLayout.PAGE_END);
@@ -376,6 +425,18 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se ha ingresado el correo electrónico del nuevo cliente", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             txtCorreo.requestFocus();
         }
+        else if(txtPass.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado contraseña para el nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPass.requestFocus();
+        }
+        else if(txtRePass.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "No se ha ingresado confirmación de contraseña para el nuevo usuario", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtRePass.requestFocus();
+        }
+        else if(!txtPass.getText().equals(txtRePass.getText())){
+            JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con su confirmación", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtPass.requestFocus();
+        }
         else{
             boolean fechaValida = false;
                     
@@ -414,7 +475,7 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
                                 else
                                     imagenCorrecta = true;
                                 if(imagenCorrecta){
-                                    iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen);
+                                    iccli.agregarCliente(txtNickname.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), fechaNac , rutaImagen, iccli.encriptar(txtPass.getText()));
                                     JOptionPane.showMessageDialog(this, "El nuevo cliente ha sido agregado de manera correcta", "¡ÉXITO!", JOptionPane.INFORMATION_MESSAGE);
                                     limpiar();
                                 }
@@ -439,7 +500,22 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         limpiar();
     }//GEN-LAST:event_formInternalFrameClosed
 
-
+    private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
+        if(txtPass.getText().length() < 5){
+            txtSeguridad.setText("Protección baja");
+            txtSeguridad.setForeground(Color.RED);
+        }
+        else if(txtPass.getText().length() > 4 &&  txtPass.getText().length() < 8){
+            txtSeguridad.setText("Protección intermedia");
+            txtSeguridad.setForeground(Color.ORANGE);
+        }
+        else{
+            txtSeguridad.setText("Segura");
+            txtSeguridad.setForeground(Color.GREEN.darker());
+        }
+            
+    }//GEN-LAST:event_txtPassKeyTyped
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
@@ -451,6 +527,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -464,5 +542,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtNickname;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JPasswordField txtRePass;
+    private javax.swing.JLabel txtSeguridad;
     // End of variables declaration//GEN-END:variables
 }

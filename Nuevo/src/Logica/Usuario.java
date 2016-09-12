@@ -20,7 +20,7 @@ public class Usuario {
     private String apellido;
     private String email;
     private LocalDate fechaNac;
-    
+    private String pass;    
     
         
     public Usuario(){
@@ -28,17 +28,19 @@ public class Usuario {
         nombre = "";
         apellido = "";
         email = "";
-        fechaNac = LocalDate.of(1900, 1, 1);       
+        fechaNac = LocalDate.of(1900, 1, 1);  
+        pass = "";
     }
     
-    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac){
+    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String pass){
         
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNac = fechaNac;
-             
+        this.pass = pass;
+        
     }
 
     public String getNickname() {
@@ -80,7 +82,14 @@ public class Usuario {
     public void setFechaNac(LocalDate FechaNac) {
         this.fechaNac = FechaNac;
     } 
-    
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }   
     
     
     public boolean correoValido(){

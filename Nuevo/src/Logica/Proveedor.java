@@ -26,8 +26,8 @@ public class Proveedor extends Usuario {
         this.servicios = new HashMap<String, Servicio>();
     }
     
-    public Proveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, ArrayList<String> rutaProveedor, String nombreEmpresa, String link, HashMap<String, Servicio> servicios){
-        super(nickname, nombre, apellido, email, fechaNac);
+    public Proveedor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, ArrayList<String> rutaProveedor, String nombreEmpresa, String link, HashMap<String, Servicio> servicios, String pass){
+        super(nickname, nombre, apellido, email, fechaNac, pass);
         
         this.imagenesUsuario = new ArrayList<Imagen>();
         

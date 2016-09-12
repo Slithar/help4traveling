@@ -7,9 +7,13 @@ package Logica;
 
 import Datos.*;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.table.TableModel;
 
 /**
@@ -159,10 +163,10 @@ public class ControladorClientes implements IControladorClientes {
     }
 
     @Override
-    public void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen) throws SQLException, ClassNotFoundException {
+    public void agregarCliente(String nickname, String nombre, String apellido, String mail, LocalDate FechaNac, String rutaImagen, String pass) throws SQLException, ClassNotFoundException {
         DatosClientes cliente = new DatosClientes();
-        Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap<Integer, Reserva>());
-        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString());
+        Cliente c = new Cliente(nickname, nombre, apellido, mail, FechaNac, rutaImagen, new HashMap<Integer, Reserva>(), pass);
+        cliente.insertar(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNac().toString(), c.getPass());
         if (!rutaImagen.equals("src/Logica/perfiles/perfil.PNG")) {
             cliente.agregarImagen(c.getNickname(), c.getImagenUsuario().getPath());
         }
@@ -434,7 +438,31 @@ public class ControladorClientes implements IControladorClientes {
         return dr.getNumeroReserva(r.getFecha().toString(), r.getPrecio(), r.getCliente().getNickname());
     }
     
-    
+    public String encriptar(String pass){
+        String key = "help4traveling";
+        String passEncriptada = "";
+        
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digPass = md.digest(key.getBytes("utf-8"));
+            byte[] keyBytes = Arrays.copyOf(digPass, 24);
+            
+            SecretKey sk = new SecretKeySpec(keyBytes, "DESede");
+            Cipher c = Cipher.getInstance("DESede");
+            c.init(Cipher.ENCRYPT_MODE, sk);
+            
+            byte[] bytesTextoPlano = pass.getBytes("utf-8");
+            byte[] buf = c.doFinal(bytesTextoPlano);
+            byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
+            
+            passEncriptada = new String(base64Bytes);
+        }
+        catch(Exception ex){
+            
+        }
+        
+        return passEncriptada;
+    }
     
     
 }
