@@ -15,6 +15,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.table.TableModel;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
