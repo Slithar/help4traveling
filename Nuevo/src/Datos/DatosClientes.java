@@ -499,4 +499,29 @@ public class DatosClientes {
         conn.close();
         
     }
+    public Cliente getClienteByNickname (String Nickname) throws SQLException, ClassNotFoundException{
+        Cliente cli = new Cliente();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("SELECT * FROM usuarios WHERE nickname = ?");
+        
+        pConsulta.setString(1, Nickname);
+
+        ResultSet rs = pConsulta.executeQuery();
+
+        while(rs.next()){
+
+        cli.setNickname(rs.getString("nickname"));
+        
+        cli.setPass(rs.getString("pass"));
+        
+        }
+        
+        return cli;
+    }
 }

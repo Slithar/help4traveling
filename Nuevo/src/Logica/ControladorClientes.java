@@ -15,10 +15,9 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.table.TableModel;
-import org.apache.commons.codec.binary.Base64;
-
+//import org.apache.commons.codec.binary.Base64;
 /**
- *
+ *1
  * @author usuario
  */
 public class ControladorClientes implements IControladorClientes {
@@ -441,9 +440,12 @@ public class ControladorClientes implements IControladorClientes {
     
     public String encriptar(String pass){
         String key = "help4traveling";
-        String passEncriptada = "";
         
-        try{
+        byte[]   bytesEncoded = Base64.getEncoder().encode(pass .getBytes());
+                
+        String passEncriptada = new String(bytesEncoded);
+        
+        /*try{
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digPass = md.digest(key.getBytes("utf-8"));
             byte[] keyBytes = Arrays.copyOf(digPass, 24);
@@ -454,16 +456,40 @@ public class ControladorClientes implements IControladorClientes {
             
             byte[] bytesTextoPlano = pass.getBytes("utf-8");
             byte[] buf = c.doFinal(bytesTextoPlano);
-            byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
-            
+            //byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
+            byte[] base64Bytes = Base64.getEncoder().encode(buf);
             passEncriptada = new String(base64Bytes);
         }
         catch(Exception ex){
             
-        }
+        }*/
         
         return passEncriptada;
     }
-    
+    @Override
+    public DataCliente getClienteByNickname(String Nickname)throws SQLException, ClassNotFoundException{
+        
+        DataCliente dCli = new DataCliente();
+        
+        Cliente cli = new Cliente();
+        
+        cli.setNickname(Nickname);
+        
+        System.out.println("Logica: "+cli.getNickname() );
+        
+        Cliente cli2 = new Cliente();
+        
+        DatosClientes daCliente = new DatosClientes();
+        
+        cli2 = daCliente.getClienteByNickname(cli.getNickname());
+        
+        dCli.setNickname(cli2.getNickname());
+        
+        
+        dCli.setPassword(cli2.getPass());
+        
+        
+        return dCli;
+    }
     
 }

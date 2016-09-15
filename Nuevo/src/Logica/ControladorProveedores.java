@@ -16,7 +16,7 @@ import java.util.logging.*;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.codec.binary.Base64;
+//import org.apache.commons.codec.binary.Base64;
 import javax.swing.*;
 
 /**
@@ -734,8 +734,8 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
             
             byte[] bytesTextoPlano = pass.getBytes("utf-8");
             byte[] buf = c.doFinal(bytesTextoPlano);
-            byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
-            
+            //byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
+            byte[] base64Bytes = Base64.getEncoder().encode(buf);
             passEncriptada = new String(base64Bytes);
         }
         catch(Exception ex){

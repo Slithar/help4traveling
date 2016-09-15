@@ -21,7 +21,7 @@ public class DataCliente {
     private LocalDate fechaNac;
     private String rutaImagen;
     private HashMap<Integer, DataReserva> reservas;
-
+    private String password;
     public DataCliente() {
         
     }
@@ -36,6 +36,16 @@ public class DataCliente {
         this.reservas = reservas;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
+    
     public String getApellido() {
         return apellido;
     }

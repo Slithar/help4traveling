@@ -45,4 +45,5 @@ public interface IControladorClientes {
     public abstract ArrayList<DataReserva> getAllReservas() throws SQLException, ClassNotFoundException;
     public abstract int getNumeroReserva(LocalDate fecha, int precio, String nickname) throws SQLException, ClassNotFoundException;
     public abstract String encriptar(String pass);
+    public abstract DataCliente getClienteByNickname(String Nickname) throws SQLException, ClassNotFoundException;
 }

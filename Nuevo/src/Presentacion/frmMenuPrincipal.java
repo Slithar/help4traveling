@@ -30,14 +30,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
      */
     public frmMenuPrincipal(){
         initComponents();
-        
         setContentPane(nuevoPanel);
         Fabrica fab = new Fabrica();
         iccat = fab.getIControladorCategorias();
         iccli = fab.getIControladorClientes();
         icprov = fab.getIControladorProveedores();
         icprom = fab.getIControladorPromociones();
-        
         Toolkit pc = Toolkit.getDefaultToolkit();
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         
