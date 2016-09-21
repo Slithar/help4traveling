@@ -6,6 +6,7 @@
 package Logica;
 
 import Datos.*;
+import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.sql.*;
@@ -14,6 +15,7 @@ import java.util.*;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 //import org.apache.commons.codec.binary.Base64;
 /**
@@ -280,10 +282,34 @@ public class ControladorClientes implements IControladorClientes {
         dtc.setApellido(cli.getApellido());
         dtc.setEmail(cli.getEmail());
         dtc.setFechaNac(cli.getFechaNac());
+        
         dtc.setRutaImagen(cli.getImagenUsuario().getPath());
         
         return dtc;
     }
+    
+    public DataCliente seleccionarClienteWeb(String nickname) throws SQLException, ClassNotFoundException {
+        JOptionPane.showMessageDialog(null, nickname);
+        DatosClientes dataux = new DatosClientes();
+        Cliente c = new Cliente();
+        DataCliente dtc = new DataCliente();
+        c.setNickname(nickname);
+        Cliente cli=dataux.seleccionarCliente(c.getNickname());
+        dtc.setNickname(cli.getNickname());
+        dtc.setNombre(cli.getNombre());
+        dtc.setApellido(cli.getApellido());
+        dtc.setEmail(cli.getEmail());
+        dtc.setFechaNac(cli.getFechaNac());        
+        if(cli.getImagenUsuario().getPath() != null){
+            File imagen = new File(cli.getImagenUsuario().getPath());
+            dtc.setRutaImagen(imagen.getAbsolutePath());
+        }
+        else
+            dtc.setRutaImagen("");
+             
+        return dtc;
+    }
+    
     public ArrayList<DataReserva> reservasCliente(String nickname)throws SQLException, ClassNotFoundException{
         DatosClientes dataux= new DatosClientes();
         Cliente c= new Cliente ();
