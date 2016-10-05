@@ -211,4 +211,11 @@ public class ControladorCategorias implements IControladorCategorias{
                         "insert into categoriasrelacionadas values('Cruceros', 'Mediterráneo'), ('Cruceros', 'Mar Negro'), ('Cruceros', 'Caribe'), ('Cruceros', 'Nilo'), ('Cruceros', 'Alaska');");
     }
     
+    @Override
+    public ArrayList getCategoriasRelacionadas() throws SQLException, ClassNotFoundException{
+        DatosCategorias dc = new DatosCategorias();
+        
+        return dc.getCategoriasRelacionadas();
+    }
+    
 }

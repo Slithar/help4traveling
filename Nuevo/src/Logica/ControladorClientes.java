@@ -6,7 +6,10 @@
 package Logica;
 
 import Datos.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.sql.*;
@@ -15,6 +18,7 @@ import java.util.*;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 //import org.apache.commons.codec.binary.Base64;
@@ -288,8 +292,38 @@ public class ControladorClientes implements IControladorClientes {
         return dtc;
     }
     
+    public BufferedImage imagenLogueado(String nickname) throws SQLException, ClassNotFoundException, IOException{
+        DatosUsuarios du = new DatosUsuarios();
+        Usuario c = new Cliente();
+        c.setNickname(nickname);
+        Imagen imgPerfil = du.selectImagenPerfil(c);
+        String rAbsoluta = "";
+        if(imgPerfil.getPath().length() == 0){
+            rAbsoluta = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.png";
+        }
+        else{
+            rAbsoluta  = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\" + imgPerfil.getPath();
+        }
+        File rutaAbsoluta = new File(rAbsoluta);
+        BufferedImage imagen = ImageIO.read(rutaAbsoluta);
+        return imagen;
+        //return rutaAbsoluta;
+        /*FileInputStream fis = new FileInputStream(rutaAbsoluta);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        
+        for(int readNum; (readNum = fis.read(buf)) != -1;){
+            bos.write(buf, 0, readNum);
+        }
+        
+        byte[] bytes = bos.toByteArray();
+        
+        return bytes;*/
+        
+    }
+    
     public DataCliente seleccionarClienteWeb(String nickname) throws SQLException, ClassNotFoundException {
-        JOptionPane.showMessageDialog(null, nickname);
+        //JOptionPane.showMessageDialog(null, nickname);
         DatosClientes dataux = new DatosClientes();
         Cliente c = new Cliente();
         DataCliente dtc = new DataCliente();
@@ -303,10 +337,11 @@ public class ControladorClientes implements IControladorClientes {
         if(cli.getImagenUsuario().getPath() != null){
             File imagen = new File(cli.getImagenUsuario().getPath());
             dtc.setRutaImagen(imagen.getAbsolutePath());
+            //System.out.println(imagen.getAbsolutePath());
         }
         else
             dtc.setRutaImagen("");
-             
+        //JOptionPane.showMessageDialog(null, dtc.getRutaImagen()); 
         return dtc;
     }
     

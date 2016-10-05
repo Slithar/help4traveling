@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
@@ -54,5 +55,9 @@ public interface IControladorProveedores {
     public abstract ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) throws SQLException,ClassNotFoundException;
     public abstract DataProveedor getNombreEmpresa(String nick) throws SQLException,ClassNotFoundException;
     public abstract String encriptar(String pass);
+    public abstract ArrayList<DataServicio> getServiciosPorCategoria(String categoria) throws SQLException,ClassNotFoundException;
+    public abstract BufferedImage copiarImagenesServicio(String ruta) throws SQLException, ClassNotFoundException, IOException;
+    public abstract ArrayList<BufferedImage> imagenesProveedorABytes(String nickname) throws SQLException, ClassNotFoundException, IOException;
+    public abstract ArrayList<String> rutaImagenesServicios(String nombre, String nickProveedor) throws SQLException, ClassNotFoundException;
     
 }

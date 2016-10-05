@@ -7,11 +7,15 @@ package Presentacion;
 import Logica.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -28,7 +32,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form frmMenuPrincipal
      */
-    public frmMenuPrincipal(){
+    public frmMenuPrincipal() {
         initComponents();
         setContentPane(nuevoPanel);
         Fabrica fab = new Fabrica();
@@ -41,8 +45,16 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
         this.setIconImage(icono);
         
-        
-        /*try{
+        //try {
+            /*byte[] bytes = iccli.imagenLogueado("ewatson");
+            JOptionPane.showMessageDialog(null, bytes.length);*/
+            /*BufferedImage img = iccli.imagenLogueado("BruceS");
+            File outputfile = new File("src/Logica/");
+            File outputfile2 = new File(outputfile.getAbsolutePath() + "/saved.jpg");
+            ImageIO.write(img, "png", outputfile2); // Write the Buffered Image into an output file
+
+            JOptionPane.showMessageDialog(null, "LISTO!");*/
+            /*try{
             iccat.actualizarCategorias();
             icprov.setListaCategorias(iccat.getListaCategorias());
             icprov.actualizarProveedores();
@@ -52,21 +64,28 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             iccli.setListaPromociones(icprom.getListaPromociones());
             iccli.setListaProveedores(icprov.getListaProveedores());            
             iccli.actualizarClientes();
-        }
-        catch(SQLException ex){
+            }
+            catch(SQLException ex){
             //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             //JOptionPane.showMessageDialog(this, "Hay un problema de conexión con la base de datos, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(ClassNotFoundException ex){
+            }
+            catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
-        System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
-        System.out.println("CIUDADES: " + icprov.getCantCiudades());
-        System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
-        System.out.println("CLIENTES: " + iccli.getCantClientes());*/
+            }
+            
+            System.out.println("CATEGORÍAS: " + iccat.getCantCategorias());
+            System.out.println("PROVEEDORES: " + icprov.getCantProveedores());
+            System.out.println("CIUDADES: " + icprov.getCantCiudades());
+            System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
+            System.out.println("CLIENTES: " + iccli.getCantClientes());*/
+        /*} catch (SQLException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
     
     public void setCursorFrame(Cursor c){

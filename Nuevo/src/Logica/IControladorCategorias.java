@@ -24,4 +24,5 @@ public interface IControladorCategorias {
     public abstract boolean existeCategoria(String c) throws SQLException, ClassNotFoundException;
     public abstract void deleteAllCategorias() throws SQLException, ClassNotFoundException;
     public abstract void insertCategoriasDePrueba() throws SQLException, ClassNotFoundException;
+    public abstract ArrayList getCategoriasRelacionadas() throws SQLException, ClassNotFoundException;
 }

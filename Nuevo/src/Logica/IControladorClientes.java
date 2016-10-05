@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.*;
@@ -47,4 +49,5 @@ public interface IControladorClientes {
     public abstract String encriptar(String pass);
     public abstract DataCliente getClienteByNickname(String Nickname) throws SQLException, ClassNotFoundException;
     public abstract DataCliente seleccionarClienteWeb(String nickname) throws SQLException, ClassNotFoundException; 
+    public abstract BufferedImage imagenLogueado(String nickname) throws SQLException, ClassNotFoundException, IOException;
 }

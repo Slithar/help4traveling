@@ -208,6 +208,28 @@ public class DatosCategorias {
         conn.close();
         
     }
+    
+    public ArrayList getCategoriasRelacionadas() throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from categoriasrelacionadas");
+        
+        ArrayList relacionadas = new ArrayList();
+        while(rs.next()){
+            relacionadas.add(rs.getString("categoriaPadre") + ";" + rs.getString("categoriaHija"));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return relacionadas;
+    }
 
     
 }

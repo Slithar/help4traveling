@@ -6,6 +6,7 @@
 package Logica;
 
 import Datos.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -16,6 +17,7 @@ import java.util.logging.*;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.imageio.ImageIO;
 //import org.apache.commons.codec.binary.Base64;
 import javax.swing.*;
 
@@ -744,6 +746,76 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         
         return passEncriptada;
     }
+    
+    public ArrayList<DataServicio> getServiciosPorCategoria(String categoria) throws SQLException,ClassNotFoundException{
+        Categoria c = new Categoria();
+        c.setNombre(categoria);
+        DatosServicios ds = new DatosServicios();
+        ArrayList<Servicio> servicios = ds.getServiciosPorCategoria(c.getNombre());
+        ArrayList<DataServicio> dtservicios = new ArrayList<DataServicio>();
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio tempds = new DataServicio();
+            tempds.setNombreServicio(servicios.get(i).getNombreServicio());
+            tempds.setNombreProveedor(servicios.get(i).getProveedorServicio().getNickname());
+            tempds.setPrecioServicio(servicios.get(i).getPrecioServicio());
+            dtservicios.add(tempds);
+        }
+        return dtservicios;
+    }
+    
+    public BufferedImage copiarImagenesServicio(String ruta) throws SQLException, ClassNotFoundException, IOException{
+        File rutaAbsoluta = new File(ruta);
+        BufferedImage imagen = ImageIO.read(rutaAbsoluta);
+        return imagen;
+    }
+    
+    public ArrayList<BufferedImage> imagenesProveedorABytes(String nickname) throws SQLException, ClassNotFoundException, IOException{
+        DatosUsuarios du = new DatosUsuarios();
+        Usuario u = new Usuario();
+        u.setNickname(nickname);
+        ArrayList<Imagen> imagenes = du.selectImagenesPerfil(u);
+        ArrayList<BufferedImage> bytes = new ArrayList<BufferedImage>();
+        String rAbsoluta = "";
+        if(imagenes.size() == 0){
+            rAbsoluta = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.png";
+            File rutaAbsoluta = new File(rAbsoluta);
+            BufferedImage imagen = ImageIO.read(rutaAbsoluta);
+            bytes.add(imagen);
+        }
+        else{
+            for(int i = 0; i < imagenes.size(); i++){
+                rAbsoluta  = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\" + imagenes.get(i).getPath();
+                File rutaAbsoluta = new File(rAbsoluta);
+                BufferedImage imagen = ImageIO.read(rutaAbsoluta);
+                bytes.add(imagen);
+            }            
+        }
+        
+        return bytes;
+        
+    }
+    
+    public ArrayList<String> rutaImagenesServicios(String nombre, String nickProveedor) throws SQLException, ClassNotFoundException{
+        DatosServicios ds = new DatosServicios();
+        Servicio s = new Servicio();
+        s.setNombreServicio(nombre);
+        Proveedor p = new Proveedor();
+        p.setNickname(nickProveedor);
+        s.setProveedorServicio(p);
+        ArrayList<ImagenServicio> dsImagenServicio = ds.getImagenes(nombre, nickProveedor);
+        ArrayList<String> rutasImagenes = new ArrayList<String>();
+        if(dsImagenServicio.size() == 0){
+            rutasImagenes.add(System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\imagenesservicios\\noImagen.jpg");            
+        }
+        else{
+            for(int i = 0; i < dsImagenServicio.size(); i++){
+                rutasImagenes.add(System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\" + dsImagenServicio.get(i).getPath());
+            }
+        }
+        
+        return rutasImagenes;
+    }
+
 
 }
 

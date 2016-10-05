@@ -306,7 +306,7 @@ public class ifrmVerInfoReserva extends javax.swing.JInternalFrame {
                 this.jEstado.setText(dtcant.getEstado().toString());
 
                 ArrayList <DataCantidadReservasPromociones>  listProm=this.iccli.getReservasPromo(selected);
-                ArrayList<DataCantidadReservasServicios>listServ=this.iccli.getReservasServ(selected);
+                ArrayList<DataCantidadReservasServicios> listServ=this.iccli.getReservasServ(selected);
                 if(listProm.size()>0){
                     for(int i=0;i<listProm.size();i++){
                         DataCantidadReservasPromociones promAux=listProm.get(i);
