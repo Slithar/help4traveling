@@ -501,4 +501,64 @@ public class DatosServicios {
         
         return servicios;
     }
+    
+    public ArrayList<Servicio> getServiciosPorCategoriaOrdenPrecio(String categoria) throws SQLException, ClassNotFoundException{
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select distinct s.nombre, s.nickProveedor, s.precio from categoriasdeservicios c, servicios s where s.nombre = c.nombreServicio and s.nickProveedor = c.nickProveedor and c.rutaCategoria like ? order by s.precio asc");
+        pConsulta.setString(1, "%" + categoria + "%");
+        ResultSet rs = pConsulta.executeQuery();
+        
+        //int i = 0;
+        while(rs.next()){
+            Servicio s = new Servicio();
+            Proveedor p = new Proveedor();
+            s.setNombreServicio(rs.getString("nombre"));
+            p.setNickname(rs.getString("nickProveedor"));
+            s.setProveedorServicio(p);
+            s.setPrecioServicio(rs.getInt("precio"));
+            servicios.add( s);
+            //i++;
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return servicios;
+    }
+    
+    public ArrayList<Servicio> getServiciosPorCategoriaOrdenAlfabeticamente(String categoria) throws SQLException, ClassNotFoundException{
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("select distinct s.nombre, s.nickProveedor, s.precio from categoriasdeservicios c, servicios s where s.nombre = c.nombreServicio and s.nickProveedor = c.nickProveedor and c.rutaCategoria like ? order by s.nombre asc");
+        pConsulta.setString(1, "%" + categoria + "%");
+        ResultSet rs = pConsulta.executeQuery();
+        
+        while(rs.next()){
+            Servicio s = new Servicio();
+            Proveedor p = new Proveedor();
+            s.setNombreServicio(rs.getString("nombre"));
+            p.setNickname(rs.getString("nickProveedor"));
+            s.setProveedorServicio(p);
+            s.setPrecioServicio(rs.getInt("precio"));
+            servicios.add(s);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return servicios;
+    }
 }

@@ -44,6 +44,60 @@ public class DatosPromociones {
         
     }
     
+    public ArrayList<Promocion> selectAllPromocionesOrdenPrecio() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from promociones order by precio asc");
+        
+        while(rs.next()){
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nickProveedor"));
+            promociones.add(new Promocion(rs.getString("nombre"), rs.getInt("descuento"), rs.getInt("precio"), new ArrayList(), p));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return promociones;
+        
+    }
+    
+    public ArrayList<Promocion> selectAllPromocionesOrdenAlfabeticamente() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select * from promociones order by nombre asc");
+        
+        while(rs.next()){
+            Proveedor p = new Proveedor();
+            p.setNombreEmpresa(rs.getString("nickProveedor"));
+            promociones.add(new Promocion(rs.getString("nombre"), rs.getInt("descuento"), rs.getInt("precio"), new ArrayList(), p));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return promociones;
+        
+    }
+    
     public ArrayList<Servicio> selectServiciosPromocion(String nombre) throws SQLException, ClassNotFoundException{
         
         ArrayList<Servicio> servicios = new ArrayList<Servicio>();

@@ -59,5 +59,8 @@ public interface IControladorProveedores {
     public abstract BufferedImage copiarImagenesServicio(String ruta) throws SQLException, ClassNotFoundException, IOException;
     public abstract ArrayList<BufferedImage> imagenesProveedorABytes(String nickname) throws SQLException, ClassNotFoundException, IOException;
     public abstract ArrayList<String> rutaImagenesServicios(String nombre, String nickProveedor) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataServicio> getServiciosPorCategoriaOrdenPrecio(String categoria) throws SQLException,ClassNotFoundException;
+    public abstract ArrayList<DataServicio> getServiciosPorCategoriaOrdenAlfabeticamente(String categoria) throws SQLException,ClassNotFoundException;
+    
     
 }

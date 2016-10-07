@@ -828,7 +828,7 @@ public class ifrmAltaServicio extends javax.swing.JInternalFrame {
         String combo = cmbProveedor.getSelectedItem().toString();
         String[] partesCombo = combo.split("<");
         
-        return partesCombo[0].toString();
+        return partesCombo[0].toString().trim();
     }
     
     public ArrayList<String> obtenerCategorias(DefaultListModel modelo){

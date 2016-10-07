@@ -211,6 +211,38 @@ public String getNombreServicio(String cadena){
     }
     
     @Override
+    public ArrayList<DataPromocion> getPromocionesOrdenPrecio() throws SQLException, ClassNotFoundException {
+        DatosPromociones promocion = new DatosPromociones();
+        ArrayList<Promocion> todaslaspromociones = promocion.selectAllPromocionesOrdenPrecio();
+        ArrayList<DataPromocion> resultado = new ArrayList();
+        for(int i = 0; i < todaslaspromociones.size(); i++){
+            DataPromocion promo = new DataPromocion();
+            promo.setNombre(todaslaspromociones.get(i).getNombre());
+            promo.setDescuento(todaslaspromociones.get(i).getDescuento());
+            promo.setPrecio(todaslaspromociones.get(i).getPrecio());
+            promo.setProveedor(todaslaspromociones.get(i).getProveedor().getNombreEmpresa());
+            resultado.add(promo);
+        }
+        return resultado;
+    }
+    
+    @Override
+    public ArrayList<DataPromocion> getPromocionesOrdenAlfabeticamente() throws SQLException, ClassNotFoundException {
+        DatosPromociones promocion = new DatosPromociones();
+        ArrayList<Promocion> todaslaspromociones = promocion.selectAllPromocionesOrdenAlfabeticamente();
+        ArrayList<DataPromocion> resultado = new ArrayList();
+        for(int i = 0; i < todaslaspromociones.size(); i++){
+            DataPromocion promo = new DataPromocion();
+            promo.setNombre(todaslaspromociones.get(i).getNombre());
+            promo.setDescuento(todaslaspromociones.get(i).getDescuento());
+            promo.setPrecio(todaslaspromociones.get(i).getPrecio());
+            promo.setProveedor(todaslaspromociones.get(i).getProveedor().getNombreEmpresa());
+            resultado.add(promo);
+        }
+        return resultado;
+    }
+    
+    @Override
     public DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException{
         DataPromocion promocion = new DataPromocion();
         DatosPromociones promociones = new DatosPromociones();

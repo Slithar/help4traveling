@@ -299,7 +299,7 @@ public class ControladorClientes implements IControladorClientes {
         Imagen imgPerfil = du.selectImagenPerfil(c);
         String rAbsoluta = "";
         if(imgPerfil.getPath().length() == 0){
-            rAbsoluta = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.png";
+            rAbsoluta = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.jpg";
         }
         else{
             rAbsoluta  = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\" + imgPerfil.getPath();
@@ -536,7 +536,7 @@ public class ControladorClientes implements IControladorClientes {
         
         cli.setNickname(Nickname);
         
-        System.out.println("Logica: "+cli.getNickname() );
+        //System.out.println("Logica: "+cli.getNickname() );
         
         Cliente cli2 = new Cliente();
         

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -45,6 +46,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
         this.setIconImage(icono);
         
+       
         //try {
             /*byte[] bytes = iccli.imagenLogueado("ewatson");
             JOptionPane.showMessageDialog(null, bytes.length);*/
@@ -79,11 +81,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             System.out.println("CIUDADES: " + icprov.getCantCiudades());
             System.out.println("PROMOCIONES: " + icprom.getCantPromociones());
             System.out.println("CLIENTES: " + iccli.getCantClientes());*/
+           /* ArrayList<DataServicio> serviciosPrecio = icprov.getServiciosPorCategoriaOrdenPrecio("Alojamiento");
+            for(int i = 0; i< serviciosPrecio.size(); i++){
+                JOptionPane.showMessageDialog(null, serviciosPrecio.get(i).getNombreServicio());
+            }*/
         /*} catch (SQLException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);*/
+        /*} catch (IOException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }

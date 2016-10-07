@@ -489,7 +489,7 @@ public class ControladorProveedores implements IControladorProveedores{
         File[]imagenes = fichero.listFiles();
         
         for(int i = 0; i < imagenes.length; i++){
-            if(!imagenes[i].getName().equalsIgnoreCase("perfil.png")) 
+            if(!imagenes[i].getName().equalsIgnoreCase("perfil.png") && !imagenes[i].getName().equalsIgnoreCase("perfil.jpg")) 
                 imagenes[i].delete();
         }
     }
@@ -500,7 +500,7 @@ public class ControladorProveedores implements IControladorProveedores{
         File[]imagenes = fichero.listFiles();
         
         for(int i = 0; i < imagenes.length; i++){
-            if(!imagenes[i].getName().equalsIgnoreCase("agregarImagenServicio.png")) 
+            if(!imagenes[i].getName().equalsIgnoreCase("agregarImagenServicio.png") && !imagenes[i].getName().equalsIgnoreCase("noImagen.jpg")) 
                 imagenes[i].delete();
         }
     }
@@ -581,7 +581,7 @@ public class ControladorProveedores implements IControladorProveedores{
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-S-Iberia-1.jpg', 'Euro-Vuelo-S', 'remus');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-LC-Iberia-1.jpg', 'Euro-Vuelo-LC', 'remus');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-FC-Iberia-1.jpg', 'Euro-Vuelo-FC', 'remus');\n" +
-                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-1-Europcar-1.png', 'Euro-Car-1', 'moody');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-1-Europcar-1.jpg', 'Euro-Car-1', 'moody');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-2-Europcar-1.jpg', 'Euro-Car-2', 'moody');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Car-3-Europcar-1.jpg', 'Euro-Car-3', 'moody');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Casa para p4 BsAs-Segundo Hogar-1.jpg', 'Casa para p4 BsAs', 'mHooch');\n" +
@@ -592,7 +592,7 @@ public class ControladorProveedores implements IControladorProveedores{
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Air-France.FC-AirFrance-1.jpg', 'Air-France-FC', 'tCook');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/TAM-FC-TAM-1.jpg', 'TAM-FC', 'adippet');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Luxury south beach corner apartment-Segundo Hogar-1.jpg', 'Luxury south beach corner apartment', 'mHooch');\n" +
-                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Coche-Miami-Segundo Hogar-1.png', 'Coche-Miami', 'mHooch');\n" +
+                        "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Coche-Miami-Segundo Hogar-1.jpg', 'Coche-Miami', 'mHooch');\n" +
                         "INSERT INTO categoriasdeservicios VALUES ('Air-France-FC ','tCook','Air France','Vuelos > Empresas > Air France'),('Air-France-FC ','tCook','First Class','Vuelos > Tipo vuelo > First Class'),('Casa para p4 BsAs ','mHooch','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Casa para p4 BsAs ','mHooch','Casa','Alojamientos > Tipo alojamiento > Casa'),('Coche-Miami ','mHooch','Auto','Automóviles > Tipo vehículo > Auto'),('Coche-Miami ','mHooch','Chevrolet','Automóviles > Marca > Chevrolet'),('Coche-Miami ','mHooch','Económico','Automóviles > Tarifa > Económico'),('Euro-Car-1 ','moody','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-1 ','moody','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-1 ','moody','Económico','Automóviles > Tarifa > Económico'),('Euro-Car-2 ','moody','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-2 ','moody','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-2 ','moody','Standard','Automóviles > Tarifa > Standard'),('Euro-Car-3 ','moody','Auto','Automóviles > Tipo vehículo > Auto'),('Euro-Car-3 ','moody','Chevrolet','Automóviles > Marca > Chevrolet'),('Euro-Car-3 ','moody','Full','Automóviles > Tarifa > Full'),('Euro-Vuelo-FC ','remus','First Class','Vuelos > Tipo vuelo > First Class'),('Euro-Vuelo-FC ','remus','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-LC ','remus','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-LC ','remus','LowCost','Vuelos > Tipo vuelo > LowCost'),('Euro-Vuelo-S ','remus','Iberia','Vuelos > Empresas > Iberia'),('Euro-Vuelo-S ','remus','Standard','Vuelos > Tipo vuelo > Standard'),('Floripa G. House ','mHooch','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Floripa G. House ','mHooch','Alojamientos','Alojamientos'),('Floripa G. House ','mHooch','Casa','Alojamientos > Tipo alojamiento > Casa'),('Luxury south beach corner apartment ','mHooch','2 dormitorios','Alojamientos > Habitaciones > 2 dormitorios'),('Luxury south beach corner apartment ','mHooch','Hotel','Alojamientos > Tipo alojamiento > Hotel'),('Luxury south beach corner apartment ','mHooch','Playa','Alojamientos > Ubicación > Playa'),('TAM-FC ','adippet','First Class','Vuelos > Tipo vuelo > First Class'),('TAM-FC ','mHooch','TAM','Vuelos > Empresas > TAM');");
     }
     
@@ -763,6 +763,41 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         return dtservicios;
     }
     
+    @Override
+    public ArrayList<DataServicio> getServiciosPorCategoriaOrdenPrecio(String categoria) throws SQLException,ClassNotFoundException{
+        Categoria c = new Categoria();
+        c.setNombre(categoria);
+        DatosServicios ds = new DatosServicios();
+        ArrayList<Servicio> servicios = ds.getServiciosPorCategoriaOrdenPrecio(c.getNombre());
+        ArrayList<DataServicio> dtservicios = new ArrayList();
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio tempds = new DataServicio();
+            tempds.setNombreServicio(servicios.get(i).getNombreServicio());
+            tempds.setNombreProveedor(servicios.get(i).getProveedorServicio().getNickname());
+            tempds.setPrecioServicio(servicios.get(i).getPrecioServicio());
+            //System.out.println(tempds.getNombreServicio());
+            dtservicios.add(tempds);
+        }
+        return dtservicios;
+    }
+    
+    @Override
+    public ArrayList<DataServicio> getServiciosPorCategoriaOrdenAlfabeticamente(String categoria) throws SQLException,ClassNotFoundException{
+        Categoria c = new Categoria();
+        c.setNombre(categoria);
+        DatosServicios ds = new DatosServicios();
+        ArrayList<Servicio> servicios = ds.getServiciosPorCategoriaOrdenAlfabeticamente(c.getNombre());
+        ArrayList<DataServicio> dtservicios = new ArrayList<DataServicio>();
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio tempds = new DataServicio();
+            tempds.setNombreServicio(servicios.get(i).getNombreServicio());
+            tempds.setNombreProveedor(servicios.get(i).getProveedorServicio().getNickname());
+            tempds.setPrecioServicio(servicios.get(i).getPrecioServicio());
+            dtservicios.add(tempds);
+        }
+        return dtservicios;
+    }
+    
     public BufferedImage copiarImagenesServicio(String ruta) throws SQLException, ClassNotFoundException, IOException{
         File rutaAbsoluta = new File(ruta);
         BufferedImage imagen = ImageIO.read(rutaAbsoluta);
@@ -777,7 +812,7 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         ArrayList<BufferedImage> bytes = new ArrayList<BufferedImage>();
         String rAbsoluta = "";
         if(imagenes.size() == 0){
-            rAbsoluta = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.png";
+            rAbsoluta = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.jpg";
             File rutaAbsoluta = new File(rAbsoluta);
             BufferedImage imagen = ImageIO.read(rutaAbsoluta);
             bytes.add(imagen);
@@ -815,7 +850,6 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         
         return rutasImagenes;
     }
-
 
 }
 
