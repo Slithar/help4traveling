@@ -275,4 +275,75 @@ public class DatosPromociones {
         rs.close();
         return promo;
     }
+    
+    public ArrayList<Promocion> selectMaxPromociones() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select count(*) cantidad, nombrePromocion, nickProveedor from cantidadreservaspromociones group by nombrePromocion, nickProveedor order by cantidad desc");
+        
+        while(rs.next()){
+            Proveedor p = new Proveedor();
+            p.setNickname(rs.getString("nickProveedor"));
+            promociones.add(new Promocion(rs.getString("nombrePromocion"), 0, 0, new ArrayList(), p));
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return promociones;
+        
+    }
+    
+    public ArrayList<String> selectBusquedaDatosOrdenPrecio(String buscar) throws SQLException, ClassNotFoundException{
+        ArrayList<String> resultado = new ArrayList<String>();
+        ConexionBD conexion = new ConexionBD();
+        Connection conn;
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareCall("select distinct 'servicio' as tipo, s.nombre, s.nickProveedor, s.precio from servicios s, categoriasdeservicios c where s.nombre = c.nombreServicio and s.nickProveedor = c.nickProveedor and c.rutaCategoria like ? union select distinct 'servicio' as tipo, s.nombre, s.nickProveedor, s.precio from servicios s where s.nombre like ? or s.descripcion like ? union select 'promocion' as tipo, nombre, nickProveedor, precio from promociones where nombre like ? order by precio");
+        pConsulta.setString(1, "%" + buscar + "%");
+        pConsulta.setString(2, "%" + buscar + "%");
+        pConsulta.setString(3, "%" + buscar + "%");
+        pConsulta.setString(4, "%" + buscar + "%");
+        ResultSet rs = pConsulta.executeQuery();
+        while(rs.next()){
+            String r = rs.getString("tipo") + ";" + rs.getString("nombre") + ";" + rs.getString("nickProveedor") + ";" + rs.getString("precio") + ";";
+            resultado.add(r);
+        }
+        rs.close();
+        conn.close();
+        
+        return resultado;
+    }
+    
+    public ArrayList<String> selectBusquedaDatosOrdenAlfabeticamente(String buscar) throws SQLException, ClassNotFoundException{
+        ArrayList<String> resultado = new ArrayList<String>();
+        ConexionBD conexion = new ConexionBD();
+        Connection conn;
+        conn = conexion.conectar();
+        PreparedStatement pConsulta = conn.prepareCall("select distinct 'servicio' as tipo, s.nombre, s.nickProveedor, s.precio from servicios s, categoriasdeservicios c where s.nombre = c.nombreServicio and s.nickProveedor = c.nickProveedor and c.rutaCategoria like ? union select distinct 'servicio' as tipo, s.nombre, s.nickProveedor, s.precio from servicios s where s.nombre like ? or s.descripcion like ? union select 'promocion' as tipo, nombre, nickProveedor, precio from promociones where nombre like ? order by nombre");
+        pConsulta.setString(1, "%" + buscar + "%");
+        pConsulta.setString(2, "%" + buscar + "%");
+        pConsulta.setString(3, "%" + buscar + "%");
+        pConsulta.setString(4, "%" + buscar + "%");
+        ResultSet rs = pConsulta.executeQuery();
+        while(rs.next()){
+            String r = rs.getString("tipo") + ";" + rs.getString("nombre") + ";" + rs.getString("nickProveedor") + ";" + rs.getString("precio") + ";";
+            resultado.add(r);
+        }
+        rs.close();
+        conn.close();
+        
+        return resultado;
+    }
+    
+    
 }

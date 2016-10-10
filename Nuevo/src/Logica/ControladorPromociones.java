@@ -276,4 +276,31 @@ public String getNombreServicio(String cadena){
         return DTservs;
 
     }
+    
+    @Override
+    public ArrayList getMaxPromociones() throws SQLException, ClassNotFoundException{
+        DatosPromociones dp = new DatosPromociones();
+        ArrayList<Promocion> promociones = dp.selectMaxPromociones();
+        ArrayList<DataPromocion> dtpromociones = new ArrayList();
+        for(int i = 0; i < promociones.size(); i++){
+            DataPromocion dataPromocion = new DataPromocion();
+            dataPromocion.setNombre(promociones.get(i).getNombre());
+            dataPromocion.setProveedor(promociones.get(i).getProveedor().getNickname());
+            dtpromociones.add(dataPromocion);
+        }
+        
+        return dtpromociones;
+    }
+
+    @Override
+    public ArrayList<String> selectBusquedaDatosOrdenPrecio(String buscar) throws SQLException, ClassNotFoundException {
+        DatosPromociones dp = new DatosPromociones();
+        return dp.selectBusquedaDatosOrdenPrecio(buscar);
+    }
+
+    @Override
+    public ArrayList<String> selectBusquedaDatosOrdenAlfabeticamente(String buscar) throws SQLException, ClassNotFoundException {
+        DatosPromociones dp = new DatosPromociones();
+        return dp.selectBusquedaDatosOrdenAlfabeticamente(buscar);
+    }
 }

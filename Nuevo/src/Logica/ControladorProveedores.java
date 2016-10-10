@@ -550,15 +550,15 @@ public class ControladorProveedores implements IControladorProveedores{
     @Override
     public void insertDatosProveedoresDePrueba() throws SQLException, ClassNotFoundException {
         DatosProveedores dp = new DatosProveedores();
-        dp.insertDatosProveedoresDePrueba("insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false, 'AirFrance', 'http://www.airfrance.com/', '" + encriptar("tcook") + "');\n" +
-                        "insert into usuarios values('moody', 'Alastor', 'Moody', 'eu.car@eucar.com', '1965-9-2', false, 'EuropCar', 'http://www.europcar.com.uy/', '" + encriptar("moody") + "');\n" +
-                        "insert into usuarios values('remus', 'Remus', 'Lupin', 'iberia@gmail.com', '1970-5-4', false, 'Iberia', 'http://www.iberia.com/uy/', '" + encriptar("remus") + "');\n" +
-                        "insert into usuarios values('adippet', 'Armando', 'Dippet', 'tam@outlook.com', '1967-2-12', false, 'TAM', 'http://www.tam.com.br/', '" + encriptar("adippet") + "');\n" +
-                        "insert into usuarios values('mHooch', 'Madam', 'Hooch', 'segHogar@gmail.com', '1963-8-5', false, 'Segundo Hogar', 'http://www.segundohogar.com/', '" + encriptar("mhooch") + "');\n" +
-                        "insert into usuarios values('oWood', 'Oliver', 'Wood', 'quidditch28@gmail.com', '1988-12-28', true, null, null, '" + encriptar("owood") + "');\n" +
-                        "insert into usuarios values('eWatson', 'Emma', 'Watson', 'e.watson@gmail.com', '1990-4-15', true, null, null, '" + encriptar("ewatson") + "');\n" +
-                        "insert into usuarios values('BruceS', 'Bruce', 'Sewell', 'bruce.sewell@gmail.com', '1978-12-3', true, null, null, '" + encriptar("bruces") + "');\n" +
-                        "insert into usuarios values('JeffW', 'Jeff', 'Williams', 'jeff.williams@gmail.com', '1984-11-27', true, null, null, '" + encriptar("jeffw") + "');\n" +
+        dp.insertDatosProveedoresDePrueba("insert into usuarios values('tCook', 'Tim', 'Cook', 'air.f@gmail.com', '1960-11-1', false, 'AirFrance', 'http://www.airfrance.com/', '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('moody', 'Alastor', 'Moody', 'eu.car@eucar.com', '1965-9-2', false, 'EuropCar', 'http://www.europcar.com.uy/', '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('remus', 'Remus', 'Lupin', 'iberia@gmail.com', '1970-5-4', false, 'Iberia', 'http://www.iberia.com/uy/', '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('adippet', 'Armando', 'Dippet', 'tam@outlook.com', '1967-2-12', false, 'TAM', 'http://www.tam.com.br/', '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('mHooch', 'Madam', 'Hooch', 'segHogar@gmail.com', '1963-8-5', false, 'Segundo Hogar', 'http://www.segundohogar.com/', '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('oWood', 'Oliver', 'Wood', 'quidditch28@gmail.com', '1988-12-28', true, null, null, '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('eWatson', 'Emma', 'Watson', 'e.watson@gmail.com', '1990-4-15', true, null, null, '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('BruceS', 'Bruce', 'Sewell', 'bruce.sewell@gmail.com', '1978-12-3', true, null, null, '" + encriptar("123") + "');\n" +
+                        "insert into usuarios values('JeffW', 'Jeff', 'Williams', 'jeff.williams@gmail.com', '1984-11-27', true, null, null, '" + encriptar("123") + "');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/tCook-1.jpg', 'tCook');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/moody-1.jpg', 'moody');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/remus-1.jpg', 'remus');\n" +
@@ -849,6 +849,21 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         }
         
         return rutasImagenes;
+    }
+
+    @Override
+    public ArrayList getMaxServicios() throws SQLException, ClassNotFoundException {
+        DatosProveedores dp = new DatosProveedores();
+        ArrayList<Servicio> servicios = dp.selectMaxServicios();
+        ArrayList<DataServicio> dtservicios = new ArrayList();
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio dataServicio = new DataServicio();
+            dataServicio.setNombreServicio(servicios.get(i).getNombreServicio());
+            dataServicio.setNombreProveedor(servicios.get(i).getProveedorServicio().getNickname());
+            dtservicios.add(dataServicio);
+        }
+        
+        return dtservicios;
     }
 
 }

@@ -47,7 +47,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         this.setIconImage(icono);
         
        
-        //try {
+        try {
             /*byte[] bytes = iccli.imagenLogueado("ewatson");
             JOptionPane.showMessageDialog(null, bytes.length);*/
             /*BufferedImage img = iccli.imagenLogueado("BruceS");
@@ -85,11 +85,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             for(int i = 0; i< serviciosPrecio.size(); i++){
                 JOptionPane.showMessageDialog(null, serviciosPrecio.get(i).getNombreServicio());
             }*/
-        /*} catch (SQLException ex) {
+           
+           ArrayList<DataPromocion> promociones = icprom.getMaxPromociones();
+           //JOptionPane.showMessageDialog(null, promociones.get(1).getNombre());
+        } catch (SQLException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);*/
-        /*} catch (IOException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } /*catch (IOException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }

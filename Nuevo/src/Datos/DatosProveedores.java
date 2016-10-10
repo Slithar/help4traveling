@@ -8,6 +8,7 @@ package Datos;
 import Logica.Cliente;
 import Logica.Imagen;
 import Logica.ImagenServicio;
+import Logica.Promocion;
 import java.sql.*;
 import java.util.*;
 import Logica.Proveedor;
@@ -307,6 +308,36 @@ public class DatosProveedores {
         conn.close();
         
         return imagenes;
+        
+    }
+    
+    public ArrayList<Servicio> selectMaxServicios() throws SQLException, ClassNotFoundException{
+        
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        ConexionBD conexion = new ConexionBD();
+        
+        Connection conn;
+        
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select count(*) cantidad, nombreServicio, nickProveedor from cantidadreservasservicios group by nombreServicio, nickProveedor order by cantidad desc");
+        
+        while(rs.next()){
+            Proveedor p = new Proveedor();
+            p.setNickname(rs.getString("nickProveedor"));
+            Servicio s = new Servicio();
+            s.setNombreServicio(rs.getString("nombreServicio"));
+            s.setProveedorServicio(p);
+            servicios.add(s);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return servicios;
         
     }
       

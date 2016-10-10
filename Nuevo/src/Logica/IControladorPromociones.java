@@ -30,5 +30,9 @@ public interface IControladorPromociones {
     public abstract DataPromocion getDataPromocion(String nombrePromo, String nombreProveedor) throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataPromocion> getPromocionesOrdenPrecio() throws SQLException, ClassNotFoundException; 
     public abstract ArrayList<DataPromocion> getPromocionesOrdenAlfabeticamente() throws SQLException, ClassNotFoundException;
+    public abstract ArrayList getMaxPromociones() throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<String> selectBusquedaDatosOrdenPrecio(String buscar) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<String> selectBusquedaDatosOrdenAlfabeticamente(String buscar) throws SQLException, ClassNotFoundException;
+    
     
 }
