@@ -462,7 +462,42 @@ public class ControladorClientes implements IControladorClientes {
         }
         
     }
-
+    
+    public void datosAsociadosReservaWeb(int numReserva, String tipo, String nombreProducto, String nickProveedor, String fechaInicio, String fechaFin, int cantidad, int totalLinea)throws SQLException, ClassNotFoundException{
+        
+        DatosReservas res = new DatosReservas();
+     
+            if(tipo.equals("Servicio")){
+                    
+                    Servicio s = new Servicio();
+                    s.setNombreServicio(nombreProducto);
+                    Proveedor p = new Proveedor();
+                    p.setNombreEmpresa(nickProveedor);
+                    String[] datosFI = fechaInicio.trim().split("/");
+                    LocalDate fInicio = LocalDate.of(Integer.parseInt(datosFI[2].trim()), Integer.parseInt(datosFI[1].trim()), Integer.parseInt(datosFI[0].trim()));
+                    String[] datosFF = fechaFin.trim().split("/");
+                    LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2].trim()), Integer.parseInt(datosFF[1].trim()), Integer.parseInt(datosFF[0].trim()));
+                    cantidadReservasServicios crs = new cantidadReservasServicios(cantidad, totalLinea, fInicio, fFin, p, s);
+                    int precioUnitario = crs.getTotalLinea() / crs.getCantidad();
+                    res.insertarServicioReserva(numReserva, crs.getServicio().getNombreServicio(), crs.getProveedor().getNombreEmpresa(), crs.getCantidad(), crs.getTotalLinea(), crs.getFechaInicio().toString(), crs.getFechaFin().toString(), precioUnitario);                    
+            }
+            else{   
+                    Promocion prom = new Promocion();
+                    prom.setNombre(nombreProducto);
+                    Proveedor p = new Proveedor();
+                    p.setNombreEmpresa(nickProveedor);
+                    String[] datosFI = fechaInicio.trim().split("/");
+                    LocalDate fInicio = LocalDate.of(Integer.parseInt(datosFI[2].trim()), Integer.parseInt(datosFI[1].trim()), Integer.parseInt(datosFI[0].trim()));
+                    String[] datosFF = fechaFin.trim().split("/");
+                    LocalDate fFin = LocalDate.of(Integer.parseInt(datosFF[2].trim()), Integer.parseInt(datosFF[1].trim()), Integer.parseInt(datosFF[0].trim()));
+                    cantidadReservasPromociones crp = new cantidadReservasPromociones(cantidad, totalLinea, fInicio, fFin, prom, p);
+                    int precioUnitario = crp.getTotalLinea() / crp.getCantidad();
+                    res.insertarPromocionReserva(numReserva, crp.getPromocion().getNombre(), crp.getProveedor().getNombreEmpresa(), crp.getCantidad(), crp.getTotalLinea(), crp.getFechaInicio().toString(), crp.getFechaFin().toString(), precioUnitario);
+                   
+            }
+        
+    }
+    
     @Override
     public ArrayList<DataReserva> getAllReservas() throws SQLException, ClassNotFoundException {
         ArrayList<DataReserva> AlldataReservas = new ArrayList();
@@ -500,32 +535,10 @@ public class ControladorClientes implements IControladorClientes {
     }
     
     public String encriptar(String pass){
-        String key = "help4traveling";
+        byte[] bytesEncoded = Base64.getEncoder().encode(pass .getBytes());
+        String EncodedPassword = new String(bytesEncoded);
         
-        byte[]   bytesEncoded = Base64.getEncoder().encode(pass .getBytes());
-                
-        String passEncriptada = new String(bytesEncoded);
-        
-        /*try{
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digPass = md.digest(key.getBytes("utf-8"));
-            byte[] keyBytes = Arrays.copyOf(digPass, 24);
-            
-            SecretKey sk = new SecretKeySpec(keyBytes, "DESede");
-            Cipher c = Cipher.getInstance("DESede");
-            c.init(Cipher.ENCRYPT_MODE, sk);
-            
-            byte[] bytesTextoPlano = pass.getBytes("utf-8");
-            byte[] buf = c.doFinal(bytesTextoPlano);
-            //byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
-            byte[] base64Bytes = Base64.getEncoder().encode(buf);
-            passEncriptada = new String(base64Bytes);
-        }
-        catch(Exception ex){
-            
-        }*/
-        
-        return passEncriptada;
+        return EncodedPassword;
     }
     @Override
     public DataCliente getClienteByNickname(String Nickname)throws SQLException, ClassNotFoundException{
