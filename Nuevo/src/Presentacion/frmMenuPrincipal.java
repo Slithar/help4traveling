@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.jfree.chart.*;
+import org.jfree.data.category.*;
+import org.jfree.chart.plot.*;
 
 /**
  *
@@ -28,6 +31,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private IControladorProveedores icprov;
     private IControladorCategorias iccat;
     private IControladorPromociones icprom;
+    private IControladorLogs iclog;
     
     private frmProgresoDatos vProgreso;
     /**
@@ -41,6 +45,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         iccli = fab.getIControladorClientes();
         icprov = fab.getIControladorProveedores();
         icprom = fab.getIControladorPromociones();
+        iclog = fab.getIControladorLogs();
         Toolkit pc = Toolkit.getDefaultToolkit();
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         
@@ -132,6 +137,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         miConsServicios = new javax.swing.JMenuItem();
         miConsPromociones = new javax.swing.JMenuItem();
         miConsReservas = new javax.swing.JMenuItem();
+        mAccesos = new javax.swing.JMenu();
+        miRegistros = new javax.swing.JMenuItem();
+        miEstadisticasServicios = new javax.swing.JMenuItem();
         mDatos = new javax.swing.JMenu();
         miDatosDePrueba = new javax.swing.JMenuItem();
         mEliminarDatos = new javax.swing.JMenuItem();
@@ -273,6 +281,26 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mConsultas.add(miConsReservas);
 
         mbBarra.add(mConsultas);
+
+        mAccesos.setText("Accesos al sitio");
+
+        miRegistros.setText("Registros de accesos");
+        miRegistros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegistrosActionPerformed(evt);
+            }
+        });
+        mAccesos.add(miRegistros);
+
+        miEstadisticasServicios.setText("Estadísticas de servicios");
+        miEstadisticasServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miEstadisticasServiciosActionPerformed(evt);
+            }
+        });
+        mAccesos.add(miEstadisticasServicios);
+
+        mbBarra.add(mAccesos);
 
         mDatos.setText("Datos del sistema");
 
@@ -483,6 +511,40 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         nuevoPanel.add(vVerInfoProveedores);
         vVerInfoProveedores.setVisible(true);
     }//GEN-LAST:event_miConsProveedoresActionPerformed
+
+    private void miRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistrosActionPerformed
+        ifrmRegistrosAccesos vRegistros = new ifrmRegistrosAccesos(this.iclog);
+        nuevoPanel.add(vRegistros);
+        vRegistros.setVisible(true);
+    }//GEN-LAST:event_miRegistrosActionPerformed
+
+    private void miEstadisticasServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEstadisticasServiciosActionPerformed
+        ifrmEstadisticas vEstadisticas = new ifrmEstadisticas(this.icprov);
+        
+        //JPanel panel = new JPanel();
+        //vEstadisticas.getContentPane().add(panel);
+        
+        DefaultCategoryDataset data = new DefaultCategoryDataset();
+        
+        try{
+            ArrayList<DataServicio> servicios = icprov.getServiciosMasVisitados();
+            for(int i = 0; i < servicios.size(); i++){
+                data.addValue(servicios.get(i).getVisitas(), "Servicio", servicios.get(i).getNombreServicio() + " (" + servicios.get(i).getNombreProveedor() + ")");
+            }
+            
+            JFreeChart grafica = ChartFactory.createBarChart("Servicios más visitados", "Servicio", "Visitas", data, PlotOrientation.HORIZONTAL, false, true, false);
+            
+            ChartPanel contenedor = new ChartPanel(grafica);
+            vEstadisticas.setContentPane(contenedor);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "El número de la reserva indicada es incorrecto", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "No se ha podido encontrar librería SQL, por lo que no fue posible completar la acción", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        nuevoPanel.add(vEstadisticas);
+        vEstadisticas.setVisible(true);
+    }//GEN-LAST:event_miEstadisticasServiciosActionPerformed
     
         
     /**
@@ -531,6 +593,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenu mAccesos;
     private javax.swing.JMenu mConsultas;
     private javax.swing.JMenu mDatos;
     private javax.swing.JMenuItem mEliminarDatos;
@@ -548,11 +611,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsReservas;
     private javax.swing.JMenuItem miConsServicios;
     private javax.swing.JMenuItem miDatosDePrueba;
+    private javax.swing.JMenuItem miEstadisticasServicios;
     private javax.swing.JMenuItem miRegClientes;
     private javax.swing.JMenuItem miRegPromociones;
     private javax.swing.JMenuItem miRegProveedores;
     private javax.swing.JMenuItem miRegServiciosActualizar;
     private javax.swing.JMenuItem miRegServiciosNuevo;
+    private javax.swing.JMenuItem miRegistros;
     private javax.swing.JMenuItem miSalir;
     // End of variables declaration//GEN-END:variables
 }

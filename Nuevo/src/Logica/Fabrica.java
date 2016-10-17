@@ -37,5 +37,10 @@ public class Fabrica {
         return icprom;
     }
     
+    public IControladorLogs getIControladorLogs(){
+        IControladorLogs iclog = new ControladorLogs();
+        return iclog;
+    }
+    
     
 }

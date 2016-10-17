@@ -378,7 +378,9 @@ public class ControladorClientes implements IControladorClientes {
                         "delete from reservas where numero > 0;\n" +
                         "delete from usuarios where nickname <> \"\";\n" +
                         "\n" +
-                        "ALTER TABLE reservas AUTO_INCREMENT=1;");
+                        "ALTER TABLE reservas AUTO_INCREMENT=1;\n" + 
+                        "delete from logs where numero <> -1;\n" +
+                        "ALTER TABLE logs AUTO_INCREMENT=1;");
     }
 
     @Override
@@ -564,6 +566,18 @@ public class ControladorClientes implements IControladorClientes {
         
         
         return dCli;
+    }
+
+    @Override
+    public void agregarImagenPerfilWeb(BufferedImage img, String nick) throws SQLException, ClassNotFoundException, IOException {
+        //BufferedImage img = icprov.copiarImagenesServicio(System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\perfil.jpg");
+        //String homeUsuario = System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\H4T-Web\\web\\perfiles\\" + proveedores.get(i).getNickname() + "-1.jpg";
+        File fichero = new File(System.getProperty("user.home") + "\\Documents\\NetBeansProjects\\help4traveling\\Nuevo\\src\\Logica\\perfiles\\" + nick + ".jpg");
+        //File rutaAbsoluta = new File(fichero.getAbsolutePath());
+        //System.out.println("RUTA: " + rutaAbsoluta.getAbsolutePath());
+        ImageIO.write(img, "jpg", fichero);
+        DatosClientes dc = new DatosClientes();
+        dc.agregarImagen(nick, "src/Logica/perfiles/" + nick + ".jpg");
     }
     
 }

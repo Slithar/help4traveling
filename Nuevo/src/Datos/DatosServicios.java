@@ -62,7 +62,7 @@ public class DatosServicios {
         conn = conexion.conectar();
         
         if(tieneDestino){
-            PreparedStatement pConsulta = conn.prepareStatement("insert into servicios values (?, ?, ?, ?, ?, ?)");
+            PreparedStatement pConsulta = conn.prepareStatement("insert into servicios values (?, ?, ?, ?, ?, ?, 0)");
             
             pConsulta.setString(1, nombre);
             pConsulta.setString(2, nombreProveedor);
@@ -553,6 +553,43 @@ public class DatosServicios {
             p.setNickname(rs.getString("nickProveedor"));
             s.setProveedorServicio(p);
             s.setPrecioServicio(rs.getInt("precio"));
+            servicios.add(s);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return servicios;
+    }
+    
+    public void agregarVisita(String nombreServicio, String nickProveedor) throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        Connection conn;
+        conn = conexion.conectar();
+        
+        PreparedStatement pConsulta = conn.prepareCall("update servicios set visitas = visitas + 1 where nombre = ? and nickProveedor = ?");
+        pConsulta.setString(1, nombreServicio);
+        pConsulta.setString(2, nickProveedor);
+        pConsulta.executeUpdate();
+        
+        conn.close();
+    }
+    
+    public ArrayList<Servicio> selectServiciosMasVisitados() throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        Connection conn;
+        conn = conexion.conectar();
+        
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        Statement st = conn.createStatement();
+        
+        ResultSet rs = st.executeQuery("select visitas, nombre, nickProveedor from servicios where visitas > 0 order by visitas desc limit 10");
+        
+        while(rs.next()){
+            Proveedor p = new Proveedor();
+            p.setNickname(rs.getString("nickProveedor"));
+            Servicio s = new Servicio(rs.getString("nombre"), p, rs.getInt("visitas"));
             servicios.add(s);
         }
         

@@ -18,6 +18,7 @@ public class Servicio {
     private ArrayList<Categoria> categoriasServicio;
     private Ciudad origen;
     private Ciudad destino;
+    private int visitas;
 
     public Servicio() {
         nombreServicio = "";
@@ -42,6 +43,18 @@ public class Servicio {
             this.destino = destino;
         else
             this.destino = new Ciudad();               
+    }
+    
+    public Servicio(String nombreServicio, Proveedor p, int visitas){
+        this.nombreServicio = nombreServicio;
+        descripcionServicio = "";
+        precioServicio = 0;
+        proveedorServicio = p;
+        imagenesServicio = new ArrayList<ImagenServicio>();
+        categoriasServicio = new ArrayList<Categoria>();
+        origen = new Ciudad();
+        destino = new Ciudad();
+        this.visitas = visitas;
     }
     
     public ArrayList<Categoria> getCategoriasServicio() {
@@ -106,6 +119,14 @@ public class Servicio {
 
     public void setImagenesServicio(ArrayList<ImagenServicio> ImagenesServicio) {
         this.imagenesServicio = ImagenesServicio;
+    }
+
+    public int getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(int visitas) {
+        this.visitas = visitas;
     }
     
 }

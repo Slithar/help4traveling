@@ -21,6 +21,7 @@ public class DataServicio {
     private ArrayList<String> categoriasServicio;
     private String origen;
     private String destino;
+    private int visitas;
 
     public DataServicio() {
     }
@@ -34,8 +35,8 @@ public class DataServicio {
         this.categoriasServicio = categoriasServicio;
         this.origen = origen;
         this.destino = destino;
-    }
-
+    }  
+    
     public String getNombreServicio() {
         return nombreServicio;
     }
@@ -99,7 +100,12 @@ public class DataServicio {
     public void setDestino(String destino) {
         this.destino = destino;
     }
-    
-    
-    
+
+    public int getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(int visitas) {
+        this.visitas = visitas;
+    }   
 }

@@ -62,5 +62,7 @@ public interface IControladorProveedores {
     public abstract ArrayList<DataServicio> getServiciosPorCategoriaOrdenPrecio(String categoria) throws SQLException,ClassNotFoundException;
     public abstract ArrayList<DataServicio> getServiciosPorCategoriaOrdenAlfabeticamente(String categoria) throws SQLException,ClassNotFoundException;
     public abstract ArrayList getMaxServicios() throws SQLException, ClassNotFoundException;
+    public abstract void agregarVisita(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException;
+    public abstract ArrayList<DataServicio> getServiciosMasVisitados() throws SQLException, ClassNotFoundException;
     
 }

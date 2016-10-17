@@ -161,6 +161,29 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="mAccesos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Accesos al sitio"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="miRegistros">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Registros de accesos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miRegistrosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miEstadisticasServicios">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Estad&#xed;sticas de servicios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miEstadisticasServiciosActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="mDatos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Datos del sistema"/>

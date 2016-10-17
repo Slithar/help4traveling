@@ -569,18 +569,18 @@ public class ControladorProveedores implements IControladorProveedores{
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/mHooch-1.jpg', 'mHooch');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/oWood.jpg', 'oWood');\n" +
                         "insert into imagenesusuarios values('src/Logica/PerfilesDefault/eWatson.jpg', 'eWatson');\n" +
-                        "insert into servicios values('Euro-Vuelo-S', 'remus', 'Montevideo', 'Valencia', 'Vuelo con excelente atención y comodidad.', 1100);\n" +
-                        "insert into servicios values('Euro-Vuelo-LC', 'remus', 'Montevideo', 'Valencia', 'Vuelo con excelente atención y comodidad a un precio accesible.', 850);\n" +
-                        "insert into servicios values('Euro-Vuelo-FC', 'remus', 'Montevideo', 'Valencia', 'Vuelo de primera clase. Excelente atención, comodidad y servicio.', 1300);\n" +
-                        "insert into servicios values('Euro-Car-1', 'moody', 'Madrid', 'Valencia', 'Euro-Car. Autos de buena calidad y comodidad. Versión Económica', 300);\n" +
-                        "insert into servicios values('Euro-Car-2', 'moody', 'Madrid', 'Valencia', 'Euro-Car. Autos de buena calidad y comodidad. Versión Standard.', 300);\n" +
-                        "insert into servicios values('Euro-Car-3', 'moody', 'Valencia', null, 'Euro-Car. Autos de buena calidad y comodidad. Una camioneta para toda la familia.', 300);\n" +
-                        "insert into servicios values('Casa para p4 BsAs', 'mHooch', 'Buenos Aires', null, 'Esta hermosa casa, se encuentra ubicada en el corazón de Buenos Aires y ofrece una capacidad para cuatro personas. La propiedad cuenta con un dormitorio con dos camas simples, que pueden transformarse en una matrimonial y dos baños completos, que incluyen toallas.', 80);\n" +
-                        "insert into servicios values('Floripa G. House', 'mHooch', 'Florianópolis', null, 'Estamos a sólo unos pasos de un supermercado, restaurantes, cajero automático, gasolinera, farmacia, gimnasio, etc. Lagoa da Conceição es 7 km de nuestra casa de huéspedes y tarda sólo 10-15 minutos en el transporte público. Allí se encuentra una buena vida nocturna con bares y música en vivo', 190);\n" +
-                        "insert into servicios values('Air-France-FC', 'tCook', 'París', 'Berlín', '¡Un vuelo de primera! Excelencia y experiencia en mejorar sus viajes.', 100);\n" +
-                        "insert into servicios values('TAM-FC', 'adippet', 'Florianópolis', 'Pekín', '¡Un vuelo de primera! Excelencia y experiencia.', 150);\n" +
-                        "insert into servicios values('Luxury south beach corner apartment', 'mHooch', 'Miami', null, 'Beautiful large 2 bedrooms 2 bathrooms apartment CORNER UNIT. Marble floor throughout, beautiful open kitchen, granite counter top, spacious dining room area and living room area. Spectacular views of Miami from all windows and balcony', 300);\n" +
-                        "insert into servicios values('Coche-Miami', 'mHooch', 'Miami', null, 'A useful car to travel around Miami', 360);\n" +
+                        "insert into servicios values('Euro-Vuelo-S', 'remus', 'Montevideo', 'Valencia', 'Vuelo con excelente atención y comodidad.', 1100, 0);\n" +
+                        "insert into servicios values('Euro-Vuelo-LC', 'remus', 'Montevideo', 'Valencia', 'Vuelo con excelente atención y comodidad a un precio accesible.', 850, 0);\n" +
+                        "insert into servicios values('Euro-Vuelo-FC', 'remus', 'Montevideo', 'Valencia', 'Vuelo de primera clase. Excelente atención, comodidad y servicio.', 1300, 0);\n" +
+                        "insert into servicios values('Euro-Car-1', 'moody', 'Madrid', 'Valencia', 'Euro-Car. Autos de buena calidad y comodidad. Versión Económica', 300, 0);\n" +
+                        "insert into servicios values('Euro-Car-2', 'moody', 'Madrid', 'Valencia', 'Euro-Car. Autos de buena calidad y comodidad. Versión Standard.', 300, 0);\n" +
+                        "insert into servicios values('Euro-Car-3', 'moody', 'Valencia', null, 'Euro-Car. Autos de buena calidad y comodidad. Una camioneta para toda la familia.', 300, 0);\n" +
+                        "insert into servicios values('Casa para p4 BsAs', 'mHooch', 'Buenos Aires', null, 'Esta hermosa casa, se encuentra ubicada en el corazón de Buenos Aires y ofrece una capacidad para cuatro personas. La propiedad cuenta con un dormitorio con dos camas simples, que pueden transformarse en una matrimonial y dos baños completos, que incluyen toallas.', 80, 0);\n" +
+                        "insert into servicios values('Floripa G. House', 'mHooch', 'Florianópolis', null, 'Estamos a sólo unos pasos de un supermercado, restaurantes, cajero automático, gasolinera, farmacia, gimnasio, etc. Lagoa da Conceição es 7 km de nuestra casa de huéspedes y tarda sólo 10-15 minutos en el transporte público. Allí se encuentra una buena vida nocturna con bares y música en vivo', 190, 0); \n" +
+                        "insert into servicios values('Air-France-FC', 'tCook', 'París', 'Berlín', '¡Un vuelo de primera! Excelencia y experiencia en mejorar sus viajes.', 100, 0);\n" +
+                        "insert into servicios values('TAM-FC', 'adippet', 'Florianópolis', 'Pekín', '¡Un vuelo de primera! Excelencia y experiencia.', 150, 0);\n" +
+                        "insert into servicios values('Luxury south beach corner apartment', 'mHooch', 'Miami', null, 'Beautiful large 2 bedrooms 2 bathrooms apartment CORNER UNIT. Marble floor throughout, beautiful open kitchen, granite counter top, spacious dining room area and living room area. Spectacular views of Miami from all windows and balcony', 300, 0);\n" +
+                        "insert into servicios values('Coche-Miami', 'mHooch', 'Miami', null, 'A useful car to travel around Miami', 360, 0);\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-S-Iberia-1.jpg', 'Euro-Vuelo-S', 'remus');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-LC-Iberia-1.jpg', 'Euro-Vuelo-LC', 'remus');\n" +
                         "insert into imagenesservicios values('src/Logica/ImagenesServiciosDefault/Euro-Vuelo-FC-Iberia-1.jpg', 'Euro-Vuelo-FC', 'remus');\n" +
@@ -849,6 +849,31 @@ public ArrayList<DataServicio> getServiciosProveedor(String NombreProveedor) thr
         }
         
         return dtservicios;
+    }
+
+    @Override
+    public void agregarVisita(String nombreServicio, String nombreProveedor) throws SQLException, ClassNotFoundException {
+        DatosServicios ds = new DatosServicios();
+        ds.agregarVisita(nombreServicio, nombreProveedor);
+    }
+
+    @Override
+    public ArrayList<DataServicio> getServiciosMasVisitados() throws SQLException, ClassNotFoundException {
+        DatosServicios ds = new DatosServicios();
+        ArrayList<Servicio> servicios = ds.selectServiciosMasVisitados();
+        
+        ArrayList<DataServicio> resultado = new ArrayList<DataServicio>();
+        
+        for(int i = 0; i < servicios.size(); i++){
+            DataServicio datosServicio = new DataServicio();
+            datosServicio.setNombreServicio(servicios.get(i).getNombreServicio());
+            datosServicio.setNombreProveedor(servicios.get(i).getProveedorServicio().getNickname());
+            datosServicio.setVisitas(servicios.get(i).getVisitas());
+            
+            resultado.add(datosServicio);
+        }
+        
+        return resultado;
     }
 
 }

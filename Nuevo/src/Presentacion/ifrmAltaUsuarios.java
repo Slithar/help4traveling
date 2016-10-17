@@ -94,6 +94,8 @@ public class ifrmAltaUsuarios extends javax.swing.JInternalFrame {
         setRutaImagen("src/Logica/perfiles/perfil.PNG");
         txtPass.setText("");
         txtRePass.setText("");
+        txtSeguridad.setText("Protección baja");
+        txtSeguridad.setForeground(Color.RED);
         
         txtNickname.requestFocus();
     }
