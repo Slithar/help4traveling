@@ -49,12 +49,10 @@ public class ControladorLogs implements IControladorLogs{
     }
     
     @Override
-    public boolean posibleAgregar() throws SQLException, ClassNotFoundException{
+    public void posibleAgregar() throws SQLException, ClassNotFoundException{
         DatosLogs dl = new DatosLogs();
-        if(dl.getCantidadLogs() > 10000 | dl.getCantidadLogs() == 10000)
-            return false;
-        else
-            return true;
+        if(dl.getCantidadLogs() > 10000 || dl.getCantidadLogs() == 10000)
+            dl.deleteLogsMasViejo();
     }
     
     @Override
@@ -70,6 +68,12 @@ public class ControladorLogs implements IControladorLogs{
         }
         
         return resultado;
+    }
+
+    @Override
+    public void eliminarLogsViejos() throws SQLException, ClassNotFoundException {
+        DatosLogs dl = new DatosLogs();
+        dl.deleteLogsViejos();
     }
     
 }

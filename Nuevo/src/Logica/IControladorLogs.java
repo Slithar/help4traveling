@@ -17,7 +17,8 @@ public interface IControladorLogs {
     public abstract void agregarLog(LocalDate fecha, String ruta, String navegador, String so) throws SQLException, ClassNotFoundException;
     public abstract String getSO();    
     public abstract String getNavegador(String userAgent);
-    public abstract boolean posibleAgregar() throws SQLException, ClassNotFoundException;
+    public abstract void eliminarLogsViejos() throws SQLException, ClassNotFoundException;
+    public abstract void posibleAgregar() throws SQLException, ClassNotFoundException;
     public abstract ArrayList<DataLog> getLogs() throws SQLException, ClassNotFoundException;
     
 }

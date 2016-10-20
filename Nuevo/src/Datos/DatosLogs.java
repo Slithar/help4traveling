@@ -85,4 +85,32 @@ public class DatosLogs {
         return resultado;
         
     }
+    
+    public void deleteLogsViejos() throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        Connection conn;
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        st.executeUpdate("delete from logs where fecha < date_format(date_add(now(), interval-30 day), '%Y-%m-%d') and numero <> -1");
+                
+        
+        conn.close();
+        
+    }
+    
+    public void deleteLogsMasViejo() throws SQLException, ClassNotFoundException{
+        ConexionBD conexion = new ConexionBD();
+        Connection conn;
+        conn = conexion.conectar();
+        
+        Statement st = conn.createStatement();
+        
+        st.executeUpdate("delete from logs where numero > -1 limit 1");
+                
+        
+        conn.close();
+        
+    }
 }
