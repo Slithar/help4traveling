@@ -5,6 +5,7 @@
  */
 package Presentacion;
 import Logica.*;
+import Servicios.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,6 +34,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private IControladorPromociones icprom;
     private IControladorLogs iclog;
     
+    /*private WSClientes wscli;
+    private WSProveedores wsprov;
+    private WSCategorias wscat;
+    private WSPromociones wsprom;
+    private WSLogs wslog;*/
+    private WSPrincipal wspri;
+    
     private frmProgresoDatos vProgreso;
     /**
      * Creates new form frmMenuPrincipal
@@ -46,6 +54,21 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         icprov = fab.getIControladorProveedores();
         icprom = fab.getIControladorPromociones();
         iclog = fab.getIControladorLogs();
+        
+        /*wscli = fab.getWSClientes();
+        wsprov = fab.getWSProveedores();
+        wscat = fab.getWSCategorias();
+        wsprom = fab.getWSPromociones();
+        wslog = fab.getWSLogs();*/
+        wspri = fab.getWSPrincipal();
+        
+        /*wscli.publicar();
+        wsprov.publicar();
+        wscat.publicar();
+        wsprom.publicar();
+        wslog.publicar();*/
+        wspri.publicar();
+        
         Toolkit pc = Toolkit.getDefaultToolkit();
         Image icono = pc.getImage("src/Presentacion/Imagenes/iconoHelp4Traveling.png");
         

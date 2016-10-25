@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
+import Servicios.*;
 
 /**
  *
@@ -42,5 +43,33 @@ public class Fabrica {
         return iclog;
     }
     
+    public WSClientes getWSClientes(){
+        WSClientes wscli = new WSClientes();
+        return wscli;
+    }
     
+    public WSProveedores getWSProveedores(){
+        WSProveedores wsprov = new WSProveedores();
+        return wsprov;
+    }
+    
+    public WSCategorias getWSCategorias(){
+        WSCategorias wscat = new WSCategorias();
+        return wscat;
+    }
+    
+    public WSPromociones getWSPromociones(){
+        WSPromociones wsprom = new WSPromociones();
+        return wsprom;
+    }
+    
+    public WSLogs getWSLogs(){
+        WSLogs wslog = new WSLogs();
+        return wslog;
+    }
+    
+    public WSPrincipal getWSPrincipal(){
+        WSPrincipal wspri = new WSPrincipal();
+        return wspri;
+    }
 }

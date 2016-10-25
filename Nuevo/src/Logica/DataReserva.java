@@ -87,4 +87,8 @@ public class DataReserva {
         this.estado = Estado.obtenerEstado(estado);
     }
     
+    public String getEstadoString(){
+        return estado.toString();
+        
+    }
 }
