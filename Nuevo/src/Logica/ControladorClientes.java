@@ -393,16 +393,16 @@ public class ControladorClientes implements IControladorClientes {
                         "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 200, 'REGISTRADA', 'oWood');\n" +
                         "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 542, 'REGISTRADA', 'eWatson');\n" +
                         "insert into reservas(fecha, precio, estado, nicknameCliente) values ('2016-8-7', 1700, 'REGISTRADA', 'BruceS');\n" +
-                        "insert into cantidadreservaspromociones values(3, 'Sudamérica-Casas', 'mHooch', 1, 135, '2016-3-5', '2016-4-2', 135);\n" +
-                        "insert into cantidadreservaspromociones values(6, 'Miami-Viaje', 'mHooch', 1, 462, '2016-8-7', '2016-8-14', 462);\n" +
-                        "insert into cantidadreservasservicios values(1, 'Euro-Vuelo-S', 'remus', 1, 1100, '2016-1-1', '2016-1-1', 1100);\n" +
-                        "insert into cantidadreservasservicios values(2, 'Euro-Vuelo-S', 'remus', 2, 2200, '2016-1-1', '2016-1-1', 1100);\n" +
-                        "insert into cantidadreservasservicios values(2, 'Euro-Vuelo-LC', 'remus', 1, 850, '2016-1-1', '2016-1-1', 850);\n" +
-                        "insert into cantidadreservasservicios values(4, 'Euro-Car-2', 'moody', 1, 300, '2016-5-8', '2016-5-12', 300);\n" +
-                        "insert into cantidadreservasservicios values(4, 'Euro-Car-3', 'moody', 1, 300, '2016-5-8', '2016-5-12', 300);\n" +
-                        "insert into cantidadreservasservicios values(5, 'Air-France-FC', 'tCook', 2, 200, '2016-8-7', '2016-8-10', 100);\n" +
-                        "insert into cantidadreservasservicios values(6, 'Casa para p4 BsAs', 'mHooch', 1, 80, '2016-8-14', '2016-8-21', 80);\n" +
-                        "insert into cantidadreservasservicios values(7, 'Euro-Vuelo-LC', 'remus', 2, 1700, '2016-8-7', '2016-8-7', 850);");
+                        "insert into cantidadreservaspromociones values(3, 'Sudamérica-Casas', 'mHooch', 1, 135, '2016-3-5', '2016-4-2', 135, false);\n" +
+                        "insert into cantidadreservaspromociones values(6, 'Miami-Viaje', 'mHooch', 1, 462, '2016-8-7', '2016-8-14', 462, false);\n" +
+                        "insert into cantidadreservasservicios values(1, 'Euro-Vuelo-S', 'remus', 1, 1100, '2016-1-1', '2016-1-1', 1100, false);\n" +
+                        "insert into cantidadreservasservicios values(2, 'Euro-Vuelo-S', 'remus', 2, 2200, '2016-1-1', '2016-1-1', 1100, false);\n" +
+                        "insert into cantidadreservasservicios values(2, 'Euro-Vuelo-LC', 'remus', 1, 850, '2016-1-1', '2016-1-1', 850, false);\n" +
+                        "insert into cantidadreservasservicios values(4, 'Euro-Car-2', 'moody', 1, 300, '2016-5-8', '2016-5-12', 300, false);\n" +
+                        "insert into cantidadreservasservicios values(4, 'Euro-Car-3', 'moody', 1, 300, '2016-5-8', '2016-5-12', 300, false);\n" +
+                        "insert into cantidadreservasservicios values(5, 'Air-France-FC', 'tCook', 2, 200, '2016-8-7', '2016-8-10', 100, false);\n" +
+                        "insert into cantidadreservasservicios values(6, 'Casa para p4 BsAs', 'mHooch', 1, 80, '2016-8-14', '2016-8-21', 80, false);\n" +
+                        "insert into cantidadreservasservicios values(7, 'Euro-Vuelo-LC', 'remus', 2, 1700, '2016-8-7', '2016-8-7', 850, false);");
     }
     
     @Override    
@@ -579,5 +579,23 @@ public class ControladorClientes implements IControladorClientes {
         DatosClientes dc = new DatosClientes();
         dc.agregarImagen(nick, "src/Logica/perfiles/" + nick + ".jpg");
     }
+   
+   public ArrayList<DataReserva> ReservaProveedor(String nickProveedor)throws SQLException, ClassNotFoundException{
+       ArrayList<DataReserva> dtRes = new ArrayList<DataReserva>();
+        DatosReservas datosreservas = new DatosReservas();
+        ArrayList<Reserva> AllReservas = datosreservas.ReservaProveedor(nickProveedor);
+        for(int i = 0; i < AllReservas.size(); i++){
+            DataReserva dataReserva = new DataReserva();
+            dataReserva.setNumero(AllReservas.get(i).getNumero());
+            dataReserva.setFecha(AllReservas.get(i).getFecha());
+            dataReserva.setPrecio(AllReservas.get(i).getPrecio());
+            dataReserva.setEstado(AllReservas.get(i).getEstado().toString());
+            dataReserva.setCliente(AllReservas.get(i).getCliente().getNickname());
+            dtRes.add(dataReserva);
+        }
+        return dtRes;
+        
+    }
     
+        
 }

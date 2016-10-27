@@ -19,6 +19,7 @@ public class DataProveedor {
     private String apellido;
     private String email;
     private LocalDate fechaNac;
+    private String fechaProveedor;
     private ArrayList<String> rutaImagen;
     private String nombreEmpresa;
     private String link;
@@ -35,6 +36,10 @@ public class DataProveedor {
         this.rutaImagen = rutaImagen;
         this.nombreEmpresa = nombreEmpresa;
         this.link = link;
+        
+        String fechaProv = fechaNac.toString();
+        String[] fechaPartida = fechaProv.split("-");
+        this.fechaProveedor = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public String getNickname() {
@@ -75,6 +80,10 @@ public class DataProveedor {
 
     public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
+        
+        String fechaProv = fechaNac.toString();
+        String[] fechaPartida = fechaProv.split("-");
+        this.fechaProveedor = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public ArrayList<String> getRutaImagen() {
@@ -100,6 +109,13 @@ public class DataProveedor {
     public void setLink(String link) {
         this.link = link;
     }
-    
+
+    public String getFechaProveedor() {
+        return fechaProveedor;
+    }
+
+    public void setFechaProveedor(String fechaProveedor) {
+        this.fechaProveedor = fechaProveedor;
+    }   
     
 }

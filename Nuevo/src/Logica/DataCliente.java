@@ -19,6 +19,7 @@ public class DataCliente {
     private String apellido;
     private String email;
     private LocalDate fechaNac;
+    private String fechaCliente;
     private String rutaImagen;
     private HashMap<Integer, DataReserva> reservas;
     private String password;
@@ -34,6 +35,10 @@ public class DataCliente {
         this.fechaNac = fechaNac;
         this.rutaImagen = rutaImagen;
         this.reservas = reservas;
+        
+        String fechaCli = fechaNac.toString();
+        String[] fechaPartida = fechaCli.split("-");
+        this.fechaCliente = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public String getPassword() {
@@ -84,6 +89,10 @@ public class DataCliente {
 
     public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
+        
+        String fechaCli = fechaNac.toString();
+        String[] fechaPartida = fechaCli.split("-");
+        this.fechaCliente = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public String getRutaImagen() {
@@ -100,6 +109,14 @@ public class DataCliente {
 
     public void setReservas(HashMap<Integer, DataReserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public String getFechaCliente() {
+        return fechaCliente;
+    }
+
+    public void setFechaCliente(String fechaCliente) {
+        this.fechaCliente = fechaCliente;
     }
     
     

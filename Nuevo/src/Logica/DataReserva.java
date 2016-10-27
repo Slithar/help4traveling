@@ -16,10 +16,13 @@ public class DataReserva {
     private int numero;
     private LocalDate fecha;
     private int precio;
-    private String cliente;
+    private String estadoReserva;
+    private String fechaReserva;
+    private String cliente;    
     private ArrayList<DataCantidadReservasServicios> serviciosReserva;
     private ArrayList<DataCantidadReservasPromociones> reservaPromociones;    
     private Estado estado;
+    
     public DataReserva() {
     }
 
@@ -30,7 +33,26 @@ public class DataReserva {
         this.cliente = cliente;
         this.serviciosReserva = serviciosReserva;
         this.reservaPromociones = reservaPromociones;
+        
+        String fechaRe = fecha.toString();
+        String[] fechaPartida = fechaRe.split("-");
+        this.fechaReserva = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
+    
+    public DataReserva(int numero, LocalDate fecha, int precio, String cliente, ArrayList<DataCantidadReservasServicios> serviciosReserva, ArrayList<DataCantidadReservasPromociones> reservaPromociones, Estado estado) {
+        this.numero = numero;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.cliente = cliente;
+        this.serviciosReserva = serviciosReserva;
+        this.reservaPromociones = reservaPromociones;
+        this.estado = estado;
+        this.estadoReserva = estado.toString();
+        
+        String fechaRe = fecha.toString();
+        String[] fechaPartida = fechaRe.split("-");
+        this.fechaReserva = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
+    }   
 
     public int getNumero() {
         return numero;
@@ -46,6 +68,10 @@ public class DataReserva {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+        
+        String fechaRe = fecha.toString();
+        String[] fechaPartida = fechaRe.split("-");
+        this.fechaReserva = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public int getPrecio() {
@@ -85,10 +111,29 @@ public class DataReserva {
     }
     public void setEstado(String estado){        
         this.estado = Estado.obtenerEstado(estado);
+        this.estadoReserva = estado;
     }
     
     public String getEstadoString(){
         return estado.toString();
         
     }
+
+    public String getEstadoReserva() {
+        return estadoReserva;
+    }
+
+    public void setEstadoReserva(String estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
+
+    public String getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(String fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+    
+    
 }

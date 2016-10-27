@@ -14,7 +14,9 @@ public class DataCantidadReservasPromociones {
     private int cantidad;
     private int totalLinea;
     private LocalDate fechaInicio;
+    private String fiDCRP;
     private LocalDate fechaFin;
+    private String ffDCRP;
     private int reserva;
     private String promocion;
     private String proveedor;
@@ -30,6 +32,14 @@ public class DataCantidadReservasPromociones {
         this.reserva = reserva;
         this.promocion = promocion;
         this.proveedor = proveedor;
+        
+        String fechaI = fechaInicio.toString();
+        String[] fechaPartida = fechaI.split("-");
+        this.fiDCRP = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
+        
+        String fechaF = fechaFin.toString();
+        fechaPartida = fechaF.split("-");
+        this.ffDCRP = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
       public DataCantidadReservasPromociones(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin, String promocion, String proveedor) {
         this.cantidad = cantidad;
@@ -38,6 +48,14 @@ public class DataCantidadReservasPromociones {
         this.fechaFin = fechaFin;
         this.promocion = promocion;
         this.proveedor = proveedor;
+        
+        String fechaI = fechaInicio.toString();
+        String[] fechaPartida = fechaI.split("-");
+        this.fiDCRP = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
+        
+        String fechaF = fechaFin.toString();
+        String[] fechaP = fechaF.split("-");
+        this.ffDCRP = fechaP[2] + "/" + fechaP[1] + "/" + fechaP[0];
     }
 
     public int getCantidad() {
@@ -54,6 +72,10 @@ public class DataCantidadReservasPromociones {
 
     public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
+        
+        String fechaI = fechaInicio.toString();
+        String[] fechaPartida = fechaI.split("-");
+        this.fiDCRP = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public LocalDate getFechaFin() {
@@ -62,6 +84,10 @@ public class DataCantidadReservasPromociones {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+        
+        String fechaF = fechaFin.toString();
+        String[] fechaP = fechaF.split("-");
+        this.ffDCRP = fechaP[2] + "/" + fechaP[1] + "/" + fechaP[0];
     }
 
     public int getReserva() {
@@ -95,8 +121,20 @@ public class DataCantidadReservasPromociones {
     public void setTotalLinea(int totalLinea) {
         this.totalLinea = totalLinea;
     }
-    
-    
-    
-    
+
+    public String getFiDCRP() {
+        return fiDCRP;
+    }
+
+    public void setFiDCRP(String fiDCRP) {
+        this.fiDCRP = fiDCRP;
+    }
+
+    public String getFfDCRP() {
+        return ffDCRP;
+    }
+
+    public void setFfDCRP(String ffDCRP) {
+        this.ffDCRP = ffDCRP;
+    }    
 }

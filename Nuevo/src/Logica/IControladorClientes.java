@@ -51,5 +51,6 @@ public interface IControladorClientes {
     public abstract DataCliente seleccionarClienteWeb(String nickname) throws SQLException, ClassNotFoundException; 
     public abstract BufferedImage imagenLogueado(String nickname) throws SQLException, ClassNotFoundException, IOException;
     public abstract void datosAsociadosReservaWeb(int numReserva, String tipo, String nombreProducto, String nickProveedor, String fechaInicio, String fechaFin, int cantidad, int totalLinea) throws SQLException, ClassNotFoundException;
-    public abstract void agregarImagenPerfilWeb(BufferedImage img, String nick) throws SQLException, ClassNotFoundException, IOException; 
+    public abstract void agregarImagenPerfilWeb(BufferedImage img, String nick) throws SQLException, ClassNotFoundException, IOException;
+    public  abstract ArrayList<DataReserva> ReservaProveedor(String nickProveedor)throws SQLException, ClassNotFoundException;
 }

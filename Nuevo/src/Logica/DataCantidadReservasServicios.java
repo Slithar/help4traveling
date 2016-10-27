@@ -13,9 +13,11 @@ import java.time.*;
  */
 public class DataCantidadReservasServicios {
     private int cantidad;
-     private int totalLinea;
+    private int totalLinea;
     private LocalDate fechaInicio;
+    private String fiDCRS;
     private LocalDate fechaFin;
+    private String ffDCRS;
     private int reserva;
     private String servicio;
     private String proveedor;
@@ -31,12 +33,28 @@ public class DataCantidadReservasServicios {
         this.reserva = reserva;
         this.servicio = servicio;
         this.proveedor = proveedor;
+        
+        String fechaI = fechaInicio.toString();
+        String[] fechaPartida = fechaI.split("-");
+        this.fiDCRS = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
+        
+        String fechaF = fechaFin.toString();
+        String[] fechaP = fechaF.split("-");
+        this.ffDCRS = fechaP[2] + "/" + fechaP[1] + "/" + fechaP[0];
     }
     public DataCantidadReservasServicios(int cantidad, int totalLinea, LocalDate fechaInicio, LocalDate fechaFin ) {
         this.cantidad = cantidad;
         this.totalLinea = totalLinea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        
+        String fechaI = fechaInicio.toString();
+        String[] fechaPartida = fechaI.split("-");
+        this.fiDCRS = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
+        
+        String fechaF = fechaFin.toString();
+        String[] fechaP = fechaF.split("-");
+        this.ffDCRS = fechaP[2] + "/" + fechaP[1] + "/" + fechaP[0];
        
     }
 
@@ -54,6 +72,10 @@ public class DataCantidadReservasServicios {
 
     public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
+        
+        String fechaI = fechaInicio.toString();
+        String[] fechaPartida = fechaI.split("-");
+        this.fiDCRS = fechaPartida[2] + "/" + fechaPartida[1] + "/" + fechaPartida[0];
     }
 
     public LocalDate getFechaFin() {
@@ -62,6 +84,10 @@ public class DataCantidadReservasServicios {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+        
+        String fechaF = fechaFin.toString();
+        String[] fechaP = fechaF.split("-");
+        this.ffDCRS = fechaP[2] + "/" + fechaP[1] + "/" + fechaP[0];
     }
 
     public int getReserva() {
@@ -95,6 +121,23 @@ public class DataCantidadReservasServicios {
     public void setTotalLinea(int totalLinea) {
         this.totalLinea = totalLinea;
     }
+
+    public String getFiDCRS() {
+        return fiDCRS;
+    }
+
+    public void setFiDCRS(String fiDCRS) {
+        this.fiDCRS = fiDCRS;
+    }
+
+    public String getFfDCRS() {
+        return ffDCRS;
+    }
+
+    public void setFfDCRS(String ffDCRS) {
+        this.ffDCRS = ffDCRS;
+    }
+    
     
     
 }

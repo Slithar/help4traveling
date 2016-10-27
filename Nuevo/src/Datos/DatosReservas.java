@@ -53,7 +53,7 @@ public class DatosReservas {
        ConexionBD conexion = new ConexionBD();
        conn = conexion.conectar();
        
-       PreparedStatement st = conn.prepareStatement("insert into cantidadreservasservicios values (?, ?, ?, ?, ?, ?, ?, ?)");
+       PreparedStatement st = conn.prepareStatement("insert into cantidadreservasservicios values (?, ?, ?, ?, ?, ?, ?, ?, false)");
        
        st.setInt(1, numRes);
        st.setString(2, nombreServicio);
@@ -74,7 +74,7 @@ public class DatosReservas {
         ConexionBD conexion = new ConexionBD();
         conn = conexion.conectar();
         
-        PreparedStatement st = conn.prepareStatement("insert into cantidadreservaspromociones values(?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement st = conn.prepareStatement("insert into cantidadreservaspromociones values(?, ?, ?, ?, ?, ?, ?, ?, false)");
         st.setInt(1, numRes);
         st.setString(2, nombrePromocion);
         st.setString(3, nombreProveedor);
@@ -176,5 +176,33 @@ public class DatosReservas {
         conn.close();
         
         return numeroConsulta;
+    }
+    
+    public ArrayList<Reserva> ReservaProveedor(String nickProveedor)throws SQLException, ClassNotFoundException{
+        ArrayList<Reserva> reservaProveedor = new ArrayList();
+        
+        
+        Connection conn;
+        ConexionBD conexion = new ConexionBD();
+        conn = conexion.conectar();
+     
+        PreparedStatement pConsulta = conn.prepareCall("select * from reservas where numero in (select numeroReserva from cantidadreservaspromociones where nickProveedor = ? union select numeroReserva from cantidadreservasservicios where nickProveedor = ?)");
+        pConsulta.setString(1, nickProveedor);
+        pConsulta.setString(2, nickProveedor);
+        ResultSet rs = pConsulta.executeQuery();
+        while(rs.next()){
+             Reserva reserva = new Reserva();
+            reserva.setNumero(rs.getInt("numero"));
+            reserva.setFecha(LocalDate.parse(rs.getString("fecha")));
+            reserva.setPrecio(rs.getInt("precio"));
+            reserva.setEstado(rs.getString("estado"));
+            Cliente cli = new Cliente();
+            cli.setNickname(rs.getString("nicknameCliente"));
+            reserva.setCliente(cli);
+            reservaProveedor.add(reserva);
+        }
+        rs.close();
+        conn.close();
+        return reservaProveedor;
     }
 }

@@ -37,7 +37,7 @@ public class WSPrincipal {
     
     @WebMethod(exclude = true)
     public void publicar(){
-        endpoint = Endpoint.publish("http://localhost:8810/wsmainservices", this);
+        endpoint = Endpoint.publish("http://localhost:8810/wsmains", this);
     }
     
     @WebMethod
@@ -654,4 +654,18 @@ public class WSPrincipal {
         }
     }
     
+    @WebMethod
+    public String hola(){
+        return "hola";
+    }
+    @WebMethod
+    public ArrayList<DataReserva> reservaProveedor(String nickProveedor){
+         try {
+            return  iccli.ReservaProveedor(nickProveedor);
+        } catch (SQLException ex) {
+             return new ArrayList();
+        } catch (ClassNotFoundException ex) {
+             return new ArrayList();
+        }
+    }
 }
